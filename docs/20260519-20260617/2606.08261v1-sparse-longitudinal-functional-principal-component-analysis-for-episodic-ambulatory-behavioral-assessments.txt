@@ -1,0 +1,2506 @@
+Title: Sparse Longitudinal Functional Principal Component Analysis for Episodic Ambulatory Behavioral Assessments
+
+URL Source: https://arxiv.org/pdf/2606.08261v1
+
+Published Time: Tue, 09 Jun 2026 00:47:57 GMT
+
+Number of Pages: 62
+
+Markdown Content:
+# Sparse Longitudinal Functional Principal Component Analysis for Episodic Ambulatory Behavioral Assessments 
+
+Nidhi Pai 1∗ Yu Fang 2 Srijan Sen 2,3 Zhenke Wu 3,4,5 Erjia Cui 1
+
+> 1
+
+Division of Biostatistics and Health Data Science, University of Minnesota, Minneapolis, MN 
+
+> 2
+
+Michigan Neuroscience Institute, University of Michigan, Ann Arbor, MI 
+
+> 3
+
+Eisenberg Family Depression Center, University of Michigan, Ann Arbor, MI 
+
+> 4
+
+Department of Biostatistics, University of Michigan, Ann Arbor, MI 
+
+> 5
+
+Michigan Institute for Data and AI in Society, University of Michigan, Ann Arbor, MI 
+
+Abstract 
+
+Accurately monitoring mental fatigue is critical for improving workplace safety and productivity. A recent study examined unobtrusively collected smartphone typing speed as a potential ambulatory proxy assessment of mental fatigue using data from the Intern Health Study (IHS). While population-level average typing speed patterns were found to be consistent with validated measures of mental fatigue, how these trajectories vary across participants and days may inform opportune moments for just-in-time inter-ventions and remains an open question. Treating typing speed trajectories as sparsely observed functional data, we propose a novel sparse longitudinal functional principal component analysis (sparse LFPCA) method for decomposing variability and predict-ing individual curves. Specifically, sparse data are accommodated by casting covariance estimation as a structured penalized spline regression problem, enabling simultaneous estimation and smoothing of multiple covariance components while borrowing informa-tion across locations in the functional domain. Simulations show that sparse LFPCA (1) accurately estimates eigenfunctions and generates reasonable predictions for un-derlying curves, and (2) achieves similar or superior performance compared to existing alternatives. Our analysis of typing speed data collected from IHS reveals new and in-terpretable participant- and day-level patterns not captured by previous analyses and can be used to tailor behavioral interventions. 
+
+Keywords: Ambulatory assessment, Covariance models, Functional data analysis, Mobile health, Sparse longitudinal data 
+
+> ∗
+
+Email: pai00032@umn.edu 
+
+1
+
+> arXiv:2606.08261v1 [stat.ME] 6 Jun 2026
+
+# 1 Introduction 
+
+1.1 Motivation 
+
+Advances in ambulatory assessment technologies hold tremendous promise to unobtrusively probe the social, behavioral, physiological contexts in which individuals live and experience conditions that require clinical attention. Recognizing this potential, modern health and biomedical studies increasingly adopt these novel technologies to collect data repeatedly over time on the same subjects for clinical endpoint prediction, association studies, and con-structing tailoring variables for just-in-time interventions. For example, the Apple SensorKit [Apple Inc., Langholm et al., 2023] platform passively collects typing speed and accuracy every day at irregular and sparse times that are associated with typing activities. This infor-mation was collected in our motivating Intern Health Study (IHS), an ongoing large annual cohort study examining mental health and stress in first-year physician residents. Fang et al. [2026] used two months of data from the start of the internship to investigate smartphone typing performance in the IHS as a potential indicator for monitoring mental fatigue, an important task for improving workplace safety. In addition to typing speed metrics, be-havioral and physiological measures, including sleep patterns, were extracted from fitness trackers worn by the participants. For each typing session (defined by a short period lump-ing multiple temporally adjacent typing events across all apps), time awake was defined as the elapsed time between the typing initiation and the end of the most recent sleep episode. As a result, for each participant on each day, typing speed was collected at several discrete typing sessions (one observation per typing session) and treated as function of time awake. See Fang et al. [2026] for the exact definitions of the typing speed. To illustrate, Figure 1 shows data from three participants over three selected days per participant, with participants shown in separate columns. The x-axis is time awake in hours, and the y-axis shows typing speed in characters per second. Black points represent typing sessions, and blue curves represent the participant’s smoothed average typing speed, pooled over all available days for the participant. The number of typing sessions per day varies be-2T = 23             
+
+> T = 18
+> T = 16
+> 04812 16
+> 234567
+> 234567
+> 234567
+> Typing speed (characters/sec)
+> Participant 94
+> T = 38.7
+> T = 36.8
+> T = 23
+> 04812 16
+> 234567
+> 234567
+> 234567
+> Participant 232
+> T = 53
+> T = 47
+> T = 32.1
+> 04812 16
+> 234567
+> 234567
+> 234567
+> Time awake (hours)
+> Observed
+> Participant average
+> Prediction
+> Participant 292
+
+Figure 1: Selected participants and days from the IHS typing speed data. Columns cor-respond to different participants, and three days of data are shown for each participant. The x-axis is time since waking, in hours, and the y-axis is typing speed, in characters per second. The time for each day (denoted by T ) is the elapsed time (in days) from 6:00 a.m. on the start day of the study (June 29) to the wake-time of the most recent sleep episode. For example, T = 23 implies the participant woke up around 6:00 a.m. on July 22, whereas 
+
+T = 36 .8 indicates the participant woke up around 1:12 a.m. on August 5. Black points rep-resent typing sessions, and blue curves represent the participant’s smoothed average typing speed, pooled over all available days for the participant. Gold lines are predictions generated by our proposed methods, as described in Sections 2 and 4. 3tween 1 and 36, with a median of 3 sessions per day. The data is sparse, as most days contain very few observations, and irregular, since sampling times vary within and across days. In addition, each participant has between 1 and 74 days of data (median 28.1 days), resulting in sparse trajectories (a few observations per day) collected longitudinally (multiple days per participant). This is a more complicated setting than traditional longitudinal studies because a sparse trajectory rather than a scalar measurement is observed per day per par-ticipant. Using this data, Fang et al. [2026] investigated population-level patterns in typing speed and evaluated its utility as a proxy for mental fatigue. While they found that average typing speed mirrors patterns in lab-based measures of mental fatigue in the literature, an important scientific question remains: how do these trajectories vary across participants and across days within participants? Periods of extreme within-participant variation may indi-cate opportune moments for digital health interventions, e.g., push notifications suggesting a break when typing speed drops significantly and the participant is available to be notified. 
+
+1.2 Challenges Faced by the Existing Methods 
+
+To answer this question, a natural approach is to model daily typing speed trajectories as sparse functional observations and analyze them using tools from functional data analysis (FDA; Ramsay and Silverman [2005], Kokoszka and Reimherr [2017], Crainiceanu et al. [2024], Jiang et al. [2025]). Functional principal components analysis (FPCA; Yao et al. [2005], Ramsay and Silverman [2005], Xiao et al. [2016]) is a widely used technique in FDA, first designed to investigate dominant patterns of variation in independent, single-level func-tional data. Multilevel FPCA (MFPCA) extends FPCA to hierarchical settings by incor-porating a functional random intercept [Di et al., 2009, Cui et al., 2023]. For longitudinal functional observations, as in the Intern Health Study, Greven et al. [2010] proposed longi-tudinal FPCA (LFPCA) which further extends MFPCA by including a functional random slope to model variation across visits. A variety of longitudinal functional models have since been developed to address inference [Park and Staicu, 2015, Scheipl et al., 2015, Shamshoian 4et al., 2022, Li et al., 2022a], large, high-dimensional datasets [Cui et al., 2022, Zipunnikov et al., 2014, Loewinger et al., 2025], asynchronous variables [Li et al., 2022b], and skewed distributions [Alam and Staicu, 2024]. For sparse or irregular functional data, a parallel line of research has focused on FPCA [James et al., 2000, Xiao et al., 2018], with extensions to the multilevel [Di et al., 2014] and multivariate [Li et al., 2020, Ghosh et al., 2025] settings. Some work takes a Bayesian approach [Sartini et al., 2025, Ye, 2024], while others focus on addressing non-Gaussian data [Zhong et al., 2022]. Despite substantial progress in both directions, existing FPCA methods are limited in their ability to simultaneously account for both longitudinal and sparse functional data structures. The LFPCA framework of Greven et al. [2010] was developed for dense functional data observed on a common time grid. It estimates the covariance at each pair of time points separately, without borrowing information between pairs of time points. In sparse or irregular designs, the limited number of observations at any given pair of time points leads to unstable, high-variance, or even infeasible estimates. This problem was considered by Cederbaum et al. [2016], who introduced functional linear mixed models (FLMM) for irregular or sparse data. However, their method applies only to a simplified crossed random effect structure and is computationally intensive. See Supplementary Section S1 for details on limitations of existing methods. 
+
+1.3 Contributions 
+
+To address these limitations, we propose a novel sparse LFPCA framework. Our primary con-tribution is to cast covariance estimation as a structured penalized spline regression problem, which enables estimating and smoothing multiple covariance components simultaneously. Al-though Xiao et al. [2018] proposed a fast covariance estimation approach for sparse functional data, their method applies only to single-level observations. To solve critical new estimation challenges in the longitudinal functional setting, as in the motivating SensorKit data, we (1) propose a refined weight matrix to account for longitudinal correlations, (2) introduce a 5novel block-structured smoothness penalty, and (3) develop a scalable smoothing parameter selection strategy that regularizes separate covariance functions simultaneously while allow-ing each to have a different degree of smoothness. In addition, we provide ready-to-use R software, lfpca.sparse() , implementing our method. To our knowledge, this is the first time FPCA has been extended to a sparse longitudinal setting. The remainder of this article is organized as follows. Section 2 reviews the LFPCA model and introduces our proposed sparse LFPCA framework. Section 3 contains simulation studies of the proposed method, including a comparison with MFPCA as a special case. Section 4 presents an application of our model to the Intern Health Study data. We conclude with a discussion in Section 5. 
+
+# 2 Methods 
+
+2.1 LFPCA Model 
+
+We begin by briefly reviewing the LFPCA model. For subject i, i = 1 , ..., I at visit j,
+
+j = 1 , ..., J i, suppose we observe Yij (s) at locations {sijk }k=1 ,...,m ij ⊂ S , where S = [0 , 1] is the functional domain and mij is the number of observations for subject i at visit j. In the dense data setting considered by Greven et al. [2010], the locations sijk belong to a regular grid S∗ = {s1, s 2, . . . , s L} shared across subjects and visits. Let Tij be the time of visit j for subject i. The longitudinal functional model is 
+
+Yij (s) = μ(s, T ij )
+
+| {z }
+
+> population fixed effects
+
++ R⊤ 
+
+> ij
+
+Zi(s)
+
+| {z }
+
+> subject −level random effects
+
++ Wij (s)
+
+| {z } 
+
+> visit −level random effects
+
++ ϵij (s)
+
+| {z } 
+
+> residual error
+
+, (2.1) where μ(s, T ij ) denotes the fixed effect, Zi(s) = ( Zi, 0(s), Z i, 1(s)) ⊤ is a vector of functional subject-level random effects with corresponding design matrix Rij = (1 , T ij )⊤, Wij (s) is the visit-specific deviation, and ϵij (s) is white noise with zero mean and variance σ2. Here, Zi(s), 
+
+Wij (s), and ϵij (s) are centered, mutually uncorrelated stochastic processes. Let K0(s, u ) = Cov {Zi, 0(s), Z i, 0(u)} and K1(s, u ) = Cov {Zi, 1(s), Z i, 1(u)} be the auto-covariance functions of 
+
+Zi, 0(s) and Zi, 1(s), respectively. Let K01 (s, u ) = Cov {Zi, 0(s), Z i, 1(u)} be the cross-covariance 6function of Zi, 0(s) and Zi, 1(u). Let KZ (s, u ) be the covariance of Zi(s) such that KZ (s, u ) = 
+
+ K0(s, u ) K01 (s, u )
+
+K01 (u, s ) K1(s, u )
+
+
+
+. The functions K0(s, u ) and K1(s, u ) are symmetric in s and u,whereas K01 (s, u ) is generally not symmetric. Let KW (s, u ) = Cov {Wij (s), W ij (u)} be the covariance function of Wij (s). LFPCA identifies the main directions of variation and provides dimensionality reduction in longitudinal functional data. By Mercer’s Theorem [Mercer, 1909], the covariance function 
+
+KZ (s, u ) can be expanded as KZ (s, u ) = P∞ 
+
+> n=1
+
+λZn ϕn(s)ϕ⊤ 
+
+> n
+
+(u), where λZ 
+
+> 1
+
+≥ λZ 
+
+> 2
+
+≥ · · · ≥ 0are the eigenvalues, ϕn(s) = ( ϕ0
+
+> n
+
+(s), ϕ 1
+
+> n
+
+(s)) ⊤ are the corresponding eigenfunctions, and the set {ϕn | n ∈ N} forms an orthonormal basis with respect to the additive scalar product 
+
+⟨ ϕ0 
+
+> n1
+
+, ϕ 1
+
+> n1
+
+ ,  ϕ0 
+
+> n2
+
+, ϕ 1
+
+> n2
+
+⟩ =
+
+Z
+
+> S
+
+ϕ0 
+
+> n1
+
+(s)ϕ0 
+
+> n2
+
+(s)ds +
+
+Z
+
+> S
+
+ϕ1 
+
+> n1
+
+(s)ϕ1 
+
+> n2
+
+(s)ds. 
+
+Similarly, the eigendecomposition of KW (s, u ) is KW (s, u ) = P∞ 
+
+> n=1
+
+λWn ψn(s)ψn(u), where 
+
+λW 
+
+> 1
+
+≥ λW 
+
+> 2
+
+≥ ... ≥ 0 are the eigenvalues and ψn(s) are the corresponding eigenfunctions. The Kosambi–Karhunen–Lo` eve (KKL; Kosambi [1943], Karhunen [1947], Loeve [1948]) ex-pansions ensure that Zi(s) = P∞ 
+
+> n1=1
+
+ξin 1 ϕn1 (s) and Wij (s) = P∞ 
+
+> n2=1
+
+ζijn 2 ψn2 (s), where 
+
+ξin 1 ∼ N (0 , λ Zn1 ) and ζijn 2 ∼ N (0 , λ Wn2 ) are mutually uncorrelated scores which are inde-pendent of the error. One key assumption in LFPCA is that the infinite expansions can be approximated by the first few principal components, i.e., Zi(s) ≈ PNZ 
+
+> n1=1
+
+ξin 1 ϕn1 (s) and 
+
+Wij (s) ≈ PNW 
+
+> n2=1
+
+ζijn 2 ψn2 (s), where NZ and NW are estimated by techniques such as leave-one-curve-out cross-validation [Rice and Silverman, 1991], AIC-type criteria [Yao et al., 2005], restricted likelihood ratio tests [Staicu et al., 2010, Crainiceanu et al., 2009], or pro-portion of variance explained [Greven et al., 2010]. Then, the model (2.1) becomes 
+
+Yij (s) ≈ μ(s, T ij ) + 
+
+> NZ
+
+X
+
+> n1=1
+
+ξin 1 R⊤ 
+
+> ij
+
+ϕn1 (s) + 
+
+> NW
+
+X
+
+> n2=1
+
+ζijn 2 ψn2 (s) + ϵij (s). (2.2) The decompositions reduce the longitudinal functional data to two finite sets of scores, 
+
+{ξin 1 | i = 1 , ..., I ; n1 = 1 , ..., N Z } and {ζijn 2 | i = 1 , ..., I ; j = 1 , ..., J i; n2 = 1 , ..., N W }, yield-ing a low-dimensional representation. The scores can be used to predict underlying curves or for downstream tasks such as regression or clustering. 72.2 Sparse LFPCA Framework 
+
+To overcome the limitations of existing methods, we propose an LFPCA estimation frame-work for sparse functional data. The main steps, summarized in Algorithm 1, are to estimate the mean function, estimate the between-subject covariance functions, estimate the within-subject covariance function, and predict subject- and visit-level scores. Note that in our framework, MFPCA can be viewed as a special case without the longitudinal component; the necessary modifications are described in the Supplementary Materials, Section S5. 
+
+Algorithm 1: Sparse LFPCA 1. Estimate the mean function μ(s, T ij ) under the working independence model 
+
+Yij (s) = μ(s, T ij ) + ϵij (s). 2. Estimate K0(s, u ), K01 (s, u ), and K1(s, u ) using cross-products from different visits n bCij 1j2k1k2 | i = 1 , ..., I ; j1 = 1 , ..., J i; j2̸ = j1; k1 = 1 , ..., m ij 1 ; k2 = 1 , ..., m ij 2
+
+o
+
+. Obtain eigenvectors ϕn1 (t) and eigenvalues λZn1 .3. Estimate KW (s, u ) and σ2 using adjusted cross-products from the same visit n bAijjk 1k2 | i = 1 , ..., I ; j = 1 , ..., J i; k1, k 2 = 1 , ..., m ij 
+
+o
+
+. Obtain eigenvectors ψn2 (t) and eigenvalues λWn2 .4. Obtain scores ξin 1 and ζijn 2 using mixed model equations. Substitute the mean function and eigenfunctions into Equation (2.2) to obtain predictions for Yij (s). 
+
+2.3 Fixed Effects Estimation 
+
+The first step is to obtain an estimate bμ(s, T ij ) of the mean surface under a working indepen-dence assumption. In the most general case, μ(s, T ij ) can be estimated as a smooth bivariate function of s and Tij , which is appropriate if the collection of visit times Tij over all subjects is dense. Otherwise, simpler fixed effect structures can be used such as μ(s, T ij ) = μ(s) + Tij β.We estimate μ(s, T ij ) using tensor product P-splines in a generalized additive framework [Eil-ers and Marx, 1996]. Choosing between smoothing methods is not our focus; see Krivobokova and Kauermann [2007], Wood [2017] for a more detailed discussion. After estimating the fixed effects, let ˆ rijk = Yij (sijk ) − ˆμ(sijk , T ij ) be the residuals from substituting the estimated 8mean surface. We will use the hat notation to denote variables where the mean function 
+
+μ(s, T ij ) is replaced by its estimate ˆ μ(s, T ij ). 
+
+2.4 Between-Subject Covariance Estimation 
+
+2.4.1 Tensor product spline expansion 
+
+Let Cij 1j2k1k2 = rij 1k1 rij 2k2 be cross-products of the residuals, where j1, j 2 ∈ { 1, ..., J i} index visits and k1, k 2 ∈ { 1, ..., m ij } index observations for each subject; these cross-products underpin the covariance estimation. Based on the model in Equation (2.1), the expected value of Cij 1j2k1k2 is 
+
+E [Cij 1j2k1k2 ] = K0(sij 1k1 , s ij 2k2 ) + Tij 2 K01 (sij 1k1 , s ij 2k2 ) + Tij 1 K01 (sij 2k2 , s ij 1k1 )+ Tij 1 Tij 2 K1(sij 1k1 , s ij 2k2 ) + KW (sij 1k1 , s ij 2k2 ) + σ2δk1k2
+
+ δj1j2 ,
+
+(2.3) where δ is the Kronecker delta. In the LFPCA method proposed by Greven et al. [2010], this model is fit as a linear regression, where the parameters to be estimated are the covari-ance functions at each pair of locations, and the raw covariance estimates are subsequently smoothed. However, with sparse data, the number of cross-products is often limited, making it difficult to accurately estimate the many unknown parameters in the linear regression step. See Section S1 for more details on the limitations of existing methods for sparse data. To improve covariance estimation in the sparse data setting, we propose incorporating smoothing to borrow information across location pairs. Specifically, we model the between-subject covariance functions K0(s, u ), K01 (s, u ), and K1(s, u ) with tensor product splines 
+
+H0(s, u ) = X
+
+> 1≤κ,ℓ ≤c
+
+θ0
+
+> κℓ
+
+Bκ(s)Bℓ(u), H01 (s, u ) = X
+
+> 1≤κ,ℓ ≤c
+
+θ01  
+
+> κℓ
+
+Bκ(s)Bℓ(u),H1(s, u ) = X
+
+> 1≤κ,ℓ ≤c
+
+θ1
+
+> κℓ
+
+Bκ(s)Bℓ(u), (2.4) respectively. Here, {B1(·), ..., B c(·)} is a collection of B-spline basis functions in S, {θ0
+
+> κℓ
+
+, θ 01  
+
+> κℓ
+
+, θ 1
+
+> κℓ
+
+}1≤κ,ℓ ≤c
+
+are basis function coefficients, and c is the rank of the B-spline basis; knots are equally spaced. This tensor product spline construction provides a structured and flexible representation and has been used in covariance estimation for single-level sparse data. However, to our knowl-edge, it has not been extended to the longitudinal sparse settings. For simplicity, we assume 9that the basis functions are the same for the three covariance surfaces. For the autocovari-ance functions K0(s, t ) and K1(s, t ), we enforce that θκℓ = θℓκ for 1 ≤ κ, ℓ ≤ c, which forces 
+
+H0(s, t ) = H0(t, s ) and H1(s, t ) = H1(t, s ). For between-subject covariance estimation, consider the set 
+
+n bCij 1j2k1k2
+
+o
+
+for all i =1, 2, . . . , I , j1̸ = j2, and 1 ≤ k1 ≤ mij 1 , 1 ≤ k2 ≤ mij 2 , i.e., products of residuals from the same subject and different visits. Subjects with only one visit are not included here. Based on Equation (2.3), for j1̸ = j2, we have E [Cij 1j2k1k2 ] = K0(sij 1k1 , s ij 2k2 ) + Tij 2 K01 (sij 1k1 , s ij 2k2 ) + 
+
+Tij 1 K01 (sij 2k2 , s ij 1k1 ) + Tij 1 Tij 2 K1(sij 1k1 , s ij 2k2 ). Substituting the covariance functions with their basis expansions in Equation (2.4) gives 
+
+E [Cij 1j2k1k2 ] = X
+
+> 1≤κ, 1≤ℓ≤c
+
+θ0
+
+> κℓ
+
+Bκ(sij 1k1 )Bℓ(sij 2k2 ) + Tij 2
+
+X
+
+> 1≤κ, 1≤ℓ≤c
+
+θ01  
+
+> κℓ
+
+Bκ(sij 1k1 )Bℓ(sij 2k2 )+ Tij 1
+
+X
+
+> 1≤κ, 1≤ℓ≤c
+
+θ01  
+
+> κℓ
+
+Bκ(sij 2k2 )Bℓ(sij 1k1 ) + Tij 1 Tij 2
+
+X
+
+> 1≤κ, 1≤ℓ≤c
+
+θ1
+
+> κℓ
+
+Bκ(sij 1k1 )Bℓ(sij 2k2 )= X
+
+> 1≤κ, 1≤ℓ≤c
+
+θ0
+
+> κℓ
+
+Bκ(sij 1k1 )Bℓ(sij 2k2 )+ X
+
+> 1≤κ, 1≤ℓ≤c
+
+θ01  
+
+> κℓ
+
+[Tij 2 Bκ(sij 1k1 )Bℓ(sij 2k2 ) + Tij 1 Bκ(sij 2k2 )Bℓ(sij 1k1 )] + X
+
+> 1≤κ, 1≤ℓ≤c
+
+θ1
+
+> κℓ
+
+Tij 1 Tij 2 Bκ(sij 1k1 )Bℓ(sij 2k2 ).
+
+(2.5) While Equation (2.5) looks more complex than Equation (2.3), the key observation is that we can still write it as a regression model bC = Xα . Here, the outcome bC contains bCij 1j2k1k2
+
+for all i = 1 , 2, . . . , I , j1̸ = j2. To define α, first let Θ0 = ( θ0
+
+> kℓ
+
+)1≤κ≤c, 1≤ℓ≤c ∈ Rc×c be the coefficient matrix for K0(s, u ), and define Θ01 and Θ1 analogously. Let vech( ·) denote the operator that stacks the columns of the lower triangle of a matrix into a vector and vec( ·)denote the operator that stacks all columns of a matrix into a vector. Because K0(s, u )and K1(s, u ) are symmetric, we need only estimate θ0 = vech Θ0 and θ1 = vech Θ1, whereas 
+
+K01 (s, u ) is not symmetric, so we estimate θ01 = vec Θ01 . The vector of regression coefficients is then defined as α = ( θ⊤ 
+
+> 0
+
+, θ⊤
+
+> 01
+
+, θ⊤ 
+
+> 1
+
+)⊤.The design matrix X has a block structure X = [ X0, X01 , X1], where the columns of 10 the three blocks correspond to the entries of θ0, θ01 , and θ1. Let b(s) = {B1(s), ..., B c(s)}⊤
+
+be a vector of the basis functions evaluated at time s. To see how X is constructed, first consider K0(s, t ). Note that H0(s, u ) = ( b(u) ⊗ b(s)) ⊤Gcθ0, where ⊗ is the Kronecker product and Gc ∈ Rc2× c(c+1) 2 is the duplication matrix (Seber [2008], p. 246) such that vec Θ0 = Gcθ0. Using this notation, the block of the design matrix X for estimating θ0 can be written as X0 = BG c, where B is a complex matrix consisting of b(s) evaluated at time points corresponding to bC and appropriately concatenated. Blocks X01 and X1 are defined similarly, but in more complicated forms involving visit times in addition to basis functions. The details of constructing bC, B, X, and α are given in the Supplementary Materials, Section S2.1. 
+
+2.4.2 Weighted least squares 
+
+To increase estimation efficiency, we fit the model with weighted least squares (WLS), where the weight matrix W is specified as the inverse of Cov( C), as proposed in Xiao et al. [2018]. However, the derivation of Cov( C) for sparse LFPCA is not straightforward because the longitudinal setting introduces additional model components. Proposition 2.1 describes how to compute Cov( C) in this case. 
+
+Proposition 2.1. Define Mij 1j2k1k2 = ( K0(sij 1k1 , s ij 2k2 ), T ij 2 K01 (sij 1k1 , s ij 2k2 ),Tij 1 K01 (sij 2k2 , s ij 1k1 ), T ij 1 Tij 2 K1(sij 1k1 , s ij 2k2 ), K W (sij 1k1 , s ij 2k2 )δj1j2 , σ 2δj1j2 δk1k2 )⊤. Then Cov (Cij 1j2k1k2 , C ij 3j4k3k4 ) = 1⊤ (Mij 1j3k1k3 ⊗ Mij 2j4k2k4 + Mij 1j4k1k4 ⊗ Mij 2j3k2k3 ) .
+
+The proof of Proposition 2.1 is in the Supplementary Materials, Section S2.2. For the between-subject covariance function estimation, we use bCij 1j2k1k2 where j1̸ = j2. Thus, only the first four entries of Mij 1j2k1k2 are nonzero. Because Cov( Ci) may be singular, we let 0 < β < 1 and further define W −1 
+
+> i
+
+= (1 − β)Cov( Ci) + βdiag (diag(Cov( Ci))), which ensures the existence and numerical stability of Wi. The weight matrix is then constructed as 
+
+W = blockdiag( W1, ..., WI ). Because W and the analogous weight matrix for the within-subject covariance, fW , depend on the covariance functions and σ2, a two-stage estimation 11 procedure can be used. First, set W = I and fW = I and estimate the covariance functions as outlined in Sections 2.4.1 and 2.5 using (unweighted) least squares. Second, calculate the weight matrices and repeat the covariance function estimation using WLS. 
+
+2.4.3 Penalized estimation 
+
+Because the number of basis functions is relatively large, we propose adding a penalty term to avoid overfitting. The penalties on Θ0, Θ01 , and Θ1 are λ0|| Θ0D|| 2 
+
+> F
+
+, λ01 || Θ01 D|| 2 
+
+> F
+
+,and λ1|| Θ1D|| 2 
+
+> F
+
+, respectively, where λ0, λ01 , and λ1 are distinct smoothing parameters, 
+
+D ∈ Rc×(c−2) is a second-order difference matrix, and || · || F is the Frobenius norm. To unify the penalties for multiple covariance components within a single least squares objective function, we introduce a novel block-structured penalty. Specifically, define 
+
+Q0 =
+
+
+
+G⊤ 
+
+> c
+
+(Ic ⊗ DD ⊤)Gc 0 00 0 00 0 0
+
+ , Q01 =
+
+
+
+0 0 00 Ic ⊗ DD ⊤ 00 0 0
+
+ ,
+
+Q1 =
+
+
+
+0 0 00 0 00 0 G⊤ 
+
+> c
+
+(Ic ⊗ DD ⊤)Gc
+
+ .
+
+The penalty is then P 
+
+> l∈L
+
+λlα⊤Qlα, where L = {1, 01 , 1} are labels corresponding to the three between-subject covariance functions. Using the duplication matrix Gc ensures that smoothness penalties are correctly imposed on the symmetric coefficient matrices Θ0 and 
+
+Θ1, even though the estimation targets the vectors of unique elements θ0 and θ1. Addi-tionally, the block-structured penalty assigns each covariance component its own smoothing parameter, allowing different components to be smoothed to varying degrees. We will discuss the selection of smoothing parameters λl in Section 2.4.4. With the introduced penalty, the resulting penalized WLS objective function is 
+
+bα = argmin 
+
+> α
+
+"
+
+( bC − Xα )⊤W ( bC − Xα ) + X
+
+> l∈L
+
+λlα⊤Qlα
+
+#
+
+,
+
+and an explicit form for ˆ α is 
+
+bα = X⊤W X + X
+
+> l∈L
+
+λlQl
+
+!−1 
+
+X⊤W bC
+
+
+
+.
+
+12 In practice, we evaluate the covariance functions, eigenfunctions, and predictions on a grid S∗ of L locations in S. Let B∗ = ( b(s1), ..., b(sL)) ⊤ ∈ RL×c be a matrix of the basis functions evaluated at S∗. Given coefficient estimates bΘ0, bΘ01 , and bΘ1 from bα, the estimated covariance functions evaluated on S∗ are cKR 
+
+> 0
+
+= B∗ bΘ0(B∗)⊤, cKR 
+
+> 01
+
+= B∗ bΘ01 (B∗)⊤, and 
+
+cKR 
+
+> 1
+
+= B∗ bΘ1(B∗)⊤. Here, the R superscript stands for “raw”; the estimates are trimmed in Section 2.4.5 to ensure the matrices are positive semi-definite. 
+
+2.4.4 Selection of smoothing parameters 
+
+We propose selecting smoothing parameters λ0, λ01 , and λ1 by leave-one-subject-out cross validation, since it accounts for both within-visit and between-visit correlation, unlike leave-one-observation-out and leave-one-visit-out methods. The leave-one-subject-out cross val-idated error is iCV = PIi=1 bC[i] 
+
+> i
+
+− bC 2
+
+, where bC[i] 
+
+> i
+
+is the prediction of bCi generated by fitting the model without data from the ith subject. Specifically, we derive an expression for the cross-validated error for longitudinal functional data that is much faster to compute, adapting the approach of Xiao et al. [2018]. First, let S = X(X⊤W X + Q)−1X⊤W be the smoother matrix, where Q = P 
+
+> l∈L
+
+λlQl. We then have Lemma 2.2: 
+
+Lemma 2.2. The smoother matrix S can be written as 
+
+S = XA Ip + X
+
+> l∈L
+
+λldiag (sl)
+
+!−1
+
+(XA )⊤W
+
+for some A, s0, s01 , and s1 which do not depend on any λl.
+
+The proof of Lemma 2.2 is given in the Supplementary Materials, Section S2.3. Given Lemma 2.2, the iCV criterion can be approximated as a generalized cross validation (GCV) criterion and further simplified. Let bCi and Xi be the rows of bC and X, respectively, that correspond to subject i. Define Fi = XiA, F = XA , ˜F = F ⊤W , fi = F ⊤ 
+
+> i
+
+bCi, ˜f = ˜F bC,
+
+Ji = F ⊤ 
+
+> i
+
+Wi bCi, Li = F ⊤ 
+
+> i
+
+Fi, ˜Li = F ⊤ 
+
+> i
+
+WiFi. Let ˜D = [ I + P 
+
+> l
+
+λldiag( sl)] −1, and let ˜d be its diagonal. Let ⊙ denote the Hadamard product of two matrices of the same dimensions (i.e., elementwise multiplication). Define g = PIi=1 Ji ⊙ fi and G = PIi=1 (Ji ˜f ⊤) ⊙ Li.13 Proposition 2.3 below simplifies iGCV for computational efficiency, where only one element, ˜d, depends on λ0, λ01 , or λ1; the remaining matrices (i.e., C, ˜f , f , F , g, G, Li, ˜Li) can all be precomputed. 
+
+Proposition 2.3. The iCV criterion can be approximated as iGCV and simplified as follows: iGCV = ∥C∥2 − 2 ˜d⊤( ˜f ⊙ f ) + ( ˜f ⊙ ˜d)⊤(F ⊤F )( ˜f ⊙ ˜d) + 2 ˜d⊤g − 4 ˜d⊤G ˜d
+
++ 2 ˜d⊤
+
+" IX
+
+> i=1
+
+n
+
+Li( ˜f ⊙ ˜d)
+
+o
+
+⊙
+
+n ˜Li( ˜f ⊙ ˜d)
+
+o#
+
+.
+
+The proof of Proposition 2.3 is given in Supplementary Materials, Section S2.3. With a grid search in three dimensions, the smoothing parameters λ0, λ01 , and λ1 are selected to minimize iGCV. 
+
+2.4.5 Eigendecomposition 
+
+To obtain positive semi-definite estimates of the covariance functions and facilitate the KKL expansions in Equation (2.2), the estimated covariance functions are concatenated into a block matrix cKRZ = cKR 
+
+> 0
+
+cKR
+
+> 01
+
+(cKR
+
+> 01
+
+)⊤ cKR
+
+> 1
+
+!
+
+. An eigendecomposition of cKRZ yields eigenvalues bλn
+
+and eigenvectors bϕn for n = 1 , ..., L . Following the literature [Yao et al., 2005, Greven et al., 2010, Cui et al., 2023], negative eigenvalues are trimmed to 0 to produce the positive semi-definite matrix estimate cKZ = PLn=1 max( λn, 0) bϕn( bϕn)⊤. Estimates of K0(s, u ), K01 (s, u ), and K1(s, u ) are then given by the corresponding blocks of cKZ .After trimming, the eigendecomposition is truncated to a finite-dimensional expansion based on proportion of variability explained (PVE) [Di et al., 2009]. We retain the first NZ
+
+principal components, where NZ is large enough such that PVE =   
+
+> PNZn=1 λZn
+> PLn=1 λZn
+
+is greater than a prespecified threshold. Each vector bϕn contains two blocks of L entries each. Estimates for the eigenfunctions ϕ0
+
+> n
+
+(s) are given by entries 1 to L, and estimates for ϕ1
+
+> n
+
+(s) are given by entries L + 1 to 2 L.14 2.5 Within-Subject Covariance Estimation 
+
+We estimate the within-subject covariance function KW (s, u ) using a similar penalized spline regression framework in as Section 2.4 with two differences: (1) the residual cross-products are constructed from pairs of observations within the same visit and adjusted to target 
+
+KW (s, u ), and (2) the error variance σ2 is also estimated in the regression. Specifically, for Equation (2.3), when j1 = j2 = j, we have E [Cijjk 1k2 ] = K0(sijk 1 , s ijk 2 ) + 
+
+Tij K01 (sijk 1 , s ijk 2 ) + Tij K01 (sijk 2 , s ijk 1 ) + T 2 
+
+> ij
+
+K1(sijk 1 , s ijk 2 ) + KW (sijk 1 , s ijk 2 ) + σ2δk1=k2 . From Section 2.4, we have obtained estimates for K0(sijk 1 , s ijk 2 ), K01 (sijk 1 , s ijk 2 ), K01 (sijk 2 , s ijk 1 ), and K1(sijk 1 , s ijk 2 ). Let bAijjk 1k2 = bCijjk 1k2 − bK0(sijk 1 , s ijk 2 )−Tij bK01 (sijk 1 , s ijk 2 )−Tij bK01 (sijk 2 , s ijk 1 )−
+
+T 2 
+
+> ij
+
+bK1(sijk 1 , s ijk 2 ). It follows that the set 
+
+n bAijjk 1k2 |k1̸ = k2
+
+o
+
+is a collection of estimators of 
+
+KW (·, ·), and the set 
+
+n bAijjk 1k2 |k1 = k2
+
+o
+
+is a collection of estimators of KW (·, ·) + σ2. We model KW (s, u ) with tensor product splines 
+
+HW (s, u ) = X
+
+> 1≤κ≤c, 1≤ℓ≤c
+
+θWκℓ Bκ(s)Bℓ(u),
+
+where ΘW = ( θWκℓ )1≤κ≤c, 1≤ℓ≤c is the coefficient matrix, and fit the model using penalized weighted least squares. The details of constructing the penalized WLS model and choosing the smoothing parameter λ are left to the Supplementary Materials, Section S3, as they are similar to Xiao et al. [2018]. Compared to Section 2.4, an additional variable σ2 is added to the vector of regression coefficients, and an extra column δ containing the indicators δk1k2 is added to the design matrix. The estimated within-subject covariance function evaluated at 
+
+S∗ is cKRW = B∗ bΘW (B∗)⊤.The eigenfunctions ψn(s) and eigenvalues λWn are estimated based on an eigendecom-position of cKRW . Negative eigenvalues are trimmed. The expansion is truncated to NW
+
+components by PVE, as discussed in Section 2.4.5, to produce a low-dimensional represen-tation. 15 2.6 Score Prediction 
+
+Once the eigenfunctions and eigenvalues are estimated, the LFPCA model in Equation (2.2) reduces to a mixed effects model, which we solve using Henderson’s mixed model equations (MME; Henderson [1975]). MME were introduced to FDA by Cui et al. [2023]; the main adaptation for our sparse data setting is that eigenfunctions are only evaluated at observed time points rather than on a common dense grid. The details on constructing the matrices to estimate the scores ξin 1 and ζijn 2 are given in the Supplementary Materials, Section S4. After score prediction, we substitute the mean functions and eigenfunctions in Equation (2.2) to predict Yij (s) at any desired time points in S.
+
+# 3 Simulation 
+
+We conduct extensive simulations to evaluate the proposed methods in estimating covariance functions and eigenfunctions as well as predicting curves based on sparse observations. We separate the simulations into three settings based on what methods are available. Simulation 1 is in the sparse longitudinal setting, where, to our knowledge, only our proposed Sparse LFPCA (SLFPCA) is applicable. Simulation 2 compares a multilevel version of the proposed approach (SLFPCA-M) to two existing MFPCA methods: MFPCA-SC [Di et al., 2009] and Fast MFPCA [Cui et al., 2023]. Simulation 3 compares the proposed approach to the LFPCA methods by Greven et al. [2010] (LFPCA-G) with dense and complete data, as the available implementation of Greven et al. [2010] does not accommodate missing data. Due to space considerations, we summarize results from Simulation 2 and 3 and provide full results in the Supplementary Materials, Sections S6.2 and S6.3. For all simulations, we set the weight matrices W = I. In all plots, outliers are omitted. 16 3.1 Simulation 1: Sparse LFPCA 
+
+3.1.1 Simulation design 
+
+Simulation 1 considers the performance of SLFPCA as the number of subjects, visits, points per curve, and error variance change. Data is generated according to the KKL decomposition in Equation (2.2), with μ(s, T ij ) = 0 for simplicity and NZ = NW = 2 eigenfunctions at each level. The eigenfunctions are 
+
+ϕ01(s) = 
+
+r23 sin( πs ) ϕ11(s) = 
+
+r23 ψ1(s) = 1 
+
+ϕ02(s) = cos( πs ) ϕ12(s) = sin(3 πs ) ψ2(s) = √3(2 s − 1) Note that {ϕ01(s), ϕ 02(s)}, {ϕ11(s), ϕ 12(s)}, and {ψ1(s), ψ 2(s)} are each orthonormal sets. In addition, the random intercept eigenfunctions ϕ01(s) and ϕ02(s) and the random subject eigenfunctions ϕ11(s) and ϕ12(s) are mutually orthogonal. The true eigenvalues are λZn = λWn =
+
+ 12
+
+n−1 for n = 1 , 2. For each of the I subjects, the number of visits is drawn from a Poisson distribution with mean J∗, and for each visit, the number of observations mij is drawn from a Poisson distribution with mean m∗, where I, J∗, and m∗ are simulation parameters specified below. Visit times Tij are drawn from Unif(0, 1). To create irregular sampling points for each curve, the mij locations sijk are drawn from a Unif(0,1) distribution. The subject-level scores ξn are drawn from N (0 , λ Zn ), and the visit-level scores ζn are drawn from N (0 , λ Wn ). White noise drawn from N (0 , σ 2) is added to each observation, where σ2 is a simulation parameter. Although observed sampling times for each curve are irregular and sparse, the eigenfunctions and curves are also generated on a grid S∗ of L = 1000 points evenly spaced in S = [0 , 1] to compare estimates to. The base simulation parameters are I = 350, J∗ = 30, m∗ = 5, and σ2 = .85. One parameter is varied at a time; the variations are I = 100 , 800 , 1200, J∗ = 3 , 8, 20, m∗ = 3 , 8, and σ2 = .1, 2. These parameters are in part motivated by the SensorKit data, in which 
+
+I = 365, J∗ = 27 .5, m∗ = 4 .2. For each set of simulation parameters, 300 replicate datasets are generated and analyzed. The main metrics of interest are the integrated squared error 17 0.000 0.005 0.010 0.015 0.020 
+
+> 0.0 0.1 0.2 0.3 0.4 0.5
+> 0.00 0.05 0.10 0.15
+> K0
+
+(s, u) K01 (s, u) K 1(s, u) K W(s, u)               
+
+> 100 350 800 1200 100 350 800 1200 100 350 800 1200 100 350 800 1200
+> 0.000 0.025 0.050 0.075 0.100
+
+Number of subjects (I) 
+
+> 0.0 0.5 1.0 1.5
+> 0123
+> 0.0 0.5 1.0
+> K0
+
+(s, u) K 01 (s, u) K1(s, u) KW(s, u)               
+
+> 3820 30 3820 30 3820 30 3820 30
+> 0.0 0.2 0.4 0.6 0.8
+
+Mean visits per subject (J *)
+
+> 0.000 0.003 0.006 0.009
+> 0.05 0.10 0.15 0.20 0.25
+> 0.02 0.04 0.06
+> K0
+
+(s, u) K01 (s, u) K1(s, u) KW(s, u)           
+
+> 358358358358
+> 0.01 0.02 0.03 0.04
+
+Mean locations per curve (m *)
+
+> 0.0000 0.0025 0.0050 0.0075
+> 0.05 0.10 0.15
+> 0.01 0.02 0.03 0.04 0.05 0.06
+> K0
+
+(s, u) K01 (s, u) K 1(s, u) K W(s, u)           
+
+> 20.9 0.1 20.9 0.1 20.9 0.1 20.9 0.1
+> 0.01 0.02 0.03
+
+Error variance ( σ2 )
+
+> ISE
+
+Figure 2: Boxplots of integrated squared error (ISE) for covariance functions in Simulation 1 (sparse LFPCA). Each row varies one parameter (number of subjects I, mean visits per subject J∗, mean observations per curve m∗, or error variance σ2) while holding others at baseline values ( I = 350, J∗ = 30, m∗ = 5, and σ2 = .85). Columns correspond to K0(s, t ), 
+
+K01 (s, t ), K1(s, t ), and KW (s, t ). (ISE) of the covariance functions and eigenfunctions, as well as the mean squared error (MSE) of predictions Yij (s). Additional metrics, namely squared error of the eigenvalues and noise variance, are reported in the Supplementary Materials Section S6.1. 
+
+3.1.2 Simulation results 
+
+Overall, we found that all metrics improve with the number of subjects I, the mean number of visits J∗, the mean number of locations per curve m∗, and lower error variance σ2, as expected. The distribution of ISE of the estimated covariance functions across simulation scenarios is shown in Figure 2. Each row of plots represents a different parameter being 18 varied, and the four columns represent the four covariance functions. Across all scenarios, the estimation of the within-subject covariance function KW (s, u ) is more accurate than the other three covariance functions—the y-axis scale is an order of magnitude lower. This aligns with expectations because compared with the between-subject estimation, (1) there are fewer parameters to estimate, and (2) there are many more levels of random effects (i.e. more subject-visits than subjects). After KW (s, u ), estimation accuracy is highest for 
+
+K0(s, u ), followed by K01 (s, u ), and lowest for K1(s, u ), which may reflect the difficulty in estimating covariances based on visit time covariates. Additionally, the median ISE for all covariance functions decreases substantially with higher sample sizes, highlighting the need for increased sample size when estimating multiple covariance components simultaneously. The results in estimating the eigenfunctions are shown in Figure 3. The patterns in co-variance function estimation carry over to the eigenfunctions; for example, the eigenfunctions of KW (s, u ) are estimated more accurately than the others. Additionally, for the subject-level eigenfunctions, the second eigenfunction ( n = 2) is estimated worse than the first, whereas both within-subject eigenfunctions ( ψ1(s), ψ2(s)) are estimated about equally well. The results for prediction MSE are shown in Supplementary Figure S1. As expected, prediction accuracy improves with more subjects and visits per subject, though with dimin-ishing returns with higher I and J∗. More dramatic improvements occur when increasing mean points per curve and reducing error variation. In summary, SLFPCA behaves as expected across the range of simulation parameters, capturing the covariance structure at both levels and producing reasonable curve predictions under sparse observations. Establishing reliable performance is crucial in this setting, as many modern longitudinal functional studies involve limited measurements per subject and substantial imbalance across visits. 19 n = 1 n = 2 
+
+> φn0(s) φn1(s) ψn(s)
+
+100 350 800 1200 100 350 800 1200 
+
+0.0 0.1 0.2 0.3 0.4 
+
+0.0 0.2 0.4 0.6 
+
+0.0000 0.0025 0.0050 0.0075 0.0100 
+
+Number of subjects (I) 
+
+n = 1 n = 2 
+
+> φn0(s) φn1(s) ψn(s)
+
+3 8 20 30 3 8 20 30 
+
+0.00 0.25 0.50 0.75 1.00 
+
+0.0 0.5 1.0 
+
+0.0 0.1 0.2 0.3 0.4 0.5 
+
+Mean visits per subject (J *)
+
+n = 1 n = 2 
+
+> φn0(s) φn1(s) ψn(s)
+
+3 5 8 3 5 8
+
+0.00 0.05 0.10 0.15 0.20 
+
+0.0 0.1 0.2 
+
+0.000 0.002 0.004 
+
+Mean locations per curve (m *)
+
+n = 1 n = 2 
+
+> φn0(s) φn1(s) ψn(s)
+
+2 0.9 0.1 2 0.9 0.1 
+
+0.00 0.05 0.10 0.15 
+
+0.00 0.05 0.10 0.15 0.20 0.25 
+
+0.000 0.001 0.002 0.003 0.004 
+
+Error variance ( σ2 )
+
+> ISE
+
+Figure 3: Boxplots of ISEs for eigenfunctions in Simulation 1 (sparse LFPCA). Each quadrant varies one parameter while holding others at baseline. Within each quadrant, the rows of plots represent ϕ0
+
+n, ϕ1
+
+n, and ψn; the columns represent the two eigenfunctions for each set. The base parameters are I = 350, J∗ = 30, m∗ = 5, and σ2 = .85, and one parameter is varied at a time. 20 3.2 Summary of Simulations 2 and 3 
+
+Simulation 2 evaluates SLFPCA-M as a special case of the proposed framework applied to multilevel data, comparing it against MFPCA-SC [Di et al., 2009] and Fast MFPCA [Cui et al., 2023]. Relative to MFPCA-SC, SLFPCA-M achieved comparable median ISE for the between-subject covariance K0(s, u ) across all simulation parameters, while sub-stantially outperforming MFPCA-SC in estimating the within-subject covariance KW (s, u ), especially when sample sizes ( I, J∗, m∗) were small or error variance was large. Subject-level eigenfunctions were estimated comparably by both methods, but SLFPCA-M consistently outperformed MFPCA-SC on within-subject eigenfunctions. Prediction MSE was compara-ble between the two methods, with slight advantages for SLFPCA-M when J∗ was small. Compared to Fast MFPCA, SLFPCA-M achieved substantially higher estimation accuracy, particularly for the within-subject covariance and eigenfunctions, at the cost of increased computation time. Full results are presented in Supplementary Section S6.2. Simulation 3 compares SLFPCA to LFPCA-G [Greven et al., 2010] in the complete and dense data setting. For covariance estimation, SLFPCA achieved better performance for K0(s, u ), while LFPCA-G performed better for K01 (s, u ) and K1(s, u ); estimation of 
+
+KW (s, u ) was comparable between the two methods. SLFPCA had an advantage in esti-mating ϕ01(s) and ϕ11(s), while LFPCA-G performed better for ϕ02(s). Both methods esti-mated within-subject eigenfunctions ψn(s) similarly. SLFPCA substantially outperformed LFPCA-G in curve prediction across all simulation scenarios. Full results are presented in Supplementary Section S6.3. In summary, the proposed approach provides an accurate, scalable, and unified framework for both multilevel and longitudinal sparse FPCA, with comparable or superior performance compared to existing methods. Nonetheless, the flexibility to estimate cross-covariances in the sparse longitudinal setting is a key advantage not available in existing methods. 21 4 Application to Intern Health Study SensorKit Data 
+
+4.1 Background and Data Description 
+
+Mental fatigue poses a significant risk to workplace safety and productivity, making it im-portant to detect subtle cognitive declines early enough to intervene [Ricci et al., 2007, McCormick et al., 2012]. However, reliable measures of mental fatigue require active par-ticipation, limiting their real-world utility. To address this gap, Fang et al. [2026] studied typing speed performance as a potential ambulatory indicator of mental fatigue within the Intern Health Study (IHS), an annual cohort study of mental health and stress that follows first-year medical residents in the US from the pre-internship period through the intern year (starting July 1st). This cohort is well-suited for studying mental fatigue as physician in-terns routinely work extended hours and face high-stakes decisions. Participants starting residency in 2023 in the United States who used an iPhone were offered enrollment into the Apple SensorKit arm of the study. Among other measurements, Apple SensorKit [Apple Inc., Funk et al., 2025] allows researchers to passively collect typing speed and accuracy without viewing the content typed, enabling scalable and non-intrusive assessment of typing performance in the large IHS cohort. While Fang et al. [2026] studied both typing speed and rate of deletions, we focus on typing speed because they found relatively minimal changes in deletion rate. In addition to Apple SensorKit, participants were also provided their choice of wearable device (Fitbit Charge 4, Inspire 2, or Apple Watch) or compensation if they already owned a Fitbit, Apple, or Garmin watch. From the device, sleep and wake times were extracted. For each typing session, time awake was calculated as the difference between the timestamp of the typing session initiation (rounded to the nearest half hour for privacy) and the wake time of the most recent sleep episode. Thus, for each participant for each wake period, we have a sample of typing speed observations (one observation per typing session) as a function of time awake, as shown in Figure 1. The time of a sleep episode (denoted by T in Figure 1) is the difference between the wake time for that episode and 6:00 a.m. on June 29. For example, for 22 participant 232 (middle column), T = 23 implies the participant woke up around 6:00 a.m. on July 22, and T = 36 .8 implies that the participant woke up at about 1:12 a.m. on August 5; nonstandard wake times are not rare in this cohort. The sample size for this analysis is 365 participants. Data from the first two months of the internship (July and August) are included in the analysis, but the number of sleep episodes per participant varies between 1 and 74, with a median of 28 sleep episodes. The number of typing sessions per day varies between 1 and 36, with a median of 3 typing sessions a day. Since the sample’s average sleep duration is 6.94 hours, only 6.4% of observations are beyond 17 hours awake. Because there may be a missing sleep episode not captured by the tracker, we exclude observations beyond 17 hours awake to ensure data quality. Using the proposed SLFPCA framework, our primary goal is to study between-subject differences in patterns of typing speed, such as when typing speed starts to decline, and to characterize these differences by individual-level covariates such as demographics and men-tal health. Additionally, we aim to characterize within-person (i.e., day-to-day) differences based on within-person covariates such as the duration of the preceding sleep episode. Fur-thermore, it is of interest to dynamically predict an individual’s typing performance as their day progresses. If estimated typing speed decreases below a certain threshold, informing the individual allows them to plan precautionary measures. 
+
+4.2 Results 
+
+SLFPCA takes 10.1 minutes to run on the SensorKit typing speed data. In addition to the population-level mean function μ(s, T ij ) used to center the data (step 1), we estimated marginal mean functions μ(s) and μ(Tij ) for visualization (Figure 4). In the left panel, the mean as a function of time of day, μ(s), mirrors the average typing speed function in Fang et al. [2026]. On average, typing speed increases upon waking, peaks at about 3.4 hours after awaking, decreases gradually until about 14 hours, and then drops sharply. The smaller number of observations beyond 16 hours results in wide confidence intervals after s = 16. 23 4.4 4.6 4.8 5.0        
+
+> 04812 16
+> Time since waking (hours)
+> Mean typing speed (characters/sec)
+> 020 40 60
+> Time in residency (days)
+
+Figure 4: Estimated marginal mean functions in the SensorKit data. The left panel shows 
+
+μ(s), the smoothed mean as a function of time awake in hours (averaged across participants and days), and the right panel shows μ(Tij ), the mean as a function of days in residency. The y-axis is mean typing speed in characters per second. The blue ribbons indicate 95% credible intervals based on the Bayesian posterior covariance of the smoothing coefficients. The gray dashed line is the overall average typing speed. The right panel of Figure 4 reveals a longitudinal trend not previously examined: on average, typing speed decreased over the course of the study, with the decline most pronounced near the start of the study. This change over study time motivates analyzing the data using an FPCA model with a longitudinal component. Based on the estimated eigenvalues, 90% of variability is accounted for at the subject-level, and 10% is at the visit-level, implying larger differences in typing speed trajectories between subjects than across days. The top three eigenfunctions for each level and their PVE within the level are shown in Figure 5. Between subjects, 98.3% of variability is explained by the first principal component ϕ1(s). The first eigenfunction for K0(s, u ), ϕ01(s), decreases slightly after waking and then is mostly constant, mirroring the mean function. For interpretation, Supplementary Figure S19 shows the population average plus and minus a suitable multiple of each eigenfunction. Those with positive scores tend to type slower overall, while those with negative scores type faster. Note that eigenfunctions are identifiable only up to multiplication by -1. The longitudinal component ϕ11(s) of the first PC is approximately zero, indicating that there are minimal subject-specific longitudinal effects, although there are global longitudinal effects. The other eigenfunctions explain relatively little variability. Within each subject, the first eigenfunction explains 71.1% of the variability. It is strongly 24 n = 1, PVE = 98.3% n = 2, PVE = 1% n = 3, PVE = 0.3%                               
+
+> φn0(s) φn1(s)
+> 04812 16 04812 16 04812 16
+> −2 −1 012
+> −2 −1 012
+> n = 1, PVE = 71.1% n = 2, PVE = 16.6% n = 3, PVE = 10%
+> ψn(s)
+> 04812 16 04812 16 04812 16
+> −2 −1 01
+
+Time awake (hours) 
+
+> Eigenfunction value
+
+Figure 5: Estimated eigenfunctions from SensorKit typing speed data. The x-axis is time awake in hours. The first row shows the subject-level random intercept eigenfunctions, the second row shows the subject-level random slope, and the third row shows the visit-level eigenfunctions. The labels above each panel give the percent of variability explained (PVE) within the level by the eigenfunction. 25 negative from 0 to 4 hours, representing variation in typing speed initially upon waking. Visits with negative scores start higher and have a second peak around 12 hours. The second eigenfunction explains 16.6% of variability, which is positive for the first 6 hours and negative between 6 and 15 hours. It also captures a dip around 12 hours; visits with positive scores have lower typing speed at that time. The third eigenfunction represents 10% of variability; visits with positive scores have lower typing speeds around 4 hours. The PVE is more spread out across the within-subject eigenfunctions compared to the between-subject eigenfunctions, indicating that the day-to-day patterns are more complex. Next, we examine univariate associations between subject-level covariates and scores corresponding to the first subject-level eigenfunction (the only one explaining more than 5% of variability), and the associations between visit-level covariates and scores corresponding to the first three visit-level eigenfunctions. We use a t-test for continuous variables and an ANOVA for categorical variables. We consider the following subject-level covariates: age, sex, ethnicity, marital status, neuroticism, previous history of depression, depression score (PHQ), anxiety score (GAD), stress score (SLE), tobacco use, alcohol use, and cannabis use. All variables are measured at baseline. No subject-level variables showed significant associations with scores on the first eigenfunction, i.e., the above variables are not associated with a participant’s overall typing speed. We consider the following visit-level covariates: sleep duration (hours), time of waking (hours), and whether it is a weekend. Higher scores on the first eigenfunction are negatively associated with sleep duration ( β = −0.0004, p < . 001) and positively associated with the weekends ( β = .0024, p = .010). That is, shorter sleep durations and weekends tend to be associated with lower typing speeds upon waking. This is highly interpretable since sleep deprivation is one of the two main factors influencing real-world mental fatigue along with time on task [Fang et al., 2026]. Earlier wake time ( β = −0.0002, p = .001) is associated with scores on the second eigenfunction, i.e., earlier wake times are associated with a lower typing speed around 12 hours. Waking earlier may shift the dip in alertness to an earlier 26 point, relative to the participant’s mean profile. The proposed method can also produce predicted trajectories based on sparse observa-tions. Figure 1 shows a sample of nine trajectories predicted by SLFPCA. By combining population averages, subject-level effects, and visit-level effects, SLFPCA generates full tra-jectories over the entire functional domain, even from sparsely observed data. For days with more observations, such as in the top right and middle right panels, the predicted trajecto-ries deviate more from the participant averages, whereas for days with fewer observations, such as all three panels in the third column, the predicted trajectories are shrunk toward the participant’s average. 
+
+# 5 Discussion 
+
+In this paper, we proposed sparse LFPCA, the first FPCA framework for sparse and ir-regular longitudinal functional data. Existing LFPCA methods [Greven et al., 2010] were developed for densely observed data on a common grid, and existing sparse FPCA methods [Xiao et al., 2018, Di et al., 2014, Cederbaum et al., 2016] do not fully accommodate longitu-dinal structures. To address this gap, we introduced a structured penalized spline framework that estimates and smooths multiple covariance components simultaneously, borrowing in-formation across locations. Simulations show the proposed method successfully estimates covariance functions and eigenfunctions and predicts underlying curves. Additionally, sparse LFPCA achieves comparable or better performance relative to the LFPCA method designed for dense data by Greven et al. [2010], and the MFPCA methods by Cui et al. [2023] and Di et al. [2009, 2014]. Applied to the SensorKit typing speed data from the IHS, sparse LFPCA reveals in-terpretable subject- and visit-level patterns not captured by the population-level marginal analysis in Fang et al. [2026], which adopted generalized estimated equations. Specifically, we found that each participant’s baseline typing speed accounts for a majority of between-participant variability. Day-to-day variation only comprises 10% of total variability but 27 exhibits more complex structures. The primary source of within-subject variation comes from typing speed upon waking, which is associated with daily sleep duration and whether it is a weekend, while the second largest source captures a dip around 12 hours awake and is associated with earlier wake times. These results demonstrate how sparse LFPCA enables a more granular understanding of typing performance and its relationship with potentially actionable factors. The proposed method and computational framework can be generalized to further en-hance flexibility, speed, and scientific utility. First, while this paper focuses on LFPCA, the proposed framework can be extended to more general functional linear mixed models. Specif-ically, the regression in Section 2.4.3 can flexibly accommodate other random effect structures by modifying the design matrix appropriately. Second, the methods can be computationally optimized; for example, running an exhaustive grid search to estimate three smoothing pa-rameters can be slow compared to other optimization methods. Third, developing inferential tools to quantify the uncertainty associated with the estimated eigenfunctions and predicted trajectories would further enhance the practical utility of the proposed framework. Finally, it is of scientific interest to develop a joint inferential framework that correlates the nuanced functional patterns identified at subject- and day-levels with a final cross-sectional outcome or longitudinal outcomes. We leave these directions for future work. 
+
+Acknowledgments and funding: We gratefully acknowledge Intern Health Study partic-ipants and research coordinators for their contributions, without whom this research would not have been possible. ZW and SS are partly supported by an NIH grant (R01MH101459) and a Patient-Centered Outcomes Research Institute (PCORI) Project Program Award (ME-2025C1-44006). All statements in this report, including its findings and conclusions, are solely those of the authors and do not necessarily represent the views of the Patient-Centered Outcomes Research Institute (PCORI), its Board of Governors or Methodology Committee. 28 References 
+
+Mohammad Samsul Alam and Ana-Maria Staicu. Modeling longitudinal skewed functional data. Biometrics , 80(4):ujae121, 2024. Apple Inc. Sensorkit. Apple Developer Documentation. URL https://developer.apple. com/documentation/sensorkit . Accessed: 2026-02-12. Jona Cederbaum, Marianne Pouplier, Phil Hoole, and Sonja Greven. Functional linear mixed models for irregularly or sparsely sampled data. Statistical Modelling , 16(1):67–88, 2016. Ciprian M Crainiceanu, Ana-Maria Staicu, and Chongzhi Di. Generalized multilevel func-tional regression. Journal of the American Statistical Association , 104(488):1550–1561, 2009. Ciprian M Crainiceanu, Jeff Goldsmith, Andrew Leroux, and Erjia Cui. Functional data analysis with R . Chapman and Hall/CRC, 2024. Erjia Cui, Andrew Leroux, Ekaterina Smirnova, and Ciprian M Crainiceanu. Fast univariate inference for longitudinal functional models. Journal of Computational and Graphical Statistics , 31(1):219–230, 2022. Erjia Cui, Ruonan Li, Ciprian M Crainiceanu, and Luo Xiao. Fast multilevel functional principal component analysis. Journal of Computational and Graphical Statistics , 32(2): 366–377, 2023. Chong-Zhi Di, Ciprian M Crainiceanu, Brian S Caffo, and Naresh M Punjabi. Multilevel functional principal component analysis. The Annals of Applied Statistics , 3(1):458, 2009. Chongzhi Di, Ciprian M Crainiceanu, and Wolfgang S Jank. Multilevel sparse functional principal component analysis. Stat , 3(1):126–143, 2014. Paul HC Eilers and Brian D Marx. Flexible smoothing with B-splines and penalties. Statis-tical Science , 11(2):89–121, 1996. 29 Yu Fang, Peter Yang, Elena Frank, Cathy Goldstein, Aidan GC Wright, Amy SB Bohnert, Vik Kheterpal, Srijan Sen, and Zhenke Wu. Patterns of smartphone typing performance by time awake: implications for unobtrusive ambulatory mental fatigue assessment. PLOS Digital Health , 5(3):e0001281, 2026. Courtney Funk, Zhuo Zhao, Adam G Horwitz, Yu Fang, Karina Pereira-Lima, Vik Kheterpal, Srijan Sen, and Elena Frank. Feasibility and acceptability of collecting passive phone usage and sensor data via Apple SensorKit. PLoS One , 20(8):e0329707, 2025. Dhrubajyoti Ghosh, Zhuolin Song, Luo Xiao, and Sheng Luo. A novel smoothing-based goodness-of-fit test of covariance for multivariate sparse functional data. arXiv preprint arXiv:2503.21913 , 2025. Sonja Greven, Ciprian Crainiceanu, Brian Caffo, and Daniel Reich. Longitudinal functional principal component analysis. Electronic Journal of Statistics , 4:1022–1054, 2010. Charles R Henderson. Best linear unbiased estimation and prediction under a selection model. Biometrics , pages 423–447, 1975. Leon Isserlis. On a formula for the product-moment coefficient of any order of a normal frequency distribution in any number of variables. Biometrika , 12(1/2):134–139, 1918. Gareth M James, Trevor J Hastie, and Catherine A Sugar. Principal component models for sparse functional data. Biometrika , 87(3):587–602, 2000. Ziren Jiang, Ciprian Crainiceanu, and Erjia Cui. Tutorial on Bayesian functional regression using Stan. Statistics in Medicine , 44(20-22):e70265, 2025. Kari Karhunen. ¨Uber lineare methoden in der wahrscheinlichkeitsrechnung. Annales Academiae Scientiarum Fennicae Series A1: Mathematia Physica , 47:3–79, 1947. Piotr Kokoszka and Matthew Reimherr. Introduction to functional data analysis . Chapman and Hall/CRC, 2017. 30 D. D. Kosambi. Statistics in function space. Journal of the Indian Mathematical Society , 7: 76–88, 1943. Tatyana Krivobokova and G¨ oran Kauermann. A note on penalized spline smoothing with correlated errors. Journal of the American Statistical Association , 102(480):1328–1337, 2007. Carsten Langholm, Tobias Kowatsch, Sandra Bucci, Andrea Cipriani, and John Torous. Exploring the potential of Apple SensorKit and digital phenotyping data as new digital biomarkers for mental health research. Digital Biomarkers , 7(1):104–114, 2023. Cai Li, Luo Xiao, and Sheng Luo. Fast covariance estimation for multivariate sparse func-tional data. Stat , 9(1):e245, 2020. Ruonan Li, Luo Xiao, Ekaterina Smirnova, Erjia Cui, Andrew Leroux, and Ciprian M Crainiceanu. Fixed-effects inference and tests of correlation for longitudinal functional data. Statistics in Medicine , 41(17):3349–3364, 2022a. Ting Li, Tengfei Li, Zhongyi Zhu, and Hongtu Zhu. Regression analysis of asynchronous longitudinal functional and scalar data. Journal of the American Statistical Association ,117(539):1228–1242, 2022b. Michel Loeve. Fonctions al´ eatoires du second ordre. Processus stochastique et mouvement Brownien , pages 366–420, 1948. Gabriel Loewinger, Alexander W Levis, Erjia Cui, and Francisco Pereira. Fast penalized gen-eralized estimating equations for large longitudinal functional datasets. arXiv:2506.20437 ,2025. Frank McCormick, John Kadzielski, Christopher P Landrigan, Brady Evans, James H Hern-don, and Harry E Rubash. Surgeon fatigue: a prospective analysis of the incidence, risk, 31 and intervals of predicted fatigue-related impairment in residents. Archives of Surgery ,147(5):430–435, 2012. James Mercer. Functions of positive and negative type, and their connection with the theory of integral equations. Philosophical Transactions of the Royal Society , 209(441-458):415– 446, 1909. So Young Park and Ana-Maria Staicu. Longitudinal functional data analysis. Stat , 4(1): 212–226, 2015. James O Ramsay and Bernard W Silverman. Functional data analysis . Springer, 2005. Judith A Ricci, Elsbeth Chee, Amy L Lorandeau, and Jan Berger. Fatigue in the US work-force: prevalence and implications for lost productive work time. Journal of Occupational and Environmental Medicine , 49(1):1–10, 2007. John A Rice and Bernard W Silverman. Estimating the mean and covariance structure nonparametrically when the data are curves. Journal of the Royal Statistical Society: Series B (Methodological) , 53(1):233–243, 1991. Joseph Sartini, Scott Zeger, and Ciprian Crainiceanu. Bayesian multivariate sparse functional pca. arXiv preprint arXiv:2509.03512 , 2025. Fabian Scheipl, Ana-Maria Staicu, and Sonja Greven. Functional additive mixed models. 
+
+Journal of Computational and Graphical Statistics , 24(2):477–501, 2015. George AF Seber. A matrix handbook for statisticians . John Wiley & Sons, 2008. John Shamshoian, Damla S ¸ent¨ urk, Shafali Jeste, and Donatello Telesca. Bayesian analysis of longitudinal and multidimensional functional data. Biostatistics , 23(2):558–573, 2022. Ana-Maria Staicu, Ciprian M Crainiceanu, and Raymond J Carroll. Fast methods for spa-tially correlated multilevel functional data. Biostatistics , 11(2):177–194, 2010. 32 Simon N Wood. Generalized additive models: an introduction with R . Chapman and Hall/CRC, 2017. Luo Xiao, Vadim Zipunnikov, David Ruppert, and Ciprian Crainiceanu. Fast covariance estimation for high-dimensional functional data. Statistics and Computing , 26(1):409–421, 2016. Luo Xiao, Cai Li, William Checkley, and Ciprian Crainiceanu. Fast covariance estimation for sparse functional data. Statistics and Computing , 28:511–522, 2018. Ganggang Xu and Jianhua Z Huang. Asymptotic optimality and efficient computation of the leave-subject-out cross-validation. The Annals of Statistics , 40(6):3003–3030, 2012. Fang Yao, Hans-Georg M¨ uller, and Jane-Ling Wang. Functional data analysis for sparse longitudinal data. Journal of the American Statistical Association , 100(470):577–590, 2005. Jun Ye. Functional principal component models for sparse and irregularly spaced data by bayesian inference. Journal of Applied Statistics , 51(7):1287–1317, 2024. Rou Zhong, Shishi Liu, Haocheng Li, and Jingxiao Zhang. Robust functional principal component analysis for non-gaussian longitudinal data. Journal of Multivariate Analysis ,189:104864, 2022. Vadim Zipunnikov, Sonja Greven, Haochang Shou, Brian Caffo, Daniel S Reich, and Ciprian Crainiceanu. Longitudinal high-dimensional principal components analysis with applica-tion to diffusion tensor imaging of multiple sclerosis. The Annals of Applied Statistics , 8 (4):2175, 2014. 33 Supplementary Materials 
+
+Section S1 expands on limitations of existing methods in the setting of sparse longitu-dinal functional data. Section S2 contains details on constructing the regression bC = Xα 
+
+and the proofs referenced in the smoothing parameter selection. Section S3 contains details on constructing the regression for the within-subject covariance estimation and outlines the remainder of the penalized spline estimation framework. Section S4 describes the mixed models equations for estimating scores. Section S2.2 gives the weight matrices for the re-gressions to increase estimation efficiency. Section S5 describes the modifications to the SLFPCA necessary to conduct MFPCA as a special case. Section S6 gives additional sim-ulation results for Simulations 1 (sparse LFPCA) and 2 (MFPCA) and presents the design and results for Simulation 3 (LFPCA with complete data). 
+
+# S1 Limitations of Existing Approaches for Sparse Func-tional Data 
+
+Greven et al. [2010] proposed a method to estimate the LFPCA model in Equation (2.2) of the main text for dense data, summarized in Algorithm 2. The main steps are to es-timate the fixed effects (step 1), estimate the covariance functions (steps 2 and 3), con-struct eigendecompositions of the covariance functions (step 4), and predict scores (step 5). The primary challenge is in accurately estimating the covariance functions. Specifically, let 
+
+rijk = Yij (sijk ) − μ(sijk , T ij ) denote the residuals after subtracting the fixed effects, and let 
+
+Cij 1j2k1k2 = rij 1k1 rij 2k2 be cross-products of the residuals, where j1, j 2 ∈ { 1, ..., J i} index visits and k1, k 2 ∈ { 1, ..., m ij } index observations for each subject. Based on the model in Equa-tion (2.1) of the main text, the expected value of Cij 1j2k1k2 is given in Equation (2.3) of the main text, restated here: 
+
+E [Cij 1j2k1k2 ] = K0(sij 1k1 , s ij 2k2 ) + Tij 2 K01 (sij 1k1 , s ij 2k2 ) + Tij 1 K01 (sij 2k2 , s ij 1k1 )+ Tij 1 Tij 2 K1(sij 1k1 , s ij 2k2 ) + KW (sij 1k1 , s ij 2k2 ) + σ2δk1k2
+
+ δj1j2 .
+
+(S1.1) where δ is the Kronecker delta. 34 Algorithm 2: LFPCA [Greven et al., 2010] 1. Estimate the fixed effect surface μ(s, T ij ) under the working independence model 
+
+Yij (s) = μ(s, T ij ) + ϵij (s). 2. Using linear regression, estimate the covariance functions KZ (s, t ) and KW (s, t ) from residuals Yij (s) − μ(s, T ij ). 3. Smooth the raw covariance function estimates from step 2; this also provides an estimate for σ2.4. Construct eigendecompositions of the smoothed covariance functions, and truncate the expansions to provide a low-dimensional representation of Zi(s) and Wij (s). 5. Predict subject- and visit- specific scores using Best Linear Unbiased Predictions (BLUPs). The cross-products Cij 1k1j2k2 underpin the covariance estimation in Greven et al. [2010] as well as the proposed methods. Specifically, based on Equation (2.3) of the main text, the covariance functions KZ (s, u ) and KW (s, u ) can be estimated by fitting a linear re-gression model at each location ( s, u ) ∈ S ∗ × S ∗. For each outcome Cij 1k1j2k2 , the co-variates in the design matrix are (1 , T ij 2 , T ij 1 , T ij 1 Tij 2 , δ j1j2 ), associated with the parame-ters {K0(s, u ), K 01 (s, u ), K 01 (u, s ), K 1(s, u ), K W (s, u ) + σ2δk1k2 } where ( s, u ) = ( sij 1k1 , s ij 2k2 ). This regression yields raw estimates of each covariance function on the grid S∗. After the regression step, a bivariate smoother is applied separately over each covariance function to obtain the final estimates. While this approach works well for dense data on a common grid, it faces significant limitations when applied to sparse data. In the sparse and irregular data setting, the number of observations per curve, mij , is assumed to be relatively small (e.g., about 2 to 5), and the locations sijk are a random sample in S rather than being on a grid. Thus, the number of residual cross-products Cij 1k1j2k2 can be very small compared to the number of unknown parameters. Specifically, if the times sijk are rounded to the nearest location on a grid of 
+
+L points, this leads to a total of only PIi=1  
+
+> mi(mi+1) 2
+
+residual cross-products (the number of subjects in the regression model), where mi = PJj=1 mij is the total number of observations 35 for subject i. However, factoring in symmetry constraints, there are 5L(L+1) 2 + 1 parameters to estimate in total. Suppose that mi = ρL for all i, the model is not estimable if IρL (ρL +1) 2 < 
+
+> 5L(L+1) 2
+
++ 1. For example, when I = 100 and L = 100, the model becomes inestimable when 
+
+ρ < . 22, which is a quite common setting for sparse observations. Thus, a direct application of Greven et al. [2010] is statistically infeasible for sparse observations. Moreover, because the regression in Greven et al. [2010] does not borrow information between pairs of locations, the sample size to estimate parameters K0(s, u ), K 01 (s, u ), K 01 (u, s ), K 1(s, u ), and KW (s, u ) + σ2
+
+for each ( s, u ) is very limited, leading to high-variance or unstable estimates. Cederbaum et al. [2016] considered this issue in the sparse functional linear mixed model (FLMM) setting and incorporated smoothing to borrow information across locations. Instead of a linear regression, they propose fitting a varying coefficient model, where the auto-covariances are estimated as smooth bivariate surfaces. However, they focus on a simplified crossed design and assume that cross-covariance functions such as K01 (s, u ) are zero. In the longitudinal setting, this implies independence between the functional random intercept 
+
+Zi, 0(s) and the functional random slope Zi, 1(s), a strong and unrealistic assumption for most application scenarios. Moreover, the estimation remains computationally intensive, taking over two hours to fit the crossed model with 707 curves (sample size in Cederbaum et al. [2016]) on a standard computer, as described in their paper. This limits its scalability to larger datasets, such as the Intern Health Study which contains 10,306 daily curves. 
+
+# S2 Between-subject covariance estimation 
+
+S2.1 Construction of outcome vector, design matrix, regression coefficients 
+
+This section shows the details of constructing the outcome vector bC, the design matrix 
+
+X, and the vector of regression coefficients α when estimating the subject-level covariance functions. Let qi = PJi−1
+
+> j1=1
+
+PJi 
+
+> j2=j1+1
+
+mij 1 mij 2 be the total number of cross-visit auxiliary variables for subject i. Define bCij 1j2k =
+
+n bCij 1j2k1, bCij 1j2k2, ..., bCij 1j2km ij 2
+
+o⊤
+
+∈ Rmij 2 , bCij 1j2 =36 n bC⊤
+
+> ij 1j21
+
+, ..., bC⊤
+
+> ij 1j2mij 2
+
+o⊤
+
+∈ Rmij 1 mij 2 , bCij 1 =
+
+n bC⊤
+
+> ij 1(j1+1)
+
+, ..., bC⊤
+
+> ij 1Ji
+
+o⊤
+
+∈ Rmj1  
+
+> PJij2=j1+1 mij 2
+
+, and 
+
+bCi =
+
+n bC⊤
+
+> i1
+
+, ..., bC⊤
+
+> iJ i
+
+o⊤
+
+∈ Rqi . Then bC =
+
+ bC⊤ 
+
+> 1
+
+, ..., bC⊤
+
+> I
+
+⊤
+
+∈ Rq is the outcome vector of the regression model, where q = PIi=1 qi.To construct the design matrix, first define b(s) = {B1(s), ..., B c(s)}⊤ ∈ Rc. Considering estimation of K0(s, u ) first, let θ0 = vech Θ0 ∈ Rc(c+1) 2 . Let Gc ∈ Rc2× c(c+1) 2 be the duplication matrix such that vec Θ0 = Gcθ0. Note that H0(s, u ) = ( b(u) ⊗ b(s)) ⊤Gcθ0. For j1 < j 2, let 
+
+Bij 1j2k1 = b(sij 21), ..., b(sij 2mij 2 ) ⊗ b(sij 1k1 ) ∈ Rc2×mij 2 , Bij 1j2 = Bij 1j21, ..., Bij 1j2mij 1
+
+⊤ ∈
+
+Rmij 1 mij 2 ×c2
+
+, Bij 1 =
+
+h
+
+B⊤
+
+> ij 1(j1+1)
+
+, ..., B⊤
+
+> ij 1Ji
+
+i⊤
+
+∈ Rmij 1  
+
+> PJij2=j1+1 mij 2×c2
+
+, Bi = B⊤
+
+> i1
+
+, ..., B⊤
+
+> iJ i
+
+⊤ ∈
+
+Rqi×c2
+
+, and B = B⊤ 
+
+> 1
+
+, ..., B⊤
+
+> I
+
+⊤ ∈ Rq×c2
+
+. The columns of Bij 1j2 correspond to θ0 
+
+> κℓ
+
+for 1 ≤ κ ≤ c and 1 ≤ ℓ ≤ c; the same is true for Bij 1 , Bi, and B. Define X0 = BG c ∈ Rq× c(c+1) 2 ,the component of the design matrix for estimating K0(s, u ). The portions of the design matrix for estimating K01 (s, u ) and K1(s, u ) are constructed similarly. Define θ01 = vec Θ01 ∈ Rc2
+
+. There are c2 coefficients to be estimated because 
+
+K01 (s, u ) is not symmetric. Define Bsij 1j2 by modifying Bij 1j2 , swapping the column corre-sponding to θ0 
+
+> κ,ℓ
+
+with the column corresponding to θ0
+
+> ℓ,κ
+
+. Define B01  
+
+> ij 1j2
+
+= Tij 2 Bij 1j2 , and con-struct B01 by stacking matrices for the subjects and visit pairs, in the same way as B. Simi-larly, define B10  
+
+> ij 1j2
+
+= Tij 1 Bsij 1j2 , and construct B10 in the same way as B. Then, the portion of the design matrix corresponding to the estimation of K01 (s, u ) is X01 = B01 + B10 ∈ Rq×c2
+
+.Finally, define θ1 = vech Θ1 ∈ Rc(c+1) 2 . Let B1 
+
+> ij 1j2
+
+= Tij 1 Tij 2 Bij 1j2 , and construct B1 in the same way as B. Then the component of the design matrix for estimating K1(s, u ) is 
+
+X1 = B1Gc ∈ Rq× c(c+1) 2 .Combining the three portions, the full design matrix is X = [ X0, X01 , X1] ∈ Rq×p, where 
+
+p = 2 c2 + c, the total number of coefficients to estimate. The full vector of coefficients to estimate is α =  θ⊤ 
+
+> 0
+
+, θ⊤
+
+> 01
+
+, θ⊤
+
+> 1
+
+⊤ ∈ Rp.37 S2.2 Weights for weighted least squares 
+
+Section 2.4.2 of the main text and Section S3.2 reference weight matrices used in weighted least squares: Wi for between-subject covariance estimation and fWi for within-subject, spec-ified as the inverse of Cov( Ci) and Cov( Ai), respectively. Proposition 2.1 of the main text is used to construct the weight matrices; the proof is below. Compared to the corresponding proposition in Xiao et al. [2018] (Proposition 1), Mij 1j2k1k2 contains four additional terms for the between-subject covariances. 
+
+Proposition 2.1. Define Mij 1j2k1k2 =
+
+
+
+K0(sij 1k1 , s ij 2k2 )
+
+Tij 2 K01 (sij 1k1 , s ij 2k2 )
+
+Tij 1 K01 (sij 2k2 , s ij 1k1 )
+
+Tij 1 Tij 2 K1(sij 1k1 , s ij 2k2 )
+
+KW (sij 1k1 , s ij 2k2 )δj1j2
+
+σ2δj1j2 δk1k2
+
+
+
+. Then Cov (Cij 1j2k1k2 , C ij 3j4k3k4 ) = 1⊤ (Mij 1j3k1k3 ⊗ Mij 2j4k2k4 + Mij 1j4k1k4 ⊗ Mij 2j3k2k3 ) .
+
+Proof of Proposition 2.1 of the main text. We will use the following lemma. 
+
+Isserlis’ Theorem Isserlis [1918]: If ( X1, ..., X n) ∼ M V N (0 , Σ) then 
+
+E [X1 · · · Xm] = X 
+
+> p∈P2
+> n
+
+Y
+
+> {i,j }∈ p
+
+Cov( Xi, X j ),
+
+where P 2 
+
+> n
+
+is the set of all possible pairs in {1, ..., n }.The covariance between Cij 1j2k1k2 and Cij 3j4k3k4 is Cov( Cij 1j2k1k2 , C ij 3j4k3k4 ) = Cov ( rij 1k1 rij 2k2 , r ij 3k3 rij 4k4 )= E [rij 1k1 rij 2k2 rij 3k3 rij 4k4 ] − E [rij 1k1 rij 2k2 ] E [rij 3k3 rij 4k4 ] . (S2.1) The first term in Equation S2.1 above is 
+
+E [rij 1k1 rij 2k2 rij 3k3 rij 4k4 ]= E{Zi, 0(sij 1k1 ) + Tij 1 Zi, 1(sij 1k1 ) + Wij 1 (sij 1k1 ) + ϵij 1 (sij 1k1)
+
+
+
+[Zi, 0(sij 2k2 ) + Tij 2 Zi, 1(sij 2k2 ) + Wij 2 (sij 2k2 ) + ϵij 2 (sij 2k2 )] [Zi, 0(sij 3k3 ) + Tij 3 Zi, 1(sij 3k3 ) + Wij 3 (sij 3k3 ) + ϵij 3 (sij 3k3 )] [Zi, 0(sij 4k4 ) + Tij 4 Zi, 1(sij 4k4 ) + Wij 4 (sij 4k4 ) + ϵij 4 (sij 4k4 )] },
+
+38 which includes additional terms compared to the proof of Proposition 1 in Xiao et al. [2018]. The next step is to expand the terms and then calculate expectations. For brevity, the expansion of the terms is omitted; there are 256 terms and, by independence, only 72 nonzero terms. Expectations that contain 4 terms of either between-subject, within-subject, or error terms are calculated with Isserlis’ Theorem; for example, 
+
+E [Zi, 0(sij 1k1 )Zi, 0(sij 2k2 )Zi, 0(sij 3k3 )Zi, 0(sij 4k4 )] = K0(sij 1k1 , s ij 2k2 )K0(sij 3k3 , s ij 4k4 )+K0(sij 1k1 , s ij 3k3 )K0(sij 2k2 , s ij 4k4 )+K0(sij 1k1 , s ij 4k4 )K0(sij 2k2 , s ij 3k3 )The remainder of the terms in the expansion can be calculated from the definitions of the co-variance functions given in Section 2.4.1 of the main text. The second term in Equation S2.1 is, based on Equation 2, 
+
+E [rij 1k1 rij 2k2 ] E [rij 3k3 rij 4k4 ] = {K0(sij 1k1 , s ij 2k2 ) + Tij 2 K01 (sij 1k1 , s ij 2k2 ) + Tij 1 K01 (sij 2k2 , s ij 1k1 )+ Tij 1 Tij 2 K1(sij 1k1 , s ij 2k2 ) + KW (sij 1k1 , s ij 2k2 ) + σ2δk1k2
+
+ δj1j2 }× { K0(sij 3k3 , s ij 4k4 ) + Tij 4 K01 (sij 3k3 , s ij 4k4 ) + Tij 3 K01 (sij 4k4 , s ij 3k3 )+ Tij 3 Tij 4 K1(sij 3k3 , s ij 4k4 ) + KW (sij 3k3 , s ij 4k4 ) + σ2δk3k4
+
+ δj3j4 }.
+
+Substituting the terms back Equation S2.1 above and subtracting gives Proposition 2.1 of the main text. 
+
+S2.3 Selection of smoothing parameter 
+
+Lemma 2.2. The smoother matrix S can be written as 
+
+S = XA Ip + X
+
+> l∈L
+
+λldiag (sl)
+
+!−1
+
+(XA )⊤W
+
+for some A, s0, s01 , and s1 which do not depend on any λl.Proof. Let M = X⊤W X and write M = M 1/2M 1/2 using SVD. Let Rl = M −1/2QlM −1/2
+
+for each l. Since the three Q matrices span different subspaces of Rp, any product of the 39 Q matrices is 0, that is, Q0, Q01 , and Q1 are mutually commutative. Because the matrices are symmetric and mutually commutative, they are simultaneously diagonalizable, i.e., there exists one orthogonal U and a vector sl such that Rl = U diag( sl)U ⊤ for each l. Now, let 
+
+A = M −1/2U . Then 
+
+X⊤W X + Q = M + X
+
+> l∈L
+
+λlQl
+
+= M 1/2 I + X
+
+> l∈L
+
+λlM −1/2QlM −1/2
+
+!
+
+M 1/2
+
+= M 1/2 I + X
+
+> l∈L
+
+λlRl
+
+!
+
+M 1/2
+
+= M 1/2 U U ⊤ + X
+
+> l∈L
+
+λlU diag( sl)U ⊤
+
+!
+
+M 1/2
+
+= M 1/2U I + X
+
+> l∈L
+
+λldiag( sl)
+
+!
+
+U ⊤M 1/2.
+
+Then (X⊤W X + Q)−1 = M −1/2U I + X
+
+> l∈L
+
+λldiag( sl)
+
+!−1
+
+U ⊤M −1/2
+
+= A I + X
+
+> l∈L
+
+λldiag( sl)
+
+!−1
+
+A⊤,
+
+where A = M −1/2U . Substituting ( X⊤W X + Q)−1 with A  I + P 
+
+> l∈L
+
+λldiag( sl)−1 A⊤
+
+gives the target expression. 
+
+Proposition 2.3. The iCV criterion can be approximated as iGCV and simplified as follows: iGCV = ∥C∥2 − 2 ˜d⊤( ˜f ⊙ f ) + ( ˜f ⊙ ˜d)⊤(F ⊤F )( ˜f ⊙ ˜d) + 2 ˜d⊤g − 4 ˜d⊤G ˜d
+
++ 2 ˜d⊤
+
+" IX
+
+> i=1
+
+n
+
+Li( ˜f ⊙ ˜d)
+
+o
+
+⊙
+
+n ˜Li( ˜f ⊙ ˜d)
+
+o#
+
+.
+
+Proof. Let Si = Xi(X⊤W X + Q)−1X⊤W so that Si bCi are the fitted values for subject i.Let Sii = Xi(X⊤W X + Q)−1X⊤ 
+
+> i
+
+Wi, the diagonal block of S corresponding to auxiliary variables from subject i. We apply Lemma 3.1 from Xu and Huang [2012] to rewrite the 40 iCV error as iCV = PIi=1 (I − Sii )−1(Si bC − bCi) 2
+
+. Similar to Xu and Huang [2012] and Xiao et al. [2018], we use the approximation ( I − Sii )−T (I − Sii )−1 ≈ I + Sii + S⊤ 
+
+> ii
+
+to further simplify iCV, leading to the generalized cross validation (iGCV) criterion iGCV = 
+
+> I
+
+X
+
+> i=1
+
+(Si bC − bCi)⊤(I + Sii + S⊤ 
+
+> ii
+
+)( Si bC − bCi)=
+
+> I
+
+X
+
+> i=1
+
+h
+
+(SiC − bCi)⊤(Si bC − bCi) + ( Si bC − bCi)⊤Sii (Si bC − bCi) + ( Si bC − bCi)⊤S⊤ 
+
+> ii
+
+(Si bC − bCi)
+
+i
+
+= S bC − bC 2
+
++ 2 
+
+> I
+
+X
+
+> i=1
+
+(Si bC − bCi)⊤Sii (Si bC − bCi).
+
+Given Lemma 2.2 of the main text and the modifications for constructing X, bC, and S,the remainder of the proof is the same as the proof of Proposition 2 in Xiao et al. [2018], so it is omitted. 
+
+# S3 Within-subject covariance estimation 
+
+S3.1 Construction of outcome vector, design matrix, regression coefficients 
+
+This section gives the details on constructing the regression model bA = fXγ to estimate the within-subject covariance KW (s, u ). The tilde notation below differentiates the ma-trices constructed for estimation for KW (s, u ) from the matrices constructed in the previ-ous step for the between-subject covariance functions. Let eqij = mij (mij + 1) /2 be the number of same-visit residual cross-products for subject i at visit j and eqi = PJi 
+
+> j=1
+
+eqij be the total number of estimates for subject i. To define the outcome vector, let bAijk =
+
+n bAijjkk , bAijjk (k+1) , ..., bAijjkm ij 
+
+o⊤
+
+∈ Rmij −k+1 , and bAij =
+
+n bA⊤
+
+> ij 1
+
+, ..., bA⊤
+
+> ijm ij
+
+o⊤
+
+∈ Reqij . Then let 
+
+bAi =
+
+n bA⊤
+
+> i1
+
+, ..., bA⊤
+
+> iJ i
+
+o⊤
+
+∈ Reqi be a vector of the variables bAijk 1k2 from the jth visit for the ith subject, where k1 ≤ k2. Here, the main adaption from Xiao et al. [2018] is to stack visits from a subject into the same vector bAi. Constructing these vectors at the subject level, instead of the visit level, ensures independence between bAi terms and makes later calculations of the weight matrix and iGCV statistic simpler. 41 For the vector of regression coefficients, let θW = vech ΘW ∈ Rc(c+1) 2 ; then the parameter vector is γ = ( θ⊤ 
+
+> W
+
+, σ 2)⊤. For the design matrix, let eBijk = b(sijk ), ..., b(sijm ij ) ⊗ b(sijk ) ∈
+
+Rc2×(mij −k+1) , eBij =
+
+h eBij 1, ..., eBijm ij 
+
+i⊤
+
+∈ Reqij ×c2
+
+, eBi =
+
+h eB⊤
+
+> i1
+
+, ..., eB⊤
+
+> iJ i
+
+i⊤
+
+∈ Reqi×c2
+
+, and 
+
+eB =
+
+h eB⊤ 
+
+> 1
+
+, ..., eB⊤
+
+> I
+
+i⊤
+
+∈ Req×c2
+
+, where eq = PIi=1 eqi. Let δijk = (1 , 0⊤ 
+
+> mij −k
+
+)⊤ ∈ Rmij −k+1 ,and δij =
+
+n
+
+δ⊤
+
+> ij 1
+
+, ..., δ⊤
+
+> ijm ij
+
+o⊤
+
+∈ Reqij , and δi = δ⊤
+
+> i1
+
+, ..., δ⊤ 
+
+> iJ i
+
+∈ Reqi contain the indicators 
+
+δk1=k2 corresponding to the elements of cAi. Combine these matrices across individuals as 
+
+fXi = [ eBiGc, δi], fX =
+
+h fX⊤ 
+
+> 1
+
+, ..., fX⊤
+
+> I
+
+i⊤
+
+, bA =
+
+ bA⊤ 
+
+> 1
+
+, ..., bA⊤
+
+> I
+
+⊤
+
+, and δ = ( δ⊤ 
+
+> 1
+
+, ..., δ⊤ 
+
+> I
+
+)⊤.
+
+S3.2 Weighted least squares 
+
+Similar to the between-subject covariance estimation, the model is fit with weighted least squares to improve estimation efficiency. Note that bAijjk 1k2 is an estimate for Cijjk 1k2 , so we specify the weight matrix fWi as the inverse of Cov( Ci). The weight matrix is constructed using Proposition 2.1 of the main text, and again we define fW −1 
+
+> i
+
+= (1 − β)Cov( Ai) + 
+
+βdiag (diag(Cov( Ai))) to ensure numerical stability. Let fW = blockdiag( fW1, ..., fWn). 
+
+S3.3 Penalized estimation 
+
+As in the between-subject estimation, we add a penalty λ|| ΘW D|| 2 
+
+> F
+
+, where D ∈ Rc×(c−2) is a second-order differencing matrix, the norm is the Frobenius norm, and λ is the smoothing parameter. Defining P = G⊤ 
+
+> c
+
+(Ic ⊗ DD ⊤)Gc and eQ =
+
+P 00 0
+
+
+
+, the objective function is ˆγ = argmin 
+
+> γ
+
+
+
+( bA − fXγ )⊤ fW ( bA − fXγ ) + λγ⊤ eQγ 
+
+
+
+,
+
+and an explicit form for bγ is 
+
+bγ =
+
+ bθW
+
+bσ2
+
+
+
+=
+
+ fX⊤ fW fX + λ eQ
+
+−1  fX⊤ fW bA
+
+
+
+.
+
+The smoothing parameter λ is selected by leave-one-subject-out cross validation, as in Xiao et al. [2018] and Section 2.4.4 of the main text. We use the efficient approximation for iCV derived in Proposition 2 of Xiao et al. [2018], modifying the matrices to account for the multi-level structure in the same way that we modified constructing cAi.42 S4 Score prediction with MME 
+
+To estimate the scores ξin 1 and ζijn 2 , we first construct the matrix form of the mixed effects model in Equation (2.2) of the main text, adapting the approach of Cui et al. [2022] to sparse and longitudinal data. Let rijk = Yij (sijk ) − μ(sijk , T ij ) be the residuals as defined in Section 2.1 of the main text. Let rij = rij 1, ..., r ijm ij  
+
+> ⊤
+
+∈ Rmij , and ri = r⊤
+
+> i1
+
+, ..., r⊤ 
+
+> iJ i
+> ⊤
+
+∈
+
+Rmi , where mi = PJi 
+
+> j=1
+
+mij is the total number of observations for subject i. Let sij =
+
+sij 1, ..., s ijm ij  
+
+> ⊤
+
+∈ Rmij and si = s⊤
+
+> i1
+
+, ..., s⊤ 
+
+> iJ i
+> ⊤
+
+∈ Rmi .The design matrices are defined as follows. Let ϕ0 
+
+> in 1
+
+be the vector of ϕ0 
+
+> n1
+
+(s) evaluated at locations in si and Φ0 
+
+> i
+
+=  ϕ0 
+
+> i1
+
+· · · ϕ0
+
+> iN Z
+
+ ∈ Rmi×NZ ; define Φ1 
+
+> i
+
+analogously. Let Tij =
+
+Tij Jmij ×NZ and Ti = ( T ⊤ 
+
+> i1
+
+, ..., T ⊤ 
+
+> ij
+
+)⊤ ∈ Rmi×NZ be a matrix of visit times. Let Mi = Φ0 
+
+> i
+
++
+
+Ti ⊙ Φ1 
+
+> i
+
+. Similarly, let ψijn 2 be the vector of ψn2 (s) evaluated at times sij , let Ψij =(ψij 1 · · · ψijN W ) ∈ Rmij ×NW , and let Ψi = blockdiag( ψi1, ..., ψiJ i ) ∈ Rmi×JiNW .Now, let ξi = {ξi1, ..., ξ iN Z }⊤ ∈ RNZ be the level 1 scores for the ith subject. Similarly, let ζij = {ζij 1, ..., ζ ijN W }⊤ ∈ RNW ; then ζi = ζ⊤
+
+> i1
+
+, ..., ζ⊤ 
+
+> iJ i
+> ⊤
+
+∈ RNW Ji is the vector of level 2 scores for subject i. Let ΛZ = diag( λZ 
+
+> 1
+
+, ..., λ ZNZ ) ∈ RNZ ×NZ and ΛW = diag( λW 
+
+> 1
+
+, ..., λ WNW ) ∈
+
+RNW ×NW be the covariance matrices for ξi and ζij , respectively; the covariance of ζi is 
+
+IJi ⊗ ΛW . Finally let ϵi be the vector of error terms for subject i with covariance σ2Imi . In matrix mixed model form, for the ith subject, Equation (2.2) of the main text is 
+
+ri = Miξi + Ψiζi + ϵi.
+
+The mixed model equations (MME) give the solution 
+
+ ˆξi
+
+ˆζi
+
+
+
+=
+
+M ⊤ 
+
+> i
+
+Mi + σ2Λ−1 
+
+> Z
+
+M ⊤ 
+
+> i
+
+Ψi
+
+(Ψi)⊤Mi (Ψi)⊤Ψi + σ2IJi ⊗ Λ−1
+
+> W
+
+  M ⊤ 
+
+> i
+
+ri
+
+Ψ⊤ 
+
+> i
+
+ri
+
+
+
+.
+
+One could also use the best linear unbiased predictor (BLUP) and obtain identical estimates. In the setting of dense data, there are significant computational advantages to using the MME instead of the BLUP [Cui et al., 2023]. However, because the number of points per curve 
+
+mij is small in sparse data, both methods perform similarly, so choosing between the MME and BLUP methods is a matter of preference. 43 S5 MFPCA 
+
+The proposed framework can be used to estimate MFPCA as a special case of LFPCA with zero longitudinal component. 
+
+S5.1 Model and estimation 
+
+For subject i, i = 1 , ..., I at visit j, j = 1 , ..., J i, we observe Yij (s) at locations {sijk }k=1 ,...,m ij ⊂S, where mij is the number of observations for subject i at visit j. The MFPCA model is 
+
+Yij (s) = μ(s) + Zi(s) + Wij (s) + ϵij (s),
+
+where μ(s) is the fixed effect surface, Zi(s) is the subject-level random intercept, Wij (s)is the visit-level random intercept, and ϵij (s) is white noise with zero mean and variance 
+
+σ2. This is identical to the LFPCA model except that for the subject-level random effects, there is only a random intercept. Let K0(s, u ) = Cov ( Zi(s), Z i(u)) be the between-subject covariance function and KW (s, u ) = Cov ( Wij (s), W ij (u)) be the within-subject covariance function; both are symmetric. The mean function μ(s) is estimated as a smooth function of s using P-splines, although other fixed effect structures can be used depending on the application. The process for estimating the between-subject covariance function remains the same, except we only estimate K0(s, u ). The outcome vector C is constructed exactly as described in Supplementary Section S2.1, for LFPCA. The design matrix X contains only the first block, X0, and correspondingly, the regression coefficients are α = θ0. Because only one covariance function is estimated at the between-subject level, the penalty and smoothing parameter selection are the same as in the within-subject covariance estimation described in Supplementary Section S3.1. The within-subject covariance estimation is identical except that the estimators are 
+
+bAijk 1k2 = bCijk 1k2 − bK0(sijk 1 , s ijk 2 ), instead of bAijk 1k2 = bCijk 1k2 − bK0(sijk 1 , s ijk 2 )−Tij bK01 (sijk 1 , s ijk 2 )−
+
+Tij bK01 (sijk 2 , s ijk 1 ) − T 2 
+
+> ij
+
+bK1(sijk 1 , s ijk 2 ). 44 The steps for the eigendecomposition, truncation, and score prediction remain similar. The KKL expansion of the MFPCA model is 
+
+Yij (s) = μ(s) + 
+
+> NZ
+
+X
+
+> n1=1
+
+ξin 1 ϕ0 
+
+> n1
+
+(s) + 
+
+> NW
+
+X
+
+> n2=1
+
+ζijn 2 ψn2 (s) + ϵij (s) (S5.1) For the score prediction, the only modification to Section S4 necessary is that Mi = Φ0 
+
+> i
+
+.
+
+# S6 Additional simulation results 
+
+S6.1 Simulation 1: Sparse LFPCA 
+
+Additional simulation results are shown below. 0.2 0.4 0.6 0.8             
+
+> 100 350 800 1200
+> Number of subjects (I)
+> 3820 30
+> Mean visits per subject (J *)
+> 0.2 0.4 0.6 0.8
+> 358
+> Mean locations per curve (m *)
+> 20.9 0.1
+> Error variance ( σ2)
+> MSE
+
+Figure S1: Boxplots of MSEs for predictions in Simulation 1 (sparse LFPCA). Each plot varies one parameter while holding the others at baseline: I = 350, J∗ = 30, m∗ = 5, and 
+
+σ2 = .85. 45 n = 1 n = 2        
+
+> λnZ λnW
+> 100 350 800 1200 100 350 800 1200
+> 0.00 0.05 0.10
+> 0.000 0.005 0.010 0.015
+
+Number of subjects (I)         
+
+> n = 1 n = 2
+> λnZ λnW
+> 3820 30 3820 30
+> 0.0 0.3 0.6 0.9
+> 0.0 0.1 0.2 0.3 0.4
+
+Mean visits per subject (J *)      
+
+> n = 1 n = 2
+> λnZ λnW
+> 358358
+> 0.00 0.02 0.04
+> 0.000 0.002 0.004 0.006
+
+Mean locations per curve (m *)      
+
+> n = 1 n = 2
+> λnZ λnW
+> 20.9 0.1 20.9 0.1
+> 0.00 0.02 0.04
+> 0.000 0.001 0.002 0.003 0.004 0.005
+
+Error variance ( σ2 )
+
+> MSE
+
+Figure S2: Boxplots of MSEs of eigenvalues in Simulation 1 (sparse LFPCA). Each quadrant varies one parameter(number of subjects I, mean visits per subject J∗, mean observations per curve m∗, or error variance σ2) while holding others at baseline values ( I = 350, J∗ = 30, 
+
+m∗ = 5, and σ2 = .85). The patterns match those of the eigenfunctions in Figure 2 of the main text. 46 0.00 0.01 0.02 0.03 0.04            
+
+> 100 350 800 1200
+> Number of subjects (I)
+> 0.00 0.05 0.10 0.15 0.20 0.25
+> 3820 30
+> Mean visits per subject (J *)
+> 0.000 0.005 0.010 0.015 0.020 0.025
+> 358
+> Mean locations per curve (m *)
+> 0.000 0.005 0.010 0.015 0.020
+> 20.9 0.1
+> Error variance ( σ2)
+> MSE
+
+Figure S3: Boxplots of MSE of error variance estimation in Simulation 1 (sparse LFPCA). The base parameters are I = 350, J∗ = 30, m∗ = 5, and σ2 = .85, and one parameter is varied at a time. As expected, median MSE decreases when increasing I, J∗, and m∗, or reducing σ2.
+
+S6.2 Simulation 2: MFPCA 
+
+Since MFPCA can be viewed as a special case of our LFPCA framework, we conduct a simulation study to compare the proposed methods with existing approaches for MFPCA. 
+
+S6.2.1 Simulation design 
+
+Following the design of Simulation 1, data is generated according to the KKL decomposition 
+
+Yij (s) = μ(s) + 
+
+> NZ
+
+X
+
+> n1=1
+
+ξin 1 ϕ0 
+
+> n1
+
+(s) + 
+
+> NW
+
+X
+
+> n2=1
+
+ζijn 2 ψn2 (s) + ϵij (s). (S6.1) The number of visits for each subject Ji, number of observations for each visit mij , and scores ξin and ζin are drawn in the same way; no visit times Tij are drawn. The eigenvalues and eigenfunctions are identical, except the longitudinal components are removed by setting 
+
+ϕ11(s) = ϕ12(s) = 0, and the subject-level eigenfunctions ϕ01(s) and ϕ02(s) are accordingly rescaled to have norm 1. The simulation parameters and performance metrics are the same as in the first study, and 300 replicate datasets are analyzed for each parameter setting. 47 We compare the proposed method (SLFPCA-M) to two existing approaches: MFPCA-SC via mfpca.sc() [Di et al., 2009, 2014] and Fast MFPCA via mfpca.face() [Cui et al., 2023], both available in the R package refund . MFPCA-SC (“smooth covariance”) constructs method of moments estimators of the covariance functions, similar to LFPCA by Greven et al. [2010], except that the between-subject estimation involves only one covariance function. Fast MFPCA leverages Fast Covariance Estimation [Xiao et al., 2016] for each step to achieve computation times orders of magnitude faster than the original MFPCA. Both MFPCA-SC and Fast MFPCA require data input on a common grid, that is, in wide matrix form. Accordingly, we convert the sparse long form data to a grid S∗ of L = 1000 common locations by rounding each location sijk to the nearest grid point. If multiple locations from the same curve are mapped to the same grid point, the corresponding outcomes are averaged. Additionally, because Fast MFPCA requires at least mij = 4 observations per curve, visits with fewer observations are excluded when applying this method. As a result, prediction metrics for Fast MFPCA are computed only with the remaining visits. 
+
+S6.2.2 Simulation results 
+
+Across most simulation settings, Fast MFPCA exhibits larger errors. This is not surprising given our sparse simulation design and that Fast MFPCA requires dense observations to improve low-rank approximation performance. To avoid obscuring results for other methods, we present results with Fast MFPCA separately, below. 48 0.00 0.01 0.02 0.03 0.04 
+
+> K0
+
+(s, u) KW(s, u) 
+
+> 100 350 800 1200 100 350 800 1200
+> 0.25 0.50 0.75
+
+Number of subjects (I) 
+
+> ISE
+> 0.00 0.05 0.10 0.15
+> K0
+
+(s, u) KW(s, u)       
+
+> 3820 30 3820 30
+> 0.25 0.50 0.75
+
+Mean visits per subject (J *)
+
+> ISE
+> 0.00 0.01 0.02
+> K0
+
+(s, u) KW(s, u)     
+
+> 358358
+> 0.2 0.3 0.4 0.5 0.6 0.7
+
+Mean locations per curve (m *)
+
+> ISE
+> 0.000 0.005 0.010 0.015 0.020
+> K0
+
+(s, u) KW(s, u)     
+
+> 20.9 0.1 20.9 0.1
+> 0.2 0.3 0.4 0.5 0.6 0.7
+
+Error variance ( σ2 )
+
+> ISE
+
+Method 
+
+> SLFPCA−M
+> MFPCA−SC
+
+Figure S4: Boxplots of ISE of covariance functions in Simulation 2 (MFPCA). Each quadrant varies one parameter while the other parameters are fixed at baseline ( I = 350, J∗ = 30, 
+
+m∗ = 5, and σ2 = .85). The panels within the quadrant correspond to K0(s, t ) and KW (s, t ). Figure S4 compares SLFPCA-M with MFPCA-SC in terms of the ISE of K0(s, u ) and 
+
+KW (s, u ). When estimating K0(s, u ) (left plot in each quadrant), SLFPCA-M achieves median ISE comparable with MFPCA-SC in all scenarios. Additionally, SLFPCA-M sub-stantially outperforms MFPCA-SC when estimating KW (s, u ) (right plot in each quadrant) across scenarios, especially when I, J, or m∗ are small or σ2 is large. Supplementary Figure S9 includes Fast MFPCA, which performs slightly worse than the other methods in estimat-ing K0(s, u ) and substantially worse in estimating KW (s, u ), especially when m∗ is small or 
+
+σ2 is high. 49 n = 1 n = 2  
+
+> φn0(s) ψn(s)
+> 100 350 800 1200 100 350 800 1200
+> 0.15 0.20 0.25 0.30
+> 0.00 0.01 0.02
+
+Number of subjects (I)         
+
+> n = 1 n = 2
+> φn0(s) ψn(s)
+> 3820 30 3820 30
+> 0.1 0.2 0.3 0.4
+> 0.00 0.03 0.06 0.09
+
+Mean visits per subject (J * )      
+
+> n = 1 n = 2
+> φn0(s) ψn(s)
+> 358358
+> 0.175 0.200 0.225 0.250 0.275
+> 0.000 0.005 0.010 0.015
+
+Mean locations per curve (m * )      
+
+> n = 1 n = 2
+> φn0(s) ψn(s)
+> 20.9 0.1 20.9 0.1
+> 0.200 0.225 0.250
+> 0.000 0.003 0.006 0.009
+
+Error variance ( σ2 )
+
+> ISE
+
+Method 
+
+> SLFPCA−M
+> MFPCA−SC
+
+Figure S5: Boxplots of ISE of eigenfunctions in Simulation 2 (MFPCA). Each quadrant varies one parameter while the others are fixed at baseline ( I = 350, J∗ = 30, m∗ = 5, and 
+
+σ2 = .85). Rows correspond to the between-subject and within-subject levels, and columns correspond to the two eigenfunctions at each level. Figure S5 shows the ISE of estimated eigenfunctions across simulations. Based on the top rows of the four panels, the SLFPCA-M and MFPCA-SC estimate the subject-level eigenfunctions ϕ01(s) and ϕ02(s) similarly well. For both within-subject eigenfunctions, the SLFPCA-M consistently outperforms MFPCA-SC across scenarios. Moreover, for SLFPCA-M, the errors in estimating the second eigenfunction are not substantially higher than the first. In contrast, MFPCA-SC estimates ψ2(s) considerably worse than ψ1(s), especially when I, J∗, and m∗ are small. Supplementary Figure S10 shows that Fast MFPCA performs worse than the other two methods, especially in estimating the second eigenfunction at each level. 50 Figure S6 shows the MSE of predictions. SLFPCA-M performs slightly better when J∗
+
+is low, but otherwise the difference between the methods is small compared to increasing the mean points per curve or error variance. 0.2 0.3 0.4 0.5 0.6 0.7    
+
+> 100 350 800 1200
+
+Number of subjects (I)    
+
+> 3820 30
+
+Mean visits per subject (J *)  
+
+> 0.2 0.3 0.4 0.5 0.6 0.7
+> 358
+
+Mean locations per curve (m * )  
+
+> 20.9 0.1
+
+Error variance ( σ2)
+
+> MSE
+
+Method 
+
+> SLFPCA−M
+> MFPCA−SC
+
+Figure S6: Boxplots of MSEs for predictions in Simulation 2 (MFPCA). Each plot varies one parameter while holding the others at baseline: I = 350, J∗ = 30, m∗ = 5, and σ2 = .85. 51 n = 1 n = 2 
+
+> λnZ λnW
+
+100 350 800 1200 100 350 800 1200 
+
+0.000 0.025 0.050 0.075 0.100 
+
+0.000 0.005 0.010 0.015 0.020 
+
+Number of subjects (I) 
+
+n = 1 n = 2 
+
+> λnZ λnW
+
+3 8 20 30 3 8 20 30 
+
+0.00 0.05 0.10 
+
+0.00 0.01 0.02 0.03 0.04 0.05 
+
+Mean visits per subject (J *)
+
+n = 1 n = 2 
+
+> λnZ λnW
+
+3 5 8 3 5 8
+
+0.00 0.02 0.04 0.06 
+
+0.000 0.005 0.010 0.015 
+
+Mean locations per curve (m *)
+
+n = 1 n = 2 
+
+> λnZ λnW
+
+2 0.9 0.1 2 0.9 0.1 
+
+Error variance ( σ2 )
+
+> ISE
+
+Method 
+
+SLFPCA−M 
+
+MFPCA−SC Figure S7: Boxplots of MSE of eigenvalues in Simulation 2 (MFPCA). The base parameters are I = 350, J∗ = 30, m∗ = 5, and σ2 = .85, and one parameter is varied at a time. The proposed methods and MFPCA [Di et al., 2009] perform comparably. 52 0.000 0.005 0.010 0.015    
+
+> 100 350 800 1200
+
+Number of subjects (I)    
+
+> 0.00 0.01 0.02 0.03 0.04 0.05
+> 3820 30
+
+Mean visits per subject (J *)  
+
+> 0.0000 0.0025 0.0050 0.0075 0.0100
+> 358
+
+Mean locations per curve (m *)  
+
+> 0.000 0.002 0.004 0.006
+> 20.9 0.1
+
+Error variance ( σ2 )
+
+> MSE
+
+Method 
+
+> SLFPCA−M
+> MFPCA−SC
+
+Figure S8: Boxplots of MSE of error variance estimation in Simulation 2 (MFPCA). The base parameters are I = 350, J∗ = 30, m∗ = 5, and σ2 = .85, and one parameter is varied at a time. Fast MFPCA results were excluded from the plots above because its substantially lower estimation accuracy would obscure the performance differences between MFPCA-SC and SLFPCA-M; the results with Fast MFPCA are given below. 53 0246
+
+K0(s, u) K W(s, u)
+
+100 350 800 1200 100 350 800 1200 
+
+0.3 0.6 0.9 1.2 
+
+Number of subjects (I) 
+
+> ISE
+
+0246
+
+K0(s, u) KW(s, u)
+
+3 8 20 30 3 8 20 30 
+
+0.4 0.8 1.2 
+
+Mean visits per subject (J *)
+
+> ISE
+
+0.0 2.5 5.0 7.5 
+
+K0(s, u) KW(s, u)
+
+3 5 8 3 5 8
+
+0.25 0.50 0.75 1.00 
+
+Mean locations per curve (m *)
+
+> ISE
+
+010 20 30 
+
+K0(s, u) KW(s, u)
+
+2 0.9 0.1 2 0.9 0.1 
+
+0.25 0.50 0.75 1.00 
+
+Error variance ( σ2 )
+
+> ISE
+
+Method 
+
+SLFPCA−M 
+
+MFPCA−SC 
+
+Fast MFPCA Figure S9: ISE of covariance functions in Simulation 2 (MFPCA), similar to Figure S4 but including Fast MFPCA. 54 n = 1 n = 2 
+
+> φn0(s) ψn(s)
+
+100 350 800 1200 100 350 800 1200 
+
+0.2 0.4 0.6 
+
+0.0 0.5 1.0 1.5 
+
+Number of subjects (I) 
+
+n = 1 n = 2 
+
+> φn0(s) ψn(s)
+
+3 8 20 30 3 8 20 30 
+
+0.5 1.0 
+
+0.0 0.5 1.0 1.5 
+
+Mean visits per subject (J *)
+
+n = 1 n = 2 
+
+> φn0(s) ψn(s)
+
+3 5 8 3 5 8
+
+0.3 0.6 0.9 
+
+0.0 0.5 1.0 
+
+Mean locations per curve (m *)
+
+n = 1 n = 2 
+
+> φn0(s) ψn(s)
+
+2 0.9 0.1 2 0.9 0.1 
+
+0.25 0.50 0.75 1.00 
+
+0.0 0.3 0.6 0.9 
+
+Error variance ( σ2 )
+
+> ISE
+
+Method 
+
+SLFPCA−M 
+
+MFPCA−SC 
+
+Fast MFPCA Figure S10: ISE of eigenfunctions in Simulation 2 (MFPCA), similar to Figure S5 but including Fast MFPCA. 55 n = 1 n = 2 
+
+> λnZ λnW
+
+100 350 800 1200 100 350 800 1200 
+
+0.00 0.05 0.10 0.15 0.20 
+
+01234
+
+Number of subjects (I) 
+
+n = 1 n = 2 
+
+> λnZ λnW
+
+3 8 20 30 3 8 20 30 
+
+0.00 0.05 0.10 0.15 0.20 0.25 
+
+012345
+
+Mean visits per subject (J *)
+
+n = 1 n = 2 
+
+> λnZ λnW
+
+3 5 8 3 5 8
+
+0.00 0.05 0.10 0.15 0.20 0.25 
+
+0246
+
+Mean locations per curve (m *)
+
+n = 1 n = 2 
+
+> λnZ λnW
+
+2 0.9 0.1 2 0.9 0.1 
+
+0.00 0.05 0.10 0.15 0.20 0.25 
+
+0510 15 20 
+
+Error variance ( σ2 )
+
+> ISE
+
+Method 
+
+SLFPCA−M 
+
+MFPCA−SC 
+
+Fast MFPCA Figure S11: MSE of eigenvalues in Simulation 2 (MFPCA), similar to Figure S7 but including Fast MFPCA. 56 0.0 0.2 0.4 0.6    
+
+> 100 350 800 1200
+
+Number of subjects (I)    
+
+> 3820 30
+
+Mean visits per subject (J *)  
+
+> 0.0 0.2 0.4 0.6
+> 358
+
+Mean locations per curve (m *)  
+
+> 01234
+> 20.9 0.1
+
+Error variance ( σ2 )
+
+> MSE
+
+Method 
+
+> SLFPCA−M
+> MFPCA−SC
+> Fast MFPCA
+
+Figure S12: MSE of error variance in Simulation 2 (MFPCA), similar to Figure S8 but including Fast MFPCA. 0246   
+
+> 100 350 800 1200
+
+Number of subjects (I)    
+
+> 3820 30
+
+Mean visits per subject (J *)  
+
+> 0246
+> 358
+
+Mean locations per curve (m * )  
+
+> 20.9 0.1
+
+Error variance ( σ2 )
+
+> MSE
+
+Method 
+
+> SLFPCA−M
+> MFPCA−SC
+> Fast MFPCA
+
+Figure S13: MSE of predictions in Simulation 2 (MFPCA), similar to Figure S6 but including Fast MFPCA. 
+
+S6.3 Simulation 3: LFPCA with complete data 
+
+Because the available implementation of LFPCA-G [Greven et al., 2010] does not accommo-date missing data, we compare SLFPCA to LFPCA-G in the complete data scenario. 57 S6.3.1 Simulation design 
+
+The simulation design is identical to the design presented in Section 3.1 of the main text, except that all curves Yij (·) are observed on a common grid S∗ of timepoints rather than randomly sampled, curve-specific timepoints. Each curve has |S ∗| = 100 points equally spaced on [0 , 1]. In addition, the parameters I and J are reduced for computation time. The base simulation parameters are I = 80, J∗ = 5, and σ2 = .85; the variations are I = 40, 
+
+J∗ = 3, and σ2 = .1, 2. 
+
+S6.3.2 Results 
+
+First, the distribution of covariance function ISE is shown in Figure S14. Across all pa-rameters, SLFPCA achieves better performance for K0(s, u ), LFPCA-G performs better for 
+
+K01 (s, u ) and K1(s, u ), and estimation of KW (s, u ) is comparable between the two methods. Higher I and J lead to lower MSE for both methods, as expected, but decreasing error variance does not seem to impact the ISEs as much. Figure S15 shows the eigenfunction estimation results. While the SLFPCA estimates 
+
+K0(s, u ) better, it only has an advantage in estimating the first eigenfunction ϕ01(u); the second eigenfunction is estimated better by LFPCA-G. For K1(s, u ), SLFPCA estimates the first eigenfunction better, despite worse performance estimating K1(s, u ) overall. Both eigenfunctions are estimated similarly for KW (s, u ). Again, these conclusions are consistent across variations in parameters. Figure S16 shows the eigenvalue estimation results. For the between-subject eigenvalues, SLFPCA estimates the second eigenvalue better, while LFPCA-G estimates the first eigenvalue better, which is the opposite trend of the eigenfunctions. For within-subject, the methods perform similarly. Figure S18 shows that SLPFCA outperforms LFPCA-G in all scenarios for prediction. The results for SLFPCA follow the expected patterns when increasing I, J, and σ2, but the predictions from LFPCA-G do not improve as much when increasing I or J. It is not clear why the prediction accuracy is so different despite similar accuracy in covariance estimation. 58 0.00 0.05 0.10 0.15 0.20 
+
+0.0 0.5 1.0 1.5 2.0 
+
+0.0 0.2 0.4 0.6 0.8 
+
+K 0(s, u) K01 (s, u) K1(s, u) KW(s, u)
+
+40 80 40 80 40 80 40 80 
+
+0.0 0.5 1.0 
+
+Number of subjects (I) 
+
+0.00 0.05 0.10 0.15 
+
+01234
+
+0.00 0.25 0.50 0.75 1.00 
+
+K0(s, u) K01 (s, u) K1(s, u) KW(s, u)
+
+3 5 3 5 3 5 3 5
+
+0.0 0.5 1.0 
+
+Mean visits per subject (J *)
+
+Method 
+
+SLFPCA 
+
+LFPCA−G 
+
+0.000 0.025 0.050 0.075 0.100 
+
+0.0 0.5 1.0 1.5 2.0 
+
+0.0 0.2 0.4 
+
+K0(s, u) K01 (s, u) K1(s, u) KW(s, u)
+
+2 1 0 2 1 0 2 1 0 2 1 0
+
+0.0 0.5 1.0 
+
+Error variance ( σ2 )
+
+> ISE
+
+Figure S14: Boxplots of ISE of covariance functions in Simulation 3 (LFPCA with complete data). The base simulation parameters are I = 80, J∗ = 5, and σ2 = .85; the variations are 
+
+I = 40, J∗ = 3, and σ2 = .1, 2. 59 n = 1 n = 2 
+
+> φn0(s) φn1(s) ψn(s)
+
+40 80 40 80 
+
+0.0 0.5 1.0 
+
+0.0 0.5 1.0 
+
+0.00 0.02 0.04 0.06 0.08 
+
+Number of subjects (I) 
+
+> ISE
+
+n = 1 n = 2 
+
+> φn0(s) φn1(s) ψn(s)
+
+3 5 3 5
+
+0.0 0.5 1.0 
+
+0.0 0.5 1.0 
+
+0.00 0.03 0.06 0.09 
+
+Mean visits per subject (J *)
+
+Method SLFPCA LFPCA−G 
+
+n = 1 n = 2 
+
+> φn0(s) φn1(s) ψn(s)
+
+2 1 0 2 1 0
+
+0.0 0.5 1.0 
+
+0.0 0.3 0.6 0.9 1.2 
+
+0.00 0.02 0.04 0.06 
+
+Error variance ( σ2 )Figure S15: Boxplots of ISE of eigenfunctions in Simulation 3 (complete data). n = 1 n = 2 
+
+> λnZ λnW
+
+40 80 40 80 
+
+0.00 0.25 0.50 0.75 
+
+0.00 0.05 0.10 0.15 
+
+Number of subjects (I) 
+
+> MSE
+
+n = 1 n = 2 
+
+> λnZ λnW
+
+3 5 3 5
+
+0.0 0.5 1.0 1.5 
+
+0.00 0.05 0.10 
+
+Mean visits per subject (J *)
+
+Method SLFPCA LFPCA−G 
+
+n = 1 n = 2 
+
+> λnZ λnW
+
+2 1 0 2 1 0
+
+0.00 0.25 0.50 0.75 
+
+0.00 0.02 0.04 0.06 
+
+Error variance ( σ2 )
+
+Figure S16: Boxplots of MSE of eigenvalues in Simulation 3 (complete data). 60 0.00 0.01 0.02 0.03  
+
+> 40 80
+
+Number of subjects (I)  
+
+> MSE
+> 35
+
+Mean visits per subject (J *)  
+
+> 210
+
+Error variance ( σ2)
+
+Method 
+
+> SLFPCA
+> LFPCA−G
+
+Figure S17: Boxplots of MSE of error variance in Simulation 3 (complete data). 0.00 0.05 0.10 0.15  
+
+> 40 80
+
+Number of subjects (I)  
+
+> MSE
+> 35
+
+Mean visits per subject (J *)  
+
+> 210
+
+Error variance ( σ2)
+
+Method 
+
+> SLFPCA
+> LFPCA−G
+
+Figure S18: Boxplots of MSE of predictions in Simulation 3 (complete data). 61 S7 Additional application results n = 1 n = 2 n = 3               
+
+> φn0(s) φn1(s) ψn(s)
+> 04812 16 04812 16 04812 16
+> 4.0 4.5 5.0 5.5
+> 4.0 4.5 5.0 5.5
+> 4.0 4.5 5.0 5.5
+
+Time awake (hours) 
+
+> Typing speed (characters/sec)
+> Average
+> Plus
+> Minus
+
+Figure S19: Marginal mean function plus and minus a suitable multiple of eigenfunctions in SensorKit typing speed data. Specifically, the three rows show μ(s) ± √λZ ϕ0
+
+> n
+
+(s), μ(s) ±√λZ ϕ1
+
+> n
+
+(s), and μ(s) ± √λW ψn(s) for n = 1 , ..., 4. 62

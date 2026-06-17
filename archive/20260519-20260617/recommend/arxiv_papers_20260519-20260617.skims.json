@@ -1,0 +1,493 @@
+{
+  "mode": "skims",
+  "generated_at": "2026-06-17T06:38:58.799457+00:00",
+  "stats": {
+    "mode": "skims",
+    "forced_all_quick": true,
+    "min_score": 8.0,
+    "deep_divecandidates": 12,
+    "deep_cap": null,
+    "deep_selected": 0,
+    "quick_candidates": 12,
+    "quick_skim_target": null,
+    "quick_selected": 12
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2605.26295v1",
+      "source": "arxiv",
+      "title": "Sleep-stage efficient classification using a lightweight self-supervised model",
+      "abstract": "Accurate classification of sleep stages is crucial for diagnosing sleep disorders and automating this process can significantly enhance clinical assessments. This study aims to explore the use of a self-supervised model (more specifically, an adapted version of mulEEG) combined with a Linear SVM classifier to improve sleep stage classification. \\textbf{Methods:} The mulEEG model, which learns electroencephalogram signal representations in a self-supervised manner, was simplified here by replacing ResNet-50 with 1D-convolutions used as time series encoder by a ResNet-18 backbone. Two other adaptations were conducted: the first one evaluated different configurations of the model and data volume for training, while the second tested the effectiveness of time series features, spectrogram features, and their concatenation as inputs to a Linear SVM classifier. \\textbf{Results:} The results showed that reducing the volume of data offered a better cost-benefit ratio compared to simplifying the model. Using the concatenated features with ResNet-18 also outperformed the linear evaluations of the original mulEEG model, achieving higher classification performance. \\textbf{Conclusions:} Simplifying the mulEEG model to extract features and pairing it with a robust classifier leads to more efficient and accurate sleep stage classification. This approach holds promise for improving clinical sleep assessments and can be extended to other biological signal classification tasks.",
+      "authors": [
+        "Eldiane Borges dos Santos Durães",
+        "João Batista Florindo"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-05-25T19:37:54+00:00",
+      "link": "https://arxiv.org/pdf/2605.26295v1",
+      "tags": [
+        "keyword:sleep-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "sleep stage classification for sleep disorder diagnosis",
+      "llm_evidence_cn": "睡眠阶段分类用于睡眠障碍诊断",
+      "llm_evidence": "睡眠阶段分类用于睡眠障碍诊断",
+      "canonical_evidence": "睡眠阶段分类用于睡眠障碍诊断",
+      "llm_tldr_en": "Uses a lightweight self-supervised model (adapted mulEEG) with SVM classifier for efficient sleep stage classification, enhancing clinical assessments.",
+      "llm_tldr_cn": "针对睡眠阶段自动分类的临床需求，采用轻量级自监督模型mulEEG结合线性SVM分类器，实现了高效的睡眠阶段分类，显著提升临床评估效率。",
+      "llm_tldr": "针对睡眠阶段自动分类的临床需求，采用轻量级自监督模型mulEEG结合线性SVM分类器，实现了高效的睡眠阶段分类，显著提升临床评估效率。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.00141v1",
+      "source": "arxiv",
+      "title": "Adaptive data selection improves wearable prediction under low baseline performance",
+      "abstract": "Adaptive sensing strategies that selectively sample data are increasingly used in wearable health systems to improve prediction performance under limited data budgets, yet their benefits across individuals remain poorly understood. Here, we evaluate adaptive selection of time windows for model training under fixed measurement budgets across multiple sensing modalities, including heart rate, activity, and ecological momentary assessment (EMA), in a longitudinal wearable dataset. We quantify performance gains relative to random sampling using both area under the receiver operating characteristic curve (AUROC) and F1 score. Adaptive strategies yield substantial improvements in AUROC for participants with low baseline performance (with gains up to 0.7), while offering limited or negative gains for participants with strong baselines. Across modalities, adaptive gain is strongly inversely correlated with baseline performance (Pearson r = -0.67; Spearman p = -0.62). At the participant level, most individuals benefit in AUROC (60-80% across modalities), although improvements in F1 are smaller and less consistent. These findings show that adaptive sensing is not uniformly beneficial, but instead provides the greatest value in underperforming settings. Our results support selective deployment strategies that tailor adaptive sensing based on baseline performance to improve efficiency in wearable health monitoring.",
+      "authors": [
+        "Ali Kargarandehkordi"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-05-29T00:10:44+00:00",
+      "link": "https://arxiv.org/pdf/2606.00141v1",
+      "tags": [
+        "keyword:sleep-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "evaluates adaptive data selection with EMA as a modality",
+      "llm_evidence_cn": "以EMA为模态评估自适应数据选择方法",
+      "llm_evidence": "以EMA为模态评估自适应数据选择方法",
+      "canonical_evidence": "以EMA为模态评估自适应数据选择方法",
+      "llm_tldr_en": "This study evaluates adaptive time window selection for wearable prediction using heart rate, activity, and EMA data, showing performance gains especially in low-baseline participants.",
+      "llm_tldr_cn": "本研究在纵向穿戴数据集中评估了自适应时间窗选择策略，使用心率、活动和生态瞬时评估（EMA）作为感知模态。在固定测量预算下，自适应方法显著提升了低基线表现参与者的AUROC和F1分数。结果表明自适应采样能高效利用数据预算，尤其适用于个性化健康监测。",
+      "llm_tldr": "本研究在纵向穿戴数据集中评估了自适应时间窗选择策略，使用心率、活动和生态瞬时评估（EMA）作为感知模态。在固定测量预算下，自适应方法显著提升了低基线表现参与者的AUROC和F1分数。结果表明自适应采样能高效利用数据预算，尤其适用于个性化健康监测。",
+      "llm_tags": [
+        "query:ema-mental:composite"
+      ],
+      "matched_query_tag": "query:ema-mental:composite",
+      "matched_query_text": "Papers central to 请帮我查找在心理与精神健康领域使用到EMA工具的论文, especially work that connects or combines: Ecological Momentary Assessment mental health research; EMA use in psychological studies; Experience Sampling Method in clinical psychology; mobile health applications for ecological momentary assessment; digital phenotyping using EMA in mental health; ecological momentary assessment for depression monitoring; Ecological Momentary Assessment applications in mental health research; Studies using EMA to monitor psychiatric symptoms; Effectiveness of EMA in mental health interventions.",
+      "matched_requirement_id": "req-composite-ema-mental",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-06-03-729931-v1",
+      "source": "biorxiv",
+      "title": "From the scanner to daily life: Neural expression of the Picture-Induced Negative Emotion Signature is associated with real-world daily and momentary negative affect in midlife adults",
+      "abstract": "Functional magnetic resonance imaging (fMRI) is widely used to map brain systems that process affective stimuli and predict concurrent affective experiences in the scanner. However, the extent to which affect-related fMRI activity in the scanner predicts affective experiences in daily life remains unclear. This study examined whether a multivariate brain pattern previously validated to predict negative affect to emotional images during fMRI testing (the Picture-Induced Negative Emotion Signature; PINES) associates with daily negative affect measured over 7-10 days via daily diaries and ecological momentary assessment. Among 287 midlife adults, those exhibiting greater PINES pattern expression showed greater daily (end-of-day) and hourly negative affect. These findings were not explained by demographic factors and trait negative affect. A cross-validated whole-brain pattern of negative affect generalizes beyond the fMRI testing context to predict negative affect severity in daily life.",
+      "authors": [
+        "Wu-Chung, E. L.",
+        "Eckerle, W. D.",
+        "Marsland, A. L.",
+        "Kraynak, T. E.",
+        "Kamarck, T. W.",
+        "Gianaros, P. J."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-06-08T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.03.729931v1.full.pdf",
+      "tags": [
+        "keyword:sleep-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "uses ecological momentary assessment to link fMRI to daily negative affect",
+      "llm_evidence_cn": "使用生态瞬时评估将fMRI与日常负性情感关联",
+      "llm_evidence": "使用生态瞬时评估将fMRI与日常负性情感关联",
+      "canonical_evidence": "使用生态瞬时评估将fMRI与日常负性情感关联",
+      "llm_tldr_en": "This study shows that the Picture-Induced Negative Emotion Signature (PINES) from fMRI is associated with daily negative affect measured via ecological momentary assessment over 7-10 days in 287 midlife adults.",
+      "llm_tldr_cn": "该研究探讨了fMRI扫描中图像诱导负面情绪特征（PINES）与日常负性情感的关系。287名中年人通过每日日记和生态瞬时评估（EMA）报告了7-10天的日常负性情感。发现PINES的神经表达与真实世界中日常和瞬时负性情感显著相关，表明fMRI情感标记可推广到日常生活。为情绪评估方法提供了新视角。",
+      "llm_tldr": "该研究探讨了fMRI扫描中图像诱导负面情绪特征（PINES）与日常负性情感的关系。287名中年人通过每日日记和生态瞬时评估（EMA）报告了7-10天的日常负性情感。发现PINES的神经表达与真实世界中日常和瞬时负性情感显著相关，表明fMRI情感标记可推广到日常生活。为情绪评估方法提供了新视角。",
+      "llm_tags": [
+        "query:ema-mental:composite"
+      ],
+      "matched_query_tag": "query:ema-mental:composite",
+      "matched_query_text": "Papers central to 请帮我查找在心理与精神健康领域使用到EMA工具的论文, especially work that connects or combines: Ecological Momentary Assessment mental health research; EMA use in psychological studies; Experience Sampling Method in clinical psychology; mobile health applications for ecological momentary assessment; digital phenotyping using EMA in mental health; ecological momentary assessment for depression monitoring; Ecological Momentary Assessment applications in mental health research; Studies using EMA to monitor psychiatric symptoms; Effectiveness of EMA in mental health interventions.",
+      "matched_requirement_id": "req-composite-ema-mental",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.22286v1",
+      "source": "arxiv",
+      "title": "EmoTrack: Robust Depression Tracking from Counseling Transcripts across Session Regimes",
+      "abstract": "Text-based counseling is an important interface for AI mental-health support, where transcripts may be used to monitor depression severity and flag sessions requiring timely human review. However, robust PHQ-8 prediction across session regimes remains challenging: fine-tuning-based methods can exploit richer supervision but may generalize poorly under data scarcity, while prompt-based LLM methods are data-efficient but usually treat each transcript holistically and provide limited support for longitudinal context. We study robust depression tracking from counseling transcripts across single-session and multi-session regimes. We introduce LongCounsel, a multi-session counseling dataset with session-level PHQ-8 supervision for evaluating repeated-session tracking under partial symptom disclosure and cross-session continuity. We further propose EmoTrack, a PHQ-8 prediction framework that combines LLM-extracted clinical signals with frozen turn-level semantic embeddings and trains symptom-specific predictors over the resulting transcript representation. When prior sessions are available, EmoTrack can further incorporate them through compact cross-session memory. Experiments on LongCounsel and DAIC-WOZ show that EmoTrack achieves a clear gain on the real single-session benchmark, including a 13.5% relative MAE reduction over the strongest DAIC-WOZ baseline, and remains competitive with the strongest longitudinal baseline on LongCounsel.",
+      "authors": [
+        "Zhaomin Wu",
+        "Jiayi Li",
+        "Bingsheng He"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-05-21T10:37:45+00:00",
+      "link": "https://arxiv.org/pdf/2605.22286v1",
+      "tags": [
+        "keyword:sleep-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "depression tracking from counseling transcripts with session-level PHQ-8 supervision",
+      "llm_evidence_cn": "从咨询文本中跟踪抑郁症状，使用会话级PHQ-8监督",
+      "llm_evidence": "从咨询文本中跟踪抑郁症状，使用会话级PHQ-8监督",
+      "canonical_evidence": "从咨询文本中跟踪抑郁症状，使用会话级PHQ-8监督",
+      "llm_tldr_en": "EmoTrack combines fine-tuning and prompt-based LLM learning to robustly predict PHQ-8 scores from counseling transcripts across single and multi-session settings, introducing the LongCounsel dataset for longitudinal depression tracking.",
+      "llm_tldr_cn": "本研究针对基于文本的心理咨询中抑郁跟踪的挑战，提出EmoTrack框架。该框架结合微调与大语言模型提示学习，在单会话和多会话场景下从咨询转录中预测PHQ-8评分。同时构建了LongCounsel多会话数据集。实验表明EmoTrack在不同会话设置下均能稳健预测抑郁严重度，为在线心理健康监测提供了高效工具。",
+      "llm_tldr": "本研究针对基于文本的心理咨询中抑郁跟踪的挑战，提出EmoTrack框架。该框架结合微调与大语言模型提示学习，在单会话和多会话场景下从咨询转录中预测PHQ-8评分。同时构建了LongCounsel多会话数据集。实验表明EmoTrack在不同会话设置下均能稳健预测抑郁严重度，为在线心理健康监测提供了高效工具。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "depression mood assessment",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.22859v1",
+      "source": "arxiv",
+      "title": "Staging by the Book: Automatic Sleep Stage Classification Using Scoring Rules",
+      "abstract": "Automated sleep staging is commonly approached as a supervised machine learning problem, with deep learning methods dominating recent research. While machine learning models achieve near-human level agreement with human-scored reference sleep stages, their decisions are typically opaque and not designed to follow clinical scoring rules. We propose a transparent alternative: a deterministic, rule-based sleep staging method that explicitly operationalizes the American Academy of Sleep Medicine's (AASM) scoring logic as executable code, coupled with epoch-level natural-language justifications derived from an explanation trace. We evaluate the approach on 50 polysomnography recordings with a 10-scorer majority-vote consensus as reference. Across all recordings, the method agreed with the majority-vote reference in 60.5% of epochs ($κ=0.42$), with substantially higher agreement on a dataset used during development (77.1%, $κ=0.61$). Agreement with the reference was highest for sleep stage N2 (recall 83.5%) and moderate for sleep stage R (recall 68.7%), while Wake and N1 recall were low. Despite lower agreement with the reference than contemporary deep learning models, the method provides deterministic decisions and natural language explanations aligned with AASM scoring rules, making it a complementary tool for auditing, debugging, and governing deep learning-based sleep staging.",
+      "authors": [
+        "Emil Hardarson",
+        "Konstantin Popov",
+        "Sigridur Sigurdardottir",
+        "Anna Sigridur Islind",
+        "Erna Sif Arnardóttir",
+        "María Óskarsdóttir"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP",
+        "cs.AI"
+      ],
+      "published": "2026-05-19T15:13:35+00:00",
+      "link": "https://arxiv.org/pdf/2605.22859v1",
+      "tags": [
+        "keyword:sleep-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Automatic sleep staging using AASM rules; directly relevant to sleep quality measurement",
+      "llm_evidence_cn": "基于规则的自动睡眠分期，可直接用于睡眠质量测量",
+      "llm_evidence": "基于规则的自动睡眠分期，可直接用于睡眠质量测量",
+      "canonical_evidence": "基于规则的自动睡眠分期，可直接用于睡眠质量测量",
+      "llm_tldr_en": "Proposes a deterministic rule-based sleep staging method that operationalizes AASM scoring logic, providing transparent and explainable sleep stage classification.",
+      "llm_tldr_cn": "该研究提出一种基于美国睡眠医学会（AASM）评分规则的确定性睡眠分期方法，将临床规则转化为可执行代码，并生成逐时期自然语言解释。在50例多导睡眠图（PSG）记录上评估，与10名评分者多数投票参考比较，取得了良好的一致性。该方法提供了透明、可解释的睡眠分期，有助于睡眠质量评估。",
+      "llm_tldr": "该研究提出一种基于美国睡眠医学会（AASM）评分规则的确定性睡眠分期方法，将临床规则转化为可执行代码，并生成逐时期自然语言解释。在50例多导睡眠图（PSG）记录上评估，与10名评分者多数投票参考比较，取得了良好的一致性。该方法提供了透明、可解释的睡眠分期，有助于睡眠质量评估。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.00180v1",
+      "source": "arxiv",
+      "title": "Beyond Augmentation: Score-Guided Pathological Prior for EEG-based Depression Detection",
+      "abstract": "Deep learning-based Major Depressive Disorder (MDD) detection using Electroencephalography (EEG) is fundamentally constrained by the \"small-sample dilemma.\" Prevailing generative data augmentation methods not only incur heavy computational overhead but also risk introducing synthetic noise, thereby blurring classification boundaries. To challenge the traditional \"data quantity first\" convention, we propose a novel framework \"Beyond Augmentation\": Score-Guided Classification (SGC). SGC does not synthesize pseudo-samples; instead, it utilizes an unsupervised generative network architecture to model the structural and statistical anomaly degrees of samples, serving as the core \"Pathological Prior\". This prior, after robust normalization, is explicitly fused with deep feature representations, thereby precisely guiding the classifier's decision boundary. Furthermore, to dynamically adapt to varying channel configurations, we propose a Cross-Channel Spatial Adaptation module, utilizing a spatial mapping mechanism to effectively resolve the hardware heterogeneity of mismatched channels in multi-center datasets. Extensive experiments on the Mumtaz2016 and high-density MODMA datasets demonstrate the effectiveness and exceptional generalizability of our method under the challenging \"zero data augmentation\" setting and at \"zero sample synthesis cost\".   Keywords: Electroencephalography (EEG), Depression Detection, Anomaly Score, Diffusion Models, Few-Shot Learning",
+      "authors": [
+        "Xiaojing Chen",
+        "Jingqi Cheng",
+        "Xu Zhao",
+        "Wan Jiang",
+        "Jingjing Wu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-05-29T14:45:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.00180v1",
+      "tags": [
+        "keyword:sleep-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "EEG-based depression detection method",
+      "llm_evidence_cn": "基于脑电的抑郁检测方法",
+      "llm_evidence": "基于脑电的抑郁检测方法",
+      "canonical_evidence": "基于脑电的抑郁检测方法",
+      "llm_tldr_en": "This paper proposes Score-Guided Classification (SGC), a framework using an unsupervised generative network to model pathological priors for EEG-based depression detection without data augmentation.",
+      "llm_tldr_cn": "针对深度学习抑郁检测中小样本困境，提出了一种无需数据增强的分数引导分类（SGC）框架。SGC利用无监督生成网络对样本的结构和统计异常程度进行建模，作为核心病理先验。在标准化后，该先验有效引导分类器区分抑郁患者与健康对照，避免了合成噪声引起的边界模糊。该方法减轻了计算负担，提升了分类性能。",
+      "llm_tldr": "针对深度学习抑郁检测中小样本困境，提出了一种无需数据增强的分数引导分类（SGC）框架。SGC利用无监督生成网络对样本的结构和统计异常程度进行建模，作为核心病理先验。在标准化后，该先验有效引导分类器区分抑郁患者与健康对照，避免了合成噪声引起的边界模糊。该方法减轻了计算负担，提升了分类性能。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "depression mood assessment",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.08261v1",
+      "source": "arxiv",
+      "title": "Sparse Longitudinal Functional Principal Component Analysis for Episodic Ambulatory Behavioral Assessments",
+      "abstract": "Accurately monitoring mental fatigue is critical for improving workplace safety and productivity. A recent study examined unobtrusively collected smartphone typing speed as a potential ambulatory proxy assessment of mental fatigue using data from the Intern Health Study (IHS). While population-level average typing speed patterns were found to be consistent with validated measures of mental fatigue, how these trajectories vary across participants and days may inform opportune moments for just-in-time interventions and remains an open question. Treating typing speed trajectories as sparsely observed functional data, we propose a novel sparse longitudinal functional principal component analysis (sparse LFPCA) method for decomposing variability and predicting individual curves. Specifically, sparse data are accommodated by casting covariance estimation as a structured penalized spline regression problem, enabling simultaneous estimation and smoothing of multiple covariance components while borrowing information across locations in the functional domain. Simulations show that sparse LFPCA (1) accurately estimates eigenfunctions and generates reasonable predictions for underlying curves, and (2) achieves similar or superior performance compared to existing alternatives. Our analysis of typing speed data collected from IHS reveals new and interpretable participant- and day-level patterns not captured by previous analyses and can be used to tailor behavioral interventions.",
+      "authors": [
+        "Nidhi Pai",
+        "Yu Fang",
+        "Srijan Sen",
+        "Zhenke Wu",
+        "Erjia Cui"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME",
+        "stat.AP"
+      ],
+      "published": "2026-06-06T17:16:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.08261v1",
+      "tags": [
+        "keyword:sleep-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "ambulatory assessment of mental fatigue via smartphone typing",
+      "llm_evidence_cn": "通过智能手机打字速度进行精神疲劳的移动评估",
+      "llm_evidence": "通过智能手机打字速度进行精神疲劳的移动评估",
+      "canonical_evidence": "通过智能手机打字速度进行精神疲劳的移动评估",
+      "llm_tldr_en": "Proposes sparse LFPCA to analyze smartphone typing speed trajectories for ambulatory mental fatigue monitoring, enabling just-in-time intervention.",
+      "llm_tldr_cn": "针对职场精神疲劳监测中个体间和个体内轨迹变异性未被充分利用的问题，提出了一种稀疏纵向函数主成分分析方法，用于分析智能手机打字速度轨迹的稀疏纵向数据，揭示了可指导及时干预的个体化模式。",
+      "llm_tldr": "针对职场精神疲劳监测中个体间和个体内轨迹变异性未被充分利用的问题，提出了一种稀疏纵向函数主成分分析方法，用于分析智能手机打字速度轨迹的稀疏纵向数据，揭示了可指导及时干预的个体化模式。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.11555v1",
+      "source": "arxiv",
+      "title": "End-to-End Machine Learning for Depressive State Classification via EEG and fNIRS",
+      "abstract": "The escalating demand for mental healthcare, driven by rising societal stress, highlights the limitations of traditional psychiatric diagnostics. Conventional methods - relying primarily on clinical interviews and patient self-reports - are inherently vulnerable to subjective bias and the varying empirical judgment of practitioners. To address the need for quantitative evaluation, biological signal-based detection, including electroencephalography (EEG) and functional near-infrared spectroscopy (fNIRS), has emerged as a promising objective alternative. Such technology is particularly vital for identifying latent depressive states that may be unrecognized by the subjects themselves. Furthermore, in aging populations, the high comorbidity between depression and dementia necessitates early differentiation to prevent mutual symptom exacerbation and maintain Quality of Life (QoL). This pilot study of eleven healthy students establishes a framework for biological signal-based depression detection, serving as a foundational step toward automated, objective diagnostic tools for clinical use.",
+      "authors": [
+        "Riki Sakurai",
+        "Simon Kojima",
+        "Mihoko Otake-Matsuura",
+        "Shin'ichiro Kanoh",
+        "Tomasz M. Rutkowski"
+      ],
+      "primary_category": "q-bio.NC",
+      "categories": [
+        "q-bio.NC",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-10T01:31:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.11555v1",
+      "tags": [
+        "keyword:sleep-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Depressive state classification using EEG and fNIRS; direct relevance to depression assessment",
+      "llm_evidence_cn": "使用EEG和fNIRS进行抑郁状态分类，直接相关于抑郁评估",
+      "llm_evidence": "使用EEG和fNIRS进行抑郁状态分类，直接相关于抑郁评估",
+      "canonical_evidence": "使用EEG和fNIRS进行抑郁状态分类，直接相关于抑郁评估",
+      "llm_tldr_en": "Proposes an end-to-end machine learning model for depressive state classification using EEG and fNIRS, aiming to overcome subjective bias in traditional diagnostics.",
+      "llm_tldr_cn": "该研究针对传统抑郁症诊断依赖主观报告和临床访谈的局限性，提出基于EEG和fNIRS信号的端到端机器学习抑郁症分类方法。通过提取生物信号特征，实现抑郁状态的客观定量评估。方法在识别潜伏抑郁状态和老年共病方面具有潜力，有望为精神健康提供更可靠的工具。",
+      "llm_tldr": "该研究针对传统抑郁症诊断依赖主观报告和临床访谈的局限性，提出基于EEG和fNIRS信号的端到端机器学习抑郁症分类方法。通过提取生物信号特征，实现抑郁状态的客观定量评估。方法在识别潜伏抑郁状态和老年共病方面具有潜力，有望为精神健康提供更可靠的工具。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "depression mood assessment",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-05-05-722943-v2",
+      "source": "biorxiv",
+      "title": "Distinct hypervigilance profiles in sleep-onset insomnia with and without psychiatric comorbidity",
+      "abstract": "Study ObjectivesSleep-onset insomnia (SOI) is characterized by difficulty initiating sleep and is frequently comorbid with psychiatric disorders. Despite its prevalence and clinical impact, pathophysiological biomarkers and a clear nosological framework remain lacking. Conventional polysomnographic (PSG) measures offer limited insight into the continuous dynamics of arousal across the night. We used high-resolution EEG markers to characterize and compare hypervigilance in isolated insomnia versus insomnia comorbid with affective symptoms.\n\nMethodsWe retrospectively analyzed PSG recordings from 2,952 individuals. Alongside theta/alpha ratio dynamics and micro-sleep detection, we developed an intrinsic Vigilance Score (iVS), a continuous probability-of-wakefulness index calibrated individually on each participants own sleep-wake distribution. Individuals with and without SOI were compared, and SOI subgroups with and without depressive or anxiety symptoms were further examined. Results: Strikingly, hypervigilance was more pronounced in isolated SOI than in SOI comorbid with psychiatric symptoms, particularly depressive symptoms, pointing to partially dissociable mechanisms across subtypes. More broadly, SOI was marked by persistently elevated EEG-defined vigilance extending from wakefulness through the sleep-onset period and across all sleep stages, including N2, N3, and REM sleep, accompanied by arousal instability at sleep onset and delayed accumulation of deep sleep. These alterations remained largely undetected by conventional PSG macrostructure.\n\nConclusionsContinuous, individually calibrated EEG markers capture microstructural alterations invisible to standard staging and reveal greater hypervigilance in isolated than in comorbid insomnia. These findings support a conceptualization of SOI as a disorder of persistent vigilance dysregulation.\n\nStatement of SignificanceInsomnia is among the most common health complaints, yet clinicians still lack reliable biological markers to characterize it and distinguish its subtypes. This study shows that difficulty falling asleep reflects not merely a delayed onset of sleep, but a sustained state of heightened brain alertness that persists throughout the night and across all stages of sleep. Notably, this hypervigilance is stronger when insomnia occurs alone than when it accompanies depression or anxiety, suggesting that these conditions arise through partly different mechanisms. Because conventional sleep recordings miss these subtle dynamics, finer continuous measures of vigilance could improve diagnosis and guide treatments. Future work should test whether such markers predict treatment response and reflect everyday sleep experience.",
+      "authors": [
+        "ABBATTISTA, L.",
+        "WACQUIER, B.",
+        "STRAUSS, M."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-05-20T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.05.05.722943v2.full.pdf",
+      "tags": [
+        "keyword:sleep-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Hypervigilance profiles in sleep-onset insomnia with psychiatric comorbidity; directly addresses insomnia",
+      "llm_evidence_cn": "睡眠起始失眠中的过度警觉特征，直接涉及失眠研究",
+      "llm_evidence": "睡眠起始失眠中的过度警觉特征，直接涉及失眠研究",
+      "canonical_evidence": "睡眠起始失眠中的过度警觉特征，直接涉及失眠研究",
+      "llm_tldr_en": "Identifies distinct hypervigilance EEG profiles in sleep-onset insomnia with and without psychiatric comorbidity, using high-resolution EEG markers.",
+      "llm_tldr_cn": "该研究回顾性分析2952例PSG记录，利用高分辨率EEG标记（包括θ/α比率动态、微睡眠检测和内在警觉评分iVS）来表征睡眠起始失眠（SOI）患者的过度警觉特征。发现孤立性失眠与伴情感症状的失眠在警觉模式上存在差异，为失眠的病理生理分型提供了新的神经生理标志。",
+      "llm_tldr": "该研究回顾性分析2952例PSG记录，利用高分辨率EEG标记（包括θ/α比率动态、微睡眠检测和内在警觉评分iVS）来表征睡眠起始失眠（SOI）患者的过度警觉特征。发现孤立性失眠与伴情感症状的失眠在警觉模式上存在差异，为失眠的病理生理分型提供了新的神经生理标志。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "insomnia symptoms and treatment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-05-18-724862-v1",
+      "source": "biorxiv",
+      "title": "Urban green space exposure reduces subjective stress and physiological arousal",
+      "abstract": "Stress is a major risk factor for mental disorders, and urban living is a key environmental contributor. Nature exposure may promote stress recovery and mental health, but how physiological arousal and subjective stress change across green versus gray space during naturalistic urban mobility is poorly understood. This preregistered study (https://doi.org/10.17605/OSF.IO/HF4RW) employed geolocation-based ambulatory assessment to examine psychophysiological arousal and subjective stress during transitions between urban green and gray environments. Thirty-six healthy urban residents completed a counterbalanced circular walking route in Cologne, Germany, with continuous GPS, cardiovascular, and electrodermal recording alongside ecological momentary assessment of subjective stress, affect, and exertion. Green compared to gray spaces were associated with lower subjective stress and higher affective well-being, with cardiac indices reflecting reduced autonomic arousal during green space exposure. Autonomic changes surrounding environmental transitions persisted beyond the immediate transition window, suggesting that physiological benefits of green space exposure extend into subsequent gray environments. These findings underscore the public health potential of urban green infrastructure for preventing stress-related mental health conditions.",
+      "authors": [
+        "Korkmaz, D.",
+        "Bi, Q.",
+        "Moller, M.",
+        "Koenig, J.",
+        "Peters, J."
+      ],
+      "primary_category": "physiology",
+      "categories": [
+        "physiology"
+      ],
+      "published": "2026-05-20T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.05.18.724862v1.full.pdf",
+      "tags": [
+        "keyword:sleep-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "ambulatory assessment of stress in urban environments",
+      "llm_evidence_cn": "在城市环境中使用动态评估测量压力",
+      "llm_evidence": "在城市环境中使用动态评估测量压力",
+      "canonical_evidence": "在城市环境中使用动态评估测量压力",
+      "llm_tldr_en": "This preregistered study uses geolocation-based ambulatory assessment (EMA) to show that transitioning from urban gray to green space reduces both subjective stress and physiological arousal.",
+      "llm_tldr_cn": "该预注册研究采用基于地理位置的活动记录评估（生态瞬时评估），监测36名健康居民在城市绿地和灰空间之间行走时的心理生理反应。结果发现，从灰色空间进入绿色空间后，主观压力和生理唤醒（心血管、皮肤电）显著降低。研究为城市自然暴露对心理健康的益处提供了实时证据。",
+      "llm_tldr": "该预注册研究采用基于地理位置的活动记录评估（生态瞬时评估），监测36名健康居民在城市绿地和灰空间之间行走时的心理生理反应。结果发现，从灰色空间进入绿色空间后，主观压力和生理唤醒（心血管、皮肤电）显著降低。研究为城市自然暴露对心理健康的益处提供了实时证据。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-06-04-730226-v1",
+      "source": "biorxiv",
+      "title": "Individual, behavioural, and environmental determinants of personal light exposure in daily life: A multi-country wearable and experience-sampling study",
+      "abstract": "Personal light exposure is a modifiable determinant of circadian and neurobehavioural health, yet its everyday structure across populations remains poorly understood. We report a harmonised, multi-country field study of ocular light exposure in 191 adults across nine sites in Costa Rica, Germany, Ghana, the Netherlands, Spain, Sweden and Turkey, comprising 1,480 participant-days.\n\nParticipants wore calibrated light loggers near the corneal plane and at chest level and completed repeated contextual assessments. Average daytime exposure remained below recommended melanopic levels, with adherence varying by site, daily phase and photoperiod. Exposure generally increased with latitude despite greater year-round sunlight at lower latitudes, suggesting behavioural filtering through shade-seeking, indoor living or heat avoidance. Individual and activity-level differences explained more variation than site. Daylight access, outdoor activity and micro-environment were the strongest exposure correlates, whereas demographic factors showed limited associations. This openly accessible dataset provides the first multi-site view of real-world ocular light exposure.",
+      "authors": [
+        "Zauner, J.",
+        "Didikoglu, A.",
+        "Aerts, S.",
+        "Agbeshie, G. K.",
+        "Akuffo, K. O.",
+        "Akgun, S. G.",
+        "Aydin, S. N.",
+        "Baeza Moyano, D.",
+        "Boesten, D.",
+        "Bolte, J. F. B.",
+        "Broszio, K.",
+        "Cantarero Garcia, G.",
+        "Gonzalez Lezcano, R. A.",
+        "Guidolin, C.",
+        "Hilden, S.",
+        "Hogervorst, N.",
+        "Jansen, A.",
+        "Kayar, Z.",
+        "Kallberg, S.",
+        "Lee, S.",
+        "Melero Tur, S.",
+        "Nilsson Tengelin, M.",
+        "Perez Gutierrez, M. C.",
+        "Sancho-Salas, A.",
+        "Stefani, O.",
+        "Svensson, I.",
+        "von-Breymann, H.",
+        "Spitschan, M."
+      ],
+      "primary_category": "physiology",
+      "categories": [
+        "physiology"
+      ],
+      "published": "2026-06-09T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.04.730226v1.full.pdf",
+      "tags": [
+        "keyword:sleep-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "uses experience sampling to study light exposure and circadian health",
+      "llm_evidence_cn": "使用经验采样法研究光照暴露与昼夜节律健康",
+      "llm_evidence": "使用经验采样法研究光照暴露与昼夜节律健康",
+      "canonical_evidence": "使用经验采样法研究光照暴露与昼夜节律健康",
+      "llm_tldr_en": "This multi-country study uses wearable light loggers and repeated contextual assessments (experience sampling) to characterize personal light exposure in daily life, revealing low daytime melanopic exposure with variation by site and daily phase.",
+      "llm_tldr_cn": "该研究通过多国穿戴设备与经验采样法，收集191名成年人在日常生活中的光照暴露数据。结果显示，平均日间黑视素光照水平低于推荐值，且暴露模式因地点、日间阶段和光周期而异。研究强调了个体、行为和环境因素对光照暴露的影响，为改善昼夜节律和神经行为健康提供了实证基础。",
+      "llm_tldr": "该研究通过多国穿戴设备与经验采样法，收集191名成年人在日常生活中的光照暴露数据。结果显示，平均日间黑视素光照水平低于推荐值，且暴露模式因地点、日间阶段和光周期而异。研究强调了个体、行为和环境因素对光照暴露的影响，为改善昼夜节律和神经行为健康提供了实证基础。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "Experience sampling methodology for sleep and mood research",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-06-09-731083-v1",
+      "source": "biorxiv",
+      "title": "Music facilitates sleep initiation in adults with sleep-onset insomnia: The role of neural synchronization",
+      "abstract": "Sleep-onset insomnia is widespread in modern society, and many individuals turn to music to improve their sleep. While clinical studies have shown that music can positively affect sleep quality, the impact on sleep initiation remains unclear. Furthermore, there is limited knowledge on the mechanisms by which music may facilitate sleep. Here, we investigated whether music can facilitate sleep onset and if the effect is related to brain waves synchronizing to the slow beat of the sleep music. We recorded participants with sleep-onset insomnia (N=53) during a 30-minute afternoon rest using electroencephalography (EEG). Participants were randomly divided into two groups. Twenty-four participants listened to music chosen from a sleep music playlist while resting, and 29 rested in silence. We evaluated the transition from wakefulness towards sleep with the delta-alpha ratio of the EEG. To assess neural synchronization to the beat of the music, we used an EEG frequency tagging approach. We found a higher degree of transition towards sleep in the music group compared to silence over the 30-minutes resting period. Furthermore, higher beat stability in the music was reflected in stronger neural frequency tagging at the musical beat. However, the analyses showed no relationship between sleep initiation and neural synchronization to the beat. In sum, our results revealed that music has a positive effect on sleep initiation and that there is neural synchronization to naturalistic sleep music with a steady beat, but we found no indication that this neural synchronization is the central mechanism driving enhanced sleep initiation with music.",
+      "authors": [
+        "Jespersen, K. V.",
+        "Celma-Miralles, A.",
+        "Vuust, P."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-06-11T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.09.731083v1.full.pdf",
+      "tags": [
+        "keyword:sleep-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "investigates music for sleep-onset insomnia treatment",
+      "llm_evidence_cn": "研究音乐对入睡性失眠的改善作用",
+      "llm_evidence": "研究音乐对入睡性失眠的改善作用",
+      "canonical_evidence": "研究音乐对入睡性失眠的改善作用",
+      "llm_tldr_en": "This EEG study with 53 insomnia patients shows that music facilitates sleep initiation in adults with sleep-onset insomnia, potentially through neural synchronization to the slow beat.",
+      "llm_tldr_cn": "该研究对53名入睡性失眠患者在午间休息时进行脑电图记录，随机分为音乐组和对照组。结果发现音乐能促进睡眠启动，并且该效应可能与脑波与音乐慢拍同步有关。研究为音乐改善失眠提供了神经生理学证据，支持了音乐作为非药物干预手段的潜力。",
+      "llm_tldr": "该研究对53名入睡性失眠患者在午间休息时进行脑电图记录，随机分为音乐组和对照组。结果发现音乐能促进睡眠启动，并且该效应可能与脑波与音乐慢拍同步有关。研究为音乐改善失眠提供了神经生理学证据，支持了音乐作为非药物干预手段的潜力。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "insomnia symptoms and treatment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ]
+}
