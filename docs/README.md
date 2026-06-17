@@ -6,59 +6,35 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-19 ~ 2026-06-17
-- 运行时间：2026-06-17 06:43:35 UTC
+- 最新运行日期：2026-06-17
+- 运行时间：2026-06-17 22:23:55 UTC
 - 运行状态：成功
-- 本次总论文数：12
-- 精读区：0
-- 速读区：12
+- 本次总论文数：5
+- 精读区：3
+- 速读区：2
 
 ### 今日简报（AI）
-1) 本期日报速读12篇，精读0篇，重点推荐3篇评分9.0的论文，覆盖睡眠分类、可穿戴预测和日常情绪神经标记。
-2) 最值得关注的方向：一是轻量自监督模型实现高效睡眠分期，二是自适应数据选择法显著提升低基线可穿戴预测性能。
-3) 建议读者优先阅读前两篇，理解如何用轻量化AI和智能数据策略加速健康监测应用落地。
-- 详情：[/20260519-20260617/README](/20260519-20260617/README)
+今日精读2篇高分论文，速读2篇7分研究，聚焦环境与行为对光照暴露的影响、情感文本预测的改进方向。最值得关注：个人光照暴露的9分研究揭示行为与环境的决定作用；情感预测与情感预报的8分研究区分了纵向文本的不同信息源。建议普通读者留意健康日常基础设施和个人化移动健康行为预测模型的实际应用价值。
+- 详情：[/202606/17/README](/202606/17/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Environmental and behavioural determinants of the personal light exposome](/202606/17/biorxiv-10-64898-2026-06-04-730226-v2-environmental-and-behavioural-determinants-of-the-personal-light-exposome)  
+   标签：评分：9.0/10、query:sleep-mental
+   evidence：使用重复情境评估（EMA方法）研究光暴露、昼夜节律和神经行为健康
+2. [From Affect Prediction to Affect Forecasting: Evidence for Distinct Information Sources in Longitudinal Text](/202606/17/2606.16687v1-from-affect-prediction-to-affect-forecasting-evidence-for-distinct-information-sources-in-longitudinal-text)  
+   标签：评分：8.0/10、query:ema-mental
+   evidence：纵向自我报告生态随笔和情感词条目
+3. [How to Catch a Blank Mind? Brain Similarities and Differences between Self- and Probe-Caught Mind Blanking](/202606/17/biorxiv-10-64898-2026-06-10-731344-v1-how-to-catch-a-blank-mind-brain-similarities-and-differences-between-self--and-probe-caught-mind-blanking)  
+   标签：评分：8.0/10、query:ema-mental
+   evidence：比较了自我捕捉和探针捕捉的经验取样方法
 
 ### 速读区论文标签
-1. [Sleep-stage efficient classification using a lightweight self-supervised model](/20260519-20260617/2605.26295v1-sleep-stage-efficient-classification-using-a-lightweight-self-supervised-model)  
-   标签：评分：9.0/10、query:sleep-mental
-   evidence：睡眠阶段分类用于睡眠障碍诊断
-2. [Adaptive data selection improves wearable prediction under low baseline performance](/20260519-20260617/2606.00141v1-adaptive-data-selection-improves-wearable-prediction-under-low-baseline-performance)  
-   标签：评分：9.0/10、query:ema-mental
-   evidence：以EMA为模态评估自适应数据选择方法
-3. [From the scanner to daily life: Neural expression of the Picture-Induced Negative Emotion Signature is associated with real-world daily and momentary negative affect in midlife adults](/20260519-20260617/biorxiv-10-64898-2026-06-03-729931-v1-from-the-scanner-to-daily-life-neural-expression-of-the-picture-induced-negative-emotion-signature-is-associated-with-real-world-daily-and-momentary-negative-affect-in-midlife-adults)  
-   标签：评分：9.0/10、query:ema-mental
-   evidence：使用生态瞬时评估将fMRI与日常负性情感关联
-4. [EmoTrack: Robust Depression Tracking from Counseling Transcripts across Session Regimes](/20260519-20260617/2605.22286v1-emotrack-robust-depression-tracking-from-counseling-transcripts-across-session-regimes)  
-   标签：评分：8.0/10、query:sleep-mental
-   evidence：从咨询文本中跟踪抑郁症状，使用会话级PHQ-8监督
-5. [Staging by the Book: Automatic Sleep Stage Classification Using Scoring Rules](/20260519-20260617/2605.22859v1-staging-by-the-book-automatic-sleep-stage-classification-using-scoring-rules)  
-   标签：评分：8.0/10、query:sleep-mental
-   evidence：基于规则的自动睡眠分期，可直接用于睡眠质量测量
-6. [Beyond Augmentation: Score-Guided Pathological Prior for EEG-based Depression Detection](/20260519-20260617/2606.00180v1-beyond-augmentation-score-guided-pathological-prior-for-eeg-based-depression-detection)  
-   标签：评分：8.0/10、query:sleep-mental
-   evidence：基于脑电的抑郁检测方法
-7. [Sparse Longitudinal Functional Principal Component Analysis for Episodic Ambulatory Behavioral Assessments](/20260519-20260617/2606.08261v1-sparse-longitudinal-functional-principal-component-analysis-for-episodic-ambulatory-behavioral-assessments)  
-   标签：评分：8.0/10、query:sleep-mental
-   evidence：通过智能手机打字速度进行精神疲劳的移动评估
-8. [End-to-End Machine Learning for Depressive State Classification via EEG and fNIRS](/20260519-20260617/2606.11555v1-end-to-end-machine-learning-for-depressive-state-classification-via-eeg-and-fnirs)  
-   标签：评分：8.0/10、query:sleep-mental
-   evidence：使用EEG和fNIRS进行抑郁状态分类，直接相关于抑郁评估
-9. [Distinct hypervigilance profiles in sleep-onset insomnia with and without psychiatric comorbidity](/20260519-20260617/biorxiv-10-64898-2026-05-05-722943-v2-distinct-hypervigilance-profiles-in-sleep-onset-insomnia-with-and-without-psychiatric-comorbidity)  
-   标签：评分：8.0/10、query:sleep-mental
-   evidence：睡眠起始失眠中的过度警觉特征，直接涉及失眠研究
-10. [Urban green space exposure reduces subjective stress and physiological arousal](/20260519-20260617/biorxiv-10-64898-2026-05-18-724862-v1-urban-green-space-exposure-reduces-subjective-stress-and-physiological-arousal)  
-   标签：评分：8.0/10、query:sleep-mental
-   evidence：在城市环境中使用动态评估测量压力
-11. [Individual, behavioural, and environmental determinants of personal light exposure in daily life: A multi-country wearable and experience-sampling study](/20260519-20260617/biorxiv-10-64898-2026-06-04-730226-v1-individual-behavioural-and-environmental-determinants-of-personal-light-exposure-in-daily-life-a-multi-country-wearable-and-experience-sampling-study)  
-   标签：评分：8.0/10、query:sleep-mental
-   evidence：使用经验采样法研究光照暴露与昼夜节律健康
-12. [Music facilitates sleep initiation in adults with sleep-onset insomnia: The role of neural synchronization](/20260519-20260617/biorxiv-10-64898-2026-06-09-731083-v1-music-facilitates-sleep-initiation-in-adults-with-sleep-onset-insomnia-the-role-of-neural-synchronization)  
-   标签：评分：8.0/10、query:sleep-mental
-   evidence：研究音乐对入睡性失眠的改善作用
+1. [Personal Care Utility: Health as Everyday Infrastructure](/202606/17/2606.14145v1-personal-care-utility-health-as-everyday-infrastructure)  
+   标签：评分：7.0/10、query:sleep-mental
+   evidence：用于连续健康信号的动态评估基础设施
+2. [A Comparative Study of Deep Learning Architectures for Multi-Horizon Behavioural Forecasting for Mobile Health](/202606/17/2606.14604v1-a-comparative-study-of-deep-learning-architectures-for-multi-horizon-behavioural-forecasting-for-mobile-health)  
+   标签：评分：7.0/10、query:ema-mental
+   evidence：移动健康行为预测
 
 
 <div class="dpr-home-promo-card">

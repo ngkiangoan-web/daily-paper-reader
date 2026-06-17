@@ -1,0 +1,249 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-17T22:21:16.375303+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 3,
+    "deep_cap": 7,
+    "deep_selected": 3,
+    "quick_candidates": 2,
+    "quick_skim_target": 12,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "biorxiv-10-64898-2026-06-04-730226-v2",
+      "source": "biorxiv",
+      "title": "Environmental and behavioural determinants of the personal light exposome",
+      "abstract": "Personal light exposure is a modifiable determinant of circadian and neurobehavioural health, yet its everyday structure across populations remains poorly understood. We report a harmonised, multi-country field study of ocular light exposure in 191 adults across nine sites in Costa Rica, Germany, Ghana, the Netherlands, Spain, Sweden and Turkey, comprising 1,480 participant-days.\n\nParticipants wore calibrated light loggers near the corneal plane and at chest level and completed repeated contextual assessments. Average daytime exposure remained below recommended melanopic levels, with adherence varying by site, daily phase and photoperiod. Exposure generally increased with latitude despite greater year-round sunlight at lower latitudes, suggesting behavioural filtering through shade-seeking, indoor living or heat avoidance. Individual and activity-level differences explained more variation than site. Daylight access, outdoor activity and micro-environment were the strongest exposure correlates, whereas demographic factors showed limited associations. This openly accessible dataset provides the first multi-site view of real-world ocular light exposure.",
+      "authors": [
+        "Zauner, J.",
+        "Didikoglu, A.",
+        "Aerts, S.",
+        "Agbeshie, G. K.",
+        "Akuffo, K. O.",
+        "Akgun, S. G.",
+        "Aydin, S. N.",
+        "Baeza Moyano, D.",
+        "Boesten, D.",
+        "Bolte, J. F. B.",
+        "Broszio, K.",
+        "Cantarero Garcia, G.",
+        "Gonzalez Lezcano, R. A.",
+        "Guidolin, C.",
+        "Hilden, S.",
+        "Hogervorst, N.",
+        "Jansen, A.",
+        "Kayar, Z.",
+        "Kallberg, S.",
+        "Lee, S.",
+        "Melero Tur, S.",
+        "Nilsson Tengelin, M.",
+        "Perez Gutierrez, M. C.",
+        "Sancho-Salas, A.",
+        "Stefani, O.",
+        "Svensson, I.",
+        "von-Breymann, H.",
+        "Spitschan, M."
+      ],
+      "primary_category": "physiology",
+      "categories": [
+        "physiology"
+      ],
+      "published": "2026-06-16T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.04.730226v2.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "repeated contextual assessments (EMA method) to study light exposure, circadian health, and neurobehavioural outcomes",
+      "llm_evidence_cn": "使用重复情境评估（EMA方法）研究光暴露、昼夜节律和神经行为健康",
+      "llm_evidence": "使用重复情境评估（EMA方法）研究光暴露、昼夜节律和神经行为健康",
+      "canonical_evidence": "使用重复情境评估（EMA方法）研究光暴露、昼夜节律和神经行为健康",
+      "llm_tldr_en": "This multi-country field study used EMA (repeated contextual assessments) with wearable light loggers to characterize personal light exposure patterns, revealing widespread deficiency in daytime melanopic light and its association with circadian neurobehavioural health.",
+      "llm_tldr_cn": "该多国实地研究使用生态瞬时评估（重复情境评估）结合可穿戴光记录仪，刻画了个人光暴露模式，发现日间黑视素光照普遍不足，并揭示了光暴露与昼夜节律神经行为健康的关联，为健康光照干预提供了依据。",
+      "llm_tldr": "该多国实地研究使用生态瞬时评估（重复情境评估）结合可穿戴光记录仪，刻画了个人光暴露模式，发现日间黑视素光照普遍不足，并揭示了光暴露与昼夜节律神经行为健康的关联，为健康光照干预提供了依据。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ecological momentary assessment EMA in sleep and mental health",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.16687v1",
+      "source": "arxiv",
+      "title": "From Affect Prediction to Affect Forecasting: Evidence for Distinct Information Sources in Longitudinal Text",
+      "abstract": "Modeling dimensional affect in longitudinal text requires distinguishing current affect estimation from future affective change forecasting. Existing approaches often treat each text as an independent observation and apply similar assumptions to both tasks, without testing whether they rely on different information sources. This paper investigates that distinction using longitudinal self-reported ecological essays and feeling-word entries. We propose the Trait--State Affective Prediction (TSAP) framework and its temporal extension E-TSAP for per-text valence and arousal prediction, evaluated on a held-out prediction test set of 1,737 entries from 91 users. We further propose the Affective Change Forecaster Hybrid (ACF-Hybrid) for next-step affective change forecasting, evaluated on a held-out forecasting test set of 46 users. For prediction, E-TSAP achieves composite Pearson correlations of 0.670 for valence and 0.449 for arousal. For forecasting, textual representations perform worse than compact numeric trajectory baselines: the text-inclusive model achieves only r=0.316 for valence and r=0.284 for arousal, whereas a simple prior-state baseline reaches r=0.615 and r=0.670, respectively. ACF-Hybrid, using dimension-specific numeric trajectory features, achieves r=0.659 for valence and $r=0.658$ for arousal. These results show that textual semantics support current affect prediction, whereas future affective change is better captured through prior numeric trajectory dynamics.",
+      "authors": [
+        "Sadia Noor",
+        "Seemab Latif",
+        "Raja Khurram Shahzad",
+        "Mehwish Fatima"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-15T13:21:58+00:00",
+      "link": "https://arxiv.org/pdf/2606.16687v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "longitudinal self-reported ecological essays and feeling-word entries",
+      "llm_evidence_cn": "纵向自我报告生态随笔和情感词条目",
+      "llm_evidence": "纵向自我报告生态随笔和情感词条目",
+      "canonical_evidence": "纵向自我报告生态随笔和情感词条目",
+      "llm_tldr_en": "Proposes TSAP framework for per-text affect prediction from longitudinal ecological essays, showing affect forecasting uses different information than affect prediction.",
+      "llm_tldr_cn": "该论文区分了纵向文本中的即时情感估计与未来情感预测，利用用户自我报告的生态随笔和情感词条目。提出了Trait-State情感预测框架（TSAP）及其时序扩展E-TSAP，在91位用户的1737条条目上评估。结果表明情感预测与情感预报依赖于不同的信息源，为情感动态建模提供了新视角。",
+      "llm_tldr": "该论文区分了纵向文本中的即时情感估计与未来情感预测，利用用户自我报告的生态随笔和情感词条目。提出了Trait-State情感预测框架（TSAP）及其时序扩展E-TSAP，在91位用户的1737条条目上评估。结果表明情感预测与情感预报依赖于不同的信息源，为情感动态建模提供了新视角。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "Ecological Momentary Assessment mental health research",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-06-10-731344-v1",
+      "source": "biorxiv",
+      "title": "How to Catch a Blank Mind? Brain Similarities and Differences between Self- and Probe-Caught Mind Blanking",
+      "abstract": "Mind Blanking (MB) is a mental state characterized by the experience of a seemingly empty mind. This apparent emptiness challenges the theoretical view of a continuous and content-full stream of thought, leading to the question of how it is possible to capture MB events in the first place. MB research has relied largely on probe-caught experience-sampling, during which participants are interrupted at random times to report their mental state. This approach risks missing some MB events as they may occur between probes. Self-caught paradigms, on the other hand, allow participants to report MB upon spontaneously realizing it, relying on meta-awareness. To date, it is not clear whether these two methods capture the same phenomenon neuronally. Here, we investigated whether probe-caught MB (pMB) and self-caught MB (sMB) converge on their behavioral properties and brain correlates. Twenty-two participants underwent 3T fMRI scanning while performing both a pMB and a sMB experience-sampling task. We compared the behavioral properties, BOLD activations and time-varying functional connectivity (FC) across the two approaches. We found that reporting frequencies of pMB and sMB were significantly correlated across individuals, and both MB reports were uniformly distributed over time, pointing towards a behavioral convergence across approaches. However, we observed a divergence in BOLD activations, as sMB recruited significantly greater activation in the dorsal anterior cingulate cortex (dACC) compared to pMB, likely reflecting the meta-awareness and metacognitive monitoring required for self-detecting a MB. Lastly, time-varying FC analysis revealed a convergence, with both pMB and sMB FC resembling a hyperconnectivity pattern compared to other content-full mental states, pointing towards low arousal FC. Together, our results show that sMB and pMB converge on overlapping neurobehavioral correlates. This positions the self-caught method as a complementary tool for studying MB without external interruption, while highlighting the role of meta-awareness in self-report detection.",
+      "authors": [
+        "Aragon-Daud, A.",
+        "Boulakis, P. A.",
+        "Mortaheb, S.",
+        "Vandewalle, G.",
+        "Collette, F.",
+        "Patil, K. R.",
+        "Demertzi, A.",
+        "Raimondo, F."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-06-15T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.10.731344v1.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "compares self-caught and probe-caught experience sampling",
+      "llm_evidence_cn": "比较了自我捕捉和探针捕捉的经验取样方法",
+      "llm_evidence": "比较了自我捕捉和探针捕捉的经验取样方法",
+      "canonical_evidence": "比较了自我捕捉和探针捕捉的经验取样方法",
+      "llm_tldr_en": "Study compares self-caught and probe-caught experience sampling for mind blanking, finding brain similarities and differences between the two methods.",
+      "llm_tldr_cn": "该研究聚焦思维空白这一心理现象，比较了两种经验取样方法——自我捕捉（依赖元意识）和探针捕捉（随机中断）。通过脑电和脑成像分析，揭示了两种方法在捕捉思维空白事件时的神经相似性和差异，为难于捉摸的空白思维研究提供了方法论指导。",
+      "llm_tldr": "该研究聚焦思维空白这一心理现象，比较了两种经验取样方法——自我捕捉（依赖元意识）和探针捕捉（随机中断）。通过脑电和脑成像分析，揭示了两种方法在捕捉思维空白事件时的神经相似性和差异，为难于捉摸的空白思维研究提供了方法论指导。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "Experience Sampling Method in clinical psychology",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.14145v1",
+      "source": "arxiv",
+      "title": "Personal Care Utility: Health as Everyday Infrastructure",
+      "abstract": "Healthcare is essential, expert, and episodic by design - built around the roughly one hour per year a person spends with a clinician. The 8,759 hours outside clinical settings, where eating, sleeping, movement, medication, and stress actually shape long-term health, have no comparable infrastructure. The bottleneck for personalized health is not raw data or reasoning capability; it is the absence of that infrastructure layer. This paper introduces the Personal Care Utility (PCU): a layered, event-driven architecture proposed as the missing utility for everyday health, in the way that payments, networks, and power are utilities for their domains. PCU organizes continuous personal signals into semantically meaningful life events through a Personicle, estimates dynamic health state against personal baselines, reasons about cause and context, and routes guidance through an orchestrator that separates clinical decision logic, behavioral strategy selection, and natural-language expression. This separation lets large language models support reasoning and communication while keeping safety-critical clinical decisions grounded in validated evidence. We instantiate PCU for Type 2 Diabetes - turning CGM, meal, activity, medication, sleep, stress, and clinical data into glycemic events, individualized state estimates, causal explanations, and knowledge-grounded interventions. A day-in-the-life scenario shows the same infrastructure producing real-time nudges, weekly summaries, medication check-ins, silence, or deterministic safety alerts depending on context and risk. We close with how PCU generalizes to other chronic conditions and the governance questions any always-on personal health utility must address. The result is a blueprint that treats personalization not as a final messaging layer, but as an architectural property of everyday health guidance.",
+      "authors": [
+        "Mahyar Abbasian",
+        "Elahe Khatibi",
+        "Saba A. Farahani",
+        "Nitish Nagesh",
+        "Arshia Ilaty",
+        "Hooman Sajjadi",
+        "Amir Rahmani",
+        "Ramesh Jain"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-12T06:07:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.14145v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "ambulatory assessment infrastructure for continuous health signals",
+      "llm_evidence_cn": "用于连续健康信号的动态评估基础设施",
+      "llm_evidence": "用于连续健康信号的动态评估基础设施",
+      "canonical_evidence": "用于连续健康信号的动态评估基础设施",
+      "llm_tldr_en": "Proposes Personal Care Utility (PCU), an event-driven architecture to organize continuous personal health signals from everyday life, enabling ambulatory assessment and potential EMA applications.",
+      "llm_tldr_cn": "针对临床之外大量健康时间无基础设施的问题，提出个人护理效用(PCU)架构，将连续个人信号组织为有意义的生活事件，为动态评估和EMA提供基础设施支持。该方法通过Personicle整合多模态数据，填补了日常健康监测的空白。",
+      "llm_tldr": "针对临床之外大量健康时间无基础设施的问题，提出个人护理效用(PCU)架构，将连续个人信号组织为有意义的生活事件，为动态评估和EMA提供基础设施支持。该方法通过Personicle整合多模态数据，填补了日常健康监测的空白。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.14604v1",
+      "source": "arxiv",
+      "title": "A Comparative Study of Deep Learning Architectures for Multi-Horizon Behavioural Forecasting for Mobile Health",
+      "abstract": "Wearable devices and smartphones generate rich behavioural time series that can support proactive health interventions, yet systematic comparisons of modern forecasting architectures for these data are lacking. In particular, it remains unclear how models generalise across populations, how different architectures respond to participant-level fine-tuning and how forecasting accuracy degrades across multi-day horizons. We benchmark six deep learning architectures, two zero-shot Foundation Models (FM) and statistical baselines on three public datasets encompassing over 800 participants, reporting per-feature metrics for step counts, screen time and sleep duration across 1-8 day horizons. We further conduct a per-feature personalisation study across all six architectures and assess FM transferability across dataset sizes and temporal granularities. Our key findings are: (i) no single architecture dominates, PatchTST leads among trained models while the three runners-up (TCN, MLP, Transformer) show no meaningful performance difference; (ii) the FM TimesFM matches or exceeds trained models zero-shot, especially in low-data regimes and (iii) participant-level fine-tuning reduces per-feature RMSE by 16-60\\%, with sleep benefiting most and step counts least. These results provide practical guidance on architecture selection, FM applicability and personalisation strategies for mobile health forecasting. To the best of our knowledge, this is the first study to jointly evaluate modern deep learning, FMs and personalisation for multi-horizon behavioural forecasting from wearables.",
+      "authors": [
+        "Pavlos Nicolaou",
+        "Kleanthis Malialis",
+        "Artemis Kontou",
+        "Panayiotis Kolios"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-12T16:25:58+00:00",
+      "link": "https://arxiv.org/pdf/2606.14604v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "mobile health behavioral forecasting",
+      "llm_evidence_cn": "移动健康行为预测",
+      "llm_evidence": "移动健康行为预测",
+      "canonical_evidence": "移动健康行为预测",
+      "llm_tldr_en": "Compares deep learning architectures for multi-day forecasting of step counts, screen time, and sleep from mobile health data, supporting proactive interventions.",
+      "llm_tldr_cn": "该论文针对移动健康中行为时间序列的多日预测问题，系统比较了多种深度学习架构、零样本基础模型和统计基线。在涵盖800多名参与者的三个公开数据集上，对步数、屏幕使用时间和睡眠时长等特征进行1-8天预测，并评估了跨人群泛化能力。研究为移动健康应用中的行为预测提供了基准。",
+      "llm_tldr": "该论文针对移动健康中行为时间序列的多日预测问题，系统比较了多种深度学习架构、零样本基础模型和统计基线。在涵盖800多名参与者的三个公开数据集上，对步数、屏幕使用时间和睡眠时长等特征进行1-8天预测，并评估了跨人群泛化能力。研究为移动健康应用中的行为预测提供了基准。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
