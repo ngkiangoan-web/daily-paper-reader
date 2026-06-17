@@ -1,0 +1,131 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-17T05:53:33.166345+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "biorxiv-10-64898-2026-06-03-729931-v1",
+      "source": "biorxiv",
+      "title": "From the scanner to daily life: Neural expression of the Picture-Induced Negative Emotion Signature is associated with real-world daily and momentary negative affect in midlife adults",
+      "abstract": "Functional magnetic resonance imaging (fMRI) is widely used to map brain systems that process affective stimuli and predict concurrent affective experiences in the scanner. However, the extent to which affect-related fMRI activity in the scanner predicts affective experiences in daily life remains unclear. This study examined whether a multivariate brain pattern previously validated to predict negative affect to emotional images during fMRI testing (the Picture-Induced Negative Emotion Signature; PINES) associates with daily negative affect measured over 7-10 days via daily diaries and ecological momentary assessment. Among 287 midlife adults, those exhibiting greater PINES pattern expression showed greater daily (end-of-day) and hourly negative affect. These findings were not explained by demographic factors and trait negative affect. A cross-validated whole-brain pattern of negative affect generalizes beyond the fMRI testing context to predict negative affect severity in daily life.",
+      "authors": [
+        "Wu-Chung, E. L.",
+        "Eckerle, W. D.",
+        "Marsland, A. L.",
+        "Kraynak, T. E.",
+        "Kamarck, T. W.",
+        "Gianaros, P. J."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-06-08T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.03.729931v1.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "query:EMA-mental"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "uses ecological momentary assessment to measure daily negative affect and links to fMRI neural signature",
+      "llm_evidence_cn": "使用生态瞬时评估测量日常负性情感，并与fMRI神经特征关联",
+      "llm_evidence": "使用生态瞬时评估测量日常负性情感，并与fMRI神经特征关联",
+      "canonical_evidence": "使用生态瞬时评估测量日常负性情感，并与fMRI神经特征关联",
+      "llm_tldr_en": "This study uses EMA over 7-10 days to show that a brain signature for negative emotion (PINES) predicts real-world daily and momentary negative affect in midlife adults, bridging lab and daily life.",
+      "llm_tldr_cn": "功能性磁共振成像能有效预测扫描环境内的情感，但对日常生活中的情感预测能力尚不明确。本研究利用生态瞬时评估（EMA）在7-10天内测量287名中年人每日和瞬时的负性情感，并检验了之前验证的图片诱发负性情绪特征（PINES）的预测效度。结果显示PINES与日常负性情感显著关联，证明基于fMRI的脑模式可以推广到真实世界。该工作为将神经标记用于日常心理健康监测提供了关键证据。",
+      "llm_tldr": "功能性磁共振成像能有效预测扫描环境内的情感，但对日常生活中的情感预测能力尚不明确。本研究利用生态瞬时评估（EMA）在7-10天内测量287名中年人每日和瞬时的负性情感，并检验了之前验证的图片诱发负性情绪特征（PINES）的预测效度。结果显示PINES与日常负性情感显著关联，证明基于fMRI的脑模式可以推广到真实世界。该工作为将神经标记用于日常心理健康监测提供了关键证据。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "Ecological Momentary Assessment mental health research",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-06-05-730335-v1",
+      "source": "biorxiv",
+      "title": "Menstrual cycle selectively elevates anticipatory effort cost without altering reward sensitivity in human motivation",
+      "abstract": "Motivation fluctuates across the menstrual cycle, yet the computational mechanisms underlying these changes remain unclear. We tested whether hormonally defined cycle phases selectively alter distinct components of effort-based motivation in naturally cycling women (n=51), who completed an effort-reward decision-making task and an effort psychophysics task in both the late-follicular and mid-luteal phases, alongside electrocardiography and ecological momentary assessment. Hierarchical Bayesian modelling revealed that the anticipated cost of physical effort (effort sensitivity) was selectively elevated in the mid-luteal phase, with no corresponding change in reward sensitivity. The luteal increase in effort sensitivity was attenuated in women who entered that phase after days of higher affective valence and arousal, indicating that positive affective state buffers cyclical motivational vulnerability. Complementing these findings, phase-related individual differences in effort the mapping between objective and perceived effort (effort differentiation) were not different by phase, but were moderated by heart rate variability and momentary affective states, revealing stable person-level variation in how the cycle shapes effortful experience. Together, these results identify effort sensitivity as a specific computational mechanism of cyclical motivational change, with implications for understanding the elevated burden of cycle-related psychiatric conditions across the female reproductive lifespan.",
+      "authors": [
+        "Schwarz, N.",
+        "Harlev, D.",
+        "Wolpe, N."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-06-09T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.05.730335v1.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "query:EMA-mental"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "uses ecological momentary assessment to study effort-based motivation across menstrual cycle",
+      "llm_evidence_cn": "采用生态瞬时评估研究月经周期中的努力动机变化",
+      "llm_evidence": "采用生态瞬时评估研究月经周期中的努力动机变化",
+      "canonical_evidence": "采用生态瞬时评估研究月经周期中的努力动机变化",
+      "llm_tldr_en": "Combines behavioral tasks with ecological momentary assessment to show that the luteal phase selectively increases perceived effort cost without altering reward sensitivity.",
+      "llm_tldr_cn": "针对女性动机波动的机制不清问题，该研究在51名自然周期女性中结合努力决策任务、心理物理学任务和生态瞬时评估，发现黄体期选择性地提高了对体力努力的预期成本（努力敏感性），而不改变奖励敏感性。这一发现揭示了激素周期影响动机的特定计算机制，并展示了EMA在追踪日常动机变化中的效用。",
+      "llm_tldr": "针对女性动机波动的机制不清问题，该研究在51名自然周期女性中结合努力决策任务、心理物理学任务和生态瞬时评估，发现黄体期选择性地提高了对体力努力的预期成本（努力敏感性），而不改变奖励敏感性。这一发现揭示了激素周期影响动机的特定计算机制，并展示了EMA在追踪日常动机变化中的效用。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "Ecological Momentary Assessment mental health research",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.13529v1",
+      "source": "arxiv",
+      "title": "Ride, Track, and Recover: Pilot Randomized Trial of a Wearable Digital Self-Management Intervention During a Veteran Endurance-Cycling Program",
+      "abstract": "Post-traumatic stress disorder (PTSD) in veterans is characterized by persistent hyperarousal and comorbid anxiety and depressive symptoms that are difficult to monitor and manage outside clinical settings. Thirteen veterans participating in a Project Hero cycling event in Texas were randomized by computer-generated sequence in a naturalistic setting to two arms: (1) digital intervention plus physical activity, or (2) physical activity only, plus a third at-home monitoring control cohort consisting of 7 veterans selected from the broader Project Hero veteran community. Continuous smartwatch sensing combined heart rate and accelerometer features to detect hyperarousal events, which were confirmed in real time by participants. Weekly self-report measures of anxiety, depression, and PTSD severity were collected. Generalized additive mixed models characterized nonlinear trajectories over time. Baseline-normalized hyperarousal trajectories differed significantly across conditions, with the digital intervention group (n=7) showing structured stabilization compared to late-study escalation in the physical-only group (n=3). Both cycling groups exhibited acute symptom improvements during the endurance event; however, the digital intervention group demonstrated a higher overall maintenance of gains. The at-home control group (n=4) showed gradual symptom declines. Perceived precision of ML detections varied substantially across individuals and was positively associated with symptom severity, with higher-severity participants confirming a greater proportion of detected events. These results suggest that coupling wearable detection with digital self-management tools may support stabilization of hyperarousal and symptom improvement while emphasizing the importance of personalization and human-centered design in wearable mental health systems.",
+      "authors": [
+        "Alan Ta",
+        "Nilsu Salgin",
+        "Caleb Armstrong",
+        "Kala Phillips Reindel",
+        "Farzan Sasangohar"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.LG"
+      ],
+      "published": "2026-06-11T16:18:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.13529v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "query:EMA-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "wearable smartwatch sensing for PTSD hyperarousal monitoring similar to EMA",
+      "llm_evidence_cn": "可穿戴智能手表监测PTSD高唤醒，类似EMA方法",
+      "llm_evidence": "可穿戴智能手表监测PTSD高唤醒，类似EMA方法",
+      "canonical_evidence": "可穿戴智能手表监测PTSD高唤醒，类似EMA方法",
+      "llm_tldr_en": "A pilot RCT with veterans using smartwatch data to detect hyperarousal events, demonstrating feasibility of wearable digital self-management intervention for PTSD in naturalistic settings.",
+      "llm_tldr_cn": "该试验针对退伍军人PTSD的远程监测难题，采用智能手表连续传感心率与加速度特征检测高唤醒事件，并结合身体活动干预。结果显示数字干预可行且有助于自我管理，为移动健康领域的EMA应用提供了实证支持。",
+      "llm_tldr": "该试验针对退伍军人PTSD的远程监测难题，采用智能手表连续传感心率与加速度特征检测高唤醒事件，并结合身体活动干预。结果显示数字干预可行且有助于自我管理，为移动健康领域的EMA应用提供了实证支持。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}

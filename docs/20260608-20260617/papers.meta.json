@@ -1,0 +1,54 @@
+{
+  "label": "2026-06-08 ~ 2026-06-17",
+  "date": "2026-06-08 ~ 2026-06-17",
+  "generated_at": "2026-06-17T05:56:05",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "20260608-20260617/biorxiv-10-64898-2026-06-03-729931-v1-from-the-scanner-to-daily-life-neural-expression-of-the-picture-induced-negative-emotion-signature-is-associated-with-real-world-daily-and-momentary-negative-affect-in-midlife-adults",
+      "section": "deep",
+      "title_en": "From the scanner to daily life: Neural expression of the Picture-Induced Negative Emotion Signature is associated with real-world daily and momentary negative affect in midlife adults",
+      "authors": "Wu-Chung, E. L., Eckerle, W. D., Marsland, A. L., Kraynak, T. E., Kamarck, T. W., Gianaros, P. J.",
+      "date": "2026-06-08",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.03.729931v1.full.pdf",
+      "score": "9.0",
+      "evidence": "使用生态瞬时评估测量日常负性情感，并与fMRI神经特征关联",
+      "tldr": "fMRI虽能预测实验室内的情绪反应，但其对日常情绪预测能力未知。本研究将先前验证的脑模式（PINES）与287名中年人7-10天的每日日记及生态瞬时评估关联，发现PINES表达越高，每日和每小时负面情绪越强，且不受人口学因素与特质情绪影响。结果证实fMRI脑模式可泛化至日常生活，为神经指标的生态效度提供证据。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Functional magnetic resonance imaging (fMRI) is widely used to map brain systems that process affective stimuli and predict concurrent affective experiences in the scanner. However, the extent to which affect-related fMRI activity in the scanner predicts affective experiences in daily life remains unclear. This study examined whether a multivariate brain pattern previously validated to predict negative affect to emotional images during fMRI testing (the Picture-Induced Negative Emotion Signature; PINES) associates with daily negative affect measured over 7-10 days via daily diaries and ecological momentary assessment. Among 287 midlife adults, those exhibiting greater PINES pattern expression showed greater daily (end-of-day) and hourly negative affect. These findings were not explained by demographic factors and trait negative affect. A cross-validated whole-brain pattern of negative affect generalizes beyond the fMRI testing context to predict negative affect severity in daily life.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "20260608-20260617/biorxiv-10-64898-2026-06-05-730335-v1-menstrual-cycle-selectively-elevates-anticipatory-effort-cost-without-altering-reward-sensitivity-in-human-motivation",
+      "section": "deep",
+      "title_en": "Menstrual cycle selectively elevates anticipatory effort cost without altering reward sensitivity in human motivation",
+      "authors": "Schwarz, N., Harlev, D., Wolpe, N.",
+      "date": "2026-06-09",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.05.730335v1.full.pdf",
+      "score": "9.0",
+      "evidence": "采用生态瞬时评估研究月经周期中的努力动机变化",
+      "tldr": "月经周期如何影响动机的神经计算机制尚不明确。本研究在51名自然周期女性中结合努力-奖赏决策任务、心理物理学任务、心电监测和生态瞬时评估，使用分层贝叶斯建模分析。发现黄体中期预期体力努力成本（努力敏感性）选择性升高，而奖赏敏感性无变化；积极情感状态可缓冲这一效应。研究揭示了努力敏感性是周期性动机变化的关键计算机制，为理解经前综合征等周期相关精神疾病的动机缺陷提供了新视角。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Motivation fluctuates across the menstrual cycle, yet the computational mechanisms underlying these changes remain unclear. We tested whether hormonally defined cycle phases selectively alter distinct components of effort-based motivation in naturally cycling women (n=51), who completed an effort-reward decision-making task and an effort psychophysics task in both the late-follicular and mid-luteal phases, alongside electrocardiography and ecological momentary assessment. Hierarchical Bayesian modelling revealed that the anticipated cost of physical effort (effort sensitivity) was selectively elevated in the mid-luteal phase, with no corresponding change in reward sensitivity. The luteal increase in effort sensitivity was attenuated in women who entered that phase after days of higher affective valence and arousal, indicating that positive affective state buffers cyclical motivational vulnerability. Complementing these findings, phase-related individual differences in effort the mapping between objective and perceived effort (effort differentiation) were not different by phase, but were moderated by heart rate variability and momentary affective states, revealing stable person-level variation in how the cycle shapes effortful experience. Together, these results identify effort sensitivity as a specific computational mechanism of cyclical motivational change, with implications for understanding the elevated burden of cycle-related psychiatric conditions across the female reproductive lifespan.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "20260608-20260617/2606.13529v1-ride-track-and-recover-pilot-randomized-trial-of-a-wearable-digital-self-management-intervention-during-a-veteran-endurance-cycling-program",
+      "section": "deep",
+      "title_en": "Ride, Track, and Recover: Pilot Randomized Trial of a Wearable Digital Self-Management Intervention During a Veteran Endurance-Cycling Program",
+      "authors": "Alan Ta, Nilsu Salgin, Caleb Armstrong, Kala Phillips Reindel, Farzan Sasangohar",
+      "date": "2026-06-11",
+      "pdf": "https://arxiv.org/pdf/2606.13529v1",
+      "score": "8.0",
+      "evidence": "可穿戴智能手表监测PTSD高唤醒，类似EMA方法",
+      "tldr": "针对退伍军人PTSD过度警觉症状难以在临床外监控的问题，本研究在耐力骑行活动中结合智能手表检测与数字自我管理工具。13名退伍军人随机分为数字干预加骑行、仅骑行两组，另设家中对照组。数字干预组过度警觉呈结构化稳定，仅骑行组后期恶化；骑行期间症状均改善，但数字干预组维持更好。ML检测精度与症状严重度正相关。结果表明可穿戴数字干预有助于稳定症状，但需个性化设计。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Post-traumatic stress disorder (PTSD) in veterans is characterized by persistent hyperarousal and comorbid anxiety and depressive symptoms that are difficult to monitor and manage outside clinical settings. Thirteen veterans participating in a Project Hero cycling event in Texas were randomized by computer-generated sequence in a naturalistic setting to two arms: (1) digital intervention plus physical activity, or (2) physical activity only, plus a third at-home monitoring control cohort consisting of 7 veterans selected from the broader Project Hero veteran community. Continuous smartwatch sensing combined heart rate and accelerometer features to detect hyperarousal events, which were confirmed in real time by participants. Weekly self-report measures of anxiety, depression, and PTSD severity were collected. Generalized additive mixed models characterized nonlinear trajectories over time. Baseline-normalized hyperarousal trajectories differed significantly across conditions, with the digital intervention group (n=7) showing structured stabilization compared to late-study escalation in the physical-only group (n=3). Both cycling groups exhibited acute symptom improvements during the endurance event; however, the digital intervention group demonstrated a higher overall maintenance of gains. The at-home control group (n=4) showed gradual symptom declines. Perceived precision of ML detections varied substantially across individuals and was positively associated with symptom severity, with higher-severity participants confirming a greater proportion of detected events. These results suggest that coupling wearable detection with digital self-management tools may support stabilization of hyperarousal and symptom improvement while emphasizing the importance of personalization and human-centered design in wearable mental health systems.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
