@@ -1,0 +1,217 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-18T22:26:41.209005+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 3,
+    "deep_cap": 7,
+    "deep_selected": 3,
+    "quick_candidates": 2,
+    "quick_skim_target": 12,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "biorxiv-10-64898-2026-06-13-732027-v1",
+      "source": "biorxiv",
+      "title": "Whos been sleeping in my bedroom? Sleep and cardiorespiratory physiology when co-sleeping with a dog, cat, or child",
+      "abstract": "Co-sleeping with pets or children is common, yet its effects on sleep, cardiorespiratory physiology, and behavioral outcomes are understudied. We examined within-person associations between co-sleeping with a dog, cat, or child and sleep characteristics, measures of cardiorespiratory physiology, and next-day physical activity in 1,649,083 person-days from 11,733 adults wearing the WHOOP wearable device. Participants reported nightly co-sleeping via a daily journal in the devices companion smartphone application, and linear mixed-effects models compared nights with and without co-sleeping within the same individual. Co-sleeping was associated with modest improvements in cardiorespiratory physiology, including lower resting heart rate (0.8-1.1 beats/min), lower respiratory rate (0.04-0.07 breaths/min), and higher heart rate variability (1.41-1.95 ms). Sleep outcomes were mixed, with longer sleep duration (5.5-9.6 min) but more disturbances (0.36-0.40 instances) and slightly less restorative sleep (0.23-1.17%). Associations were generally consistent across groups, although child co-sleeping showed greater sleep disruption. Next-day physical activity was higher following dog and cat co-sleeping (7.6 and 7.4 intensity-weighted min, respectively) but lower following child co-sleeping (2.6 intensity-weighted min). Although effect sizes were small ({beta} range: 0.008-0.045), findings suggest that co-sleeping is associated with a trade-off between modest cardiorespiratory benefits and mild sleep disruption, indicating that co-sleeping decisions may be driven more by personal and contextual factors than by concerns about physiologic impact.",
+      "authors": [
+        "Montoye, A. H.",
+        "Curran, D.",
+        "Grosicki, G. J."
+      ],
+      "primary_category": "physiology",
+      "categories": [
+        "physiology"
+      ],
+      "published": "2026-06-17T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.13.732027v1.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "daily journal via smartphone app for sleep and physiology measurement in natural settings",
+      "llm_evidence_cn": "通过智能手机应用每日日记测量自然环境下的睡眠和生理数据",
+      "llm_evidence": "通过智能手机应用每日日记测量自然环境下的睡眠和生理数据",
+      "canonical_evidence": "通过智能手机应用每日日记测量自然环境下的睡眠和生理数据",
+      "llm_tldr_en": "Analyzes 1.6M person-days from WHOOP wearables to examine within-person effects of co-sleeping with pets/children on sleep and cardiorespiratory physiology.",
+      "llm_tldr_cn": "该研究利用WHOOP可穿戴设备收集了11,733名成年人的164万天数据，结合智能手机应用中的每日日记，分析了与狗、猫或孩子同睡对睡眠特征、心肺生理和次日身体活动的影响。采用线性混合效应模型进行个体内比较，发现同睡与心肺生理适度改善相关。研究展示了生态瞬时评估在睡眠研究中的应用潜力，为理解共睡对健康的影响提供了大规模自然情境证据。",
+      "llm_tldr": "该研究利用WHOOP可穿戴设备收集了11,733名成年人的164万天数据，结合智能手机应用中的每日日记，分析了与狗、猫或孩子同睡对睡眠特征、心肺生理和次日身体活动的影响。采用线性混合效应模型进行个体内比较，发现同睡与心肺生理适度改善相关。研究展示了生态瞬时评估在睡眠研究中的应用潜力，为理解共睡对健康的影响提供了大规模自然情境证据。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "Ecological momentary assessment studies on sleep and mental health",
+      "matched_requirement_id": "req-16",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.18506v1",
+      "source": "arxiv",
+      "title": "Beyond AHI: An Interpretable Causal-Discovery-Guided Framework for Sleep Recovery in Connected Health",
+      "abstract": "Objective sleep assessment relies on polysomnography (PSG), yet clinical impact is often better reflected in patient-reported outcomes (PROs) such as sleepiness and fatigue. Existing summary indices, including the Apnea-Hypopnea Index (AHI), provide limited insight into the multidomain physiology underlying functional recovery. We propose an interpretable, causal-discovery--guided framework for deriving a hierarchical Sleep Recovery Score (SRS) from multimodal PSG. Using two large population cohorts (MESA: n=1540; MrOS: n=825), we apply directed acyclic graph (DAG) learning to identify candidate physiological drivers spanning respiratory burden, hypoxic burden, sleep fragmentation, sleep architecture, and autonomic regulation. Although derived from clinical PSG, these domains map naturally to sensing streams increasingly available in connected health technologies, including wearable ECG, oximetry, and sleep-stage estimation devices. To preserve mechanistic plausibility, we introduce a two-stage screening process that combines physiology-based constraints with constrained LLM-assisted auditing to identify and remove structural confounders and construct-overlapping variables. Across cohorts, these five domains emerge as recurrent physiological domains associated with recovery, and the resulting SRS shows up to 2.5$\\times$ stronger alignment with perceived recovery than AHI. By linking multimodal sleep physiology to patient-centered outcomes through an interpretable, bias-aware, and domain structured framework, this work provides a practical foundation for recovery modeling across both clinical sleep studies and emerging smart and connected health settings.",
+      "authors": [
+        "Saba A. Farahani",
+        "Elahe Khatibi",
+        "Manoj Vishwanath",
+        "Amir M. Rahmani",
+        "Hung Cao"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "eess.SP",
+        "stat.AP"
+      ],
+      "published": "2026-06-16T21:38:40+00:00",
+      "link": "https://arxiv.org/pdf/2606.18506v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "presents a Sleep Recovery Score (SRS) from multimodal PSG for objective sleep assessment",
+      "llm_evidence_cn": "提出了一个基于多模态PSG的睡眠恢复评分（SRS）用于客观睡眠评估",
+      "llm_evidence": "提出了一个基于多模态PSG的睡眠恢复评分（SRS）用于客观睡眠评估",
+      "canonical_evidence": "提出了一个基于多模态PSG的睡眠恢复评分（SRS）用于客观睡眠评估",
+      "llm_tldr_en": "Proposes an interpretable causal-discovery-guided framework deriving a hierarchical Sleep Recovery Score from multimodal PSG, improving over AHI for sleep recovery assessment.",
+      "llm_tldr_cn": "针对传统睡眠指标AHI无法充分反映患者功能恢复的局限，本文提出一个基于因果发现的可解释框架，从多模态多导睡眠图中提取层次化睡眠恢复评分（SRS）。在MESA和MrOS两个队列中验证，SRS整合了呼吸、缺氧、睡眠碎片等多域生理信息，优于AHI，为睡眠质量评估提供了更全面的指标。该评分有望在互联健康环境中指导个性化睡眠干预。",
+      "llm_tldr": "针对传统睡眠指标AHI无法充分反映患者功能恢复的局限，本文提出一个基于因果发现的可解释框架，从多模态多导睡眠图中提取层次化睡眠恢复评分（SRS）。在MESA和MrOS两个队列中验证，SRS整合了呼吸、缺氧、睡眠碎片等多域生理信息，优于AHI，为睡眠质量评估提供了更全面的指标。该评分有望在互联健康环境中指导个性化睡眠干预。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.18596v1",
+      "source": "arxiv",
+      "title": "Better Adherence, Richer Context: A Field Evaluation of LLM-Powered Conversational Voice Diaries for Sleep",
+      "abstract": "Sleep diaries are central to behavioral sleep medicine and cognitive behavioral therapy for insomnia, yet daily completion is difficult to sustain, and static forms often provide limited context for interpreting night-to-night sleep variation. We designed an LLM-powered conversational voice diary that delivers clinically grounded morning and evening sleep diary questions through proactive smart-speaker prompts, structured conversational intake, and adaptive follow-up dialogue. We evaluated the system in a four-week between-subjects field study with 30 university students, comparing it with a text-based mobile diary using matched diary items, reporting windows, and reminder intervals. Compared with the text-based diary, the conversational voice diary showed higher adherence and elicited more detailed contextual self-report about routines, stressors, environmental conditions, and other sleep-related factors. Participants also described the voice diary as easier to integrate into daily routines, despite longer perceived completion time. However, voice-based conversational intake produced lower completeness for some structured diary fields, revealing a trade-off between expressive richness and structured precision. These findings show both the promise and the challenge of using LLM-powered conversational voice assistants for longitudinal health self-report.",
+      "authors": [
+        "Amama Mahmood",
+        "Bokyung Kim",
+        "Honghao Zhao",
+        "Molly E. Atwood",
+        "Luis F. Buenaver",
+        "Michael T. Smith",
+        "Chien-Ming Huang"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.AI"
+      ],
+      "published": "2026-06-17T01:46:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.18596v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LLM-powered conversational voice diary for sleep assessment in natural settings",
+      "llm_evidence_cn": "基于大语言模型的对话式语音睡眠日记，在自然环境中进行生态瞬时评估",
+      "llm_evidence": "基于大语言模型的对话式语音睡眠日记，在自然环境中进行生态瞬时评估",
+      "canonical_evidence": "基于大语言模型的对话式语音睡眠日记，在自然环境中进行生态瞬时评估",
+      "llm_tldr_en": "This paper presents an LLM-powered conversational voice diary for sleep assessment, evaluated in a field study with 30 students, showing better adherence and richer context than text diaries.",
+      "llm_tldr_cn": "该论文针对睡眠日记依从性低且静态表格无法提供丰富情境的问题，提出了一种基于大语言模型的对话式语音睡眠日记系统，通过智能音箱主动询问并进行适应性对话。在为期四周的实地研究中，30名大学生参与实验，与文本日记相比，该系统显著提高了日记完成度，并收集到更详细的睡眠情境信息，为生态瞬时评估在睡眠和心理健康领域的应用提供了有力工具。",
+      "llm_tldr": "该论文针对睡眠日记依从性低且静态表格无法提供丰富情境的问题，提出了一种基于大语言模型的对话式语音睡眠日记系统，通过智能音箱主动询问并进行适应性对话。在为期四周的实地研究中，30名大学生参与实验，与文本日记相比，该系统显著提高了日记完成度，并收集到更详细的睡眠情境信息，为生态瞬时评估在睡眠和心理健康领域的应用提供了有力工具。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ecological momentary assessment EMA in sleep and mental health",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.15526v1",
+      "source": "arxiv",
+      "title": "Latent Variable Models for Distributional Features",
+      "abstract": "Analyzing the mean response of study subjects in psychological research is a standard, well-justified practice. However, theoretical arguments and empirical evidence also suggest that there is value in investigating other aspects of the distribution of such responses, such as their variability or skewness.   A particular challenge that practitioners face is statistical modeling of associations between distributional features and other outcomes of interest. The most common approach is to perform estimation in two steps: distributional features are estimated first, and then those estimates are used as predictors for the relevant outcomes. Such an approach is most amenable to implementation in standard statistical software, but it ignores estimation error and can therefore lead to biased estimates and increased error rates.   We introduce Distributional Feature Latent Variable Models (DFLVM), a general framework that represents between-person difference in distributional features as random intercepts. These intercepts can be simultaneously used as predictors for downstream outcomes and their associations estimated in a single estimation step. We compare the performance of our approach against two-step procedures in a simulation study and through a re-analysis of a real dataset.",
+      "authors": [
+        "Luna Fazio",
+        "Paul-Christian Bürkner"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-06-14T00:50:47+00:00",
+      "link": "https://arxiv.org/pdf/2606.15526v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "provides latent variable models for distributional features, applicable to EMA data analysis in psychological studies",
+      "llm_evidence_cn": "提供用于分布特征的潜变量模型，可应用于心理研究中的EMA数据分析",
+      "llm_evidence": "提供用于分布特征的潜变量模型，可应用于心理研究中的EMA数据分析",
+      "canonical_evidence": "提供用于分布特征的潜变量模型，可应用于心理研究中的EMA数据分析",
+      "llm_tldr_en": "Proposes latent variable models that jointly model mean and distributional features for psychological research, with potential application to EMA data.",
+      "llm_tldr_cn": "在心理研究中，传统方法只关注反应均值，忽视分布特征如变异性和偏斜，导致信息丢失。本文提出一类潜变量模型，可同时建模均值和分布特征，并采用联合估计避免两步法的误差传播。该方法特别适用于EMA等密集采样数据，能更准确地揭示心理过程与结局变量的关联，为利用分布特征进行心理动态分析提供了有效统计工具。",
+      "llm_tldr": "在心理研究中，传统方法只关注反应均值，忽视分布特征如变异性和偏斜，导致信息丢失。本文提出一类潜变量模型，可同时建模均值和分布特征，并采用联合估计避免两步法的误差传播。该方法特别适用于EMA等密集采样数据，能更准确地揭示心理过程与结局变量的关联，为利用分布特征进行心理动态分析提供了有效统计工具。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "EMA use in psychological studies",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-06-06-729437-v1",
+      "source": "biorxiv",
+      "title": "Social Jet Lag Estimated From CPAP Adherence Data in Two Obstructive Sleep Apnea Cohorts",
+      "abstract": "BackgroundSocial jet lag (SJL), the discrepancy timing between work nights and free nights, reflects schedule-related circadian misalignment. Time-stamped CPAP adherence records may provide objective, longitudinal estimates of sleep timing and could augment conventional CPAP reports by adding information on sleep regularity and weekday-weekend misalignment.\n\nObjectivesTo quantify CPAP-derived SJL in two independent clinical cohorts, characterize its behavioral correlates and age-related patterns, and assess cross-site reproducibility.\n\nMethodsWe analyzed CPAP-derived sleep timing in patients from Rutgers-RWJ Health (RWJ, N = 1,437) and Hackensack Meridian Health (HMH, N = 1,510) with at least 31 valid nights and at least one valid work night and free night. Mid-sleep on work nights (MSW) and free nights (MSF) was estimated using circular statistics. SJL was defined as the absolute circular difference between MSF and MSW and categorized as none (<1 h), moderate (1-2 h), or severe ([&ge;]2 h). Sleep duration, free-night rebound, age-stratified prevalence, and cross-site differences were evaluated using nonparametric and categorical tests.\n\nResultsSJL was right-skewed at both sites, with median values below 0.5 h at RWJ and HMH. SJL >1 h was present in 21.2% and 16.4% of patients, respectively; severe SJL occurred in 4.0% and 2.8%. Moderate and severe SJL were associated with shorter work-night sleep and greater free-night rebound, consistent with weekday restriction and weekend compensation. SJL prevalence and variability were highest in younger and middle-aged adults, particularly those aged 26-50 years, and declined markedly after age 65. Core timing phenotypes, including MSW, MSF, and free-night rebound, were highly reproducible across sites despite modest differences in absolute sleep duration and overall SJL prevalence.\n\nConclusionsIn CPAP-treated cohorts, SJL is common but usually modest, is associated with weekday sleep restriction and free-night rebound, and declines substantially with age. These findings support the use of routinely collected CPAP data as a scalable, low-burden source of device-anchored circadian screening phenotypes. CPAP-derived SJL may augment standard adherence reports by helping identify patients who warrant further behavioral, circadian, or activity-based assessment.",
+      "authors": [
+        "Yousef, Z.",
+        "Ramabadran, V.",
+        "Scharf, M.",
+        "Androulakis, I. P."
+      ],
+      "primary_category": "physiology",
+      "categories": [
+        "physiology"
+      ],
+      "published": "2026-06-10T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.06.729437v1.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "estimates social jet lag from CPAP adherence data, providing objective sleep timing assessment",
+      "llm_evidence_cn": "利用CPAP依从性数据估计社交时差，提供客观睡眠定时评估",
+      "llm_evidence": "利用CPAP依从性数据估计社交时差，提供客观睡眠定时评估",
+      "canonical_evidence": "利用CPAP依从性数据估计社交时差，提供客观睡眠定时评估",
+      "llm_tldr_en": "Uses CPAP adherence records to quantify social jet lag in two sleep apnea cohorts, showing age-related patterns and cross-site reproducibility.",
+      "llm_tldr_cn": "睡眠时差（SJL）反映昼夜节律失调。本文利用CPAP依从性数据在两个阻塞性睡眠呼吸暂停队列中估计SJL，发现年龄相关模式，并验证跨站点可重复性。该方法为客观评估睡眠规律性提供新途径。",
+      "llm_tldr": "睡眠时差（SJL）反映昼夜节律失调。本文利用CPAP依从性数据在两个阻塞性睡眠呼吸暂停队列中估计SJL，发现年龄相关模式，并验证跨站点可重复性。该方法为客观评估睡眠规律性提供新途径。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

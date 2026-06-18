@@ -6,35 +6,37 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-17
-- 运行时间：2026-06-17 22:23:55 UTC
+- 最新运行日期：2026-06-18
+- 运行时间：2026-06-18 22:29:33 UTC
 - 运行状态：成功
 - 本次总论文数：5
 - 精读区：3
 - 速读区：2
 
 ### 今日简报（AI）
-今日精读2篇高分论文，速读2篇7分研究，聚焦环境与行为对光照暴露的影响、情感文本预测的改进方向。最值得关注：个人光照暴露的9分研究揭示行为与环境的决定作用；情感预测与情感预报的8分研究区分了纵向文本的不同信息源。建议普通读者留意健康日常基础设施和个人化移动健康行为预测模型的实际应用价值。
-- 详情：[/202606/17/README](/202606/17/README)
+今日精选5篇睡眠研究，重点聚焦共睡生理影响与睡眠恢复新框架。
+最值得看《谁睡在我的卧室？》揭示与宠物或孩子同睡对心肺生理的影响（9分），以及《超越AHI》提出的因果发现模型。
+建议普通读者关注共睡与睡眠质量的关联，同时留意社交时差对CPAP治疗依从性的影响。
+- 详情：[/202606/18/README](/202606/18/README)
 
 ### 精读区论文标签
-1. [Environmental and behavioural determinants of the personal light exposome](/202606/17/biorxiv-10-64898-2026-06-04-730226-v2-environmental-and-behavioural-determinants-of-the-personal-light-exposome)  
+1. [Whos been sleeping in my bedroom? Sleep and cardiorespiratory physiology when co-sleeping with a dog, cat, or child](/202606/18/biorxiv-10-64898-2026-06-13-732027-v1-whos-been-sleeping-in-my-bedroom-sleep-and-cardiorespiratory-physiology-when-co-sleeping-with-a-dog-cat-or-child)  
    标签：评分：9.0/10、query:sleep-mental
-   evidence：使用重复情境评估（EMA方法）研究光暴露、昼夜节律和神经行为健康
-2. [From Affect Prediction to Affect Forecasting: Evidence for Distinct Information Sources in Longitudinal Text](/202606/17/2606.16687v1-from-affect-prediction-to-affect-forecasting-evidence-for-distinct-information-sources-in-longitudinal-text)  
-   标签：评分：8.0/10、query:ema-mental
-   evidence：纵向自我报告生态随笔和情感词条目
-3. [How to Catch a Blank Mind? Brain Similarities and Differences between Self- and Probe-Caught Mind Blanking](/202606/17/biorxiv-10-64898-2026-06-10-731344-v1-how-to-catch-a-blank-mind-brain-similarities-and-differences-between-self--and-probe-caught-mind-blanking)  
-   标签：评分：8.0/10、query:ema-mental
-   evidence：比较了自我捕捉和探针捕捉的经验取样方法
+   evidence：通过智能手机应用每日日记测量自然环境下的睡眠和生理数据
+2. [Beyond AHI: An Interpretable Causal-Discovery-Guided Framework for Sleep Recovery in Connected Health](/202606/18/2606.18506v1-beyond-ahi-an-interpretable-causal-discovery-guided-framework-for-sleep-recovery-in-connected-health)  
+   标签：评分：8.0/10、query:sleep-mental
+   evidence：提出了一个基于多模态PSG的睡眠恢复评分（SRS）用于客观睡眠评估
+3. [Better Adherence, Richer Context: A Field Evaluation of LLM-Powered Conversational Voice Diaries for Sleep](/202606/18/2606.18596v1-better-adherence-richer-context-a-field-evaluation-of-llm-powered-conversational-voice-diaries-for-sleep)  
+   标签：评分：8.0/10、query:sleep-mental
+   evidence：基于大语言模型的对话式语音睡眠日记，在自然环境中进行生态瞬时评估
 
 ### 速读区论文标签
-1. [Personal Care Utility: Health as Everyday Infrastructure](/202606/17/2606.14145v1-personal-care-utility-health-as-everyday-infrastructure)  
-   标签：评分：7.0/10、query:sleep-mental
-   evidence：用于连续健康信号的动态评估基础设施
-2. [A Comparative Study of Deep Learning Architectures for Multi-Horizon Behavioural Forecasting for Mobile Health](/202606/17/2606.14604v1-a-comparative-study-of-deep-learning-architectures-for-multi-horizon-behavioural-forecasting-for-mobile-health)  
-   标签：评分：7.0/10、query:ema-mental
-   evidence：移动健康行为预测
+1. [Latent Variable Models for Distributional Features](/202606/18/2606.15526v1-latent-variable-models-for-distributional-features)  
+   标签：评分：6.0/10、query:ema-mental
+   evidence：提供用于分布特征的潜变量模型，可应用于心理研究中的EMA数据分析
+2. [Social Jet Lag Estimated From CPAP Adherence Data in Two Obstructive Sleep Apnea Cohorts](/202606/18/biorxiv-10-64898-2026-06-06-729437-v1-social-jet-lag-estimated-from-cpap-adherence-data-in-two-obstructive-sleep-apnea-cohorts)  
+   标签：评分：6.0/10、query:sleep-mental
+   evidence：利用CPAP依从性数据估计社交时差，提供客观睡眠定时评估
 
 
 <div class="dpr-home-promo-card">

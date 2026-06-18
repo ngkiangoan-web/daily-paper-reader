@@ -1,0 +1,539 @@
+Title: Latent Variable Models for Distributional Features
+
+URL Source: https://arxiv.org/pdf/2606.15526v1
+
+Published Time: Tue, 16 Jun 2026 01:11:06 GMT
+
+Number of Pages: 26
+
+Markdown Content:
+# Latent Variable Models for Distributional Features 
+
+## Luna Fazio 1∗, Paul-Christian B¨ urkner 1 
+
+> 1
+
+Department of Statistics, TU Dortmund University, Germany  
+
+> ∗
+
+Corresponding author; Email: bmfaziol@gmail.com 
+
+Abstract 
+
+Analyzing the mean response of study subjects in psychological research is a standard, well-justified practice. However, theoretical arguments and empirical evidence also suggest that there is value in investigating other aspects of the distribution of such responses, such as their variability or skewness. A particular challenge that practitioners face is statistical modeling of associations between distributional features and other outcomes of interest. The most common approach is to perform estimation in two steps: distributional features are estimated first, and then those estimates are used as predictors for the relevant outcomes. Such an approach is most amenable to implementation in standard statistical software, but it ignores estimation error and can therefore lead to biased estimates and increased error rates. We introduce Distributional Feature Latent Variable Models (DFLVM), a general framework that represents between-person difference in distributional features as random intercepts. These intercepts can be simultaneously used as predictors for downstream outcomes and their associations estimated in a single estimation step. We compare the performance of our approach against two-step procedures in a simulation study and through a re-analysis of a real dataset. 
+
+Keywords— Psychometrics, distributional regression, structural equation modeling, Bayesian inference 
+
+# 1 Introduction 
+
+A common approach to measurement in psychology consists of taking the mean or sum score of participant responses on some multi-item scale (Sijtsma, Ellis, & Borsboom, 2024). Participants that attain the same score may simultaneously exhibit very different item-level response patterns, and those differences can be characterized through various statistical summaries such as the standard deviation, skewness, or range of the responses. We will generically refer to such features of the data which go “beyond the mean” as distributional features . A natural question is whether inter-personal differences in distributional features reflect valuable information for psychometric measurement. 1
+
+> arXiv:2606.15526v1 [stat.ME] 14 Jun 2026
+
+Latent Variable Models for Distributional Features This question has been approached from two distinct traditions. In the psychometric literature, recent empirical investigations have looked into the added predictive value of distributional features computed directly from scale responses, with mixed results (Dejonckheere et al., 2019; Houben, Van Den Noortgate, & Kuppens, 2015; Mader, Arslan, Schmukle, & Rohrer, 2023; Nielsen, Thielmann, & Pfattheicher, 2023). Meanwhile, in the cognitive modeling literature, behavioral data is analyzed with process models whose parameters relate substantively meaningful parameters (such as drift rate and boundary separation in the drift-diffusion model; Ratcliff & McKoon, 2008) that are simultaneously related to the mean and other distributional features of the response. The resulting estimates can then be used as predictors of downstream outcomes such as intelligence (Frischkorn & Schubert, 2018). Both traditions share the underlying idea that richer characterizations of individual response distributions can carry meaningful person-level information that is not captured by the mean alone. Our paper is motivated by a methodological limitation that has been recognized across both traditions. When distributional features – whether summary statistics of scale responses or estimated parameters of a cognitive model – are treated as directly observable quantities, this entails a two-step estimation process in which a point estimate of the distributional feature is first obtained and then used as a predictor or covariate. Because such an approach ignores estimation error, it does not adequately propagate uncertainty, leading to inflated Type I error and negative bias on the associated parameters (Frischkorn, Schubert, Neubauer, & Hagemann, 2016; Jahng, Wood, & Trull, 2008). Frischkorn and Schubert (2018) explicitly identify this problem in the cognitive modeling tradition and recommend hierarchical Bayesian estimation as the principled remedy, while noting that practical adoption remains limited by the scarcity of accessible software implementations. This problem has been similarly recognized in the psychometric literature: Wang, Hamaker, and Bergeman (2012) investigate the association between inter-individual variability in negative affect and health outcomes, and note the aforementioned issues with using a two-step procedure to obtain a point estimate of variability before regressing it on another outcome. While the authors in this case also implement a Bayesian single-step procedure, their implementation is specific to the analysis at hand and would demand additional expertise from researchers wishing to build on it. For instance, a key result from Mader et al. (2023) is that failing to account for floor and ceiling effects in item scale responses leads to losses in power, but dealing with this requires the specification of a censored observational model. We propose a general modeling framework where distributional features are treated as latent variables, represented via person-specific random intercepts. This enables single-step estimation that fully propagates uncertainty. Further, it can accommodate more sophisticated modeling choices (e.g., censoring), allowing it to be readily applied to both item response data in a psychometric context as well as behavioral measurements used in cognitive process models. 2Latent Variable Models for Distributional Features 
+
+## 1.1 Distributional features in psychology 
+
+To situate our contribution more broadly, we briefly review the two main roles that distributional features have played in psychological research and give examples of each. There are two ways in which distributional features can be used in an analysis which we wish to distinguish for clarity. On the one hand, distributional features can be of direct interest as part of the model for a response variable. A classic example is that of a heteroscedastic linear regression model, in which the scale parameter of the response distribution can be predicted separately from the mean parameter (Harvey, 1976). More generally, such models fall under the framework of generalized additive models for location, scale and shape (GAMLSS, Stasinopoulos, 2017), also referred to as distributional regression models (Fahrmeir, Kneib, Lang, and Marx, 2021, Chapter 10; B¨ urkner, 2021). On the other hand, distributional features can instead be used as explanatory variables that predict other outcomes in a model. This is a less common approach for which there does not appear to be a general naming convention, so we adopt the term distributional covariates to refer to such an approach. In any case, both approaches have applications in psychology and we review some examples below. For starters, the classic definition of measurement invariance given by Meredith (1993) contemplated the possibility of response models with general parametric differences between subpopulations. A statistical model to account for those differences was introduced in Bauer and Hussong (2009) (Moderated Nonlinear Factor Analysis, shortened as MNLFA), which can be understood as involving a distributional regression component on the variance parameters of a factor model. More recently, Wiedermann, Zhang, Reinke, Herman, and Von Eye (2022) demonstrated that distributional regression can be used for detecting effects in interventional settings in addition to those that appear on the mean, or even when the latter are absent. Clearly, the distributional regression perspective is one with a long-standing presence in the psychological literature and one for which well-established estimation frameworks are widely available. In contrast, when it comes to the use of distributional covariates, the literature does not appear to have coalesced around a common modeling framework. A long line of research has investigated whether the variability of responses, both across items within a single scale administration and across repeated measurements over time, carries predictive value for outcomes such as well-being and adjustment (Baird, Le, & Lucas, 2006; Houben et al., 2015; Wang et al., 2012), with more recent work examining this question in a systematic and broad-ranging manner (Dejonckheere et al., 2019; Nielsen et al., 2023). The general finding has been that few among the many possible distributional summaries add meaningful predictive value beyond the mean. This inconclusive picture may partially be an artifact of i) inappropriate handling of estimation uncertainty leading to inflated error rates and biased estimates (Jahng et al., 2008) and ii) loss of power due to omission of floor and ceiling effects (Mader et al., 2023). The lack of freely available, user-friendly, and sufficiently flexible frameworks for modeling of distributional covariates is a non-trivial obstacle for practitioners, which could partly explain why such issues persist even in recent literature. 3Latent Variable Models for Distributional Features 
+
+## 1.2 Our contributions 
+
+1. We propose an estimation framework that represents between-person variation in distributional features as latent variables and simultaneously allows their use as downstream covariates. 2. We investigate the impact of using these distributional covariates in single-step estimation compared with two-step estimation approaches that only use point estimates of distributional features. 3. We evaluate our framework both via extensive simulation studies and analyses of real-world data. 
+
+# 2 Method 
+
+Previous work investigating distributional features has largely focused on direct summaries of the data such as observed variances, skewness, response ranges, among other more sophisticated metrics (see Dejonckheere et al., 2019; Nielsen et al., 2023). We take a different approach, and propose the use of latent variable models to represent the information contained in distributional features, a framework which we refer to as a Distributional Feature Latent Variable Model (DFLVM). This framing facilitates a general discussion of the statistical issues at play during estimation, and allows for more direct connections to be drawn between the theories that motivate the use of distributional features and their formal implementations. In this section, we formally introduce the DFLVM framework and provide an overview of the statistical considerations that their use raises. We defer a discussion of substantive implications of using latent variable models for distributional features to Section 5. 
+
+## 2.1 Measurement model for distributional features 
+
+Consider a setting with 𝑁 participants indexed by 𝑛 ∈ { 1, . . . , 𝑁 }, each of which has been measured a total of 𝑀 𝑛 times through some observable 𝑋 . Let the probability distribution of 𝑋 be denoted by D(θ), parameterized in terms of a vector of 𝑃 parameters θ = (𝜃 1, . . . , 𝜃 𝑃 ). We use a hierarchical structure to capture person- and parameter-specific variation. Let U = (𝑈 11 , . . . , 𝑈 𝑁 𝑃 ) be a vector of normally distributed random intercepts with length 𝑁 × 𝑃 and covariance matrix Σ. Then, observations of 𝑋 can be used to construct a the measurement model for a distributional feature: 
+
+U ∼ Normal (0, Σ)
+
+𝜃 𝑛𝑝 = 𝑔 −1 
+
+> 𝑝
+
+(𝛼 𝑝 + 𝑈 𝑛𝑝 )
+
+𝑋 𝑛𝑚 ∼ D(θ𝑛 )
+
+𝑛 ∈ { 1, . . . , 𝑁 }, 𝑝 ∈ { 1, . . . , 𝑃 }
+
+𝑚 ∈ { 1, . . . , 𝑀 𝑛 },
+
+(1) 4Latent Variable Models for Distributional Features where 𝛼 𝑝 is the global intercept of its corresponding parameter and 𝑔 𝑝 is some appropriate link function. The components of the vector U will be later used as distributional covariates. We do not require the measurements 𝑋 𝑛𝑚 to be univariate. For example, evidence accumulation models (Ratcliff & McKoon, 2008) take bivariate measurements (reaction time + decision) and often have multiple distributional parameters, for each of which a measurement model can be constructed. From a statistical perspective, the distributional covariates U simply are random intercepts that appear on the linear predictors of parameters θ, but this also corresponds to a latent variable representation. To see this, consider the case where 𝑃 = 1. Frequently, the first parameter of a distribution corresponds to its mean, in this case represented by 𝜃 1. Then, the model in Equation 1 is equivalent to a simple confirmatory factor analysis (CFA) model, where 𝑈 𝑛 1 is the latent trait for subject 𝑛 , which loads on the set of measurements 𝑋 𝑛𝑚 with factor loadings fixed to 1. That is a well-studied setting, so our interest in developing DFLVMs lies in the case where 𝑃 > 1, with parameters that are related to the distributional features of the measurements. Given the comparison drawn above, a natural question is whether factor loadings can also be estimated in a DFLVM. One can readily show that this is possible for the scale parameter of a normally distributed response (see Section 2.2 of Fazio and B¨ urkner, 2025), but this is not the focus of the present paper. 
+
+## 2.2 Distributional features as distributional covariates 
+
+As detailed in Section 1.1, we are interested in the case where variation in distributional features can be used to predict other outcomes. For the purposes of this paper, a generalized linear regression model suffices to demonstrate the relevant principles of this second modeling step. Building on the setup for Equation 1, consider a random variable 𝑌 with distribution D′, a mean parameter 𝜇 , a link function 𝑔 ′, and additional parameters 𝜉 , which has been collected from the same set of 𝑁 participants. Then, the expected value of 𝑌 is related to the distributional features of 
+
+𝑋 through 
+
+𝑌 𝑛 ∼ D′(𝜇 𝑛 , 𝜉 )
+
+𝜇 𝑛 = 𝑔 ′− 1 (𝛽 0 + 𝛽 1𝑈 𝑛 1 + · · · + 𝛽 𝑃 𝑈 𝑛𝑃 ). (2) We refer to this component as the second-stage model. Taken together, Equation 1 and Equation 2 form the DFLVM. We are primarily interested in estimating the regression coefficients 𝛽 {1,...,𝑃 }
+
+that quantify the impact of the distributional covariates U on the second-stage outcome 𝑌 . The notation above is kept simple for expository purposes. The outcome 𝑌 can be either a manifest or latent variable (in which case we leave its measurement model unspecified here) and it may admit additional parameters 𝜉 other than the mean 𝜇 on which distributional covariates could be placed. 5Latent Variable Models for Distributional Features 
+
+Standardized coefficients 
+
+In some circumstances (e.g., when investigating within-person associations over time, Wang, Zhang, Maxwell, and Bergeman (2019)), it may be of interest to compare a standardized version of the coefficients 𝛽 {1,...,𝑃 } instead of their raw values. Standardization can be conducted relative to the scale of the covariates, the response, or both. The methods we compare in this paper only vary in how the estimate and process the covariates U, so we standardize by the scale of the covariates only: 
+
+𝑏 𝑝 = 𝛽 𝑝 × SD (𝑈 𝑝 ), (3) where 𝑏 𝑝 represents the standardized version of 𝛽 𝑝 and SD (𝑈 𝑝 ) is the standard deviation of the corresponding distributional covariate. If written in terms of estimates, rather than true values, the estimates ˆ𝑏 𝑝 of the standardized coefficients 𝑏 𝑝 are computed as 
+
+ˆ𝑏 𝑝 = ˆ𝛽 𝑝 × SD (𝑈 𝑝 ), (4) where both ˆ𝛽 𝑝 and SD (𝑈 𝑝 ) are specific to the estimation method (see below). 
+
+Form of the distributional covariate 
+
+When using distributional features as covariates, the analyst must make a choice regarding the form in which its value enters into the predictor. An approach commonly taken in the literature is to take data summaries as predictors. Because of the many possible summaries that one can concoct, this can introduce a large number of researcher degrees of freedom (Simmons, Nelson, & Simonsohn, 2011). For instance, Table 1 of Dejonckheere et al. (2019) illustrates nine different summaries that have been proposed for the analysis of affect dynamics. In the case of Nielsen et al. (2023), eleven summaries beyond the mean are considered, including the standard deviation, range, and skew. By contrast, Wang et al. (2012) takes a model-based approach and uses the random intercepts that represent inter-personal differences in the distributional parameter of interest. The differing approaches illustrate that the choice of form in which to represent the distributional covariate is not obvious. Our proposed DFLVM formulation more explicitly frames that choice as part of the model-building exercise by introducing link functions which relate distributional parameters to person-specific latent variables. In the case of, e.g. standard deviations, trying a log link would be a natural first choice, while a scaled logit link could be suitable for correlations. That said, constructing a parametric representation of general data summaries is not always a straightforward task, but we defer discussion of this point to Section 5. Our results in Section 3 demonstrate that choosing to use a distributional feature directly in place of the latent person-specific component can lead to very different assessments of model fit. 6Latent Variable Models for Distributional Features 
+
+## 2.3 Estimation 
+
+In this paper, all models are estimated within the Bayesian framework. In a Bayesian estimation procedure, one aims to obtain a posterior probability distribution over plausible parameter values given the observed data. This requires defining both a likelihood function and a prior distribution (for an introduction to Bayesian inference, see McElreath, 2020). Using 𝜋 to denote a probability density function, we can write the joint likelihood implied by Equations 1 and 2 as 
+
+𝐿 (x, y | U, Σ, α, β, 𝜉 ) =
+
+
+
+> 𝑁
+
+Ö
+
+> 𝑛 =1
+
+𝜋 (𝑦 𝑛 | β, U, 𝜉 )
+
+> 𝑀
+
+Ö
+
+> 𝑚 =1
+
+𝜋 (𝑥 𝑛𝑚 | θ𝑛 )
+
+!©«
+
+> 𝑃
+
+Ö
+
+> 𝑝 =1
+
+𝜋 (𝜃 𝑛𝑝 | 𝛼 𝑝 , 𝑈 𝑛𝑝 )ª®¬
+
+𝜋 (U | Σ). (5) Leaving the priors unspecified for now, we can write the posterior up to proportionality as 
+
+𝜋 (U, Σ, α, β, 𝜉 | x, y) ∝ 𝐿 (x, y | U, Σ, α, β, 𝜉 )𝜋 (Σ)𝜋 (α)𝜋 (β)𝜋 (𝜉 ). (6) The main practical challenge for Bayesian inference is computation of the posterior distribution, which generally requires the use of approximation methods. We use the Markov chain Monte Carlo (MCMC) sampler implemented in the Stan probabilistic programming language (Stan Development Team, 2026). The output of MCMC is a sequence of samples (known as a chain ) intended to represent the target distribution, but the quality of the approximation always needs to be verified. We describe the criteria we use to assess convergence at the end of Section 3.2. 
+
+Prior specification 
+
+In the ideal Bayesian workflow, all model parameters are given priors that represent a relevant state of knowledge that will be updated through the likelihood as new data arrives (Gelman et al., 2020; Koenig, Depaoli, Liu, & Van De Schoot, 2021). The purpose of this paper, however, is to investigate general conditions for which estimation of a DFLVM is viable. Hence, we use very weakly informative priors in our case studies (Gelman, Simpson, & Betancourt, 2017). We show the exact priors being used along with the model descriptions in Section 3 and 4. 
+
+## 2.4 Two-step approaches and estimation error 
+
+As discussed in Section 1.1, two-step estimation is the most commonly used approach for models that involve distributional covariates, even if this is not always explicitly framed as such. For instance, the various data summaries investigated in Nielsen et al. (2023) can be seen as the result of a first stage where a point value for the distributional feature is estimated, followed by a second stage where those estimates are used as distributional covariates, as if they had been directly observed. 7Latent Variable Models for Distributional Features Another approach, discussed by Wang et al. (2012), proceeds by estimating the random intercepts that represent the person-specific component of the observed variability in negative affect. Those point estimates are then used as distributional covariates to predict health outcomes. The authors recognized that the approach does not propagate the uncertainty in the random intercepts, and additionally developed a model for single-step Bayesian estimation. The advantage of two-step approaches for practitioners is that each stage can generally be reduced to a model simple enough to fit within already-existing estimation frameworks. This is illustrated by the more recent example of Mader et al. (2023), where the authors also investigated between-person variability in negative affect, this time relating it to neuroticism. While they do not cite Wang et al. (2012), they converged to essentially the same two-step procedure, both acknowledging the issue of uncertainty propagation and that a single-step approach would require a custom implementation that goes beyond the types of model that can be represented in standard software. To elaborate on the matter of uncertainty propagation, the issue stems from the fact that distributional features have to be estimated from data, and hence are subject to estimation error. A central finding from the measurement error literature is that using covariates measured with error in a regression model without accounting for that can lead to biased and inconsistent estimates of the corresponding coefficient, and to inflated test error rates. Gustafson (2021) provides a comprehensive overview of key results about the impact of measurement error under various conditions. Estimation error constitutes a particular kind of measurement error in this context, and hence introduces the aforementioned problems. At the same time, because estimation error decreases with the number of repeated measurements, its practical effect may be ignorable in certain circumstances (Ram et al., 2005). We investigate these issues in Section 3 via simulations. 
+
+# 3 Simulations 
+
+We conduct extensive simulations to assess the performance of single-step DFLVM estimation as compared with two other two-step procedures. One approach, exemplified by Nielsen et al. (2023), takes the person-specific value of a distributional feature (in this case a standard deviation) directly as the distributional covariate. The other approach, demonstrated by Wang et al. (2012) and Mader et al. (2023), estimates random intercepts that model the between-person variation in the distributional feature and then uses their point estimates as the distributional covariate. For brevity, we will henceforth refer to the first approach as Full Parameter (FP) and to the second one as Latent Component (LC). 
+
+## 3.1 Computational setup 
+
+Our simulations were implemented in the R programming language (R Core Team, 2023). We specified our models in the brms package (B¨ urkner, 2017), which provides a user-friendly interface 8Latent Variable Models for Distributional Features for generation of Stan code (Stan Development Team, 2026). 1 To facilitate reproducibility, the simulation pipeline is implemented using the targets framework (Landau, 2021). Full code is available via an online repository. 2
+
+## 3.2 Performance metrics 
+
+The coefficients β = 𝛽 {1,...,𝑃 }, which express the impact of the distributional covariates on the outcome 𝑌 , are the primary parameters of interest in contexts where a DFLVM would be applied. Therefore, we focus on assessing estimation performance for those parameters. We consider both the unstandardized coefficient 𝛽 and its standardized version 𝑏 , as defined in Equation 3. In the case of the DFLVM, standardization is performed during fitting on a per-sample basis, whereas two-step models use the standard deviation of the vector of point estimates of the distributional covariates, which is obtained during the first stage. To evaluate parameter recovery, we use bias and the Root Mean Squared Error (RMSE). If 𝑆 is the number of simulations, ˆ𝛽 (𝑠 ) the estimated posterior mean, and 𝛽 (𝑠 ) the true coefficient of the 𝑠 th simulation, we have Bias = 1
+
+𝑆 
+
+> 𝑆
+
+∑︁ 
+
+> 𝑠 =1
+
+( ˆ𝛽 (𝑠 ) − 𝛽 (𝑠 ) ), (7) RMSE =
+
+vut 1
+
+𝑆 
+
+> 𝑆
+
+∑︁ 
+
+> 𝑠 =1
+
+( ˆ𝛽 (𝑠 ) − 𝛽 (𝑠 ) )2. (8) To evaluate uncertainty calibration, we first investigate the empirical type I error rate and power from the posterior credible intervals for a nominal type I error rate of 5% . Additionally, to obtain a holistic measure of uncertainty calibration, independent of any nominal error rate, we apply the approach of S ¨ailynoja, B¨ urkner, and Vehtari (2022). Motivated by simulation-based calibration, this approach considers the rank of the true value within the posterior distribution across all the posteriors estimated in the simulation. It then estimates the probability of observing the most extreme point on the empirical cumulative distribution function of those ranks compared to a discrete uniform distribution of the same size. In addition to a graphical representation, it emits a statistic for formal testing of calibration named log 𝛾 . For mathematical details, see S¨ ailynoja et al. (2022). Following one of the evaluations performed in Nielsen et al. (2023), we further investigate out-of-sample predictive performance using the coefficient of determination evaluated on test data. Using the notation in Equation 2, the test data is a vector of new responses 𝑌 ∗{1,..., 𝑁 } generated from the   
+
+> 1The functionality required to specify a DFLVM-type model is not available on an official release at the time of writing. The development version used in the present work can be accessed at https://github.com/paul-buerkner/brms/tree/brms3
+> 2See the folder simulation-study at https://github.com/bdlvm-project/dflvm-paper
+
+9Latent Variable Models for Distributional Features same distribution D′ with the distributional covariates 𝑈 {1,...,𝑁 } held fixed. For each simulation 
+
+𝑠 ∈ { 1, . . . , 𝑆 }, we calculate the ratio of the variance of the vector of estimated posterior means 
+
+ˆ𝜇 (𝑠 ){1,...,𝑁 } to the variance of the vector of corresponding new responses 𝑌 ∗( 𝑠 ){1,...,𝑁 }:
+
+𝑅 2 
+
+> 𝑠
+
+= Var 
+
+
+
+ˆ𝜇 (𝑠 ){1,...,𝑁 }
+
+
+
+/ Var 
+
+
+
+𝑌 ∗( 𝑠 ){1,...,𝑁 }
+
+
+
+. (9) Finally, fitting a more complex model such as the DFLVM can be computationally demanding, so we compare the wall time of the first-stage fit of the two-step LC approach against the single-step DFLVM fit. Because the second-stage fit of the LC approach reduces to a simple generalized linear model in our case studies, it only adds a negligible amount of time to the fitting process. We only calculate performance metrics over those fits where convergence was achieved as assessed via Stan’s built-in diagnostics. Specifically, we discard any fits with ˆ𝑅 above 1.05, divergent transitions above 50 or Effective Sample Size below 400 (Vehtari, Gelman, Simpson, & Carpenter, 2021). More details on these diagnostics can be found in the Stan online user guide (Stan Development Team, 2026). 
+
+## 3.3 Simulation study: Variability as predictor 
+
+In Mader et al., 2023, the authors explore the association between neuroticism and mood variability across various longitudinal datasets, and our simulations are inspired by this real-world case. Their main analysis uses a hierarchical distributional regression model with baseline neuroticism as a predictor of the mean and variability of daily mood levels, but they additionally present a model where the mean and variability of mood is used to predict mean neuroticism. They use a two-step estimation procedure, where the first stage estimates person-specific random intercepts for the mean and variability of mood: 
+
+R =
+
+1 𝜌 𝜌 1
+
+
+
+, D =
+
+𝜏 11 00 𝜏 22 
+
+
+
+, Σ = D R D 
+
+(𝑈 𝑛 1, 𝑈 𝑛 2)⊺ ∼ Normal (0, Σ)
+
+𝜇 𝑛 = 𝛼 1 + 𝑈 𝑛 1, 𝜎 𝑛 = exp (𝛼 2 + 𝑈 𝑛 2)
+
+Mood 𝑛𝑚 ∼ Normal (𝜇 𝑛 , 𝜎 𝑛 ).
+
+(10) The original analysis then used the posterior means 𝑈 of the random intercepts to predict mean neuroticism in a separately estimated, second-stage model: Neuroticism 𝑛 ∼ Normal (𝛽 0 + 𝛽 1𝑈 𝑛 1 + 𝛽 2𝑈 𝑛 2, 𝜉 ) (11) In our simulations, we will not only consider a normal likelihood case (with identity link) for the second-stage model, but also investigate a Poisson likelihood with log link and a Binomial likelihood 10 Latent Variable Models for Distributional Features with logit link, to study the effects of varying likelihood and link functions. We write Neuroticism 𝑛 ∼ 𝐷 ′(𝑔 (𝛽 0 + 𝛽 1𝑈 𝑛 1 + 𝛽 2𝑈 𝑛 2), 𝜉 ), (12) where 𝐷 ′ represents the chosen likelihood, 𝑔 the inverse link function, and 𝜉 a possible second likelihood parameter (residual standard deviation in the normal case, fixed number of events in the Binomial case, and unused in the Poisson case). Independent of likelihood and link choice, we refer to the procedure of propagating only posterior means of random intercepts as the Latent Component (LC) approach. In contrast, in our proposed DFLVM approach, we estimate both model stages jointly, directly using the 𝑈 as predictors in the second-stage model: Neuroticism 𝑛 ∼ 𝐷 ′(𝑔 ′− 1 (𝛽 0 + 𝛽 1𝑈 𝑛 1 + 𝛽 2𝑈 𝑛 2), 𝜉 ). (13) An additional approach of interest is that of using the value of the mean 𝜇 and variability parameter 
+
+𝜎 by itself, instead of isolating the person-specific components 𝑈 . Accordingly, the second-stage model, again estimated separately, is given by Neuroticism 𝑛 ∼ 𝐷 ′(𝑔 (𝛽 0 + 𝛽 1 𝜇 𝑛 + 𝛽 2𝜎 𝑛 ), 𝜉 ). (14) Since the full value of each parameter is used directly in the model, we refer to this as the FP (Full Parameter) approach. We also consider an oracle model , which uses the true values 𝑈 ∗ of the distributional features – known only for simulated data – as covariates: Neuroticism 𝑛 ∼ Normal (𝛽 0 + 𝛽 1𝑈 ∗ 
+
+> 𝑛 1
+
++ 𝛽 2𝑈 ∗
+
+> 𝑛 2
+
+, 𝜉 ). (15) Since its covariates are known, the oracle only has a second-stage fit. For 𝑀 → ∞ , it is equivalent to both our DFLVM and the LC approach, as 𝑈 𝑛 → 𝑈 ∗ in this case. For our simulations, we take the DFLVM model (Equations 10 and 13) as the true data generating process. Simulation parameters are presented in Table 3.3. 11 Latent Variable Models for Distributional Features Table 1: Simulation conditions. We use a full factorial design over the varying conditions for a total of 23 × 3 = 24 conditions. Condition Value Description 
+
+Varying conditions 
+
+𝑀 3, 10 Measurements per participant 
+
+𝜏 22 0.5, 1 Standard deviation of 𝑈 2
+
+𝛽 2 0, 0.6 Slope for 𝑈 2 (normal model) 
+
+𝛽 2 0, 0.25 Slope for 𝑈 2 (Poisson & binomial models) 
+
+𝐷 ′ Normal, Poisson, Binomial Second-stage response distribution 
+
+Fixed conditions 
+
+𝑆 100 Replicates per condition 
+
+𝑁 500 Number of participants 
+
+𝜏 11 1 Standard deviation of 𝑈 1
+
+𝛼 1 0 Intercept for first-stage 𝜇 𝛼 2 0 Intercept for first-stage 𝜎 (log-scale) 
+
+𝛽 0 0 Intercept for second-stage 𝜇 𝛽 1 0.6 Slope for 𝑈 1
+
+𝜌 0 Correlation between 𝑈 1 and 𝑈 2
+
+𝜉 1 Second-stage error standard deviation (normal model) In all four competing estimation approaches, we use very weakly informative priors on the coefficients for the distributional covariates and keep the default priors provided in the brms package (B¨ urkner, 2017) for the correlation matrix, intercepts, and scale parameters: 
+
+R ∼ LKJ (1)
+
+𝛽 1, 𝛽 2 ∼ Normal (0, 5)
+
+𝛼 1, 𝛼 2, 𝛽 0 ∼ Student-t (3, 0, 2.5)
+
+𝜏 11 , 𝜏 22 , 𝜉 ∼ Student-t + (3, 0, 2.5),
+
+(16) where LKJ (1) stands for the Lewandowski-Kurowicka-Joe distribution (Lewandowski, Kurowicka, & Joe, 2009) with shape parameter 1, a value that provides a uniform prior over all appropriately sized correlation matrices. In the 2 × 2 case, this is equivalent to setting a (0, 1) uniform prior on 𝜌 .We first present the simulations results for the second-stage model with a normal likelihood and identity link, followed by the Poisson likelihood with log link. Results for the binomial likelihood with logit link can be found in Appendix A. 12 Latent Variable Models for Distributional Features τ 22 = 0.5 τ 22 = 1                           
+
+> Bias  RMSE  Log-gamma
+> 310 310 -0.3 -0.2 -0.1 0.0 0.0 0.1 0.2 0.3 0.4 -6 -4 -2 MMetric (a)
+> τ22 =0.5 τ22 =1
+> Bias  RMSE  Log-gamma
+> 310 310 -0.15 -0.10 -0.05 0.00 0.00 0.05 0.10 0.15 0.20 0.25 -30 -20 -10 M(b)
+> τ22 =0.5 τ22 =1
+> Type I error  R²
+> 310 310 0.00 0.05 0.10 0.15 0.1 0.2 0.3 M(c) Estimation method Oracle DFLVM Two-stage LC Two-stage FP
+
+Figure 1: Performance metrics for the second-stage normal likelihood model. (a) Estimation performance for coefficient 𝛽 2. (b) Same metrics for the standardized coefficient 𝑏 2. Dashed red lines indicate a reference value for the metric: 0 for bias and RMSE, 0.05 for type I error, and the critical value for the log-gamma statistic. For the latter, values under the line represent rejection of the null hypothesis of a well-calibrated posterior. (c) Model-level metrics in the second-stage normal likelihood model: Empirical type I error rate (nominal rate: 5%) and predictive performance measured via out-of-sample 𝑅 2.
+
+Results: Normal second-stage response model 
+
+Our results for parameter recovery and calibration (Figure 1a, b) show that the FP model generally underperforms across all conditions, regardless of which version of the estimate is considered. For the LC model, differences become apparent in terms of bias and calibration only when the standardized coefficient is considered. Because the DFLVM estimate has increased uncertainty, differences in RMSE are less stark and otherwise mirror differences in bias. Type I error and 𝑅 2 are shown separately in Figure 1c as these metrics do not depend on whether the coefficient is standardized. Differences between the models become more apparent with increasing random effects variance. The FP model again exhibits inferior performance. Although the LC model achieved similar performance to the DFLVM in parameter recovery of the unstandardized coefficient, it has slightly worse type I error and 𝑅 2.We use the graphical approach of S ¨ailynoja et al., 2022 to further examine calibration of the resulting 13 Latent Variable Models for Distributional Features 0.00 0.25 0.50 0.75 1.00 Oracle     
+
+> 0.00 0.25 0.50 0.75 1.00
+
+DFLVM     
+
+> 0.00 0.25 0.50 0.75 1.00
+
+Two-stage LC     
+
+> 0.00 0.25 0.50 0.75 1.00
+
+Two-stage FP                                        
+
+> β2 = 0
+> 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00
+> β2 ≠ 0
+> 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00
+> τ 22 β2 ≠ 0
+> sample ECDF theoretical CDF
+
+Figure 2: ECDF difference plot for a selected simulation condition ( 𝑀 = 10 , 𝜏 22 = 0.5) in the normal second-stage model. The blue areas represent the 95%-confidence bands for a well-calibrated posterior. posteriors. Figure 2 shows that uncertainty is overall well-calibrated for every model in the null effect case ( 𝛽 2 = 0). When the effect is not null, the sharp peak of the FP model indicates a clear underestimation of the overall effect size in both the unstandardized and standardized cases. For the LC model, a more subtle degree of underestimation appears only in the standardized version of the coefficient. No detectable differences appear between our approach and the oracle model, confirming that uncertainty is well-calibrated in both cases. 
+
+Results: Poisson second-stage response model 
+
+For the Poisson model, the results in terms of parameter recovery, shown in panels a and b of Figure 3, appear to be qualitatively similar to those of the normal model. Figure 3c shows that inflation of the type I error rate is more pronounced for both two-step models. Predictive performance measured via 𝑅 2 again favors the DFLVM compared to the two-step approaches. The ECDF difference plot in Figure 4 also reveals similar patterns of miscalibration as those seen in the normal model. 14 Latent Variable Models for Distributional Features τ 22 = 0.5 τ 22 = 1                           
+
+> Bias  RMSE  Log-gamma
+> 310 310 -0.15 -0.10 -0.05 0.00 0.00 0.05 0.10 0.15 0.20 -10 -5 MMetric (a)
+> τ22 =0.5 τ22 =1
+> Bias  RMSE  Log-gamma
+> 310 310 -0.100 -0.075 -0.050 -0.025 0.000 0.00 0.04 0.08 0.12 -20 -15 -10 -5 M(b)
+> τ22 =0.5 τ22 =1
+> Type I error  R²
+> 310 310 0.05 0.10 0.15 0.20 0.25 0.1 0.2 0.3 0.4 M(c) Estimation method Oracle DFLVM Two-stage LC Two-stage FP
+
+Figure 3: Estimation performance in the second-stage Poisson likelihood model for coefficient 𝛽 2.The dashed red line indicates a reference value for each metric: 0 for bias and RMSE, 0.05 for type I error, and the critical value for the log-gamma statistic. 
+
+Results: Estimation times 
+
+Given the overall modest differences in performance between our DFLVM and the LC approach, one may be concerned that fitting the more complex model may incur unnecessary computational cost. Our results in Figure 5 show that the median time to fit a DFLVM is only moderately higher than in the LC approach. In fact, the latter tends to have longer tails as the information in the model grows (i.e., higher random effects variance or more observations per person). Therefore, at least for the conditions assessed in this simulation study, the DFLVM appears to provide improved uncertainty quantification at an acceptable computational cost. 
+
+# 4 Illustrative example 
+
+Having investigated the performance of the DFLVM approach under controlled conditions, we move on to investigating if practically meaningful differences also manifest in a realistic setting. We expand on the last analysis of Mader et al. (2023) by comparing the DFLVM to the authors’ two-step LC approach on their Goettingen Ovulatory Cycle Diaries 2 (GOCD2) dataset. 15 Latent Variable Models for Distributional Features 0.00 0.25 0.50 0.75 1.00 Oracle     
+
+> 0.00 0.25 0.50 0.75 1.00
+
+DFLVM     
+
+> 0.00 0.25 0.50 0.75 1.00
+
+Two-stage LC     
+
+> 0.00 0.25 0.50 0.75 1.00
+
+Two-stage FP                                        
+
+> β2 = 0
+> 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00
+> β2 ≠ 0
+> 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00
+> τ 22 β2 ≠ 0
+> sample ECDF theoretical CDF
+
+Figure 4: ECDF difference plot for a selected simulation condition ( 𝑀 = 10 , 𝜏 22 = 0.5) in the Poisson second-stage model. The blue areas represent the 95%-confidence bands for a well-calibrated posterior. A detailed description of the data collection process for the GOCD2 dataset is provided in Arslan, Reitz, Driebe, Gerlach, and Penke (2021). Briefly, the study recruited women who filled out a form at recruitment, which included a personality questionnaire, and who were subsequently asked to fill out an online diary for up to 70 days, from which a daily negative affect measurement could be constructed. The data, as made available in the replication package for Mader et al. (2023) 3,contains 444 subjects after cleaning, with a median of 15 diary entries per participant (IQR: 15 – 15, range: 4 – 16). Following the authors’ specification, the first-stage model introduces censoring to account for floor and ceiling effects in the measurements of mood. The difference with the model used for our simulations in Equation 10 is that the last line is replaced by Mood ∗ 
+
+> 𝑛𝑚
+
+∼ Normal (𝜇 𝑛 , 𝜎 𝑛 )
+
+Mood 𝑛𝑚 =
+
+
+
+1 Mood ∗ 
+
+> 𝑛𝑚
+
+≤ 1
+
+Mood ∗ 
+
+> 𝑛𝑚
+
+1 < Mood ∗ 
+
+> 𝑛𝑚
+
+< 55 5 ≤ Mood ∗
+
+> 𝑛𝑚
+
+,
+
+(17) 
+
+> 3
+
+Found in the Own diary data folder at https://osf.io/9dcxn/, processed according to the code in 
+
+CodeFiles/OwnDiaryDataset13.Rmd .
+
+16 Latent Variable Models for Distributional Features M = 3 M = 10               
+
+> τ22 =0.5 τ22 =1τ22 =0.5 τ22 =1
+> Normal-identity  Poisson-log
+> 1310 30 1310 30 Time (minutes) Method DFLVM First-stage fi t
+
+Figure 5: Distribution of estimation times of the full DFLVM model against the first-stage fit shared by the two-step models. Time spent on the second stage of the two-step models is negligible and is therefore omitted here. The y-axis is log-scaled. Where Mood ∗ 
+
+> 𝑛𝑚
+
+represents the uncensored, unobservable response and Mood 𝑛𝑚 is the observed response, measured through an item scale with 5 options. We fit the authors’ original two-step LC approach, our single-stage DFLVM and additionally investigate the fit of the two-stage Full Parameter (FP) approach. The procedure for standardization of coefficients was described in Section 2.2. Results for the key model parameters are shown in Figure 6. A difference in the unstandardized coefficient ( 𝛽 2) for the FP model is expected, as the scale of the parameter is different from that of the random intercepts. However, when the standardized coefficient ( 𝑏 2) is considered instead, all three methods produce a very similar estimate. Consistent with our simulations, a moderate downward bias is observed on the standardized coefficients for the two-stage approaches. Table 2 shows the posterior estimates and in-sample 𝑅 2. The 95% credible intervals exclude zero in all cases except for the unstandardized FP estimate. For 𝑅 2, we find the same ordering as in our simulations, showing that the DFLVM achieves better predictive performance, although the magnitude of the difference is small. 17 Latent Variable Models for Distributional Features 𝛃 ₁    
+
+> 𝛃 ₂
+> b₂
+> 𝝉 ₂₂
+> 𝛏
+> -0.5 0.0 0.5 1.0 1.5 Parameter Value Parameter  Estimation method DFLVM Two-stage LC Two-stage FP
+
+Figure 6: Results for the reanalysis of Mader, Arslan, Schmukle, and Rohrer (2023). Density plots show the posterior distributions of key model parameters. Table 2: First two rows show posterior summaries for the coefficient of the distributional covariate in unstandardized ( 𝛽 2) and standardized ( 𝑏 2) form. Last row shows in-sample point estimate of 𝑅 2.Parameter Model Mean 95% CI 
+
+𝛽 2
+
+DFLVM 0.284 [0.074, 0.495] Two-step LC 0.280 [0.062, 0.499] Two-step FP 0.545 [-0.002, 1.093] 
+
+𝑏 2
+
+DFLVM 0.101 [0.026, 0.175] Two-step LC 0.083 [0.021, 0.145] Two-step FP 0.068 [0.006, 0.130] 
+
+𝑅 2
+
+DFLVM 0.402 Two-step LC 0.392 Two-step FP 0.390 The lack of any large differences between the DFLVM and the LC approaches is explained by the larger amount of per-person observations: participants had 15 diary entries in the majority of cases, 18 Latent Variable Models for Distributional Features compared to 3 and 10 as evaluated during our simulations. Additionally, the error scale parameter for the second-stage response ( 𝜉 ) has a posterior mean 0.65 , which is smaller than the value of 1
+
+we investigated. With regards to the FP approach, our simulations also showed that the difference is influenced by the random intercept scale 𝜏 22 . For this dataset, 𝜏 22 has posterior mean of 0.36 ,again smaller than our simulated values of 0.5 and 1. Taken together, these factors lead to reduced estimation error of the random intercepts and impact of the misspecified form of the distributional covariate. As an additional investigation, we fit the same models in a subset of the original dataset, keeping only three diary entries per participant to match our simulation setup. The results are qualitatively similar and are presented in Appendix B. 
+
+# 5 Discussion 
+
+We have introduced a framework for single-step estimation of models with distributional covariates. This addresses a long-standing gap in the psychology modeling toolkit, where interest in the associa-tion between person-level distributional features and other outcomes of interest have historically driven researchers to either use multi-step estimation procedures or ad hoc model implementations (Frischkorn et al., 2016; Jahng et al., 2008; Mader et al., 2023; Ram et al., 2005). Our framework generalizes past instances of models that were used to investigate associations with distributional features by introducing the notion of distributional covariates. That is, random intercepts that model inter-individual variation in distributional parameters, which can be simultaneously used to predict other downstream outcomes. By using a Bayesian framework, our model can be estimated in a single step and avoids issues pertaining to omission of estimation error / uncertainty propagation. We implemented our DFLVM framework in the brms package (B¨ urkner, 2017), a widely used interface for Bayesian model specification based on Stan (Stan Development Team, 2026). This means that our framework can be combined with other advanced modeling approaches available therein (e.g., missing data, censoring, custom distributions, among others), giving researchers a flexible and reliable platform on which to build their models. In those cases where practitioners were able to implement single-step estimation approaches, they reported both two-step and single-step estimates for the data at hand (Ram et al., 2005; Wang et al., 2012), but more extensive simulation studies to characterize the ”region of concern” were not conducted. As a result, researchers remain wary of the estimates they obtain in such manner, leading to less confident claims about their results (e.g., Mader et al., 2023). Our simulation results clarify the contexts in which the omission of estimation error in two-step procedures can have a practical impact. We find that estimation error disappears quickly with the number of measurements per individual, more so when the measurements themselves have a low level of non-systematic error (i.e., high reliability). This is in line with previous empirical findings and the results of our own reanalysis of Mader et al. (2023), which demonstrate that researchers often already collect enough 19 Latent Variable Models for Distributional Features per-person measurements for two-step procedures to produce accurate results. On the other hand, one aspect that has seen less discussion in analyses that involve distributional covariates is the impact that the form of the covariate can have on model fit. Our DFLVM formulation highlights the fact that between-person variation can be regarded as a latent variable, different from the raw distributional summary it is associated with. More importantly, we show that misspecification of that form can have a larger impact on parameter recovery and model fit than estimation error. In our simulations, we chose to represent between-person variation as random intercepts in a log-scaled linear predictor for illustrative purposes. However, our reanalysis of Mader et al. (2023) showed that such a choice also appeared to be optimal in the context of a real dataset, as the FP approach obtained an inferior 𝑅 2 compared to the DFLVM and LC. This suggests that previous efforts which have investigated the associations of distributional summaries with other outcomes of interest (e.g., Nielsen et al., 2023), may have failed to detect relevant patterns by not considering alternative forms of representing those summaries. A valid practical concern for the use of the DFLVM framework is the added computational cost of fitting a more complex model. Early comparisons found stark differences in the time it took to perform single-step compared to two-step estimation (e.g., 30 hours vs 10 minutes in Ram et al., 2005), which could reasonably discourage practitioners. That said, ongoing developments in sampling techniques and the general increase of computing power continue to decrease estimation times. Our simulations demonstrate that single-step estimation takes a comparable amount of time relative to the first stage of a two-step procedure, with only a slight increase in median time. We chose to use Stan’s MCMC sampler for posterior estimation due to its well-validated accuracy (Magnusson et al., 2025), but it could be relevant to investigate the potential of alternative approaches such as variational inference (Blei, Kucukelbir, & McAuliffe, 2017; Zhang, Carpenter, Gelman, & Vehtari, 2022) or simulation-based inference (Cranmer, Brehmer, & Louppe, 2020; Zammit-Mangion, Sainsbury-Dale, & Huser, 2024) to further reduce estimation times. One limitation of the DFLVM framework as presented here is that it requires the construction of a likelihood that explicitly features the distributional covariates as parameters therein. In the case we have examined, the distributional feature of interest was variability of a normal response, and this made it straightforward to introduce random intercepts in the log-linear predictor of the scale parameter. For more general summaries, as the ones explored by Dejonckheere et al. (2019) and Nielsen et al. (2023), this task can be more challenging. Likelihood-free methods, such as those featured by simulation-based inference, can provide a helpful alternative in this case and should be explored in future work. 
+
+# Acknowledgments 
+
+This research was partially funded by Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) Project 497785967. We gratefully acknowledge the computing time provided on the 20 Latent Variable Models for Distributional Features Linux HPC cluster at Technical University Dortmund (LiDO3), partially funded in the course of the Large-Scale Equipment Initiative by the DFG Project 271512359. We thank Nina Mader and Ruben Arslan for their guidance with the dataset and code we used for our illustrative example. 
+
+# References 
+
+Arslan, R. C., Reitz, A. K., Driebe, J. C., Gerlach, T. M., & Penke, L. (2021). Routinely randomize potential sources of measurement reactivity to estimate and adjust for biases in subjective reports. Psychological Methods , 26 (2), 175–185. doi:10.1037/met0000294 Baird, B. M., Le, K., & Lucas, R. E. (2006). On the nature of intraindividual personality variability: Reliability, validity, and associations with well-being. Journal of Personality and Social Psychology , 90 (3), 512–527. doi:10.1037/0022-3514.90.3.512 Bauer, D. J., & Hussong, A. M. (2009). Psychometric approaches for developing commensurate measures across independent studies: Traditional and new models. Psychological Methods ,
+
+14 (2), 101–125. doi:10.1037/a0015583 Blei, D. M., Kucukelbir, A., & McAuliffe, J. D. (2017). Variational Inference: A Review for Statisticians. Journal of the American Statistical Association , 112 (518), 859–877. doi:10. 1080/01621459.2017.1285773 B¨ urkner, P. -C. (2017). Brms : An R Package for Bayesian Multilevel Models Using Stan . Journal of Statistical Software , 80 (1). doi:10.18637/jss.v080.i01 B¨ urkner, P. - C. (2021). Bayesian Item Response Modeling in R with brms and Stan. Journal of Statistical Software , 100 , 1–54. doi:10.18637/jss.v100.i05 Cranmer, K., Brehmer, J., & Louppe, G. (2020). The frontier of simulation-based inference. 
+
+Proceedings of the National Academy of Sciences , 117 (48), 30055–30062. doi:10.1073/pnas. 1912789117. arXiv: 1911.01429 [stat] 
+
+Dejonckheere, E., Mestdagh, M., Houben, M., Rutten, I., Sels, L., Kuppens, P., & Tuerlinckx, F. (2019). Complex affect dynamics add limited information to the prediction of psychological well-being. Nature Human Behaviour , 3(5), 478–491. doi:10.1038/s41562-019-0555-0 Fahrmeir, L., Kneib, T., Lang, S., & Marx, B. D. (2021). Regression: Models, Methods and Applications . doi:10.1007/978-3-662-63882-8 Fazio, L., & B¨ urkner, P. - C. (2025). Gaussian distributional structural equation models: A framework for modeling latent heteroscedasticity. Multivariate Behavioral Research , 1–19. doi:10.1080/ 00273171.2025.2483252 Frischkorn, G. T., & Schubert, A. -L. (2018). Cognitive Models in Intelligence Research: Advantages and Recommendations for Their Application. Journal of Intelligence , 6(3), 34. doi:10.3390/ jintelligence6030034 21 Latent Variable Models for Distributional Features Frischkorn, G. T., Schubert, A. -L., Neubauer, A. B., & Hagemann, D. (2016). The Worst Performance Rule as Moderation: New Methods for Worst Performance Analysis. Journal of Intelligence ,
+
+4(3), 9. doi:10.3390/jintelligence4030009 Gelman, A., Simpson, D., & Betancourt, M. (2017). The prior can generally only be understood in the context of the likelihood. Entropy , 19 (10), 555. doi:10.3390/e19100555. arXiv: 1708.07487 
+
+[stat] 
+
+Gelman, A., Vehtari, A., Simpson, D., Margossian, C. C., Carpenter, B., Yao, Y., . . . Modr ´ak, M. (2020). Bayesian Workflow. arXiv preprint . doi:10.48550/arXiv.2011.01808. arXiv: 2011.01808 [stat] 
+
+Gustafson, P. (2021, September). The Impact of Unacknowledged Measurement Error. In Handbook of Measurement Error Models (1st ed., pp. 37–52). doi:10.1201/9781315101279-2 Harvey, A. C. (1976). Estimating regression models with multiplicative heteroscedasticity. Econo-metrica: journal of the Econometric Society , 461–465. doi:10.2307/1913974 Houben, M., Van Den Noortgate, W., & Kuppens, P. (2015). The relation between short-term emotion dynamics and psychological well-being: A meta-analysis. Psychological Bulletin ,
+
+141 (4), 901–930. doi:10.1037/a0038822 Jahng, S., Wood, P. K., & Trull, T. J. (2008). Analysis of affective instability in ecological momentary assessment: Indices using successive difference and group comparison via multilevel modeling. 
+
+Psychological Methods , 13 (4), 354–375. doi:10.1037/a0014173 Koenig, C., Depaoli, S., Liu, H., & Van De Schoot, R. (2021). Editorial: Moving Beyond Non-informative Prior Distributions: Achieving the Full Potential of Bayesian Methods for Psychological Research. Frontiers in Psychology , 12 , 809719. doi:10.3389/fpsyg.2021.809719 Landau, W. M. (2021). The targets R package: A dynamic Make-like function-oriented pipeline toolkit for reproducibility and high-performance computing. Journal of Open Source Software ,
+
+6(57), 2959. Lewandowski, D., Kurowicka, D., & Joe, H. (2009). Generating random correlation matrices based on vines and extended onion method. Journal of Multivariate Analysis , 100 (9), 1989–2001. doi:10.1016/j.jmva.2009.04.008 Mader, N., Arslan, R. C., Schmukle, S. C., & Rohrer, J. M. (2023). Emotional (in)stability: Neuroticism is associated with increased variability in negative emotion after all. Proceedings of the National Academy of Sciences , 120 (23), e2212154120. doi:10.1073/pnas.2212154120 Magnusson, M., Torgander, J., B¨ urkner, P. -C., Zhang, L., Carpenter, B., & Vehtari, A. (2025, May). Posteriordb: Testing, benchmarking and developing bayesian inference algorithms. In Y. Li, S. Mandt, S. Agrawal, & E. Khan (Eds.), Proceedings of the 28th international conference on artificial intelligence and statistics (Vol. 258, pp. 1198–1206). PMLR. McElreath, R. (2020). Statistical rethinking: A Bayesian course with examples in R and Stan (Second edition). Boca Raton London New York: CRC Press. Meredith, W. (1993). Measurement invariance, factor analysis and factorial invariance. Psychometrika ,
+
+58 (4), 525–543. doi:10.1007/BF02294825 22 Latent Variable Models for Distributional Features Nielsen, Y. A., Thielmann, I., & Pfattheicher, S. (2023). Beyond the Mean: Can We Improve the Predictive Power of Psychometric Scales? Advances in Methods and Practices in Psychological Science , 6(2), 25152459231177713. doi:10.1177/25152459231177713 R Core Team. (2023). R: A language and environment for statistical computing . R Foundation for Statistical Computing. Vienna, Austria. Ram, N., Chow, S. -M., Bowles, R. P., Wang, L., Grimm, K., Fujita, F., & Nesselroade, J. R. (2005). Examining Interindividual Differences in Cyclicity of Pleasant and Unpleasant Affects Using Spectral Analysis and Item Response Modeling. Psychometrika , 70 (4), 773–790. doi:10.1007/s11336-001-1270-5 Ratcliff, R., & McKoon, G. (2008). The diffusion decision model: Theory and data for two-choice decision tasks. Neural Computation , 20 (4), 873–922. doi:10.1162/neco.2008.12-06-420 S ¨ailynoja, T., B¨ urkner, P. -C., & Vehtari, A. (2022). Graphical test for discrete uniformity and its applications in goodness-of-fit evaluation and multiple sample comparison. Statistics and Computing , 32 (2), 32. doi:10.1007/s11222-022-10090-6 Sijtsma, K., Ellis, J. L., & Borsboom, D. (2024). Recognize the Value of the Sum Score, Psychometrics’ Greatest Accomplishment. Psychometrika , 89 (1), 84–117. doi:10.1007/s11336-024-09964-7 Simmons, J. P., Nelson, L. D., & Simonsohn, U. (2011). False-Positive Psychology: Undisclosed Flexibility in Data Collection and Analysis Allows Presenting Anything as Significant. 
+
+Psychological Science , 22 (11), 1359–1366. doi:10.1177/0956797611417632 Stan Development Team. (2026). Stan Reference Manual, 2.38. Stasinopoulos, M. D. (2017). Flexible Regression and Smoothing: Using GAMLSS in R .Vehtari, A., Gelman, A., Simpson, D., & Carpenter. (2021). Rank-Normalization, Folding, and Localization: An Improved Rhat for Assessing Convergence of MCMC (with Discussion). 
+
+Bayesian Analysis , 16 (2), 667–718. doi:10.1214/20-BA1221 Wang, L., Hamaker, E., & Bergeman, C. S. (2012). Investigating inter-individual differences in short-term intra-individual variability. Psychological Methods , 17 (4), 567–581. doi:10.1037/ a0029317 Wang, L., Zhang, Q., Maxwell, S. E., & Bergeman, C. S. (2019). On Standardizing Within-Person Effects: Potential Problems of Global Standardization. Multivariate Behavioral Research ,
+
+54 (3), 382–403. doi:10.1080/00273171.2018.1532280 Wiedermann, W., Zhang, B., Reinke, W., Herman, K. C., & Von Eye, A. (2022). Distributional causal effects: Beyond an “averagarian” view of intervention effects. Psychological Methods ,
+
+29 (6), 1046–1061. doi:10.1037/met0000533 Zammit-Mangion, A., Sainsbury-Dale, M., & Huser, R. (2024, October). Neural Methods for Amortized Inference. arXiv. arXiv: 2404.12484 [stat] 
+
+Zhang, L., Carpenter, B., Gelman, A., & Vehtari, A. (2022). Pathfinder: Parallel quasi-Newton variational inference. Journal of Machine Learning Research , 23 (306), 1–49. 23 Latent Variable Models for Distributional Features 
+
+# Appendix 
+
+## A Simulation results for the second-stage binomial response model τ 22 = 0.5 τ 22 = 1   
+
+> Bias  RMSE  Log-gamma
+> 310 310 -0.15 -0.10 -0.05 0.00 0.00 0.05 0.10 0.15 -10.0 -7.5 -5.0 -2.5
+
+MMetric (a) 
+
+τ 22 = 0.5 τ 22 = 1   
+
+> Bias  RMSE  Log-gamma
+> 310 310 -0.08 -0.06 -0.04 -0.02 0.00 0.000 0.025 0.050 0.075 0.100 -30 -20 -10
+
+M(b) 
+
+τ 22 = 0.5 τ 22 = 1   
+
+> Type I error  R²
+> 310 310 0.00 0.05 0.10 0.15 0.1 0.2 0.3
+
+M(c) Estimation method Oracle DFLVM Two-stage LC Two-stage FP 
+
+Figure A.1: Performance metrics for the second-stage binomial likelihood model. (a) Estimation performance for coefficient 𝛽 2. (b) Same metrics for the standardized coefficient. (c) Model-level metrics in the second-stage normal likelihood model: false positive rate and predictive performance measured via out-of-sample 𝑅 2.iLatent Variable Models for Distributional Features 0.00 0.25 0.50 0.75 1.00 Oracle     
+
+> 0.00 0.25 0.50 0.75 1.00
+
+DFLVM     
+
+> 0.00 0.25 0.50 0.75 1.00
+
+Two-stage LC     
+
+> 0.00 0.25 0.50 0.75 1.00
+
+Two-stage FP                                        
+
+> β2 = 0
+> 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00
+> β2 ≠ 0
+> 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00 0.00 0.25 0.50 0.75 1.00
+> τ 22 β2 ≠ 0
+> sample ECDF theoretical CDF
+
+Figure A.2: ECDF difference plot for a selected simulation condition ( 𝑀 = 10 , 𝜏 22 = 0.5) in the binomial second-stage model. The blue areas represent the 95%-confidence bands for a well-calibrated posterior. 
+
+## B Results for reanalysis on subset of Mader et al., 2023 
+
+These results were obtained by following the same procedures described in Section 4, except that the dataset was filtered to retain only three diary measurements per person. ii Latent Variable Models for Distributional Features 𝛃 ₁   
+
+> 𝛃 ₂
+> b₂
+> 𝝉 ₂₂
+> 𝛏
+> -1 012Parameter Value Parameter  Estimation method DFLVM Two-stage LC Two-stage FP
+
+Figure B.3: Posterior distributions for key model parameters. Table 1: First two rows show posterior summaries for the coefficient of the distributional covariate in unstandardized ( 𝛽 2) and standardized ( 𝑏 2) form. Last row shows in-sample point estimate of 𝑅 2.Parameter Model Mean 95% CI 
+
+𝛽 2
+
+DFLVM 0.446 [0.096, 0.842] Two-step LC 0.460 [0.111, 0.800] Two-step FP 1.060 [0.250, 1.898] 
+
+𝑏 2
+
+DFLVM 0.157 [0.034, 0.277] Two-step LC 0.086 [0.018, 0.155] Two-step FP 0.082 [0.017, 0.147] 
+
+𝑅 2
+
+DFLVM 0.370 Two-step LC 0.359 Two-step FP 0.359 iii
