@@ -6,37 +6,34 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-18
-- 运行时间：2026-06-18 22:29:33 UTC
+- 最新运行日期：2026-06-19
+- 运行时间：2026-06-19 22:00:40 UTC
 - 运行状态：成功
-- 本次总论文数：5
-- 精读区：3
+- 本次总论文数：4
+- 精读区：2
 - 速读区：2
 
 ### 今日简报（AI）
-今日精选5篇睡眠研究，重点聚焦共睡生理影响与睡眠恢复新框架。
-最值得看《谁睡在我的卧室？》揭示与宠物或孩子同睡对心肺生理的影响（9分），以及《超越AHI》提出的因果发现模型。
-建议普通读者关注共睡与睡眠质量的关联，同时留意社交时差对CPAP治疗依从性的影响。
-- 详情：[/202606/18/README](/202606/18/README)
+今日精选4篇AI+精神健康论文，精读2篇均聚焦大语言模型从对话中评估抑郁与痴呆，获8分高分。  
+最值得关注方向：利用LLM进行被动抑郁严重度评估与临床访谈中的多维痴呆检测，展现语言模型在心理健康筛查中的潜力。  
+下一步建议：探索如何将这类模型轻量化，结合EEG分析部署到可穿戴设备，实现日常情绪与睡眠监测。
+- 详情：[/202606/19/README](/202606/19/README)
 
 ### 精读区论文标签
-1. [Whos been sleeping in my bedroom? Sleep and cardiorespiratory physiology when co-sleeping with a dog, cat, or child](/202606/18/biorxiv-10-64898-2026-06-13-732027-v1-whos-been-sleeping-in-my-bedroom-sleep-and-cardiorespiratory-physiology-when-co-sleeping-with-a-dog-cat-or-child)  
-   标签：评分：9.0/10、query:sleep-mental
-   evidence：通过智能手机应用每日日记测量自然环境下的睡眠和生理数据
-2. [Beyond AHI: An Interpretable Causal-Discovery-Guided Framework for Sleep Recovery in Connected Health](/202606/18/2606.18506v1-beyond-ahi-an-interpretable-causal-discovery-guided-framework-for-sleep-recovery-in-connected-health)  
+1. [Fine-tuning LLMs for Passive Depression Severity Estimation from AI Mental Health Dialogue](/202606/19/2606.17973v1-fine-tuning-llms-for-passive-depression-severity-estimation-from-ai-mental-health-dialogue)  
    标签：评分：8.0/10、query:sleep-mental
-   evidence：提出了一个基于多模态PSG的睡眠恢复评分（SRS）用于客观睡眠评估
-3. [Better Adherence, Richer Context: A Field Evaluation of LLM-Powered Conversational Voice Diaries for Sleep](/202606/18/2606.18596v1-better-adherence-richer-context-a-field-evaluation-of-llm-powered-conversational-voice-diaries-for-sleep)  
+   evidence：从对话被动估计抑郁严重程度
+2. [Reading between the Lines: Leveraging Large Language Models for Global Dementia and Depression Assessment from Clinical Interviews](/202606/19/2606.18019v1-reading-between-the-lines-leveraging-large-language-models-for-global-dementia-and-depression-assessment-from-clinical-interviews)  
    标签：评分：8.0/10、query:sleep-mental
-   evidence：基于大语言模型的对话式语音睡眠日记，在自然环境中进行生态瞬时评估
+   evidence：从临床访谈中进行抑郁评估
 
 ### 速读区论文标签
-1. [Latent Variable Models for Distributional Features](/202606/18/2606.15526v1-latent-variable-models-for-distributional-features)  
-   标签：评分：6.0/10、query:ema-mental
-   evidence：提供用于分布特征的潜变量模型，可应用于心理研究中的EMA数据分析
-2. [Social Jet Lag Estimated From CPAP Adherence Data in Two Obstructive Sleep Apnea Cohorts](/202606/18/biorxiv-10-64898-2026-06-06-729437-v1-social-jet-lag-estimated-from-cpap-adherence-data-in-two-obstructive-sleep-apnea-cohorts)  
-   标签：评分：6.0/10、query:sleep-mental
-   evidence：利用CPAP依从性数据估计社交时差，提供客观睡眠定时评估
+1. [Reducing the Complexity of Deep Learning Models for EEG Analysis on Wearable Devices](/202606/19/2606.12742v1-reducing-the-complexity-of-deep-learning-models-for-eeg-analysis-on-wearable-devices)  
+   标签：评分：7.0/10、query:ema-mental
+   evidence：降低可穿戴设备上深度神经网络复杂度，使得移动健康应用中的生态瞬时评估成为可能
+2. [Quantum machine learning for detection of sleep deprivation from EEG signals](/202606/19/biorxiv-10-64898-2026-06-14-732153-v1-quantum-machine-learning-for-detection-of-sleep-deprivation-from-eeg-signals)  
+   标签：评分：7.0/10、query:sleep-mental
+   evidence：使用脑电图检测睡眠剥夺，直接适用于睡眠质量评估
 
 
 <div class="dpr-home-promo-card">
