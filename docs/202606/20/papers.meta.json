@@ -1,0 +1,39 @@
+{
+  "label": "2026-06-20",
+  "date": "2026-06-20",
+  "generated_at": "2026-06-20T21:28:32",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202606/20/biorxiv-10-64898-2026-06-10-731319-v1-video-based-eye-movements-are-linked-to-cortical-and-pupil-based-arousal-in-human-sleep",
+      "section": "deep",
+      "title_en": "Video-based eye movements are linked to cortical and pupil-based arousal in human sleep",
+      "authors": "Carro-Dominguez, M., Oberlin, S., Oesch, T. L., Wenderoth, N., Meissner, S. N., Lustenberger, C.",
+      "date": "2026-06-12",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.10.731319v1.full.pdf",
+      "score": "8.0",
+      "evidence": "基于视频的眼动与睡眠阶段评估",
+      "tldr": "传统睡眠监测依赖电信号难以区分真实眼动与脑肌电伪迹。本研究利用红外视频眼动追踪和计算机视觉提取眼动参数，分析其与瞳孔大小（皮层下唤醒）及EEG谱斜率（皮层唤醒）的关系。结果发现眼动速度在非快速眼动睡眠中与瞳孔大小正相关，在觉醒和快速眼动睡眠中与谱斜率相关，且快速眼动睡眠相态差异显著。该工作建立了眼动与全脑唤醒状态的定量耦合，为睡眠表型及神经疾病生物标志物提供了高保真工具。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "Study ObjectivesTo quantify high-resolution video-based eye kinematics across sleep macro- and microstructure and determine their coupling with pupil-based and cortical arousal markers.\n\nMethodsWe recorded polysomnography and utilized infrared video-based eye-tracking in 17 healthy adults. Computer vision was employed to extract eye position and speed, which were related to pupil size (subcortical arousal marker) and EEG spectral slope (cortical arousal marker) across sleep stages, rapid eye movement (REM) substates, and K-complexes.\n\nResultsEye kinematics varied significantly across sleep stages (p<0.001), except for horizontal pupil position (p=0.192). Video-based eye position and speed are sufficient to classify stages with above chance level accuracy (47%). Eye movement speed positively correlated with pupil size during non-REM sleep (R[&ge;]0.21, p<0.001) and with spectral slope during wakefulness and REM sleep (R[&ge;]0.11, p<0.018). These strengths of the correlations differ depending on the direction of the eye movement. Phasic REM exhibited faster eye movements, larger pupil size (p<0.001), and a flatter spectral slope (p=0.014) compared to tonic REM, indicating elevated subcortical and cortical arousal. K-complexes were accompanied by increased eye movement speed (p<0.05) and a steeper spectral slope (p[&le;]0.010), suggesting a transient shift toward a sleep-protective cortical state despite concurrent oculomotor activation.\n\nConclusionsVideo-based eye-tracking reveals that eye movements are quantitatively coupled to brain-wide arousal fluctuations in a state-dependent manner. This methodology provides a ground-truth framework for resolving fine-grained eye dynamics during sleep, offering a high-fidelity tool for sleep phenotyping and clinical assessment.\n\nStatement of significanceTraditional sleep monitoring relies on low-resolution electrical signals that often confound true eye movements with brain or muscle activity. This study uses high-resolution video tracking to establish a physical ground truth for eye kinematics across human sleep. We demonstrate that eye movements are coupled with both cortical and subcortical arousal levels in a state-dependent manner, providing a clearer neurophysiological distinction between, for example, sleep substates like tonic and phasic REM. This framework reveals how the eyes serve as a non-invasive window into the brains internal arousal state. Such insights address critical gaps in understanding sleep microarchitecture and offer a novel pathway for developing high-fidelity biomarkers for neurological disorders, such as Parkinsons disease, characterized by disrupted sleep-related arousal.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/20/biorxiv-10-1101-2025-09-03-673947-v2-a-multimodal-human-computer-interaction-dataset-for-neurocognitive-user-state-evaluation",
+      "section": "quick",
+      "title_en": "A multimodal human-computer interaction dataset for neurocognitive user state evaluation",
+      "authors": "Zhang, S., Bai, X., Hartley-O'Dwyer, C., Warren, H., Beyer, F., Noreika, V.",
+      "date": "2026-06-19",
+      "pdf": "https://www.biorxiv.org/content/10.1101/2025.09.03.673947v2.full.pdf",
+      "score": "6.0",
+      "evidence": "每五分钟报告警觉性状态的动态评估",
+      "tldr": "针对计算机用户警觉性波动难以实时监测的问题，我们构建了SENSE-42数据集。42名参与者在模拟桌面环境中执行日常任务，同步记录EEG、ECG、呼吸等生理信号，主观报告（KSS、NASA-TLX）以及键盘鼠标行为数据，同时收集睡眠质量问卷。该多模态数据集可用于发展用户状态监测模型和生理计算研究。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "We introduce the Simulated Environment for Neurocognitive State Evaluation (SENSE-42), a multimodal dataset collected during user interactions with desktop computers. It is designed for studying spontaneous fluctuations in the neurocognitive state related to the tonic alertness of computer users, with recordings from 42 participants over 2-hour sessions. Within a simulated desktop environment, participants performed real-world routine tasks, including application switching, file management, typing, and web browsing. High-resolution data were recorded across physiological (electroencephalography, electrocardiography, respiration) and subjective modalities of alertness. At five-minute intervals, alertness state was reported using seven questions, addressing sleepiness (Karolinska Sleepiness Scale), mental and temporal demand, perceived performance, effort and frustration (NASA Task Load Index), as well as attentiveness. Behavioural data included keyboard, mouse and webcam inputs. Demographic information for the experience, habits, and preferences of computer usage was collected. In addition, individual differences in sleep quality were evaluated using the Pittsburgh Sleep Quality Index and the Epworth Sleepiness Scale. The SENSE-42 dataset can contribute to future research in user state monitoring, behavioural analysis and physiological computing.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
