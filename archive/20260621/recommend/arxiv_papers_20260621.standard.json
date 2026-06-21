@@ -1,0 +1,103 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-21T21:17:51.078766+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 0,
+    "deep_cap": 7,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 12,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.15033v1",
+      "source": "arxiv",
+      "title": "Cloze: An Open Research Platform for Studying Human-AI Conversations in Mental Health Contexts",
+      "abstract": "Cloze is an open-source web platform for conducting controlled, monitored studies of human-AI conversation in mental health research contexts. Consumer large language model (LLM) products such as ChatGPT, Claude, and Gemini are built for individual productivity, and offer researchers little experimental control, inconsistent data export, and no shared safety scaffolding that holds across providers. Cloze gives research teams a single environment in which they configure which models participants converse with, how the AI is instructed, how conversations are scheduled over time, and which safety constraints apply unconditionally, while every message is captured with full provenance (model version, prompt configuration, timing). The platform currently supports OpenAI, Anthropic, Google, and locally hosted open-weight models served through Ollama behind a unified interface, and runs in the cloud or fully on premises so that participant data need never leave an institution. Cloze is research infrastructure for building an evidence base on human-AI interaction in mental health contexts. It is not a therapeutic product.",
+      "authors": [
+        "Matthew Flathers",
+        "Francesco Cipriani",
+        "John Torous"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.CL",
+        "cs.CY"
+      ],
+      "published": "2026-06-13T00:24:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.15033v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "open platform for controlled human-AI conversations in mental health contexts",
+      "llm_evidence_cn": "用于心理健康人机对话研究的开放平台",
+      "llm_evidence": "用于心理健康人机对话研究的开放平台",
+      "canonical_evidence": "用于心理健康人机对话研究的开放平台",
+      "llm_tldr_en": "Cloze is an open-source platform for studying human-AI conversations in mental health, enabling controlled and scheduled interactions, which could support EMA-like data collection.",
+      "llm_tldr_cn": "Cloze是一个开源平台，用于在心理健康背景下进行受控的人机对话研究。它允许研究人员配置模型、安排对话时间并捕获完整对话记录，支持类似生态瞬时评估的数据收集方式，但其核心应用场景并非传统的EMA。",
+      "llm_tldr": "Cloze是一个开源平台，用于在心理健康背景下进行受控的人机对话研究。它允许研究人员配置模型、安排对话时间并捕获完整对话记录，支持类似生态瞬时评估的数据收集方式，但其核心应用场景并非传统的EMA。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.15284v1",
+      "source": "arxiv",
+      "title": "CAP: Towards PPG Universal Representation Learning with Patient-level Supervision",
+      "abstract": "Photoplethysmography (PPG) plays a central role in wearable health monitoring and clinical decision support. Yet existing approaches to universal PPG representation learning largely focus on signal-level objectives and often overlook patient-level health context, which limits generalization to complex clinical tasks and heterogeneous cohorts. To address this gap, we construct a large-scale paired PPG-EHR multimodal dataset by distilling fragmented medical histories and clinical records into cohesive, patient-level electronic health records (EHR). Building on this resource, we propose Clinical Anchored Pretraining for PPG (CAP). During pretraining, CAP performs cross-modal contrastive alignment that anchors PPG representations to patient-level clinical semantics, guiding the encoder beyond waveform fitting toward modeling consistency in a patient's overall physiological state. During downstream adaptation, the pretrained PPG encoder provides clinically grounded representations that strengthen inductive bias and improve robustness and transferability. Experiments demonstrate that CAP consistently outperforms strong baselines on four diverse downstream tasks. CAP achieves a particularly large gain on respiratory rate prediction (up to +87.6% relative improvement over the state-of-the-art baseline) and delivers an average relative +26.7% across all tasks. We further enhance the interpretability of our approach through comprehensive analyses, including ablations and multiple complementary visualizations of the learned representations. The code for our experiments is available at: https://github.com/gody123gody/CAP .",
+      "authors": [
+        "Chenyang He",
+        "Xinyi Shao",
+        "Shun Huang",
+        "Bosong Huang",
+        "Daoqiang Zhang",
+        "Ming Jing",
+        "Cheng Ding"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-13T12:44:27+00:00",
+      "link": "https://arxiv.org/pdf/2606.15284v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "PPG universal representation learning for wearable health monitoring, applicable to sleep and mental health",
+      "llm_evidence_cn": "面向可穿戴健康监测的PPG通用表征学习，可应用于睡眠与心理健康",
+      "llm_evidence": "面向可穿戴健康监测的PPG通用表征学习，可应用于睡眠与心理健康",
+      "canonical_evidence": "面向可穿戴健康监测的PPG通用表征学习，可应用于睡眠与心理健康",
+      "llm_tldr_en": "CAP leverages patient-level supervision to learn universal PPG representations, enabling better health monitoring from wearables, which supports EMA studies involving sleep and mental health.",
+      "llm_tldr_cn": "CAP通过构建大规模配对PPG-EHR数据集，进行跨模态对比预训练，将PPG信号与患者级健康记录对齐，学习可泛化的PPG表示。该方法提升了可穿戴健康监测在复杂临床任务上的表现，可用于睡眠和心理健康相关的生态瞬时评估研究。",
+      "llm_tldr": "CAP通过构建大规模配对PPG-EHR数据集，进行跨模态对比预训练，将PPG信号与患者级健康记录对齐，学习可泛化的PPG表示。该方法提升了可穿戴健康监测在复杂临床任务上的表现，可用于睡眠和心理健康相关的生态瞬时评估研究。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ecological momentary assessment EMA in sleep and mental health",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "label": "2026-06-21",
+  "date": "2026-06-21",
+  "generated_at": "2026-06-21T21:18:47",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202606/21/2606.15033v1-cloze-an-open-research-platform-for-studying-human-ai-conversations-in-mental-health-contexts",
+      "section": "quick",
+      "title_en": "Cloze: An Open Research Platform for Studying Human-AI Conversations in Mental Health Contexts",
+      "authors": "Matthew Flathers, Francesco Cipriani, John Torous",
+      "date": "2026-06-13",
+      "pdf": "https://arxiv.org/pdf/2606.15033v1",
+      "score": "6.0",
+      "evidence": "用于心理健康人机对话研究的开放平台",
+      "tldr": "消费者LLM产品（如ChatGPT）缺乏实验控制、数据导出不一致且无安全框架，不适合心理健康研究。Cloze是一个开源Web平台，提供统一环境配置模型、指令、对话安排及安全约束，并记录完整元数据。平台支持OpenAI、Anthropic、Google及本地模型，可云端或完全本地部署。它作为研究基础设施，为建立人机交互证据基础提供支持，而非治疗产品。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Cloze is an open-source web platform for conducting controlled, monitored studies of human-AI conversation in mental health research contexts. Consumer large language model (LLM) products such as ChatGPT, Claude, and Gemini are built for individual productivity, and offer researchers little experimental control, inconsistent data export, and no shared safety scaffolding that holds across providers. Cloze gives research teams a single environment in which they configure which models participants converse with, how the AI is instructed, how conversations are scheduled over time, and which safety constraints apply unconditionally, while every message is captured with full provenance (model version, prompt configuration, timing). The platform currently supports OpenAI, Anthropic, Google, and locally hosted open-weight models served through Ollama behind a unified interface, and runs in the cloud or fully on premises so that participant data need never leave an institution. Cloze is research infrastructure for building an evidence base on human-AI interaction in mental health contexts. It is not a therapeutic product.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/21/2606.15284v1-cap-towards-ppg-universal-representation-learning-with-patient-level-supervision",
+      "section": "quick",
+      "title_en": "CAP: Towards PPG Universal Representation Learning with Patient-level Supervision",
+      "authors": "Chenyang He, Xinyi Shao, Shun Huang, Bosong Huang, Daoqiang Zhang, Ming Jing, Cheng Ding",
+      "date": "2026-06-13",
+      "pdf": "https://arxiv.org/pdf/2606.15284v1",
+      "score": "6.0",
+      "evidence": "面向可穿戴健康监测的PPG通用表征学习，可应用于睡眠与心理健康",
+      "tldr": "现有PPG表示学习多聚焦信号级目标，忽略患者级健康上下文，限制复杂临床任务泛化。本文构建大规模PPG-EHR多模态数据集，提出临床锚定预训练（CAP），通过跨模态对比对齐将PPG表示锚定到患者级临床语义。实验表明CAP在四项下游任务上优于基线，呼吸率预测相对提升87.6%，平均提升26.7%。该工作增强模型鲁棒性与可解释性，为PPG通用表示学习提供新范式。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "Photoplethysmography (PPG) plays a central role in wearable health monitoring and clinical decision support. Yet existing approaches to universal PPG representation learning largely focus on signal-level objectives and often overlook patient-level health context, which limits generalization to complex clinical tasks and heterogeneous cohorts. To address this gap, we construct a large-scale paired PPG-EHR multimodal dataset by distilling fragmented medical histories and clinical records into cohesive, patient-level electronic health records (EHR). Building on this resource, we propose Clinical Anchored Pretraining for PPG (CAP). During pretraining, CAP performs cross-modal contrastive alignment that anchors PPG representations to patient-level clinical semantics, guiding the encoder beyond waveform fitting toward modeling consistency in a patient's overall physiological state. During downstream adaptation, the pretrained PPG encoder provides clinically grounded representations that strengthen inductive bias and improve robustness and transferability. Experiments demonstrate that CAP consistently outperforms strong baselines on four diverse downstream tasks. CAP achieves a particularly large gain on respiratory rate prediction (up to +87.6% relative improvement over the state-of-the-art baseline) and delivers an average relative +26.7% across all tasks. We further enhance the interpretability of our approach through comprehensive analyses, including ablations and multiple complementary visualizations of the learned representations. The code for our experiments is available at: https://github.com/gody123gody/CAP .",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

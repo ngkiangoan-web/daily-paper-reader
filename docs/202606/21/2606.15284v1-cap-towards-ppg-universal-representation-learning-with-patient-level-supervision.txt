@@ -1,0 +1,531 @@
+Title: CAP: Towards PPG Universal Representation Learning with Patient-level Supervision
+
+URL Source: https://arxiv.org/pdf/2606.15284v1
+
+Published Time: Tue, 16 Jun 2026 00:48:13 GMT
+
+Number of Pages: 11
+
+Markdown Content:
+# CAP: Towards PPG Universal Representation Learning with Patient-level Supervision 
+
+# Chenyang He ∗
+
+Nanjing University of Aeronautics and Astronautics Nanjing, Jiangsu, China raoquan00@gmail.com 
+
+# Xinyi Shao ∗
+
+Nanjing University of Aeronautics and Astronautics Nanjing, Jiangsu, China xshao@arizona.edu 
+
+# Shun Huang 
+
+Peking University Beijing, Beijing, China huangshun0815@gmail.com 
+
+# Bosong Huang 
+
+Independent Researcher N/A boson.hwang@gmail.com 
+
+# Daoqiang Zhang 
+
+Nanjing University of Aeronautics and Astronautics Nanjing, Jiangsu, China dqzhang@nuaa.edu.cn 
+
+# Ming Jing 
+
+Independent Researcher N/A mingjinedu@gmail.com 
+
+# Cheng Ding †
+
+Jinling Clinical Medical College College of Artificial Intelligence Nanjing University of Aeronautics and Astronautics Nanjing, Jiangsu, China chengding@nuaa.edu.cn 
+
+## Abstract 
+
+Photoplethysmography (PPG) plays a central role in wearable health monitoring and clinical decision support. Yet existing approaches to universal PPG representation learning largely focus on signal-level objectives and often overlook patient-level health context, which limits generalization to complex clinical tasks and heteroge-neous cohorts. To address this gap, we construct a large-scale paired PPG-EHR multimodal dataset by distilling fragmented medical his-tories and clinical records into cohesive, patient-level electronic health records (EHR). Building on this resource, we propose Clinical 
+
+Anchored Pretraining for PPG ( CAP ). During pretraining, CAP performs cross-modal contrastive alignment that anchors PPG rep-resentations to patient-level clinical semantics, guiding the encoder beyond waveform fitting toward modeling consistency in a pa-tient’s overall physiological state. During downstream adaptation, the pretrained PPG encoder provides clinically grounded represen-tations that strengthen inductive bias and improve robustness and transferability. Experiments demonstrate that CAP consistently out-performs strong baselines on four diverse downstream tasks. CAP achieves a particularly large gain on respiratory rate prediction (up to +87 .6% relative improvement over the state-of-the-art base-line) and delivers an average relative +26 .7% across all tasks. We  
+
+> ∗Both authors contributed equally to this research.
+> †Corresponding author: chengding@nuaa.edu.cn
+> This work is licensed under a Creative Commons Attribution 4.0 International License.
+> KDD 2026, Jeju Island, Republic of Korea
+> ©2026 Copyright held by the owner/author(s). ACM ISBN 979-8-4007-2259-2/2026/08 https://doi.org/10.1145/3770855.3818881
+
+further enhance the interpretability of our approach through com-prehensive analyses, including ablations and multiple complemen-tary visualizations of the learned representations. The code for our experiments is available at: https://github.com/gody123gody/CAP. 
+
+## CCS Concepts 
+
+• Computing methodologies → Machine learning ; Artificial intelligence ; • Applied computing → Life and medical sciences .
+
+## Keywords 
+
+PPG, Multimodal Representation, AI for healthcare 
+
+ACM Reference Format: 
+
+Chenyang He, Xinyi Shao, Shun Huang, Bosong Huang, Daoqiang Zhang, Ming Jing, and Cheng Ding. 2026. CAP: Towards PPG Universal Represen-tation Learning with Patient-level Supervision. In Proceedings of the 32nd ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.2 (KDD 2026), August 9–13, 2026, Jeju Island, Republic of Korea. ACM, New York, NY, USA, 11 pages. https://doi.org/10.1145/3770855.3818881 
+
+## 1 Introduction 
+
+Photoplethysmography (PPG) is a low-cost, non-invasive physio-logical [7, 25, 6] sensing modality that has been widely deployed in mobile health (mHealth) [33] and clinical decision support [54], enabling key applications such as heart rate and respiratory moni-toring [39], blood pressure estimation [5], and arrhythmia screen-ing [10, 13]. Learning a transferable Universal PPG Encoder that captures robust physiological representations [18, 17] has become an important direction in medical informatics, which can be reused across diverse downstream tasks.  
+
+> arXiv:2606.15284v1 [eess.SP] 13 Jun 2026 KDD 2026, August 9–13, 2026, Jeju Island, Republic of Korea He et al.
+
+Figure 1: Overall performance of CAP across downstream tasks, contains Blood pressure (BP) estimation, Atrial fibril-lation (AF) detection, Heart rate (HR) estimation and Respi-ratory rate (Resp) estimation. 
+
+However, existing PPG studies largely focus on deriving medical inductive patterns from short term PPG segments, while overlook-ing the patient’s underlying physiological state reflected by the signal [56, 31, 10]. We therefore claim that: 
+
+PPG representation learning should be patient-centric. 
+
+These limitations are illustrated in Figure 2. First, semantic spar-sity and bias in the representation space [9]. Many contrastive approaches primarily align samples by geometric waveform simi-larity [38]. Yet PPG is an external manifestation of complex feedback within the circulatory system, and similar waveforms do not nec-essarily imply the same physiological or pathological state. This mismatch limits the model’s ability to distinguish signals that are morphologically similar but semantically different. Second, augmentation-induced semantic corruption. Common augmentations such as masking, temporal perturbations, or mor-phological transforms [35, 20] may inadvertently distort fine-grained structures that carry clinically relevant information, thereby con-straining transferability to fine-grained diagnosis or sensitive esti-mation tasks. Third, limited temporal-scale awareness. Many studies pretrain on short segments (e.g., 5–30 seconds) [13, 24], whereas real-world clinical and out-of-clinic monitoring is tightly coupled with a pa-tient’s long term context. Relying solely on short windows often fails to capture chronic conditions and long-horizon physiological drift, which in turn undermines generalization across tasks and cohorts. To address these challenges, we first expand the temporal field of view by modeling longer PPG segments, enabling the encoder to capture long-range physiological dynamics. We then incorporate patient-level clinical history within the corresponding time win-dow as semantic supervision, anchoring representation learning to clinically meaningful patient states rather than waveform-level heuristics. Together, these designs promote patient-centric repre-sentations. 
+
+Figure 2: Challenges of pSSL (PPG Self-Supervised Learn-ing, referring to approaches that rely solely on PPG signals themselves for representation learning). (A) Over-reliance on geometric waveform similarity. (B) Semantic corruption introduced by common augmentations. (C) Limited temporal scope. 
+
+To support this paradigm, we construct a large-scale dataset with 
+
+2,279 patients. For each patient, we pair long term PPG signals with an electronic health records (EHR) distilled by a pretrained language model (PLM) from fragmented diagnosis codes and narrative clinical histories, providing rich patient-level clinical context as supervision for the paired PPG signals. Building on this dataset, we propose Clinical Anchored Pretrain-ing for PPG ( CAP ). To bridge the mismatch between pretraining and downstream tasks in terms of signal duration and frequency resolution, CAP introduces Physical-Semantic Unified Patching (PSUP). PSUP performs dynamic resampling and slicing to map het-erogeneous long PPG recordings into a sequence of patches with a consistent physical time span, enabling physically meaningful alignment of representation granularity across tasks. CAP further integrates a set of complementary self-supervised objectives that jointly capture PPG morphology, robustness, and clinical semantics: (1) Morphological Reconstruction, which recov-ers masked waveform details to preserve fine-grained morphologi-cal patterns; (2) Physiological Stability Modeling, which enforces invariance under noise and state perturbations to learn robust fea-tures; and (3) Long-term Semantic Anchoring, which introduces a patient-level clinical contrastive loss to align physiological rep-resentations with a shared multimodal medical semantic space, thereby mitigating representation drift in long-term monitoring. Empirically, CAP learns clinically grounded and transferable universal PPG representations, yielding strong performance across multiple downstream monitoring tasks. Our main contributions are summarized as follows: CAP: Towards PPG Universal Representation Learning with Patient-level Supervision KDD 2026, August 9–13, 2026, Jeju Island, Republic of Korea 
+
+• A principled diagnosis of current PPG SSL. We provide a systematic analysis of why existing self-supervised learn-ing (SSL) paradigms for PPG often fall short of universal transfer, highlighting their reliance on signal-level objec-tives and the lack of patient-level physiological and clinical context. Motivated by these limitations, we curate a large-scale paired PPG–EHR multimodal pretraining dataset that injects long-horizon patient background information into PPG representation learning. 
+
+• CAP: a multimodal pretraining framework for PPG. 
+
+Building on this dataset, we propose Clinical Anchored 
+
+Pretraining for PPG (CAP). CAP leverages patient-level clin-ical semantics as a physiological semantic anchor and per-forms cross-modal contrastive alignment, guiding the PPG encoder beyond waveform fitting toward patient level repre-sentations. 
+
+• Strong transfer across four heterogeneous downstream tasks. We conduct comprehensive evaluations on four di-verse downstream tasks, including atrial fibrillation detec-tion, heart rate prediction, respiratory rate prediction, and heart rate estimation. CAP consistently outperforms compet-itive baselines, validating the effectiveness of patient-level clinical anchoring for universal PPG representation learning. 
+
+## 2 Related Works 2.1 PPG Self-Supervised Learning 
+
+PPG captures peripheral blood volume pulsations and vascular dynamics, making it highly informative for health monitoring. Ac-cordingly, a substantial literature has studied supervised PPG mod-eling across diverse downstream tasks such as vital-sign estimation and arrhythmia screening [15]. Representative advances include architectures tailored for temporal dynamics (e.g., convolutional recurrent regressors [24]), training strategies that improve label effi-ciency and consistency, data augmentation for class imbalance [14], and signal-quality-aware learning to mitigate motion artifacts and acquisition noise (e.g., SQUWA and related variants) [57, 8]. De-spite these efforts, PPG learning remains sensitive to noise, motion artifacts, and distribution shifts across devices and cohorts. To improve generalization and reduce reliance on expensive la-bels, recent work has moved toward self-supervised and foundation-style pretraining for PPG. These methods typically leverage large-scale recordings and adopt contrastive objectives or waveform-centric reconstruction targets to learn transferable representations that generalize across datasets and tasks [1, 43, 47]. In parallel, mul-timodal and cross-signal pretraining has been explored to transfer representations across PPG, ECG, and other physiological signals; masked-reconstruction paradigms further show promise for multi-variate health time-series modeling [2, 40, 58]. Collectively, these trends reflect a shift from task-specific pipelines toward more uni-versal representation learning for biosignals. However, most existing approaches remain largely confined to signal-level objectives and are weakly constrained by real clini-cal semantics. As a result, the learned representations may capture dataset- or device-specific shortcuts, limiting robustness under clini-cal distribution shifts. In contrast, our work introduces patient-level clinical context from EHR as semantic anchors for pretraining, com-plementing signal-only objectives and encouraging representations that better align with clinically meaningful patient states. 
+
+## 2.2 Representation Learning with Multimodal Medical Data 
+
+Due to the inherent heterogeneity of medical data, multimodal representation learning has become a powerful paradigm for learn-ing semantically grounded features. In radiology, a large body of work has shown that aligning images with free-text reports yields representations that are more robust and clinically meaningful for downstream tasks [36, 53, 43, 13, 10, 23]. Extending this paradigm to physiological signals is non-trivial [32]. Unlike images [59], physiological waveforms exhibit strong tem-poral structure, complex generative dynamics, and limited human interpretability, which complicates the learning of stable, transfer-able semantics from local patterns alone [49]. Nevertheless, recent efforts have begun to pair physiological signals with clinical text, most notably for ECG [34]. Prior studies demonstrate the potential of jointly modeling ECG with EHR, but many existing designs rely on coarse condition names or weak prompts, which may miss richer clinical attributes and longitudinal context and thus provide limited semantic supervision [37]. In contrast, multimodal representation learning for PPG remains comparatively under-explored. Most prior work is task-specific and does not provide a general-purpose pretraining framework that supports broad transfer. Our work fills this gap by incorporating patient-level clinical semantics from EHR as supervision for PPG pretraining, enabling reusable universal representations and sys-tematically demonstrating their benefits across diverse downstream tasks. 
+
+## 3 PPG Multimodal Dataset 
+
+We build our multimodal datasets on MC-MED from emergency-department (ED). ED patients frequently present with undifferen-tiated complaints and rapidly evolving physiology. Consequently, in addition to EHR, continuous physiological monitoring is crucial for characterizing acute disease trajectories and responses to clini-cal interventions. To maximize reusability and clinical validity, we curate the paired PPG–text dataset under the guidance of medical experts, following three design principles. 
+
+Principle 1: Strict Temporal Causality. We enforce strict tem-poral causality when pairing modalities. For each PPG segment recorded up to time 𝑇 current , the associated text includes only infor-mation available at or before 𝑇 current (e.g., prior diagnoses, notes, and orders placed before the segment end time). Any future-dependent information, such as discharge diagnoses, outcomes, or post-hoc summaries determined after the signal recording, is excluded to prevent look-ahead bias. 
+
+Principle 2: Hierarchical Multimodal Alignment. To reflect the multi-timescale nature of ED visits, we adopt a hierarchical alignment strategy that organizes clinical text into three streams: static context (e.g., demographics), cumulative context (e.g., past medical history and laboratory results within a specified look-back window), and concurrent context (e.g., time-stamped observations KDD 2026, August 9–13, 2026, Jeju Island, Republic of Korea He et al. 
+
+and interventions proximal to the PPG segment). This design en-sures that textual context evolves alongside the patient’s physio-logical state captured by PPG. 
+
+Principle 3: Clinical Quality-Aware Filtering. Given the noisy acquisition conditions in the ED, we apply clinical quality-aware filtering to retain reliable PPG segments. Specifically, we compute signal quality indices (SQIs) for each 300-second segment, and keep only segments that exceed a predefined quality threshold. This filtering reduces the risk of training models on acquisition artifacts and encourages learning physiologically meaningful patterns. Following these principles, we extract fixed-length PPG segments and their matched clinical entries from MC-MED . Each example is a 5-minute PPG window 𝑥 𝑘 together with all clinical information available up to the end of that window, denoted as C𝑘 . We then use a pretrained LLM to distill C𝑘 into a structured EHR document 𝑒 𝑘 :
+
+𝑒 𝑘 = LLM (C 𝑘 ). (1) After SQI-based filtering, we obtain the paired multimodal dataset 
+
+D = {( 𝑥 𝑘 , 𝑒 𝑘 )} 𝑀 𝑘 =1, (2) where 𝑀 is the total number of retained PPG–EHR pairs. 
+
+## 4 Clinical Anchored Pretraining for PPG 4.1 Pretrain Stage 
+
+In this section, we present the proposed CAP (Clinical Anchored Pretraining) framework for PPG universal representation learning. The framework is designed to bridge the gap between low-level physiological fluctuations and high-level clinical semantics through a hierarchical alignment process. 
+
+Physical-Semantic Unified Patching. A fundamental challenge in PPG pretraining is the granularity mismatch between long term recordings (e.g., 5-minute pretraining samples) and short term downstream tasks (e.g., 30-second diagnostics). To achieve physi-cal and semantic consistency, we propose the Physical-Semantic Unified Patching mechanism. Given a target duration 𝑇 𝑑 and a desired number of sampling points 𝑁 𝑝 for downstream compatibility, we first define the target sampling frequency as 𝑓 𝑡𝑎𝑟𝑔𝑒𝑡 = 𝑁 𝑝 /𝑇 𝑑 . The raw signal 𝑆 𝑖 with frequency 𝑓 𝑟𝑎𝑤 is resampled to 𝑆 ′ 
+
+> 𝑖
+
+:
+
+𝑆 ′ 
+
+> 𝑖
+
+= Resample  𝑆 𝑖 , 𝑓 𝑟𝑎𝑤 → 𝑓 𝑡𝑎𝑟𝑔𝑒𝑡 
+
+ (3) The resampled sequence 𝑆 ′ 
+
+> 𝑖
+
+∈ R𝐶 ×𝐿 ′
+
+is then partitioned into 𝑀 
+
+non-overlapping patches x = {𝑥 1, 𝑥 2, . . . , 𝑥 𝑀 }, where each patch 
+
+𝑥 𝑗 ∈ R𝐶 ×𝑁 𝑝 corresponds exactly to the physical span required by downstream tasks. This mechanism ensures that the learned repre-sentation is invariant to sampling rate variations and temporally aligned with diagnostic windows. The CAP framework optimizes three cooperative objectives to capture physiological features from micro-morphology to macro-clinical semantics. 
+
+Morphological Reconstruction Loss . To encourage the Patch Encoder F𝜃 to learn the fundamental “grammar” of PPG waveforms, such as systolic peaks and dicrotic notches, we employ Masked Signal Modeling (MSM). A random binary mask 𝑚 ∈ { 0, 1}𝑁 𝑝 with ratio 𝜌 is applied to each patch 𝑥 𝑗 . The masked patch ˜𝑥 𝑗 = 𝑥 𝑗 ⊙ ( 1 −
+
+𝑚 ) is fed into F𝜃 and a lightweight decoder G𝜙 to reconstruct the original signal: 
+
+ˆ𝑥 𝑗 = G𝜙 (F 𝜃 ( ˜𝑥 𝑗 )) (4) The morphological reconstruction loss is defined as: 
+
+L𝑚𝑜𝑟𝑝ℎ = E𝑥 ∈x
+
+"
+
+1
+
+∥M ∥ 0∑︁ 𝑘 ∈ M 
+
+∥𝑥 𝑗,𝑘 − ˆ𝑥 𝑗,𝑘 ∥2
+
+#
+
+(5) where M is the set of masked indices. 
+
+Physiological Stability Loss . To ensure that the extracted fea-tures are robust against sensor noise and baseline wander, we imple-ment a self-supervised contrastive objective. For a single patch 𝑥 𝑗 ,two stochastic latent views 𝑧 𝑗 and 𝑧 ′ 
+
+> 𝑗
+
+are generated via independent dropout perturbations within F𝜃 . The stability loss enforces feature consistency in the latent space: 
+
+L𝑖𝑛𝑣 = − log exp (sim (𝑧 𝑗 , 𝑧 ′ 
+
+> 𝑗
+
+)/ 𝜏 )
+
+Í𝐵 𝑘 =1 exp (sim (𝑧 𝑗 , 𝑧 𝑘 )/ 𝜏 ) (6) where sim (· , ·) denotes cosine similarity and 𝐵 is the batch size. 
+
+Clinical Anchored Loss . To anchor physiological fluctuations to clinical reality, we align the aggregated global PPG represen-tation 𝑃 𝑖 = Agg ({ 𝑧 𝑗,𝑖 }𝑀 𝑗 =1) with the structural EHR embedding 𝑇 𝑖 
+
+derived from the LLM-enhanced text. Using a cross-modal con-trastive framework [45], the loss is defined as: 
+
+L𝑐𝑙𝑖𝑛 = 12
+
+ L𝑝 →𝑡 + L 𝑡 →𝑝 
+
+ (7) By anchoring the signal to long-term clinical outcomes, L𝑐𝑙𝑖𝑛 miti-gates representation shift and imbues the encoder with diagnostic relevance. 
+
+## 4.2 Finetune Stage 
+
+In the finetuning stage, we adapt CAP to task-specific supervision by combining local waveform dynamics with the long-context clin-ical semantics learned during pretraining. Given a 5-minute PPG segment 𝑥 ∈ R𝑇 , we compute its first- and second-order temporal derivatives and construct a three-channel input: 
+
+s = 𝑥, ∇𝑥, ∇2𝑥  ∈ R3×𝑇 , (8) where ∇𝑥 and ∇2𝑥 denote the discrete first and second derivatives, respectively. This multi-channel representation explicitly exposes slope and curvature cues, which are often informative for local morphology. 
+
+Local Morphology Encoder. We feed s into a ResNet-based local encoder H𝜓 to extract task-relevant local features: 
+
+ℓ = H𝜓 (s) ∈ R𝑑 ℓ . (9) 
+
+Clinical-Semantic Encoder. In parallel, we reuse the CAP pre-trained PPG encoder to obtain a clinically grounded long-context representation. Using the same Physical-Semantic Unified Patching procedure as in pretraining, we map the input segment into 𝑁 𝑝 
+
+patches {𝑥 𝑗 }𝑁 𝑝 
+
+> 𝑗 =1
+
+, and encode each patch with the pretrained patch encoder F𝜃 :
+
+𝑧 𝑗 = F𝜃 (𝑥 𝑗 ), 𝑗 = 1, . . . , 𝑁 𝑝 . (10) CAP: Towards PPG Universal Representation Learning with Patient-level Supervision KDD 2026, August 9–13, 2026, Jeju Island, Republic of Korea 
+
+Figure 3: Model architecture overview. In data construct part, (I) hospital-acquired PPG recordings are paired with matched clinical records and (II) converted into downstream-compatible PPG patches via Physical-Semantic Unified Patching. In model development part, (1) Pretraining stage: PPG encoder is trained with three complementary objectives to jointly capture physiological patterns and clinical semantics. (2) Finetune stage: local signal features are extracted from the PPG waveform and its first-derivatives and second-derivatives, while the pretrained PPG encoder provides long-context clinical representations; combining both yields strong performance on downstream tasks. 
+
+We then aggregate patch embeddings to obtain a global semantic representation: 
+
+𝑔 = Agg  {𝑧 𝑗 }𝑁 𝑝 
+
+> 𝑗 =1
+
+ ∈ R𝑑 𝑔 . (11) Because F𝜃 is pretrained with the clinical anchored loss (Section 4.1), 
+
+𝑔 captures long-term clinical semantics beyond local waveform patterns. 
+
+Gated Fusion and Prediction Head. To integrate complemen-tary information from local morphology and long-context seman-tics, we employ a gated fusion module. Specifically, we compute a gate vector 𝛼 conditioned on both feature types: 
+
+𝛼 = 𝜎 (𝑊 𝛼 [ℓ; 𝑔 ] + 𝑏 𝛼 ) , (12) where [; ] denotes concatenation and 𝜎 (·) is the sigmoid function. The fused representation is computed as 
+
+ℎ = 𝛼 ⊙ 𝑔 + ( 1 − 𝛼 ) ⊙ ℓ, (13) where ⊙ is the element-wise product. Finally, we apply an activation layer and a task-specific linear head to obtain the prediction: 
+
+ˆ𝑦 = R𝜔 
+
+ 𝜑 (ℎ), (14) where 𝜑 (·) denotes a non-linear activation and R𝜔 is a prediction head constructed by multilayer perceptron (MLP). 
+
+## 5 Experiment 
+
+For pretraining, we utilize MedCPT as the text encoder for Elec-tronic Health Records (EHR). During downstream training, we optimize the BCEWithLogitsLoss for AF detection and the Mean Squared Error (MSE) for the three regression tasks (HR/BP/RR). For evaluation, we report the F1-score for AF detection and the Mean Absolute Error (MAE) for all regression tasks. 
+
+Experiments settings All experiments are implemented in Py-Torch [42] and run on 8 × NVIDIA A800 80GB GPUs. For each reported result, we repeat training three times with different ran-dom seeds and report 99% confidence intervals. In CAP pretraining, PPG segments are 5 minutes long at 125 Hz. In downstream tasks, PPG segments are 30 seconds long at 40 Hz. Since prior work adopts different evaluation protocols, we explicitly detail the methodology used in each table; CV denotes cross-validation and LoSo denotes leave-one-subject-out validation [10]. 
+
+Datasets & Baselines. We evaluate CAP on four downstream tasks using widely adopted public benchmarks. 
+
+Atrial fibrillation (AF) detection. We use the Stanford PPG dataset [52]. We follow the official subject-level train/test split provided by the dataset, ensuring no overlap of individuals be-tween training and testing. We compare against DeepBeat [52], BayesBeat [12], ResNeXt [50], SiamQuality [13] and GPT-PPG [10]. SiamQuality and GPT-PPG are pretrained (foundation-style) ap-proach trained on large-scale PPG recordings. 
+
+Heart rate (HR) estimation. We adopt WESAD [48] and perform leave-one-subject-out (LOSO) evaluation. Baselines include Belief-PPG [4], Deep PPG [46], TAPIR [22], SiamQuality [13],PaPaGei [43] and GPT-PPG [10]. 
+
+Respiratory rate (RR) estimation. We use BIDMC [44] and conduct 5-fold cross-validation. For each fold, we enforce subject-disjoint splits between training and validation sets, using an 80%/20% ratio. We compare against RRWaveNet [41], RespWatch [11], an LSTM baseline [29], SiamQuality [13] and GPT-PPG [10]. 
+
+Blood pressure (BP) estimation. We evaluate on PulseDB [55]. We create a held-out test set by randomly sampling subjects from the full cohort, and explicitly ensure subject-level disjointness between training and test splits to prevent distribution leakage. We compare against Slapniar [51], Kachuee [28], SiamQuality [13] and GPT-PPG [10]. KDD 2026, August 9–13, 2026, Jeju Island, Republic of Korea He et al. 
+
+## 5.1 AF Detection Results 
+
+As shown in Table 1, CAP achieves the best performance on AF detection. Coverage denotes the fraction of the original dataset retained for evaluation, which is typically reduced by quality-based filtering. All results in Table 1 follow the same official test split; when coverage is below 100%, evaluation is performed on the fil-tered subset of the test set rather than the full test set. 
+
+Table 1: AF detection results on the Stanford [52]. Cover-age denotes the fraction of the original dataset retained for evaluation. 
+
+Method #Params Coverage CI (99%) F1                                        
+
+> DeepBeat (2020) 3M 100% ±0.135 0.652
+> 3M 27.67% ±0.209 0.646
+> ResNext (2019) 5M 100% ±0.118 0.684
+> BayesBeat (2020) 2M 100% ±0.099 0.671
+> 2M 54% ±0.234 0.754
+> SiamQuality (2024) 19M 100% ±0.124 0.770
+> GPT-PPG (2025) 19M 100% ±0.101 0.710
+> 85M 100% ±0.095 0.770
+> 345M 100% ±0.105 0.823
+> 1B 100% ±0.116 0.841
+> CAP (Ours) 130M 100% ±0.010 0.883 (Best)
+
+## 5.2 Heart Rate Estimation Results 
+
+As shown in Table 2, CAP achieves the best performance on the HR estimation task. We report results on HR estimation task in table 2. TAPIR performs quality-based filtering on the dataset. 
+
+Table 2: HR Estimation Results on the WESAD [48]. 
+
+Method #Params Eval CI (99%) MAE                                      
+
+> BeliefPPG (2023) 3M LoSo ±2.00 4.28
+> Deep PPG (2019) 3M LoSo ±3.30 7.47
+> TAPIR (2020) 5M LoSo ±1.40 4.20
+> SiamQuality (2024) 2M LoSo ±2.34 5.88
+> PaPaGei-P (2024) 2M Random ––GPT-PPG (2025) 19M Random ––85M LoSo ±2.20 5.42
+> 345M LoSo ±2.00 5.32
+> 1B LoSo ±1.80 4.98
+> CAP (Ours) 130M LoSo ±1.06 3.99 (Best)
+
+## 5.3 Respiration Rate Estimation Results 
+
+As shown in Table 3, CAP achieves the best performance on the HR estimation task. Since the dataset does not provide an official fixed test split, we report results using 5-fold CV. CAP consistently outperforms competing methods, even when trained and evaluated without any quality-based filtering. 
+
+Table 3: Resp estimation Results on the BIDMC [44]. 
+
+Method #Params Eval CI (99%) MAE                                  
+
+> RRWaveNet (2023) 3M LOOCV ±1.01 1.66
+> RespWatch (2021) 3M 5-fold CV ±2.80 1.66
+> LSTM (2022) 5M Random ±2.09 1.51
+> SiamQuality (2024) 2M 5-fold CV ±0.01 0.89
+> GPT-PPG (2025) 19M 5-fold CV ±0.69 2.21
+> 85M 5-fold CV ±0.56 1.64
+> 345M 5-fold CV ±0.48 1.33
+> 1B 5-fold CV ±0.21 0.93
+> CAP (Ours) 130M 5-fold CV ±0.05 0.11 (Best)
+
+## 5.4 Blood Pressure Estimation Results 
+
+As shown in Table 3, CAP achieves the best performance on the HR estimation task. We evaluate on PulseDB [55], a curated dataset derived from MIMIC-III [27] and VitalDB [30]. We compare against prior methods reported on MIMIC-III ; however, since different works adopt non-matching signal filtering and preprocessing pipelines, these comparisons should be interpreted as a reference rather than a strictly controlled benchmark. Given the large scale of PulseDB 
+
+(483,844 samples), we use a single held-out test split instead of 5-fold cross-validation, and keep the randomly sampled test set fixed across all our runs for consistency. 
+
+Table 4: BP Estimation Results on the PulseDB [55]. 
+
+Method #Params Eval CI (99%) MAE                              
+
+> Slapniar (2019) 3M LoSo ±6.35 9.43
+> Kachuee (2015) 3M Random ±8.92 12.38
+> SiamQuality (2024) 2M 5-fold CV ±6.93 8.60
+> GPT-PPG (2025) 19M Random ±5.98 9.13
+> 85M Random ±7.56 8.81
+> 345M Random ±6.80 8.42
+> 1B Random ±7.09 8.12
+> CAP (Ours) 130M Random ±6.39 8.04 (Best)
+
+## 6 Ablation Study 
+
+In this section, we perform comprehensive ablation studies on the key components choices, and report the average performance. 
+
+Pretrain Stage Loss. In the pretraining stage, CAP optimizes three objectives to learn PPG representations. As shown in Table 5, we conduct a detailed ablation study to quantify the contribution of each loss term. We first evaluate each objective in isolation. The results show that the clinical anchored loss L𝑐𝑙𝑖𝑛 , which injects long-horizon patient context, provides the largest performance gain, directly supporting our motivation. We then progressively remove each loss component from the full model; performance consistently degrades in all cases, indicating that each term contributes to the overall effectiveness of CAP. CAP: Towards PPG Universal Representation Learning with Patient-level Supervision KDD 2026, August 9–13, 2026, Jeju Island, Republic of Korea 
+
+Table 5: Ablating Loss Function. 
+
+L𝑚𝑜𝑟𝑝ℎ L𝑖𝑛𝑣 L𝑐𝑙𝑖𝑛 AF Detection Resp Estimation 
+
+✓ 0.72 ±0.03 0.76 ±0.22 
+
+✓ 0.69 ±0.05 1.23 ±1.05 
+
+✓ 0.72 ±0.06 1.66 ±0.31 
+
+✓ ✓ 0.75 ±0.02 0.36 ±0.23 
+
+✓ ✓ 0.72 ±0.00 1.28 ±0.41 
+
+✓ ✓ 0.79 ±0.04 0.75 ±0.45 
+
+✓ ✓ ✓ 0.88 ±0.01 0.11 ±0.05 
+
+Text Encoder for L𝑐𝑙𝑖𝑛 . Computing the clinical anchored loss 
+
+L𝑐𝑙𝑖𝑛 requires embedding the paired EHR text with a pretrained language model. Table 6 summarizes the impact of different text encoders; among all candidates, MedCPT [26] achieves the best performance on both tasks. 
+
+Table 6: Effects of Text Encoder. 
+
+EHR Encoder AF Detection Resp Estimation 
+
+BioClinicalBERT [3] 0.84 ±0.03 0.22 ±0.10 
+
+PubMedBERT [19] 0.81 ±0.05 0.14 ±0.03 
+
+Med-CPT (Ours) [26] 0.88 ±0.01 0.11 ±0.05 
+
+Data Augmentation Strategies for L𝑖𝑛𝑣 . Computing L𝑖𝑛𝑣 re-quires constructing positive/negative pairs via data augmentation. We evaluate several pairing strategies in Table 7. In particular, ap-plying dropout in the representation space is less disruptive than augmenting the raw waveform, and thus better preserves physio-logically meaningful information in the signal. 
+
+Table 7: Data Augmentation Strategies. 
+
+EHR Encoder AF Detection Resp Estimation 
+
+Cutout 0.72 ±0.12 1.48 ±0.60 
+
+Drop 0.82 ±0.05 1.07 ±0.21 
+
+Gaussian noise 0.77 ±0.02 0.92 ±0.42 
+
+Latent Dropout (Ours) 0.88 ±0.01 0.11 ±0.05 
+
+Dropout Ratio In the previous section, we verified the effective-ness of dropout-based view generation. Here, we further study the impact of the dropout ratio. As shown in Table 8, CAP is rela-tively sensitive to this hyperparameter and achieves the best overall performance at a dropout ratio of 0.2; we therefore use 0.2 in all experiments. 
+
+Table 8: Dropout Ratio. 
+
+Drop Ratio AF Detection Resp Estimation 
+
+0.1 0.85 ±0.02 0.14 ±0.02 
+
+0.5 0.82 ±0.03 0.15 ±0.02 
+
+0.2 0.88 ±0.01 0.11 ±0.05 
+
+Signal branch in the finetuning stage. In finetuning, we augment the raw PPG waveform with its first- and second-order derivatives to expand the local feature space. This design is clinically motivated, as derivative signals capture physiologically meaningful dynamics (e.g., slope and curvature) and provide complementary local cues that can help adaptation across tasks and domains. In this ablation, we aim to answer two questions: (1) whether the clinical-semantic information provided by the pretrained PPG encoder contributes beyond a purely task-specific ResNet backbone; and (2) whether each signal component (raw PPG, first derivative, second derivative) is necessary rather than redundant. 
+
+Q1: Does the pretrained PPG embedding provide non-trivial gains? Using only the pretrained PPG embedding already achieves competitive performance (Row 1), but it is limited by insufficient sensitivity to task-specific local patterns. In contrast, using only the ResNet-based local features (Rows 2–5) does not surpass the full CAP model. When we combine the ResNet branch with the pretrained PPG embedding (Rows 6–8), performance consistently improves across settings. These results indicate that the pretrained embedding contributes complementary long-context clinical se-mantics and yields measurable gains beyond local feature learning. 
+
+Q2: Are the derivative channels useful? Comparing Rows 2– 9, removing any single signal component leads to a performance drop, demonstrating that both the first- and second-order deriva-tives provide meaningful information. This supports our design choice of incorporating derivative signals as informative local fea-tures in the finetuning stage. 
+
+Table 9: Ablating Signal branch. 
+
+PPG emb PPG 1𝑠𝑡 𝑑𝑒𝑣 2𝑠𝑡 𝑑𝑒𝑣 AF Detection Resp Estimation                                             
+
+> ✓0.68 ±0.02 0.23 ±0.01
+> ✓0.79 ±0.02 0.18 ±0.01
+> ✓0.73 ±0.05 0.20 ±0.02
+> ✓0.74 ±0.00 0.19 ±0.01
+> ✓✓✓0.80 ±0.06 0.18 ±0.05
+> ✓✓0.84 ±0.01 0.14 ±0.01
+> ✓✓0.79 ±0.03 0.18 ±0.00
+> ✓✓0.82 ±0.01 0.13 ±0.00
+> ✓✓✓✓0.88 ±0.01 0.11 ±0.05
+
+Feature Extractor in Finetune stage Table 10 outlines the ab-lation study for two PPG feature extractor networks (i.e., back-bones) in finetune stage: the CNN-based ResNet18 [21] and the transformer-based ViT-Tiny [16]. 
+
+Table 10: Feature Extractor. 
+
+Feature Extractor AF Detection Resp Estimation 
+
+ViT 0.84 ±0.04 0.12 ±0.02 
+
+ResNet (Ours) 0.88 ±0.01 0.11 ±0.05 
+
+Gating Mechanism. To further elucidate the complementary dy-namics between the pre-trained global semantics ( 𝑔 ) and the local morphological features ( ℓ), we conduct an in-depth empirical in-vestigation into the learned gating vector 𝛼 . Recall that the fused dual-path representation ℎ is formulated as: 
+
+ℎ = 𝛼 · 𝑔 + ( 1 − 𝛼 ) · ℓ, (15) where 𝛼 ∈ [ 0, 1] adaptively balances the contribution of each modal-ity. A higher value of 𝛼 indicates a heavier reliance on pre-trained global EHR-aligned semantics, whereas a lower value prioritizes fine-grained local PPG morphology. We compute the empirical mean of 𝛼 across the test sets of the four downstream tasks to observe how the model modulates its focus based on clinical objectives. As summarized in Table 11, the model exhibits distinct task-driven adaptation. For instance, Atrial KDD 2026, August 9–13, 2026, Jeju Island, Republic of Korea He et al. 
+
+Fibrillation (AF) detection yields the highest mean 𝛼 (0.55 ), indi-cating that the identification of arrhythmic episodes inherently demands broader contextual and long-term semantic cues. Con-versely, tasks like Respiratory Rate (Resp) estimation exhibit a lower mean 𝛼 (0.42 ), reflecting a stronger dependency on localized, cycle-to-cycle waveform variations. 
+
+Table 11: Mean Gating Vector 𝛼 Across Different Downstream Tasks Task Mean 𝛼 
+
+Blood Pressure 0.47 
+
+Atrial Fibrillation 0.55 
+
+Heart Rate 0.49 
+
+Respiratory Rate 0.42 
+
+To evaluate the gating mechanism’s resilience against domain noise, we utilize the pyPPG toolbox to stratify the AF test samples into four distinct groups based on their Signal Quality Index (SQI). Table 12 presents the sample distributions and the corresponding mean 𝛼 for each quality range. A clear monotonic trend is observed: as the signal quality degrades from the pristine range ( 90 –100% )to the severely corrupted range ( < 50% ), the mean 𝛼 significantly increases from 0.43 to 0.61 . This empirical behavior demonstrates that when local morphological features become unreliable due to motion artifacts or low perfusion, the model automatically increases its reliance on the robust, pre-trained long-context semantics to compensate for the information loss. Conversely, for high-quality signals, the model naturally prioritizes fine-grained local features. This dynamic adaptation validates the necessity and the intrinsic complementary nature of our dual-path architectural design. 
+
+Table 12: Gating Behavior Tracking Across Different Signal Quality Index (SQI) Ranges for AF Detection Quality Range (SQI) Sample Count Mean 𝛼 
+
+90 –100% 16,226 0.43 70 –90% 10,729 0.51 50 –70% 7,218 0.53 
+
+< 50% 3,974 0.61 
+
+## 7 Analysis 
+
+In this section, we aim to improve the interpretability of CAP through complementary analyses from multiple perspectives. Specif-ically, we examine (i) text–signal interaction attention, (ii) signal-level attention over the PPG waveform, and (iii) UMAP visualiza-tions of the learned representation space. Together, these analyses provide insight into how CAP leverages clinical anchoring and help elucidate the mechanisms behind its empirical gains. 
+
+## 7.1 Text embedding visualization 
+
+In this section, we provide an interpretability analysis of the learned cross-modal alignment. Specifically, we freeze the pretrained weights of the PPG encoder and MedCPT, and extract embeddings for paired PPG signals and EHR reports from the training set. This yields patch-level representations for PPG and token-level representations for text. We then compute a cross-modal attention map based on the 
+
+Figure 4: Text embedding visualization on AF task. 
+
+similarity between text tokens and PPG patches, which character-izes how each token aligns with different temporal segments of the PPG waveform. Let t𝑖 denote the ℓ2-normalized embedding of the 
+
+𝑖 -th text token and p𝑗 denote the ℓ2-normalized embedding of the 
+
+𝑗 -th PPG patch. The token-to-patch cross-attention is defined as: 
+
+𝑎 𝑖 𝑗 = exp  t⊤ 
+
+> 𝑖
+
+p𝑗 /𝜏 Í𝑃 𝑘 =1 exp  t⊤ 
+
+> 𝑖
+
+p𝑘 /𝜏  , (16) where 𝜏 is a temperature hyperparameter and 𝑃 is the number of valid PPG patches. We visualize the resulting attention matrix 
+
+A = [𝑎 𝑖 𝑗 ] in Figure 4. As shown, the model assigns high attention weights to clinically meaningful keywords in the EHR text, which are consistent with MedCPT’s medical semantics. This observation suggests that the pretraining objective successfully injects clinical information into the PPG representations, facilitating cross-modal semantic matching between physiological signals and textual de-scriptions. 
+
+## 7.2 PPG Signal Attention Visualization 
+
+To provide an intuitive view of how the model interprets PPG in downstream tasks, we visualize attention over the input signal. CAP: Towards PPG Universal Representation Learning with Patient-level Supervision KDD 2026, August 9–13, 2026, Jeju Island, Republic of Korea 
+
+Figure 5: PPG signal attention visualization.  
+
+> (a) no EHR (b) with EHR
+
+Figure 6: EHR supervised t-SNE Visualization on AF task. 
+
+Specifically, we use the PPG encoder to obtain patch-level represen-tation weights, and then map these weights back to the correspond-ing time indices to construct a time-resolved attention profile over the waveform. We select several low-noise examples for clearer visualization. As shown in Figure 5, the model consistently assigns higher attention to the rising phase of the PPG waveform and the peak-to-peak region. This observation is physiologically plausible: the rising waveform is closely related to the arterial pulse arrival and is sensitive to vascular compliance and peripheral resistance, while peak-to-peak timing reflects cardiac cycle dynamics and is directly associated with heart rate variability. The attention patterns there-fore suggest that CAP tends to focus on clinically meaningful com-ponents of PPG rather than noise-dominated segments, supporting the interpretability and medical relevance of the learned represen-tations. 
+
+## 7.3 UMAP analysis 
+
+We use UMAP to visualize the representation space learned by the PPG encoder, comparing encoders trained with unimodal pretrain-ing versus our multimodal (EHR-anchored) pretraining. We take AF detection as an illustrative example, since class separation is more directly observable in a classification setting. As shown in Figure 6, the multimodally trained encoder exhibits substantially clearer separation between AF-positive and AF-negative samples. This improved clustering structure indicates that the EHR-derived supervision provides clinically meaningful constraints and helps shape a more discriminative representation space. 
+
+## 8 Conclusion 
+
+In this work, we argue that PPG representation learning should be patient-centric, moving beyond short-window, signal-level pattern matching toward modeling patient-level physiological states. We identify three key limitations of current PPG self-supervised learn-ing, including geometric-similarity bias, augmentation-induced semantic corruption, and limited temporal-scale awareness. To ad-dress these issues, we introduce patient-level clinical history as semantic supervision. To support this paradigm, we curate a paired PPG–EHR mul-timodal dataset from 2,279 patients, where EHR is distilled from heterogeneous clinical records by a pretrained language model. Building on this dataset, we propose CAP, a clinical anchored pre-training framework for PPG. CAP combines Physical-Semantic Unified Patching to reconcile duration and frequency mismatches across pretraining and downstream tasks, and a set of cooperative objectives that jointly capture waveform morphology, physiologi-cal robustness, and long-term clinical semantics via patient-level anchoring. Extensive experiments across four heterogeneous downstream tasks—atrial fibrillation detection, heart rate prediction, respiratory rate prediction, and heart rate estimation—demonstrate that CAP learns clinically grounded and transferable universal PPG represen-tations, consistently outperforming strong baselines. In particular, CAP achieves an 88% relative improvement in MAE on respira-tory rate prediction and an average relative improvement of 26.7% 
+
+across all four tasks. Overall, our results suggest that incorporating long-term patient context and clinical semantics is a promising direction toward universal foundation models for physiological signals. We further conduct extensive interpretability analyses to better understand CAP and validate key design choices. Ablation studies confirm the effectiveness of each component and the rationale behind major hyperparameter settings. In addition, we analyze the learned representations from multiple perspectives, including attention-based signal attribution derived from encoder weights, text–signal alignment behavior, and UMAP visualizations of the representation space. These results provide converging evidence for the effectiveness of clinical anchoring and improve the transparency of our approach. KDD 2026, August 9–13, 2026, Jeju Island, Republic of Korea He et al. 
+
+## References 
+
+[1] Salar Abbaspourazad, Oussama Elachqar, Andrew Miller, Saba Emrani, Udhyakumar Nallasamy, and Ian Shapiro. 2024. Large-scale training of foundation models for wearable biosignals. In Proc. ICLR .[2] Salar Abbaspourazad, Anshuman Mishra, Joseph Futoma, Andrew C Miller, and Ian Shapiro. 2024. Wearable accelerometer foundation models for health via knowledge distillation. arXiv preprint arXiv:2412.11276 .[3] Emily Alsentzer, John Murphy, William Boag, Wei-Hung Weng, Di Jindi, Tristan Naumann, and Matthew McDermott. 2019. Publicly available clinical bert embeddings. In Proc. 2nd Clinical NLP Workshop , 72–78. [4] Valentin Bieri, Paul Streli, Berken Utku Demirel, and Christian Holz. 2023. Beliefppg: uncertainty-aware heart rate estimation from ppg signals via belief propagation. In Uncertainty in Artificial Intelligence . PMLR, 173–183. [5] Chiara Botrugno, Kanika Dheman, Pietro Bonazzi, Francesco Dell’Olio, and Michele Magno. 2025. Optimized blood pressure prediction with a hybrid cnn-svr model using multiwavelength ppg. IEEE Trans. Instrum. Meas. , 74, 1–12. [6] Cathal Breen and Jeroen Hendriks. 2025. Advancing cardiovascular health: photoplethysmography as a tool for electrocardiogram signal acquisition. 
+
+European Journal of Cardiovascular Nursing , 24, 2, 314–315. [7] Peter H Charlton et al. 2023. The 2023 wearable photoplethysmography roadmap. Physiological measurement , 44, 11, 111001. [8] Sully F Chen, Zhicheng Guo, Cheng Ding, Xiao Hu, and Cynthia Rudin. 2024. Sparse learned kernels for interpretable and efficient medical time series processing. Nature Machine Intelligence , 6, 10, 1132–1144. [9] Ting Chen, Simon Kornblith, Mohammad Norouzi, and Geoffrey Hinton. 2020. A simple framework for contrastive learning of visual representations. In Proc. Int. Conf. Machine Learning (ICML) . PmLR, 1597–1607. [10] Zhaoliang Chen, Cheng Ding, Saurabh Kataria, Runze Yan, Minxiao Wang, Randall Lee, and Xiao Hu. 2025. Gpt-ppg: a gpt-based foundation model for photoplethysmography signals. Physiological Measurement , 46, 5, 055004. [11] Ruixuan Dai, Chenyang Lu, Michael Avidan, and Thomas Kannampallil. 2021. Respwatch: robust measurement of respiratory rate on smartwatches with photoplethysmography. In Proc. ACM/IEEE IoTDI , 208–220. [12] Sarkar Snigdha Sarathi Das, Subangkar Karmaker Shanto, Masum Rahman, Md Saiful Islam, Atif Hasan Rahman, Mohammad M Masud, and Mohammed Eunus Ali. 2022. Bayesbeat: reliable atrial fibrillation detection from noisy photoplethysmography data. Proc. ACM Interact. Mob. Wearable Ubiquitous Technol. , 6, 1, 1–21. [13] Cheng Ding, Zhicheng Guo, Zhaoliang Chen, Randall J Lee, Cynthia Rudin, and Xiao Hu. 2024. Siamquality: a convnet-based foundation model for photoplethysmography signals. Physiological Measurement , 45, 8, 085004. [14] Cheng Ding, Ran Xiao, Duc H Do, David Scott Lee, Randall J Lee, Shadi Kalantarian, and Xiao Hu. 2023. Log-spectral matching gan: ppg-based atrial fibrillation detection can be enhanced by gan-based data augmentation with integration of spectral loss. IEEE Journal of Biomedical and Health Informatics , 27, 3, 1331–1341. [15] Cheng Ding, Ran Xiao, Weijia Wang, Elizabeth Holdsworth, and Xiao Hu. 2024. Photoplethysmography based atrial fibrillation detection: a continually growing field. Physiological measurement , 45, 4, 04TR01. [16] Alexey Dosovitskiy et al. 2021. An image is worth 16x16 words: transformers for image recognition at scale. In Proc. ICLR .[17] Xiaocheng Fang et al. 2026. Ecgflowcmr: pretraining with ecg-generated cine cmr improves cardiac disease classification and phenotype prediction. arXiv preprint arXiv:2601.20904 .[18] Xiaocheng Fang et al. 2025. Ppgflowecg: latent rectified flow with cross-modal encoding for ppg-guided ecg generation and cardiovascular disease detection. 
+
+arXiv preprint arXiv:2509.19774 .[19] Yu Gu, Robert Tinn, Hao Cheng, Michael Lucas, Naoto Usuyama, Xiaodong Liu, Tristan Naumann, Jianfeng Gao, and Hoifung Poon. 2021. Domain-specific language model pretraining for biomedical natural language processing. ACM Trans. Comput. Healthcare , 3, 1, 1–23. [20] Chenyang He, Zilong Yan, Tianmu Sha, Lei Yao, Qi Li, Zhenyu Zhang, Yong Zhang, and Da Guo. 2025. Pefnet: injecting pre-learned channel dependence for time series forecasting with missing data. In Proc. Int. Joint Conf. Neural Networks (IJCNN) . IEEE, 1–8. [21] Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. 2016. Deep residual learning for image recognition. In Proc. CVPR , 770–778. [22] Nicholas Huang and Nandakumar Selvaraj. 2020. Robust ppg-based ambulatory heart rate tracking algorithm. In Proc. 42nd Annu. Int. Conf. IEEE Eng. Med. Biol. Soc. (EMBC) . IEEE, 5929–5934. [23] Shun Huang, Wenlu Xing, Shijia Geng, Hailong Wang, Guangkun Nie, Gongzheng Tang, Chenyang He, and Shenda Hong. 2025. Combining ecg foundation model and xgboost to predict in-hospital malignant ventricular arrhythmias in ami patients. arXiv preprint arXiv:2510.17172 .[24] Shahid Ismail, Imran Siddiqi, and Usman Akram. 2022. Heart rate estimation in ppg signals using convolutional-recurrent regressor. Computers in Biology and Medicine , 145, 105470. [25] Hui Jiang, Tianliang Yao, and Cheng Ding. 2025. Ppg-based glucose sensors: a review. Artificial Intelligence Review , 58, 12, 391. [26] Qiao Jin, Won Kim, Qingyu Chen, Donald C Comeau, Lana Yeganova, W John Wilbur, and Zhiyong Lu. 2023. Medcpt: contrastive pre-trained transformers with large-scale pubmed search logs for zero-shot biomedical information retrieval. Bioinformatics , 39, 11, btad651. [27] Alistair EW Johnson et al. 2016. Mimic-iii, a freely accessible critical care database. Scientific data , 3, 1, 160035. [28] Mohamad Kachuee, Mohammad Mahdi Kiani, Hoda Mohammadzade, and Mahdi Shabany. 2015. Cuff-less high-accuracy calibration-free blood pressure estimation using pulse transit time. In Proc. IEEE ISCAS . IEEE, 1006–1009. [29] Amit Krishan Kumar, M Ritam, Lina Han, Shuli Guo, and Rohitash Chandra. 2022. Deep learning for predicting respiratory rate from biosignals. Computers in biology and medicine , 144, 105338. [30] Hyung-Chul Lee, Yoonsang Park, Soo Bin Yoon, Seong Mi Yang, Dongnyeok Park, and Chul-Woo Jung. 2022. Vitaldb, a high-fidelity multi-parameter vital signs database in surgical patients. Scientific Data , 9, 1, 279. [31] Yongbin Lee, Soyoung Lee, Sang Kyu Kim, Dong Keon Yon, Yunyoung Nam, and Jinseok Lee. 2025. Cooperative ppg/ecg wearable system for atrial fibrillation diagnosis. IEEE Sensors Journal , 25, 4, 7331–7344. [32] Chenqi Li, Boyan Gao, Gabriel Davis Jones, Timothy Denison, and Tingting Zhu. 2025. Anchorinv: few-shot class-incremental learning of physiological signals via feature space-guided inversion. In Proc. AAAI Conf. Artificial Intelligence number 13. Vol. 39, 14274–14282. [33] Hao Li, Tianxiang Qu, Liheng Liu, Yuying Li, Zhiliang Hong, and Jiawei Xu. 2025. An iot-enabled wearable health monitor for synchronized exg, ppg, and bioz measurement. IEEE Trans. Instrum. Meas. , 74, 1–11. [34] Jun Li et al. 2025. An electrocardiogram foundation model built on over 10 million recordings. NEJM AI , 2, 7, AIoa2401033. [35] Zhiyu Liang, Jianfeng Zhang, Chen Liang, Hongzhi Wang, Zheng Liang, and Lujia Pan. 2023. A shapelet-based framework for unsupervised multivariate time series representation learning. Proc. VLDB Endow. , 17, 3, 386–399. [36] Che Liu, Sibo Cheng, Chen Chen, Mengyun Qiao, Weitong Zhang, Anand Shah, Wenjia Bai, and Rossella Arcucci. 2023. M-flag: medical vision-language pre-training with frozen language models and latent space geometry optimization. In Proc. MICCAI . Springer, 637–647. [37] Che Liu, Zhongwei Wan, Cheng Ouyang, Anand Shah, Wenjia Bai, and Rossella Arcucci. 2024. Zero-shot ecg classification with multimodal learning and test-time clinical knowledge enhancement. In Proc. 41st Int. Conf. Machine Learning (ICML) , 31949–31963. [38] Ke Ma, Tao Zhang, Hengyuan Zhang, and Wu Huang. 2026. Self-supervised contrastive learning achieves 12-lead ecg classification. Biomedical Signal Processing and Control , 112, 108420. [39] Yuyang Miao, Zehua Chen, Chang Li, and Danilo P Mandic. 2025. Respdiff: an end-to-end multi-scale rnn diffusion model for respiratory waveform estimation from ppg signals. In Proc. IEEE ICASSP . IEEE, 1–5. [40] Girish Narayanswamy et al. 2025. Scaling wearable foundation models. In Proc. ICLR .[41] Pongpanut Osathitporn et al. 2023. Rrwavenet: a compact end-to-end multiscale residual cnn for robust ppg respiratory rate estimation. IEEE Internet of Things Journal , 10, 18, 15943–15952. [42] Adam Paszke et al. 2019. Pytorch: an imperative style, high-performance deep learning library. Advances in neural information processing systems , 32. [43] Arvind Pillai, Dimitris Spathis, Fahim Kawsar, and Mohammad Malekzadeh. 2025. Papagei: open foundation models for optical physiological signals. In 
+
+Proc. ICLR .[44] Marco AF Pimentel, Alistair EW Johnson, Peter H Charlton, Drew Birrenkott, Peter J Watkinson, Lionel Tarassenko, and David A Clifton. 2017. Toward a robust estimation of respiratory rate from pulse oximeters. IEEE Trans. Biomed. Eng. , 64, 8, 1914–1923. [45] Alec Radford et al. 2021. Learning transferable visual models from natural language supervision. In Proc. ICML . PMLR, 8748–8763. [46] Attila Reiss, Ina Indlekofer, Philip Schmidt, and Kristof Van Laerhoven. 2019. Deep ppg: large-scale heart rate estimation with convolutional neural networks. Sensors , 19, 14, 3079. [47] Mithun Saha, Maxwell A Xu, Wanting Mao, Sameer Neupane, James M Rehg, and Santosh Kumar. 2025. Pulse-ppg: an open-source field-trained ppg foundation model for wearable applications across lab and field settings. Proc. ACM Interact. Mob. Wearable Ubiquitous Technol. , 9, 3, 1–35. [48] Philip Schmidt, Attila Reiss, Robert Duerichen, Claus Marberger, and Kristof Van Laerhoven. 2018. Introducing wesad, a multimodal dataset for wearable stress and affect detection. In Proc. 20th ACM Int. Conf. Multimodal Interaction (ICMI) , 400–408. CAP: Towards PPG Universal Representation Learning with Patient-level Supervision KDD 2026, August 9–13, 2026, Jeju Island, Republic of Korea                     
+
+> [49] Jian Shen et al. 2025. Physiological signal analysis using explainable artificial intelligence: a systematic review. Neurocomputing , 618, 128920. [50] Yichen Shen, Maxime Voisin, Alireza Aliamiri, Anand Avati, Awni Hannun, and Andrew Ng. 2019. Ambulatory atrial fibrillation monitoring using wearable photoplethysmography with deep learning. In Proc. ACM SIGKDD Conf. Knowledge Discovery and Data Mining , 1909–1916. [51] Gašper Slapničar, Nejc Mlakar, and Mitja Luštrek. 2019. Blood pressure estimation from photoplethysmogram using a spectro-temporal deep neural network. Sensors , 19, 15, 3420. [52] Jessica Torres-Soto and Euan A Ashley. 2020. Multi-task deep learning for cardiac rhythm detection in wearable devices. NPJ digital medicine , 3, 1, 116. [53] Zhongwei Wan, Che Liu, Mi Zhang, Jie Fu, Benyou Wang, Sibo Cheng, Lei Ma, César Quilodrán-Casas, and Rossella Arcucci. 2023. Med-unic: unifying cross-lingual medical vision-language pre-training by diminishing bias.
+> Advances in Neural Information Processing Systems , 36, 56186–56197. [54] Daomiao Wang, Qihan Hu, Xiaoman Xing, Hong Wu, Jian Liu, Xuepeng Fu, and Cuiwei Yang. 2025. Thinking like clinicians: ranking-based multi-instance learning for ppg-based hemodynamic fluctuation detection. Pattern Recognition , 112981. [55] Weinan Wang, Pedram Mohseni, Kevin L Kilgore, and Laleh Najafizadeh. 2022. Pulsedb: a large, cleaned dataset based on mimic-iii and vitaldb for benchmarking cuff-less blood pressure estimation methods. Frontiers in Digital Health , 4, 1090854. [56] Qiuyue Xue, Dilini Nissanka, Jiachen Tammy Yan, Ruiqing Wang, Shwetak Patel, and Vikram Iyer. 2025. Ppg earring: wireless smart earring for heart health monitoring. In Proc. CHI Conf. Human Factors in Computing Systems , 1–16. [57] Runze Yan, Cheng Ding, Ran Xiao, Aleksandr Fedorov, Randall J Lee, Fadi Nahab, and Xiao Hu. 2024. Squwa: signal quality aware dnn architecture for enhanced accuracy in atrial fibrillation detection from noisy ppg signals. In
+> Proc. Conf. Health, Inference, and Learning (CHIL) (Proceedings of Machine Learning Research). Vol. 248. PMLR, 105–119. [58] Chaoqi Yang, M Westover, and Jimeng Sun. 2023. Biot: biosignal transformer for cross-data learning in the wild. Advances in Neural Information Processing Systems , 36, 78240–78260. [59] Weilian Zhou, Sei-ichiro Kamata, Haipeng Wang, Man Sing Wong, and Huiying Cynthia Hou. 2025. Mamba-in-mamba: centralized mamba-cross-scan in tokenized mamba model for hyperspectral image classification.
+> Neurocomputing , 613, 128751.
+
+## A GenAI Disclosure 
+
+We clarify the use of GenAI during the preparation of this manu-script. GenAI were employed exclusively for supportive purposes in three aspects: (i) assisting in the translation of early drafts written in the authors’ native language, (ii) providing linguistic refinement such as correcting grammar, improving sentence structure, and enhancing readability, and (iii) offering technical assistance in code editing and debugging (e.g., clarifying library usage, resolving im-plementation issues, or refactoring scripts for clarity). It is important to emphasize that all core scientific ideas, method-ological contributions, analyses, and results presented in this work are entirely the intellectual product of the human authors. GenAI functioned strictly as auxiliary tools for writing and coding support, and were not involved in the conceptual or analytical aspects of the research. 
+
+## B Limitations and Ethical Considerations 
+
+Limitations: our datasets are predominantly from Western popu-lations and may not generalize globally; patient-level supervision requires multiple samples per patient which may not be available in all clinical scenarios. Ethics: all data is de-identified; the method is intended for re-search and wellness monitoring, not diagnostic use without FDA/-clinical approval; we have carefully considered privacy implications of patient-level learning and ensure no individual patient can be re-identified from the learned representations. 
+
+Table 13: Statistics of the Pre-training Dataset Before and After Curation                     
+
+> Category / Metric Source Dataset Processed Dataset
+> Dataset Scale
+> Total Samples (Segments/Pairs) 721,840 31,393 Total Patients 52,398 2,279 Total Effective Beats 278,551,511 11,118,996
+> Patient Window Distribution
+> Mean Windows per Patient 13.78 15.32 Range of Windows per Patient 1–8,244 5–8,244
+> Signal Quality Profiles
+> Mean SQI Score 88.29% 93.47% Samples with Excellent Quality ( >90% )400,252 (55.5%) 31,393 (100.0%) Samples with Good Quality ( >70% )675,486 (93.7%) 31,393 (100.0%)
+
+## C Evaluation Protocols and Fairness. 
+
+Delivering strictly controlled comparisons within the PPG foun-dation model community remains an open challenge, primarily due to fragmented evaluation protocols and the lack of publicly available source code or checkpoints in prior arts (e.g., GPT-PPG, SiamQuality). To guarantee a rigorous and fair evaluation, we es-tablish absolute consistency with the pipeline of GPT-PPG—the direct predecessor of our work—strictly replicating its dataset splits, preprocessing procedures, and evaluation metrics. Furthermore, unlike several baselines that rely on quality-based signal filtering, we evaluate our model on 100% of the raw data. This represents a more challenging and realistic setting, and we explicitly delin-eate the varying protocol configurations of each baseline in our comprehensive results. 
+
+## D Data Preprocessing and Signal Quality Specifications 
+
+To guarantee the fidelity of the multi-modal representation align-ment during pre-training, we employ a rigorous artifact filtering pipeline based on the Signal Quality Index (SQI). We utilize the open-source pyPPG library to compute multi-dimensional quality metrics, which comprehensively evaluate signal morphology, periodicity, and amplitude characteristics of each photoplethysmography (PPG) segment. In clinical settings—particularly within the Emergency Depart-ment (ED)—finger-pinch PPG acquisition is highly susceptible to severe noise. The dominant noise sources in our cohort include equipment contact instability (e.g., probe displacement) and patient motion artifacts during acute care. To mitigate these confounding factors, we enforce a stringent inclusion threshold of SQI > 90% .This strict filtering, combined with the prerequisite of non-empty matched clinical text (Electronic Health Records), yields a high-fidelity pre-training corpus consisting of 2,279 unique patient pairs. Table 13 provides a comprehensive breakdown of the data char-acteristics, delineating the distribution and quality metrics before and after the inclusion and exclusion criteria.

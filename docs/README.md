@@ -6,26 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-20
-- 运行时间：2026-06-20 21:28:25 UTC
+- 最新运行日期：2026-06-21
+- 运行时间：2026-06-21 21:18:41 UTC
 - 运行状态：成功
 - 本次总论文数：2
-- 精读区：1
-- 速读区：1
+- 精读区：0
+- 速读区：2
 
 ### 今日简报（AI）
-今日精读论文揭示视频眼动与睡眠中皮层及瞳孔唤醒的关联，速读一篇多模态人机交互数据集论文。值得关注眼动作为睡眠皮层唤醒指标的方向，多模态数据集为神经认知评估提供参考。下步可尝试将眼动监测技术应用于睡眠研究或自适应交互系统。
-- 详情：[/202606/20/README](/202606/20/README)
+1) 今日速览2篇6分论文，聚焦心理健康人机对话平台与PPG患者级表征学习。  
+2) 值得关注方向：AI辅助心理健康对话研究基础设施，以及基于光电容积描记的通用生理信号表示方法。  
+3) 建议优先阅读《Cloze》中平台设计思路，对理解AI在真实诊疗场景中的落地挑战有参考价值。
+- 详情：[/202606/21/README](/202606/21/README)
 
 ### 精读区论文标签
-1. [Video-based eye movements are linked to cortical and pupil-based arousal in human sleep](/202606/20/biorxiv-10-64898-2026-06-10-731319-v1-video-based-eye-movements-are-linked-to-cortical-and-pupil-based-arousal-in-human-sleep)  
-   标签：评分：8.0/10、query:sleep-mental
-   evidence：基于视频的眼动与睡眠阶段评估
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [A multimodal human-computer interaction dataset for neurocognitive user state evaluation](/202606/20/biorxiv-10-1101-2025-09-03-673947-v2-a-multimodal-human-computer-interaction-dataset-for-neurocognitive-user-state-evaluation)  
+1. [Cloze: An Open Research Platform for Studying Human-AI Conversations in Mental Health Contexts](/202606/21/2606.15033v1-cloze-an-open-research-platform-for-studying-human-ai-conversations-in-mental-health-contexts)  
+   标签：评分：6.0/10、query:ema-mental
+   evidence：用于心理健康人机对话研究的开放平台
+2. [CAP: Towards PPG Universal Representation Learning with Patient-level Supervision](/202606/21/2606.15284v1-cap-towards-ppg-universal-representation-learning-with-patient-level-supervision)  
    标签：评分：6.0/10、query:sleep-mental
-   evidence：每五分钟报告警觉性状态的动态评估
+   evidence：面向可穿戴健康监测的PPG通用表征学习，可应用于睡眠与心理健康
 
 
 <div class="dpr-home-promo-card">
