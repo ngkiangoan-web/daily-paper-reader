@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-22",
+  "date": "2026-06-22",
+  "generated_at": "2026-06-22T22:46:07",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202606/22/2606.18969v1-balanced-twins-causal-inference-on-time-series-with-hidden-confounding",
+      "section": "quick",
+      "title_en": "Balanced Twins: Causal Inference on Time Series with Hidden Confounding",
+      "authors": "Ouali Maha, Ghattas Badih, Flachaire Emmanuel, Charpentier Philippe, Bozzi Laurent",
+      "date": "2026-06-17",
+      "pdf": "https://arxiv.org/pdf/2606.18969v1",
+      "score": "7.0",
+      "evidence": "适用于评估EMA干预效果的时间序列因果推断方法",
+      "tldr": "针对时间序列中隐藏混杂和交错干预导致的因果推断难题，提出Balanced Twins框架，通过神经网络同时学习个体时间序列的低维表示和倾向得分，并采用灵活匹配逼近个体反事实，避免传统合成控制法的凸约束。在真实能源数据和ICU半合成数据上验证了该方法能有效估计ATT，且无需显式时间建模假定，适用于非平稳动态场景。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Accurately estimating treatment effects in time series is essential for evaluating interventions in real-world applications, especially when treatment assignment is biased by unobserved factors. In many practical settings, interventions are adopted at different times across individuals, leading to staggered treatment exposure and heterogeneous pre-treatment histories. In such cases, aggregating outcome trajectories across treated units is ill-defined, making individual treatment effect (ITE) estimation a prerequisite for reliable causal inference. We therefore study the problem of estimating the average treatment effect for the treated (ATT) by first recovering individual-level counterfactuals. We introduce a neural framework that learns simultaneously low-dimensional latent representations of individual time series and propensity scores. These estimates are then used to approximate the individual treatment effects through a flexible matching procedure that avoids classical convexity constraints commonly used in synthetic control methods. By operating at the individual level, our approach naturally accommodates staggered interventions and improves counterfactual estimation under latent bias, without relying on explicit temporal modeling assumptions. We illustrate our approach on both real-world energy consumption data and clinical time series, including high-frequency electricity demand-response programs and semi-synthetic data for individuals in intensive care unit (ICU), where hidden confounding, staggered treatment adoption, and non-stationary dynamics are prevalent.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

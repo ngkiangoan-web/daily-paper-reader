@@ -1,0 +1,60 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-22T22:44:56.626240+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 0,
+    "deep_cap": 7,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 12,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.18969v1",
+      "source": "arxiv",
+      "title": "Balanced Twins: Causal Inference on Time Series with Hidden Confounding",
+      "abstract": "Accurately estimating treatment effects in time series is essential for evaluating interventions in real-world applications, especially when treatment assignment is biased by unobserved factors. In many practical settings, interventions are adopted at different times across individuals, leading to staggered treatment exposure and heterogeneous pre-treatment histories. In such cases, aggregating outcome trajectories across treated units is ill-defined, making individual treatment effect (ITE) estimation a prerequisite for reliable causal inference. We therefore study the problem of estimating the average treatment effect for the treated (ATT) by first recovering individual-level counterfactuals. We introduce a neural framework that learns simultaneously low-dimensional latent representations of individual time series and propensity scores. These estimates are then used to approximate the individual treatment effects through a flexible matching procedure that avoids classical convexity constraints commonly used in synthetic control methods. By operating at the individual level, our approach naturally accommodates staggered interventions and improves counterfactual estimation under latent bias, without relying on explicit temporal modeling assumptions. We illustrate our approach on both real-world energy consumption data and clinical time series, including high-frequency electricity demand-response programs and semi-synthetic data for individuals in intensive care unit (ICU), where hidden confounding, staggered treatment adoption, and non-stationary dynamics are prevalent.",
+      "authors": [
+        "Ouali Maha",
+        "Ghattas Badih",
+        "Flachaire Emmanuel",
+        "Charpentier Philippe",
+        "Bozzi Laurent"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME",
+        "cs.MS",
+        "stat.ML"
+      ],
+      "published": "2026-06-17T11:52:59+00:00",
+      "link": "https://arxiv.org/pdf/2606.18969v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "causal inference method for time series applicable to evaluating EMA intervention effectiveness",
+      "llm_evidence_cn": "适用于评估EMA干预效果的时间序列因果推断方法",
+      "llm_evidence": "适用于评估EMA干预效果的时间序列因果推断方法",
+      "canonical_evidence": "适用于评估EMA干预效果的时间序列因果推断方法",
+      "llm_tldr_en": "This paper proposes a neural framework for causal inference on time series with hidden confounding, which can be applied to evaluate effectiveness of EMA-based mental health interventions.",
+      "llm_tldr_cn": "评估现实干预效果时，时间序列中往往存在未观测混杂因素，且处理时间交错。本文提出一种神经框架，通过学习个体级反事实来估计平均处理效应。该方法可应用于评估基于生态瞬时评估的心理健康干预的有效性，为EMA研究提供因果推断工具。",
+      "llm_tldr": "评估现实干预效果时，时间序列中往往存在未观测混杂因素，且处理时间交错。本文提出一种神经框架，通过学习个体级反事实来估计平均处理效应。该方法可应用于评估基于生态瞬时评估的心理健康干预的有效性，为EMA研究提供因果推断工具。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "Effectiveness of EMA in mental health interventions",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

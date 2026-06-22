@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-06-22 <!--dpr-date:20260622-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/22/2606.18969v1-balanced-twins-causal-inference-on-time-series-with-hidden-confounding" data-sidebar-item="{&quot;title&quot;: &quot;Balanced Twins: Causal Inference on Time Series with Hidden Confounding&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.18969v1-balanced-twins-causal-inference-on-time-series-with-hidden-confounding&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ema-mental&quot;}], &quot;evidence&quot;: &quot;适用于评估EMA干预效果的时间序列因果推断方法&quot;}">Balanced Twins: Causal Inference on Time Series with Hidden Confounding</a>
   * 2026-06-21 <!--dpr-date:20260621-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/21/2606.15033v1-cloze-an-open-research-platform-for-studying-human-ai-conversations-in-mental-health-contexts" data-sidebar-item="{&quot;title&quot;: &quot;Cloze: An Open Research Platform for Studying Human-AI Conversations in Mental Health Contexts&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.15033v1-cloze-an-open-research-platform-for-studying-human-ai-conversations-in-mental-health-contexts&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ema-mental&quot;}], &quot;evidence&quot;: &quot;用于心理健康人机对话研究的开放平台&quot;}">Cloze: An Open Research Platform for Studying Human-AI Conversations in Mental Health Contexts</a>
