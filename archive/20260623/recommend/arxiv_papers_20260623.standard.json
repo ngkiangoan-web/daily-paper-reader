@@ -1,0 +1,184 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-23T22:24:38.793051+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 0,
+    "deep_cap": 7,
+    "deep_selected": 0,
+    "quick_candidates": 4,
+    "quick_skim_target": 12,
+    "quick_selected": 4
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.23461v1",
+      "source": "arxiv",
+      "title": "Analysis of Autonomic Regulation in Cancer Survivors During Daily Physical Activity: A Real-World Wearable ECG Study",
+      "abstract": "This study investigates heart rate (HR) and heart rate variability (HRV) responses to physical activity in breast cancer survivors using wearable electrocardiogram (ECG) data collected in real-world settings. Reliable HRV analysis in such environments is challenging due to motion artifacts and activity-related signal degradation. To address this, we use an approach that combines accelerometer and gyroscope data for activity intensity segmentation (light, moderate, vigorous) with a robust ECG processing pipeline incorporating R-peak detection and annotation-free signal quality assessment. Because vigorous activity produced unreliable HRV estimates, analyses focused on light and moderate activity levels. Using 30~s, 1~min, and 2~min windows, HR and HRV metrics were computed and compared between breast cancer survivors and healthy controls. Cancer survivors consistently exhibited elevated HR and reduced HRV across activity levels. During light activity, HR increased from 95.7~bpm in controls to 103.4~bpm in cancer survivors. Differences became more pronounced during moderate activity, where RMSSD decreased from 39.7~ms to 22.1~ms and SDNN from 42.6~ms to 25.1~ms. Statistical analyses showed significant group differences with strong and consistent effects across observations. In addition, the proposed ECG quality assessment framework reliably identified high-quality signal segments, achieving near-perfect valid RR ratios (0.99) without manual annotations. Overall, these findings demonstrate impaired and activity-dependent autonomic regulation in cancer survivors and highlight the importance of motion-aware activity segmentation and robust ECG quality control for accurate physiological monitoring in real-world wearable settings.",
+      "authors": [
+        "Sajad Farrokhiørcidicon",
+        "Lerick Sequeira",
+        "Shanna L. Burke",
+        "Waltenegus Dargie",
+        "Christian Poellabauer"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR"
+      ],
+      "published": "2026-06-22T15:10:17+00:00",
+      "link": "https://arxiv.org/pdf/2606.23461v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Real-world wearable ECG study analyzing autonomic regulation during daily activity in cancer survivors, ambulatory assessment",
+      "llm_evidence_cn": "使用可穿戴心电图在真实世界分析癌症幸存者日常活动中的自主调节，动态评估",
+      "llm_evidence": "使用可穿戴心电图在真实世界分析癌症幸存者日常活动中的自主调节，动态评估",
+      "canonical_evidence": "使用可穿戴心电图在真实世界分析癌症幸存者日常活动中的自主调节，动态评估",
+      "llm_tldr_en": "Analyzed HR and HRV during physical activity in breast cancer survivors using wearable ECG in real-world settings, focusing on light and moderate activity segments, demonstrating feasibility of ambulatory cardiovascular monitoring.",
+      "llm_tldr_cn": "乳腺癌幸存者在日常活动中心率变异性分析面临运动伪影挑战。本研究采用可穿戴心电图结合加速度计数据对活动强度进行分段，在轻度和中度活动下进行可靠HRV分析。结果显示在真实世界环境中进行动态自主神经评估是可行的，为临床动态评估提供了方法参考。",
+      "llm_tldr": "乳腺癌幸存者在日常活动中心率变异性分析面临运动伪影挑战。本研究采用可穿戴心电图结合加速度计数据对活动强度进行分段，在轻度和中度活动下进行可靠HRV分析。结果显示在真实世界环境中进行动态自主神经评估是可行的，为临床动态评估提供了方法参考。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.17789v1",
+      "source": "arxiv",
+      "title": "Mind Companion: An Embodied Conversational Agent for Process-Based Psychotherapy",
+      "abstract": "Access to evidence-based psychotherapy remains limited worldwide, with long waitlists even in high-income regions. Recent advances in large language models (LLMs) offer potential for scalable mental health support when designed with clinical oversight and safety mechanisms. We present Mind Companion, an LLM-based embodied conversational agent integrating multi-layered psychological analysis with process-based therapy principles. The system performs real-time analysis of client statements across fact extraction, psychological flexibility process detection, emotion recognition, and safety monitoring. Analysis results are stored for supervising clinicians to inform therapeutic planning. Response generation incorporates retrieval-augmented generation from evidence-based therapeutic literature and context-aware prompting. Responses are delivered through an embodied avatar with synchronized speech synthesis and animation. We evaluated three LLM configurations (GPT-4.1-mini, GPT-5.2, Claude Sonnet 4.5) against therapist responses from real therapy sessions using automated LLM-judge assessment and expert evaluation with 11 professional psychotherapists. GPT-5.2 achieved higher ratings than human therapist responses across understanding, interpersonal effectiveness, collaboration, and therapeutic alignment in both evaluations, demonstrating the feasibility of LLM-based conversational agents as tools to complement clinical care.",
+      "authors": [
+        "Sofie Kamber",
+        "Lukas Diebold",
+        "Pascal Riachi",
+        "Stella Brogna",
+        "Andrew Gloster",
+        "Rafael Wampfler"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-06-16T11:05:43+00:00",
+      "link": "https://arxiv.org/pdf/2606.17789v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "LLM-based conversational agent for mental health, real-time analysis, potential mobile health application",
+      "llm_evidence_cn": "基于大语言模型的对话代理用于心理健康，实时分析，潜在的移动健康应用",
+      "llm_evidence": "基于大语言模型的对话代理用于心理健康，实时分析，潜在的移动健康应用",
+      "canonical_evidence": "基于大语言模型的对话代理用于心理健康，实时分析，潜在的移动健康应用",
+      "llm_tldr_en": "Mind Companion is an LLM-based embodied conversational agent integrating multi-layered psychological analysis with process-based therapy; it performs real-time analysis of client statements and response generation with retrieval augmentation, targeting scalable mental health support.",
+      "llm_tldr_cn": "针对全球心理治疗可及性不足的问题，本文提出Mind Companion，一种基于大语言模型的具身对话代理。该系统集成了多层次的心理学分析，包括事实提取、心理灵活性过程检测、情绪识别和安全监控，并采用检索增强生成技术生成回应。实时分析结果存储在临床医生监督系统中，以支持治疗规划。该方法有望通过移动设备提供可扩展的心理健康支持，与生态瞬时评估应用中移动健康工具的方向一致。",
+      "llm_tldr": "针对全球心理治疗可及性不足的问题，本文提出Mind Companion，一种基于大语言模型的具身对话代理。该系统集成了多层次的心理学分析，包括事实提取、心理灵活性过程检测、情绪识别和安全监控，并采用检索增强生成技术生成回应。实时分析结果存储在临床医生监督系统中，以支持治疗规划。该方法有望通过移动设备提供可扩展的心理健康支持，与生态瞬时评估应用中移动健康工具的方向一致。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.23631v1",
+      "source": "arxiv",
+      "title": "AI-driven Optimisation of Quality of Recovery (QoR) in Remote Patient Monitoring",
+      "abstract": "Remote patient monitoring depends on patient-reported data to capture the subjective dimension of recovery that devices cannot measure. The Quality of Recovery (QoR-15) survey is the gold-standard instrument for this purpose. It was designed and validated for occasional in-hospital assessment, yet remote monitoring now administers it to patients daily. In our own post-surgical deployment, only 55% of patients submitted the survey more than 14 days of 30 monitoring days. We developed QoR-compact, a five-item daily input for the RPM prediction pathway. Setting a deployment-driven target of one-third of the daily items, we exhaustively evaluated all 3,003 five-question subsets of the QoR-15 and tested whether the best of them matches the full instrument in predicting near-term postoperative recovery severity. QoR-compact achieves a mean AUC-ROC of 0.968 (95% CI 0.915-0.988), statistically comparable to the 0.964 baseline obtained with one-third of the items. Patient-level backtesting indicates that it tracks readmission events as faithfully as the full form. Its five items span the physical and psychological axes of recovery: Q3 (feeling rested), Q9 (feeling comfortable and in control), Q10 (general well-being), Q12 (severe pain), and Q14 (feeling worried or anxious). The QoR-15 remains the gold-standard measure of recovery; QoR-compact complements it as a shorter daily input designed for prediction. This parity provides the basis for a prospective study of whether a lighter daily input is, in turn, completed more consistently. External validation on larger cohorts is required before clinical use.",
+      "authors": [
+        "Yansong Liu",
+        "Li-Hsi",
+        "Lin",
+        "Pramit Khetrapal",
+        "Ronnie Stafford",
+        "John Kelly",
+        "Ivana Drobnjak"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-22T17:23:06+00:00",
+      "link": "https://arxiv.org/pdf/2606.23631v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Optimized daily survey for remote patient monitoring after surgery",
+      "llm_evidence_cn": "优化术后远程患者监测中的日调查问卷",
+      "llm_evidence": "优化术后远程患者监测中的日调查问卷",
+      "canonical_evidence": "优化术后远程患者监测中的日调查问卷",
+      "llm_tldr_en": "Develops QoR-compact, a 5-item daily survey for remote recovery monitoring, derived from the 15-item QoR-15, to improve patient compliance.",
+      "llm_tldr_cn": "该论文针对术后远程监测中患者自评问卷提交率低的问题（仅55%坚持超过14天），从金标准QoR-15的3003个五题子集中筛选出最佳组合QoR-compact。该5题版每日调查在保持与完整量表高度相关性的同时，将题数降至1/3，显著提升了患者依从性。研究为远程医疗环境下设计简短有效的频繁调查提供了方法学范例。",
+      "llm_tldr": "该论文针对术后远程监测中患者自评问卷提交率低的问题（仅55%坚持超过14天），从金标准QoR-15的3003个五题子集中筛选出最佳组合QoR-compact。该5题版每日调查在保持与完整量表高度相关性的同时，将题数降至1/3，显著提升了患者依从性。研究为远程医疗环境下设计简短有效的频繁调查提供了方法学范例。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-06-17-733023-v1",
+      "source": "biorxiv",
+      "title": "Age Alters the Relationship between Post-Encoding Sleep Quality and Context Memory Neural Reinstatement",
+      "abstract": "Sleep supports episodic memory consolidation, yet it remains unclear how naturalistic post-encoding sleep quality relates to the neural reinstatement of episodic representations across adulthood. The present study examined whether sleep discontinuity during the retention interval predicted delayed context memory and encoding-retrieval similarity (ERS) of EEG in younger and older adults. Participants completed an object-scene context memory task with immediate and delayed retrieval, while EEG was recorded during encoding and retrieval. Actigraphy was used to measure sleep across the post-encoding retention period, and principal component analysis identified sleep discontinuity and sleep time components. Behavioral results showed that greater post-encoding sleep discontinuity, but not sleep time, was associated with poorer delayed memory accuracy for mismatching object-context pairs across age. ERS analyses further showed that greater sleep discontinuity was associated with reduced ERS for correctly rejected mismatching pairs across frontal and posterior spatiotemporal clusters. Age moderated sleep-ERS associations: greater sleep discontinuity was generally related to lower ERS in younger adults, whereas some spatiotemporal clusters showed positive associations in older adults, potentially reflecting compensatory or effortful retrieval-related processing in poorer sleepers. Together, these findings suggest that sleep continuity during the post-encoding retention interval is important for preserving high-fidelity episodic representations needed for later context discrimination. More broadly, the results demonstrate that naturalistic sleep fragmentation is linked to both behavioral memory outcomes and neural reinstatement across adults.",
+      "authors": [
+        "Seraji, M.",
+        "Mirjalili, S.",
+        "Nyan, C.",
+        "Duarte, A.",
+        "Calhoun, V."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-06-23T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.17.733023v1.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "sleep quality assessed via actigraphy in context memory study",
+      "llm_evidence_cn": "通过体动记录仪评估睡眠质量与情境记忆的关系",
+      "llm_evidence": "通过体动记录仪评估睡眠质量与情境记忆的关系",
+      "canonical_evidence": "通过体动记录仪评估睡眠质量与情境记忆的关系",
+      "llm_tldr_en": "Examines how post-encoding sleep discontinuity relates to context memory neural reinstatement in younger and older adults using actigraphy.",
+      "llm_tldr_cn": "睡眠对情景记忆巩固至关重要，但自然睡眠质量如何影响记忆神经重激活尚不清楚。本研究利用体动记录仪测量年轻和老年被试编码后睡眠的连续性，结合EEG记录编码和提取时的神经活动。结果显示睡眠不连续性预测了情境记忆提取时的神经相似性降低，且存在年龄差异。",
+      "llm_tldr": "睡眠对情景记忆巩固至关重要，但自然睡眠质量如何影响记忆神经重激活尚不清楚。本研究利用体动记录仪测量年轻和老年被试编码后睡眠的连续性，结合EEG记录编码和提取时的神经活动。结果显示睡眠不连续性预测了情境记忆提取时的神经相似性降低，且存在年龄差异。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

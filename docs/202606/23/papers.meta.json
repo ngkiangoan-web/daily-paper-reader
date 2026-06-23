@@ -1,0 +1,69 @@
+{
+  "label": "2026-06-23",
+  "date": "2026-06-23",
+  "generated_at": "2026-06-23T22:29:03",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202606/23/2606.23461v1-analysis-of-autonomic-regulation-in-cancer-survivors-during-daily-physical-activity-a-real-world-wearable-ecg-study",
+      "section": "quick",
+      "title_en": "Analysis of Autonomic Regulation in Cancer Survivors During Daily Physical Activity: A Real-World Wearable ECG Study",
+      "authors": "Sajad Farrokhiørcidicon, Lerick Sequeira, Shanna L. Burke, Waltenegus Dargie, Christian Poellabauer",
+      "date": "2026-06-22",
+      "pdf": "https://arxiv.org/pdf/2606.23461v1",
+      "score": "7.0",
+      "evidence": "使用可穿戴心电图在真实世界分析癌症幸存者日常活动中的自主调节，动态评估",
+      "tldr": "癌症幸存者在日常活动中自主神经调节受损，但实时监测受运动伪迹干扰。本研究利用可穿戴ECG与惯性传感器，通过活动强度分段（轻、中度）和免注释信号质量评估的稳健处理流水线，分析乳腺癌幸存者与健康对照组的心率和HRV。结果显示幸存者心率升高（轻活动95.7→103.4 bpm）、HRV降低（中活动RMSSD 39.7→22.1 ms），且差异随活动强度增大。该工作证实了活动依赖性的自主神经障碍，并提出了有效的运动感知质量控制方法。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "This study investigates heart rate (HR) and heart rate variability (HRV) responses to physical activity in breast cancer survivors using wearable electrocardiogram (ECG) data collected in real-world settings. Reliable HRV analysis in such environments is challenging due to motion artifacts and activity-related signal degradation. To address this, we use an approach that combines accelerometer and gyroscope data for activity intensity segmentation (light, moderate, vigorous) with a robust ECG processing pipeline incorporating R-peak detection and annotation-free signal quality assessment. Because vigorous activity produced unreliable HRV estimates, analyses focused on light and moderate activity levels. Using 30~s, 1~min, and 2~min windows, HR and HRV metrics were computed and compared between breast cancer survivors and healthy controls. Cancer survivors consistently exhibited elevated HR and reduced HRV across activity levels. During light activity, HR increased from 95.7~bpm in controls to 103.4~bpm in cancer survivors. Differences became more pronounced during moderate activity, where RMSSD decreased from 39.7~ms to 22.1~ms and SDNN from 42.6~ms to 25.1~ms. Statistical analyses showed significant group differences with strong and consistent effects across observations. In addition, the proposed ECG quality assessment framework reliably identified high-quality signal segments, achieving near-perfect valid RR ratios (0.99) without manual annotations. Overall, these findings demonstrate impaired and activity-dependent autonomic regulation in cancer survivors and highlight the importance of motion-aware activity segmentation and robust ECG quality control for accurate physiological monitoring in real-world wearable settings.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/23/2606.23631v1-ai-driven-optimisation-of-quality-of-recovery-qor-in-remote-patient-monitoring",
+      "section": "quick",
+      "title_en": "AI-driven Optimisation of Quality of Recovery (QoR) in Remote Patient Monitoring",
+      "authors": "Yansong Liu, Li-Hsi, Lin, Pramit Khetrapal, Ronnie Stafford, John Kelly, Ivana Drobnjak",
+      "date": "2026-06-22",
+      "pdf": "https://arxiv.org/pdf/2606.23631v1",
+      "score": "7.0",
+      "evidence": "优化术后远程患者监测中的日调查问卷",
+      "tldr": "远程患者监测中，金标准恢复质量量表QoR-15因每日填写依从性低（仅55%）而受限。本研究从15个问题中筛选出5个关键问题，通过穷举3003个子集验证其预测效果，开发了QoR-compact。其AUC-ROC达0.968，与完整量表0.964无显著差异，且能忠实追踪再入院事件。该五题量表作为更轻量的每日输入，有望提高患者依从性，为前瞻性研究提供基础。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Remote patient monitoring depends on patient-reported data to capture the subjective dimension of recovery that devices cannot measure. The Quality of Recovery (QoR-15) survey is the gold-standard instrument for this purpose. It was designed and validated for occasional in-hospital assessment, yet remote monitoring now administers it to patients daily. In our own post-surgical deployment, only 55% of patients submitted the survey more than 14 days of 30 monitoring days. We developed QoR-compact, a five-item daily input for the RPM prediction pathway. Setting a deployment-driven target of one-third of the daily items, we exhaustively evaluated all 3,003 five-question subsets of the QoR-15 and tested whether the best of them matches the full instrument in predicting near-term postoperative recovery severity. QoR-compact achieves a mean AUC-ROC of 0.968 (95% CI 0.915-0.988), statistically comparable to the 0.964 baseline obtained with one-third of the items. Patient-level backtesting indicates that it tracks readmission events as faithfully as the full form. Its five items span the physical and psychological axes of recovery: Q3 (feeling rested), Q9 (feeling comfortable and in control), Q10 (general well-being), Q12 (severe pain), and Q14 (feeling worried or anxious). The QoR-15 remains the gold-standard measure of recovery; QoR-compact complements it as a shorter daily input designed for prediction. This parity provides the basis for a prospective study of whether a lighter daily input is, in turn, completed more consistently. External validation on larger cohorts is required before clinical use.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/23/2606.17789v1-mind-companion-an-embodied-conversational-agent-for-process-based-psychotherapy",
+      "section": "quick",
+      "title_en": "Mind Companion: An Embodied Conversational Agent for Process-Based Psychotherapy",
+      "authors": "Sofie Kamber, Lukas Diebold, Pascal Riachi, Stella Brogna, Andrew Gloster, Rafael Wampfler",
+      "date": "2026-06-16",
+      "pdf": "https://arxiv.org/pdf/2606.17789v1",
+      "score": "6.0",
+      "evidence": "基于大语言模型的对话代理用于心理健康，实时分析，潜在的移动健康应用",
+      "tldr": "全球心理治疗可及性有限，大语言模型为可扩展支持提供可能。本文提出Mind Companion，一个基于LLM的具身对话代理，集成了多层次心理分析与过程治疗原则，通过具身头像与用户互动。评估显示GPT-5.2配置在理解、人际效能等方面优于人类治疗师反应。该工作展示了LLM代理作为临床补充工具的可行性。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Access to evidence-based psychotherapy remains limited worldwide, with long waitlists even in high-income regions. Recent advances in large language models (LLMs) offer potential for scalable mental health support when designed with clinical oversight and safety mechanisms. We present Mind Companion, an LLM-based embodied conversational agent integrating multi-layered psychological analysis with process-based therapy principles. The system performs real-time analysis of client statements across fact extraction, psychological flexibility process detection, emotion recognition, and safety monitoring. Analysis results are stored for supervising clinicians to inform therapeutic planning. Response generation incorporates retrieval-augmented generation from evidence-based therapeutic literature and context-aware prompting. Responses are delivered through an embodied avatar with synchronized speech synthesis and animation. We evaluated three LLM configurations (GPT-4.1-mini, GPT-5.2, Claude Sonnet 4.5) against therapist responses from real therapy sessions using automated LLM-judge assessment and expert evaluation with 11 professional psychotherapists. GPT-5.2 achieved higher ratings than human therapist responses across understanding, interpersonal effectiveness, collaboration, and therapeutic alignment in both evaluations, demonstrating the feasibility of LLM-based conversational agents as tools to complement clinical care.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/23/biorxiv-10-64898-2026-06-17-733023-v1-age-alters-the-relationship-between-post-encoding-sleep-quality-and-context-memory-neural-reinstatement",
+      "section": "quick",
+      "title_en": "Age Alters the Relationship between Post-Encoding Sleep Quality and Context Memory Neural Reinstatement",
+      "authors": "Seraji, M., Mirjalili, S., Nyan, C., Duarte, A., Calhoun, V.",
+      "date": "2026-06-23",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.17.733023v1.full.pdf",
+      "score": "6.0",
+      "evidence": "通过体动记录仪评估睡眠质量与情境记忆的关系",
+      "tldr": "睡眠是情景记忆巩固的关键环节，但其自然睡眠质量如何影响神经表征的重现尚待探究。本研究通过体动记录仪测量编码后睡眠质量，结合EEG编码-检索相似性(ERS)分析，探讨睡眠中断对年轻及老年人延迟情境记忆的影响。结果发现，睡眠中断（而非总睡眠时间）显著预测了不匹配对象-情境对的记忆准确性下降，并在额叶和后部脑区与ERS降低相关，且老年人中表现出正向补偿关联。这些发现强调了睡眠连续性在维持高保真情景表征中的关键作用，并为成人记忆巩固的年龄差异提供了神经证据。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "Sleep supports episodic memory consolidation, yet it remains unclear how naturalistic post-encoding sleep quality relates to the neural reinstatement of episodic representations across adulthood. The present study examined whether sleep discontinuity during the retention interval predicted delayed context memory and encoding-retrieval similarity (ERS) of EEG in younger and older adults. Participants completed an object-scene context memory task with immediate and delayed retrieval, while EEG was recorded during encoding and retrieval. Actigraphy was used to measure sleep across the post-encoding retention period, and principal component analysis identified sleep discontinuity and sleep time components. Behavioral results showed that greater post-encoding sleep discontinuity, but not sleep time, was associated with poorer delayed memory accuracy for mismatching object-context pairs across age. ERS analyses further showed that greater sleep discontinuity was associated with reduced ERS for correctly rejected mismatching pairs across frontal and posterior spatiotemporal clusters. Age moderated sleep-ERS associations: greater sleep discontinuity was generally related to lower ERS in younger adults, whereas some spatiotemporal clusters showed positive associations in older adults, potentially reflecting compensatory or effortful retrieval-related processing in poorer sleepers. Together, these findings suggest that sleep continuity during the post-encoding retention interval is important for preserving high-fidelity episodic representations needed for later context discrimination. More broadly, the results demonstrate that naturalistic sleep fragmentation is linked to both behavioral memory outcomes and neural reinstatement across adults.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
