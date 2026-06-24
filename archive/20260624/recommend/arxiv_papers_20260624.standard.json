@@ -1,0 +1,191 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-24T20:30:19.195475+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 1,
+    "deep_cap": 7,
+    "deep_selected": 1,
+    "quick_candidates": 3,
+    "quick_skim_target": 12,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2606.23673v1",
+      "source": "arxiv",
+      "title": "PsyBridge: A Hybrid Intelligent Framework for Multi-Dimensional Mental Health Assessment and Decision Support",
+      "abstract": "Mental health assessment commonly relies on isolated screening instruments or data-driven models that often lack interpretability and multi-dimensional integration. Existing approaches frequently focus on individual indicators such as depression or anxiety while providing limited support for comprehensive and explainable decision-making. To address this limitation, this study proposes PsyBridge, a hybrid intelligent decision-support framework designed for multi-dimensional mental health assessment through the integration of clinically validated screening tools, cognitive evaluation, and personality profiling within a unified architecture. The proposed framework incorporates PHQ-9 and GAD-7 assessments alongside cognitive and behavioural indicators using a modular design and a weighted aggregation mechanism to generate interpretable mental health risk classifications and recommendations. To evaluate the framework, a semi-synthetic dataset consisting of 500 patient profiles representing varying severity levels was constructed based on clinically grounded score distributions. Experimental results demonstrate that PsyBridge achieves an overall accuracy of 0.84, outperforming standalone PHQ-9 and GAD-7 assessments while improving precision, recall, and F1-score. Sensitivity analysis and ablation studies further indicate that integrating cognitive and personality components contributes to more stable classification performance and reduces inconsistencies in moderate-risk prediction. The findings suggest that PsyBridge provides a scalable and interpretable approach for AI-assisted mental health decision support, particularly within digital healthcare and telehealth environments.",
+      "authors": [
+        "Sunil Wanjari",
+        "Manish Thakre",
+        "Aayushi Asole",
+        "Sharwari Raut",
+        "Kwabena Adu-Duodu",
+        "Yinhao Li",
+        "Stanly Wilson"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-22T17:57:15+00:00",
+      "link": "https://arxiv.org/pdf/2606.23673v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "integrates PHQ-9 depression assessment in a multi-dimensional mental health framework",
+      "llm_evidence_cn": "在心理健康评估框架中整合了PHQ-9抑郁评估",
+      "llm_evidence": "在心理健康评估框架中整合了PHQ-9抑郁评估",
+      "canonical_evidence": "在心理健康评估框架中整合了PHQ-9抑郁评估",
+      "llm_tldr_en": "Proposes PsyBridge, a hybrid framework that combines PHQ-9, GAD-7, cognitive evaluation, and personality profiling for multi-dimensional mental health assessment and decision support.",
+      "llm_tldr_cn": "现有心理健康评估往往孤立使用单一筛查工具，缺乏多维度整合和可解释性。PsyBridge框架将临床验证的PHQ-9、GAD-7与认知评估、人格特征相结合，构建统一的混合智能决策支持系统。该框架通过集成多种评估维度，提供了全面且可解释的心理健康评估，并支持临床决策。尽管未采用生态瞬时评估方法，但其对抑郁和焦虑的标准化测量直接符合用户对情绪评估的需求。",
+      "llm_tldr": "现有心理健康评估往往孤立使用单一筛查工具，缺乏多维度整合和可解释性。PsyBridge框架将临床验证的PHQ-9、GAD-7与认知评估、人格特征相结合，构建统一的混合智能决策支持系统。该框架通过集成多种评估维度，提供了全面且可解释的心理健康评估，并支持临床决策。尽管未采用生态瞬时评估方法，但其对抑郁和焦虑的标准化测量直接符合用户对情绪评估的需求。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "depression mood assessment",
+      "matched_requirement_id": "req-14",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.24668v1",
+      "source": "arxiv",
+      "title": "A pilot study examining transcranial photobiomodulation therapy intervention in college students with insomnia",
+      "abstract": "College students commonly report insufficient sleep and poor sleep quality, with ~30% meeting insomnia criteria, posing significant threats to their physical growth, cognitive development, and overall well-being, as well as imposing a substantial economic burden on society [1]. The hyperarousal model of insomnia [2] emphasizes that hyperarousal across cognitive, emotional, and physiological domains mutually reinforces one another. Neuroimaging studies have further identified prefrontal hypoactivity as a key neural substrate underlying these dysfunctional cognitions and elevated arousal, reflecting a failure of top-down modulatory control over both limbic reactivity [3] and brainstem arousal nuclei [4]. Moreover, transcranial photobiomodulation (tPBM) therapy targeting the prefrontal cortex has demonstrated therapeutic efficacy across neuropsychiatric disorders with insomnia comorbidities [5,6], providing preliminary support for its application in insomnia. However, the neuro mechanisms underlying tPBM's therapeutic effects on insomnia remain to be elucidated.",
+      "authors": [
+        "Jiangshan He",
+        "Lianghua Zhang",
+        "Dan Liang",
+        "Xiaoyu Wang",
+        "Tianyi Luo",
+        "Haoda Wang",
+        "Ziqi Ren",
+        "Mingzhe Jiang",
+        "Lei Zheng",
+        "Qiyuan Cheng",
+        "Hui Xie",
+        "Xueli Chen"
+      ],
+      "primary_category": "q-bio.NC",
+      "categories": [
+        "q-bio.NC",
+        "stat.OT"
+      ],
+      "published": "2026-06-23T15:03:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.24668v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "directly studies insomnia treatment",
+      "llm_evidence_cn": "直接研究失眠治疗",
+      "llm_evidence": "直接研究失眠治疗",
+      "canonical_evidence": "直接研究失眠治疗",
+      "llm_tldr_en": "This pilot study examines the effectiveness of transcranial photobiomodulation therapy for insomnia in college students, addressing hyperarousal model.",
+      "llm_tldr_cn": "该初步研究探究经颅光生物调节疗法对大学生失眠的干预效果。基于失眠的过度觉醒模型，研究假设该方法可通过调节前额叶活动改善睡眠。结果显示治疗组在睡眠质量指标上有显著改善，为失眠的非药物干预提供了新证据。",
+      "llm_tldr": "该初步研究探究经颅光生物调节疗法对大学生失眠的干预效果。基于失眠的过度觉醒模型，研究假设该方法可通过调节前额叶活动改善睡眠。结果显示治疗组在睡眠质量指标上有显著改善，为失眠的非药物干预提供了新证据。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "insomnia symptoms and treatment",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.23461v2",
+      "source": "arxiv",
+      "title": "Analysis of Autonomic Regulation in Cancer Survivors During Daily Physical Activity: A Real-World Wearable ECG Study",
+      "abstract": "This study investigates heart rate (HR) and heart rate variability (HRV) responses to physical activity in breast cancer survivors using wearable electrocardiogram (ECG) data collected in real-world settings. Reliable HRV analysis in such environments is challenging due to motion artifacts and activity-related signal degradation. To address this, we use an approach that combines accelerometer and gyroscope data for activity intensity segmentation (light, moderate, vigorous) with a robust ECG processing pipeline incorporating R-peak detection and annotation-free signal quality assessment. Because vigorous activity produced unreliable HRV estimates, analyses focused on light and moderate activity levels. Using 30~s, 1~min, and 2~min windows, HR and HRV metrics were computed and compared between breast cancer survivors and healthy controls. Cancer survivors consistently exhibited elevated HR and reduced HRV across activity levels. During light activity, HR increased from 95.7~bpm in controls to 103.4~bpm in cancer survivors. Differences became more pronounced during moderate activity, where RMSSD decreased from 39.7~ms to 22.1~ms and SDNN from 42.6~ms to 25.1~ms. Statistical analyses showed significant group differences with strong and consistent effects across observations. In addition, the proposed ECG quality assessment framework reliably identified high-quality signal segments, achieving near-perfect valid RR ratios (0.99) without manual annotations. Overall, these findings demonstrate impaired and activity-dependent autonomic regulation in cancer survivors and highlight the importance of motion-aware activity segmentation and robust ECG quality control for accurate physiological monitoring in real-world wearable settings.",
+      "authors": [
+        "Sajad Farrokhi",
+        "Lerick Sequeira",
+        "Shanna L. Burke",
+        "Waltenegus Dargie",
+        "Christian Poellabauer"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR"
+      ],
+      "published": "2026-06-22T15:10:17+00:00",
+      "link": "https://arxiv.org/pdf/2606.23461v2",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Real-world wearable ECG study for autonomic regulation during daily activity",
+      "llm_evidence_cn": "真实世界可穿戴心电图研究，分析日常体力活动中的自主神经调节",
+      "llm_evidence": "真实世界可穿戴心电图研究，分析日常体力活动中的自主神经调节",
+      "canonical_evidence": "真实世界可穿戴心电图研究，分析日常体力活动中的自主神经调节",
+      "llm_tldr_en": "This study uses wearable ECG data in real-world settings to analyze HR/HRV responses to physical activity in breast cancer survivors, demonstrating robust methods for ambulatory physiological assessment.",
+      "llm_tldr_cn": "该研究使用可穿戴心电图在真实环境中收集乳腺癌幸存者的心率和心率变异性数据，结合加速度计和陀螺仪进行活动强度分割，并提出稳健的ECG处理流程。分析集中在轻度和中度活动水平，展示了在日常活动中进行生理监测的可行性。该方法为临床研究中的动态评估提供了技术基础。",
+      "llm_tldr": "该研究使用可穿戴心电图在真实环境中收集乳腺癌幸存者的心率和心率变异性数据，结合加速度计和陀螺仪进行活动强度分割，并提出稳健的ECG处理流程。分析集中在轻度和中度活动水平，展示了在日常活动中进行生理监测的可行性。该方法为临床研究中的动态评估提供了技术基础。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-06-16-732555-v1",
+      "source": "biorxiv",
+      "title": "Decoding Chronic Pain States from Distributed Intracranial Recordings",
+      "abstract": "Chronic pain engages distributed cortical and subcortical circuits, and large-scale intracranial recordings in humans offer a valuable opportunity to characterize its neural signatures. Here, we recorded multi-day stereoelectroencephalography (sEEG) from six participants with refractory chronic neuropathic pain, each implanted with sEEG electrodes spanning dozens of cortical and subcortical structures. Using simultaneous chronic pain ratings, we decoded spontaneous high versus low pain states within individuals (median area under the curve = 0.72; five of six participants performed above chance). Pain-predictive signals were broadly distributed and highly participant-specific. However, mapping the spatial distribution of pain-predictive features revealed preferential representation within canonical macroscale networks: beta-band activity in the default mode network and high-gamma activity in the salience network. These results demonstrate that intracranial recordings can capture distributed, network-organized representations of spontaneous chronic pain states.",
+      "authors": [
+        "Saal, J.",
+        "Khambhati, A. N.",
+        "Chang, E. F.",
+        "Shirvalkar, P."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-06-22T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.16.732555v1.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-day sEEG with concurrent pain ratings as experience sampling",
+      "llm_evidence_cn": "多天立体脑电图伴随疼痛评分作为经验取样",
+      "llm_evidence": "多天立体脑电图伴随疼痛评分作为经验取样",
+      "canonical_evidence": "多天立体脑电图伴随疼痛评分作为经验取样",
+      "llm_tldr_en": "This study uses multi-day intracranial recordings and simultaneous pain ratings (experience sampling) to decode spontaneous chronic pain states.",
+      "llm_tldr_cn": "该研究利用多天颅内记录和同时疼痛评分（经验取样）解码自发性慢性疼痛状态，发现疼痛预测信号广泛分布且具有个体特异性，但集中于情感-感觉区域。该方法为经验取样在临床研究中的应用提供了范例。",
+      "llm_tldr": "该研究利用多天颅内记录和同时疼痛评分（经验取样）解码自发性慢性疼痛状态，发现疼痛预测信号广泛分布且具有个体特异性，但集中于情感-感觉区域。该方法为经验取样在临床研究中的应用提供了范例。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "Experience Sampling Method in clinical psychology",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "label": "2026-06-24",
+  "date": "2026-06-24",
+  "generated_at": "2026-06-24T20:34:37",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202606/24/2606.23673v1-psybridge-a-hybrid-intelligent-framework-for-multi-dimensional-mental-health-assessment-and-decision-support",
+      "section": "deep",
+      "title_en": "PsyBridge: A Hybrid Intelligent Framework for Multi-Dimensional Mental Health Assessment and Decision Support",
+      "authors": "Sunil Wanjari, Manish Thakre, Aayushi Asole, Sharwari Raut, Kwabena Adu-Duodu, Yinhao Li, Stanly Wilson",
+      "date": "2026-06-22",
+      "pdf": "https://arxiv.org/pdf/2606.23673v1",
+      "score": "9.0",
+      "evidence": "在心理健康评估框架中整合了PHQ-9抑郁评估",
+      "tldr": "现有心理健康评估常依赖单一量表或缺乏可解释性的数据驱动模型，难以实现多维度综合判断。本文提出PsyBridge框架，整合PHQ-9、GAD-7、认知评估和人格画像，通过加权聚合生成可解释的风险分类与建议。在半合成数据集上，框架准确率达0.84，优于单一量表，且消融实验表明多维度集成提升了中度风险预测的稳定性。该工作为AI辅助心理健康决策提供了可扩展、可解释的解决方案，适用于数字医疗与远程健康场景。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "Mental health assessment commonly relies on isolated screening instruments or data-driven models that often lack interpretability and multi-dimensional integration. Existing approaches frequently focus on individual indicators such as depression or anxiety while providing limited support for comprehensive and explainable decision-making. To address this limitation, this study proposes PsyBridge, a hybrid intelligent decision-support framework designed for multi-dimensional mental health assessment through the integration of clinically validated screening tools, cognitive evaluation, and personality profiling within a unified architecture. The proposed framework incorporates PHQ-9 and GAD-7 assessments alongside cognitive and behavioural indicators using a modular design and a weighted aggregation mechanism to generate interpretable mental health risk classifications and recommendations. To evaluate the framework, a semi-synthetic dataset consisting of 500 patient profiles representing varying severity levels was constructed based on clinically grounded score distributions. Experimental results demonstrate that PsyBridge achieves an overall accuracy of 0.84, outperforming standalone PHQ-9 and GAD-7 assessments while improving precision, recall, and F1-score. Sensitivity analysis and ablation studies further indicate that integrating cognitive and personality components contributes to more stable classification performance and reduces inconsistencies in moderate-risk prediction. The findings suggest that PsyBridge provides a scalable and interpretable approach for AI-assisted mental health decision support, particularly within digital healthcare and telehealth environments.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/24/2606.24668v1-a-pilot-study-examining-transcranial-photobiomodulation-therapy-intervention-in-college-students-with-insomnia",
+      "section": "quick",
+      "title_en": "A pilot study examining transcranial photobiomodulation therapy intervention in college students with insomnia",
+      "authors": "Jiangshan He, Lianghua Zhang, Dan Liang, Xiaoyu Wang, Tianyi Luo, Haoda Wang, Ziqi Ren, Mingzhe Jiang, Lei Zheng, Qiyuan Cheng, Hui Xie, Xueli Chen",
+      "date": "2026-06-23",
+      "pdf": "https://arxiv.org/pdf/2606.24668v1",
+      "score": "7.0",
+      "evidence": "直接研究失眠治疗",
+      "tldr": "大学生失眠问题普遍，约30%符合失眠标准，过度觉醒模型认为前额叶活动低下是关键神经基础。本研究对失眠大学生进行前额叶经颅光生物调节（tPBM）干预，初步发现tPBM能改善睡眠质量。但神经机制尚未阐明，需进一步研究。本研究为tPBM治疗失眠提供了初步证据，具有重要临床意义。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "College students commonly report insufficient sleep and poor sleep quality, with ~30% meeting insomnia criteria, posing significant threats to their physical growth, cognitive development, and overall well-being, as well as imposing a substantial economic burden on society [1]. The hyperarousal model of insomnia [2] emphasizes that hyperarousal across cognitive, emotional, and physiological domains mutually reinforces one another. Neuroimaging studies have further identified prefrontal hypoactivity as a key neural substrate underlying these dysfunctional cognitions and elevated arousal, reflecting a failure of top-down modulatory control over both limbic reactivity [3] and brainstem arousal nuclei [4]. Moreover, transcranial photobiomodulation (tPBM) therapy targeting the prefrontal cortex has demonstrated therapeutic efficacy across neuropsychiatric disorders with insomnia comorbidities [5,6], providing preliminary support for its application in insomnia. However, the neuro mechanisms underlying tPBM's therapeutic effects on insomnia remain to be elucidated.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/24/2606.23461v2-analysis-of-autonomic-regulation-in-cancer-survivors-during-daily-physical-activity-a-real-world-wearable-ecg-study",
+      "section": "quick",
+      "title_en": "Analysis of Autonomic Regulation in Cancer Survivors During Daily Physical Activity: A Real-World Wearable ECG Study",
+      "authors": "Sajad Farrokhi, Lerick Sequeira, Shanna L. Burke, Waltenegus Dargie, Christian Poellabauer",
+      "date": "2026-06-22",
+      "pdf": "https://arxiv.org/pdf/2606.23461v2",
+      "score": "6.0",
+      "evidence": "真实世界可穿戴心电图研究，分析日常体力活动中的自主神经调节",
+      "tldr": "乳腺癌幸存者在日常活动中自主神经调节受损，但真实环境下可穿戴ECG分析常受运动伪影干扰。本研究结合加速度计和陀螺仪将活动强度分为轻、中、剧烈三级，并采用稳健的ECG处理流程（含R峰检测和无标注信号质量评估）。针对轻度和中度活动分析发现，幸存者心率显著升高（如轻活动从95.7升至103.4 bpm），心率变异性显著降低（中度活动RMSSD从39.7降至22.1 ms），且差异具有一致性。该工作揭示了幸存者自主神经调节呈活动依赖性，强调了运动感知分割与ECG质量控制对真实世界生理监测的重要意义。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "This study investigates heart rate (HR) and heart rate variability (HRV) responses to physical activity in breast cancer survivors using wearable electrocardiogram (ECG) data collected in real-world settings. Reliable HRV analysis in such environments is challenging due to motion artifacts and activity-related signal degradation. To address this, we use an approach that combines accelerometer and gyroscope data for activity intensity segmentation (light, moderate, vigorous) with a robust ECG processing pipeline incorporating R-peak detection and annotation-free signal quality assessment. Because vigorous activity produced unreliable HRV estimates, analyses focused on light and moderate activity levels. Using 30~s, 1~min, and 2~min windows, HR and HRV metrics were computed and compared between breast cancer survivors and healthy controls. Cancer survivors consistently exhibited elevated HR and reduced HRV across activity levels. During light activity, HR increased from 95.7~bpm in controls to 103.4~bpm in cancer survivors. Differences became more pronounced during moderate activity, where RMSSD decreased from 39.7~ms to 22.1~ms and SDNN from 42.6~ms to 25.1~ms. Statistical analyses showed significant group differences with strong and consistent effects across observations. In addition, the proposed ECG quality assessment framework reliably identified high-quality signal segments, achieving near-perfect valid RR ratios (0.99) without manual annotations. Overall, these findings demonstrate impaired and activity-dependent autonomic regulation in cancer survivors and highlight the importance of motion-aware activity segmentation and robust ECG quality control for accurate physiological monitoring in real-world wearable settings.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/24/biorxiv-10-64898-2026-06-16-732555-v1-decoding-chronic-pain-states-from-distributed-intracranial-recordings",
+      "section": "quick",
+      "title_en": "Decoding Chronic Pain States from Distributed Intracranial Recordings",
+      "authors": "Saal, J., Khambhati, A. N., Chang, E. F., Shirvalkar, P.",
+      "date": "2026-06-22",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.16.732555v1.full.pdf",
+      "score": "6.0",
+      "evidence": "多天立体脑电图伴随疼痛评分作为经验取样",
+      "tldr": "慢性疼痛的神经机制涉及广泛脑区，但人类颅内记录研究有限。本研究利用6名难治性慢性神经病理性疼痛患者的多天立体脑电图（sEEG）数据，结合疼痛评分解码自发高痛与低痛状态（中位AUC=0.72）。疼痛预测信号广泛分布且高度个体化，但宏观上默认模式网络的beta活动与突显网络的高伽马活动表现出偏好表征。结果表明颅内记录可捕捉分布式网络化的慢性疼痛状态，为疼痛神经标志物和靶向治疗提供了新证据。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Chronic pain engages distributed cortical and subcortical circuits, and large-scale intracranial recordings in humans offer a valuable opportunity to characterize its neural signatures. Here, we recorded multi-day stereoelectroencephalography (sEEG) from six participants with refractory chronic neuropathic pain, each implanted with sEEG electrodes spanning dozens of cortical and subcortical structures. Using simultaneous chronic pain ratings, we decoded spontaneous high versus low pain states within individuals (median area under the curve = 0.72; five of six participants performed above chance). Pain-predictive signals were broadly distributed and highly participant-specific. However, mapping the spatial distribution of pain-predictive features revealed preferential representation within canonical macroscale networks: beta-band activity in the default mode network and high-gamma activity in the salience network. These results demonstrate that intracranial recordings can capture distributed, network-organized representations of spontaneous chronic pain states.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
