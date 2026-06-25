@@ -1,0 +1,136 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-25T22:20:04.758229+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 1,
+    "deep_cap": 7,
+    "deep_selected": 1,
+    "quick_candidates": 2,
+    "quick_skim_target": 12,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2606.25107v1",
+      "source": "arxiv",
+      "title": "Nonparametric Estimation of Optimal Stochastic Just-In-Time Adaptive Interventions for Distal Outcomes",
+      "abstract": "Mobile and wearable technologies enable the delivery of just-in-time adaptive interventions (JITAIs) -- interventions that adapt treatment delivery to an individual's rapidly changing internal state and context in real-time, real-world settings. Estimating optimal JITAIs, however, remains challenging because these studies often involve dozens of decision points per individual, and existing methods can produce unstable and irregular estimators with substantial bias and slow convergence rates. Advanced reinforcement learning approaches may be difficult to interpret and often target proximal, discounted outcomes rather than the distal end-of-study outcomes that define long-term success in many behavioral and clinical studies. To address these challenges, we develop a nonparametrically efficient estimator of the regimen-response curve for distal outcomes under a class of stochastic policies and introduce a data-adaptive tilting procedure to stabilize estimation in settings with many decision points. We show that the estimated regimen-response curve converges weakly to a Gaussian process, enabling simultaneous confidence bands, and we derive asymptotic theory for the optimizer of the curve, thereby enabling inference for the learned optimal stochastic policy. These developments provide a unified framework for estimation, inference, and optimization of stochastic JITAIs for distal outcomes.",
+      "authors": [
+        "Jack M. Wolf",
+        "Nandita Mitra",
+        "Ashkan Ertefaie"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-06-23T19:27:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.25107v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "method for optimizing just-in-time adaptive interventions in mobile health",
+      "llm_evidence_cn": "移动健康中即时自适应干预的优化方法",
+      "llm_evidence": "移动健康中即时自适应干预的优化方法",
+      "canonical_evidence": "移动健康中即时自适应干预的优化方法",
+      "llm_tldr_en": "Proposes a nonparametric estimation method for optimal stochastic JITAIs targeting distal outcomes, addressing instability in existing approaches.",
+      "llm_tldr_cn": "针对移动健康中即时自适应干预（JITAI）优化问题的挑战，现有方法存在不稳定和高偏差，且多关注近端结果。本文提出一种非参数估计方法，在考虑大量决策点的情况下，稳健地估计最优随机JITAI策略，以优化远端临床结局。该方法在合成和真实数据上优于现有基准，为生态瞬时评估驱动的干预提供了实用优化工具。",
+      "llm_tldr": "针对移动健康中即时自适应干预（JITAI）优化问题的挑战，现有方法存在不稳定和高偏差，且多关注近端结果。本文提出一种非参数估计方法，在考虑大量决策点的情况下，稳健地估计最优随机JITAI策略，以优化远端临床结局。该方法在合成和真实数据上优于现有基准，为生态瞬时评估驱动的干预提供了实用优化工具。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "Effectiveness of EMA in mental health interventions",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.23461v3",
+      "source": "arxiv",
+      "title": "Analysis of Autonomic Regulation in Cancer Survivors During Daily Physical Activity: A Real-World Wearable ECG Study",
+      "abstract": "This study investigates heart rate (HR) and heart rate variability (HRV) responses to physical activity in breast cancer survivors using wearable electrocardiogram (ECG) data collected in real-world settings. Reliable HRV analysis in such environments is challenging due to motion artifacts and activity-related signal degradation. To address this, we use an approach that combines accelerometer and gyroscope data for activity intensity segmentation (light, moderate, vigorous) with a robust ECG processing pipeline incorporating R-peak detection and annotation-free signal quality assessment. Because vigorous activity produced unreliable HRV estimates, analyses focused on light and moderate activity levels. Using 30 s, 1 min, and 2 min windows, HR and HRV metrics were computed and compared between breast cancer survivors and healthy controls. Cancer survivors consistently exhibited elevated HR and reduced HRV across activity levels. During light activity, HR increased from 95.7 bpm in controls to 103.4 bpm in cancer survivors. Differences became more pronounced during moderate activity, where RMSSD decreased from 39.7 ms to 22.1 ms and SDNN from 42.6 ms to 25.1 ms. Statistical analyses showed significant group differences with strong and consistent effects across observations. In addition, the proposed ECG quality assessment framework reliably identified high-quality signal segments, achieving near-perfect valid RR ratios (0.99) without manual annotations. Overall, these findings demonstrate impaired and activity-dependent autonomic regulation in cancer survivors and highlight the importance of motion-aware activity segmentation and robust ECG quality control for accurate physiological monitoring in real-world wearable settings.",
+      "authors": [
+        "Sajad Farrokhi",
+        "Lerick Sequeira",
+        "Shanna L. Burke",
+        "Waltenegus Dargie",
+        "Christian Poellabauer"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR"
+      ],
+      "published": "2026-06-22T15:10:17+00:00",
+      "link": "https://arxiv.org/pdf/2606.23461v3",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "real-world wearable ECG study with ambulatory monitoring",
+      "llm_evidence_cn": "真实世界可穿戴心电图研究，进行动态监测",
+      "llm_evidence": "真实世界可穿戴心电图研究，进行动态监测",
+      "canonical_evidence": "真实世界可穿戴心电图研究，进行动态监测",
+      "llm_tldr_en": "Investigates HR/HRV responses to physical activity in breast cancer survivors using wearable ECG in real-world settings, with robust signal processing for ambulatory data.",
+      "llm_tldr_cn": "该研究在真实世界环境中使用可穿戴心电图设备，分析了乳腺癌幸存者日常活动中的心率与心率变异性反应。通过加速度计和陀螺仪数据分割活动强度，并采用稳健的ECG处理流程，解决了动态监测中的运动伪影问题。为真实世界自主神经评估提供了方法学支持。",
+      "llm_tldr": "该研究在真实世界环境中使用可穿戴心电图设备，分析了乳腺癌幸存者日常活动中的心率与心率变异性反应。通过加速度计和陀螺仪数据分割活动强度，并采用稳健的ECG处理流程，解决了动态监测中的运动伪影问题。为真实世界自主神经评估提供了方法学支持。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.24985v1",
+      "source": "arxiv",
+      "title": "Retrieval-Augmented Personalization with Foundation Models for Wearable Stress Detection",
+      "abstract": "Personalization in wearable-based stress detection remains challenging due to substantial inter-individual variability in physiological and behavioral responses. While traditional approaches rely on user-specific fine-tuning or costly self-supervised pre-training on large datasets, we propose a lightweight alternative based on retrieval-augmented personalization. Our method leverages frozen, out-of-domain foundation models to retrieve similar patterns from a target user's history and encode them into a compact personalized embedding that modulates representations extracted by a lightweight transformer network. We evaluate our approach on the WESAD stress detection dataset with N=15 users, comprising wrist-worn physiological (EDA, BVP, temperature) and activity (accelerometer) signals, and report gains of +3.92\\% in accuracy and +4.76\\% in macro F1-score over a non-personalized transformer baseline, approaching supervised fine-tuning performance without requiring any labeled user data. We further show that temporal retrieval, where only prior user samples are available, achieves performance close to full intra-user retrieval, demonstrating robustness to limited user history. Finally, we explore personalization in a cross-dataset retrieval setting, leveraging embeddings from the K-Emocon dataset to personalize representations for stress detection on the WESAD dataset.",
+      "authors": [
+        "Louis Simon",
+        "Mohamed Chetouani"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-23T14:24:43+00:00",
+      "link": "https://arxiv.org/pdf/2606.24985v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "wearable stress detection as mobile health method for EMA",
+      "llm_evidence_cn": "可穿戴压力检测作为EMA移动健康方法",
+      "llm_evidence": "可穿戴压力检测作为EMA移动健康方法",
+      "canonical_evidence": "可穿戴压力检测作为EMA移动健康方法",
+      "llm_tldr_en": "Proposes retrieval-augmented personalization for wearable stress detection using foundation models; evaluated on WESAD dataset with wrist-worn sensors.",
+      "llm_tldr_cn": "针对可穿戴压力检测中个体差异大的挑战，提出一种基于检索增强的轻量级个性化方法，利用外部基础模型从目标用户历史中检索相似模式并生成个性化嵌入。在WESAD数据集上的实验表明，该方法在少量用户数据下即可实现有效个性化，为移动健康应用中的生态瞬时评估提供了实用工具。",
+      "llm_tldr": "针对可穿戴压力检测中个体差异大的挑战，提出一种基于检索增强的轻量级个性化方法，利用外部基础模型从目标用户历史中检索相似模式并生成个性化嵌入。在WESAD数据集上的实验表明，该方法在少量用户数据下即可实现有效个性化，为移动健康应用中的生态瞬时评估提供了实用工具。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

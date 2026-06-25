@@ -6,32 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-24
-- 运行时间：2026-06-24 20:34:31 UTC
+- 最新运行日期：2026-06-25
+- 运行时间：2026-06-25 22:27:24 UTC
 - 运行状态：成功
-- 本次总论文数：4
+- 本次总论文数：3
 - 精读区：1
-- 速读区：3
+- 速读区：2
 
 ### 今日简报（AI）
-今天精读1篇高价值论文，速读3篇，覆盖心理健康AI、失眠疗法与癌症康复监测。最值得关注的是《PsyBridge》提出的多维度智能心理评估框架（9.0分），以及失眠的光生物调节疗法和癌症患者日常活动中的自主神经分析。建议读者优先了解AI在心理健康领域的突破，并留意可穿戴设备在临床监测中的应用趋势。
-- 详情：[/202606/24/README](/202606/24/README)
+今天共处理3篇论文，其中1篇精读聚焦非参数估计最优随机及时适应干预，2篇速读关注可穿戴设备在癌症幸存者日常活动中的自主神经分析与压力检测个性化方法。最值得关注的是精读论文提出的动态干预优化框架，以及速读中结合大模型的可穿戴压力检测方案。建议普通读者深入了解可穿戴健康监测的实时数据分析潜力，并关注个性化干预模型的实际应用前景。
+- 详情：[/202606/25/README](/202606/25/README)
 
 ### 精读区论文标签
-1. [PsyBridge: A Hybrid Intelligent Framework for Multi-Dimensional Mental Health Assessment and Decision Support](/202606/24/2606.23673v1-psybridge-a-hybrid-intelligent-framework-for-multi-dimensional-mental-health-assessment-and-decision-support)  
-   标签：评分：9.0/10、query:sleep-mental
-   evidence：在心理健康评估框架中整合了PHQ-9抑郁评估
+1. [Nonparametric Estimation of Optimal Stochastic Just-In-Time Adaptive Interventions for Distal Outcomes](/202606/25/2606.25107v1-nonparametric-estimation-of-optimal-stochastic-just-in-time-adaptive-interventions-for-distal-outcomes)  
+   标签：评分：8.0/10、query:ema-mental
+   evidence：移动健康中即时自适应干预的优化方法
 
 ### 速读区论文标签
-1. [A pilot study examining transcranial photobiomodulation therapy intervention in college students with insomnia](/202606/24/2606.24668v1-a-pilot-study-examining-transcranial-photobiomodulation-therapy-intervention-in-college-students-with-insomnia)  
-   标签：评分：7.0/10、query:sleep-mental
-   evidence：直接研究失眠治疗
-2. [Analysis of Autonomic Regulation in Cancer Survivors During Daily Physical Activity: A Real-World Wearable ECG Study](/202606/24/2606.23461v2-analysis-of-autonomic-regulation-in-cancer-survivors-during-daily-physical-activity-a-real-world-wearable-ecg-study)  
+1. [Analysis of Autonomic Regulation in Cancer Survivors During Daily Physical Activity: A Real-World Wearable ECG Study](/202606/25/2606.23461v3-analysis-of-autonomic-regulation-in-cancer-survivors-during-daily-physical-activity-a-real-world-wearable-ecg-study)  
    标签：评分：6.0/10、query:sleep-mental
-   evidence：真实世界可穿戴心电图研究，分析日常体力活动中的自主神经调节
-3. [Decoding Chronic Pain States from Distributed Intracranial Recordings](/202606/24/biorxiv-10-64898-2026-06-16-732555-v1-decoding-chronic-pain-states-from-distributed-intracranial-recordings)  
+   evidence：真实世界可穿戴心电图研究，进行动态监测
+2. [Retrieval-Augmented Personalization with Foundation Models for Wearable Stress Detection](/202606/25/2606.24985v1-retrieval-augmented-personalization-with-foundation-models-for-wearable-stress-detection)  
    标签：评分：6.0/10、query:ema-mental
-   evidence：多天立体脑电图伴随疼痛评分作为经验取样
+   evidence：可穿戴压力检测作为EMA移动健康方法
 
 
 <div class="dpr-home-promo-card">

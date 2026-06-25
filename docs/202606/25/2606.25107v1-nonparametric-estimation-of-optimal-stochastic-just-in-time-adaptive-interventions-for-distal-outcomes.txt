@@ -1,0 +1,4610 @@
+Title: Nonparametric Estimation of Optimal Stochastic Just-In-Time Adaptive Interventions for Distal Outcomes
+
+URL Source: https://arxiv.org/pdf/2606.25107v1
+
+Published Time: Thu, 25 Jun 2026 00:10:47 GMT
+
+Number of Pages: 86
+
+Markdown Content:
+# Nonparametric Estimation of Optimal Stochastic Just-In-Time Adaptive Interventions for Distal Outcomes 
+
+Jack M. Wolf, Nandita Mitra, & Ashkan Ertefaie Division of Biostatistics, University of Pennsylvania June 25, 2026 
+
+Abstract 
+
+Mobile and wearable technologies enable the delivery of just-in-time adaptive in-terventions (JITAIs)—interventions that adapt treatment delivery to an individual’s rapidly changing internal state and context in real-time, real-world settings. Estimat-ing optimal JITAIs, however, remains challenging because these studies often involve dozens of decision points per individual, and existing methods can produce unstable and irregular estimators with substantial bias and slow convergence rates. Advanced reinforcement learning approaches may be difficult to interpret and often target prox-imal, discounted outcomes rather than the distal end-of-study outcomes that define long-term success in many behavioral and clinical studies. To address these challenges, we develop a nonparametrically efficient estimator of the regimen–response curve for distal outcomes under a class of stochastic policies and introduce a data-adaptive tilting procedure to stabilize estimation in settings with many decision points. We show that the estimated regimen–response curve converges weakly to a Gaussian process, enabling simultaneous confidence bands, and we derive asymptotic theory for the optimizer of the curve, thereby enabling inference for the learned optimal stochastic policy. These developments provide a unified framework for estimation, inference, and optimization of stochastic JITAIs for distal outcomes. 
+
+Keywords: Causal Inference; Dynamic Treatment Regime; Highly Adaptive Lasso; Micro-Randomized Trial; Stochastic Intervention; Undersmoothing; Just-In-Time Adaptive Inter-vention 
+
+1
+
+> arXiv:2606.25107v1 [stat.ME] 23 Jun 2026
+
+# 1 Introduction 
+
+Modern mobile and wearable technologies provide unprecedented opportunities to deliver just-in-time adaptive interventions (JITAIs; Nahum-Shani et al., 2017)—intervention de-signs that adapt to an individual’s rapidly changing internal state in real-time, real-world settings. These interventions are especially attractive in behavioral settings, where treat-ment effectiveness may depend strongly on momentary vulnerability, receptivity, and bur-den. Recent advances in micro-randomized trials (MRTs; Klasnja et al., 2015) have made it possible to collect intensive longitudinal data that can empirically inform the construction of JITAIs by repeatedly randomizing treatment assignment across many decision points (Liao et al., 2021; Qian et al., 2022). A motivating example is Mobile Assistance for Reg-ulating Smoking (MARS; Nahum-Shani et al., 2021), a ten-day MRT conducted among people attempting to quit smoking that was designed to inform the development of a mo-bile health intervention for promoting real-time, real-world engagement in evidence-based self-regulatory strategies. There, participants could be randomized up to six times per day to receive no prompt, a prompt recommending a low-effort self-regulatory strategy, or a prompt recommending a higher-effort strategy. This type of high-frequency randomization yields the intensive longitudinal data needed to develop empirically grounded JITAIs. Despite this promise, much of the existing literature analyzing MRT data has focused on proximal outcomes measured shortly after each decision point, such as short-term engage-ment in a target behavior or immediate response to treatment (Boruvka et al., 2018; Qian et al., 2021). However, in many behavioral health applications, outcomes measured farther in the future are also of substantive interest—particularly when the relevant processes in-volve habit formation or delayed treatment effects. In such settings, proximal responses may not fully capture long-term success, even when they remain important intermediate targets. More broadly, using MRT data to construct JITAIs is a special case of learning an optimal treatment regime from longitudinal data. Classical work in longitudinal causal inference formalized counterfactual outcomes under time-varying interventions and es-tablished identification strategies for regime-specific mean outcomes from observed data (Robins, 1986; Robins et al., 2000; Murphy et al., 2001). Subsequent developments based on marginal structural models (MSMs) and related dynamic regime formulations extended these ideas to estimation and comparison of treatment rules over classes of candidate regimes (Joffe et al., 2004; Orellana et al., 2010). These approaches provide a natural start-2ing point for constructing JITAIs from MRT data, but the large number of decision points in many MRTs creates methodological challenges that are not well handled by standard longitudinal methods: inverse-probability weights can become highly variable, estimators may become irregular, and finite-sample bias can be substantial (Benkeser et al., 2017). Beyond MSMs and related approaches, the policy-learning literature seeks to directly estimate an optimal rule rather than first estimating the expected outcome under each candidate rule, including outcome- and residual-weighted learning (Zhao et al., 2009; Zhou et al., 2017) and observational policy-learning methods (Athey and Wager, 2021). While these approaches are appealing alternatives to the previous estimation-reliant methods, they were not developed for intensive longitudinal settings in which individuals repeatedly face treatment decisions over time. Reinforcement-learning methods are explicitly designed for sequential decision problems over long horizons, but they are commonly formulated to optimize cumulative or discounted rewards constructed from proximal outcomes observed after each decision point (Ertefaie and Strawderman, 2018; Luckett et al., 2020). Such ob-jectives are not well suited to our setting for two important reasons. First, from scientific and clinical perspectives, distal outcomes, such as substance use at six months, are often more relevant than proximal outcomes, such as next-day substance use. Second, choosing an appropriate discount rate, γ, which governs the relative importance of near-term ver-sus long-term outcomes, can be challenging in mobile health settings because of limited empirical or practical guidance for this choice (Liao et al., 2021). Motivated by these limitations, we propose new methods to construct an optimal JI-TAI with respect to a clinically meaningful distal outcome, without the need to pre-specify candidate decision rules. We focus on a class of stochastic policies parameterized by a finite-dimensional vector. From a practical perspective, stochastic policies provide a useful alternative to dichotomized deterministic rules by allowing treatment delivery to remain flexible and by permitting decision-makers to incorporate additional considerations not explicitly modeled, such as side effects or insurance constraints. In behavioral settings, stochastic policies may allow occasional intervention in states where a deterministic rule would not intervene, helping to sustain participant engagement, reinforce healthy behav-iors, and prevent disengagement over time. Moreover, stochastic policies help mitigate finite-sample positivity problems that arise when many decision points make determinis-tic or near-deterministic treatment paths poorly supported in the observed data (van der Laan and Petersen, 2007; Mu˜ noz and van der Laan, 2012; Haneuse and Rotnitzky, 2013; Kennedy, 2019; McClean et al., 2025). However, with many decision points, they may still 3lead to unstable estimation. To address this, we introduce a tilting approach that forms a weighted combination of the estimated optimal stochastic policy and the behavioral policy, that is, the policy generating the data. This paper makes four main contributions. First, we develop a nonparametrically efficient estimator for the regimen–response curve, which characterizes the expected dis-tal outcome under a class of stochastic policies. Our estimator is constructed to avoid estimating the large collection of augmentation terms that would otherwise arise in effi-cient estimation, thereby extending Ertefaie et al. (2023b) to time-varying settings with stochastic policy learning. This construction also avoids explicit derivation of the efficient influence function and mitigates the irregularity issues that can arise with doubly robust estimators (Benkeser et al., 2017). Second, we introduce a data-adaptive tilting procedure that addresses finite-sample instability by balancing bias and variance, and we establish conditions under which tilting is asymptotically negligible. Third, we show that the esti-mated regimen-response curve converges weakly to a Gaussian process, which enables the creation of simultaneous confidence bands for the curve. Finally, we derive the asymptotic properties of the optimizer of the regimen-response curve, corresponding to the optimal stochastic policy. 
+
+# 2 Notation and Preliminaries 
+
+2.1 Observed Data and Potential Outcomes 
+
+Suppose that we observe n i.i.d. observations O = ( S1, A 1, . . . , S T , A T , Y ) ∼ P0 ∈ M ,where M is some nonparametric model and T denotes the number of decision points. At time t ∈ { 1, . . . , T }, St ∈ Rd denotes time-varying covariates, At ∈ { 0, 1} is a binary treatment indicator, and Y is the distal (end-of-study) outcome. We use overbar notation to denote complete histories: ¯St := ( S1, . . . , S t) and ¯At := ( A1, . . . , A t); additionally, let ¯A := ¯AT and ¯S := ¯ST be the full covariate and treatment histories. Let Ht := ( ¯St, ¯At−1)denote all information observed prior to assigning At.Let Y ¯a denote the potential outcome that would have been observed if, possibly contrary to reality, treatment were assigned as ¯ a. Similarly, let S¯at−1 
+
+> t
+
+represent the covariates at time t that would have been observed if treatment was assigned as ¯ at−1 up until time 
+
+t − 1. Implicit in this notation, we assume that these covariates are not affected by future treatment decisions at, . . . , a T ; i.e., S¯at−1 
+
+> t
+
+= S¯aT 
+
+> t
+
+for any ¯ aT ∈ { 0, 1}T . We define full data 4as X := ( S1, {S¯at−1 
+
+> t
+
+: ¯ at−1 ∈ { 0, 1}t−1, t = 2 , . . . , T }, {Y ¯a : ¯ a ∈ { 0, 1}T }) ∼ PX ∈ M F
+
+where MF is the nonparametric model for the full data X.Denote the empirical distribution function as Pn, and let Pf = R f (o)d P(o) for any mea-surable function f and distribution P. For any random variable, X, we let the calligraphic 
+
+X denote its support. 
+
+2.2 Stochastic Adaptive Interventions and Our Causal Estimand 
+
+A stochastic adaptive intervention assigns At, at each time t, by drawing from a multi-nomial distribution in which the probabilities are functions of the current history Ht. To operationalize policy optimization and avoid the curse of dimensionality, we focus on poli-cies that only depend on the current state St. Henceforth, we consider the parametric class 
+
+{qθt : θ ∈ Θ} for some compact index set Θ ⊂ Rp, in which, for a ∈ { 0, 1}
+
+qθt (a, s ) := 1 − | expit {b(s)⊤θ} − a| ,for some fixed basis function b : Rd → Rp. This gives the familiar logistic model: qθt (1 , s ) = expit {b(s)⊤θ} and qθt (0 , s ) = 1 − expit {b(s)⊤θ}. Other smooth parametric forms are also admissible provided that they satisfy suitable regularity conditions. We restrict attention to genuinely stochastic policies whose treatment probabilities are bounded away from 0 and 1; Section S3.1 provides a practical construction of Θ from investigator-specified probability bounds. For each θ ∈ Θ, let Y θ denote the potential distal outcome that would have been observed had the policy {qθt }Tt=1 been followed throughout. Our primary causal estimand is the regimen-response curve 
+
+ψ0(θ) = P0(Y θ), θ ∈ Θ.
+
+This curve has two roles. For a fixed θ, it gives the mean distal outcome under the corresponding stochastic intervention. As a function of θ, it provides the basis for policy learning: an optimal stochastic policy can be defined as any maximizer of ψ0(θ) over Θ, or of a penalized version of this criterion when additional regularization is imposed. Thus, policy learning is reduced to estimation and maximization of a smooth finite-dimensional regimen-response curve. Identification of ψ0(θ) from the observed data relies on the standard longitudinal causal assumptions stated next. 5Assumption 1. Suppose that the following causal assumptions hold: (a) Consistency: For all t = 2 , . . . , T , if ¯At−1 = ¯ at−1, then St = S¯at−1 
+
+> t
+
+; if ¯A = ¯ a, then 
+
+Y = Y ¯a.(b) Ignorability/Sequential Randomization: {Y ¯a, S ¯ak−1 
+
+> k
+
+: k = t, . . . , T } ⊥ ⊥ At | Ht for all 
+
+t = 1 , . . . , T .(c) Strong Positivity: There exists some ϵπ > 0 such that πt, 0(At = a | Ht) > ϵ π almost surely for all a ∈ { 0, 1} and t ∈ { 1, . . . , T }.
+
+Assumption 1 consists of standard conditions required to identify counterfactual out-comes under longitudinal interventions (Robins, 1986; Robins et al., 2000; Murphy et al., 2001; Orellana et al., 2010). Consistency links the observed data to the corresponding potential outcomes under the realized treatment history. This assumption may be vio-lated, even in MRT settings, if one individual’s treatment assignments affect the outcomes of another individual. Sequential randomization asserts that, conditional on the observed history Ht, treatment assignment at At is effectively randomized and does not depend on future potential outcomes; this is satisfied by design in MRT settings. Positivity ensures that each treatment option has a nonzero probability at every decision point and guarantees absolute continuity of the counterfactual law under the target policy with respect to the ob-served data law. We note that only weak positivity is required for identification; however, later theoretical results will leverage strong positivity. Although strong positivity holds by design in MRTs, the large number of decision points can still induce finite-sample insta-bility in inverse probability weights, motivating the use of stochastic interventions and the policy-tilting approach introduced in Section 3.1. We note that protocols that deterministi-cally restrict treatment at some decision points are handled in Section S3.2. Together, these assumptions ensure that the mean counterfactual outcome under any stochastic policy is nonparametrically identifiable using a change-of-measure argument. 
+
+# 3 Proposed Approach 
+
+We first introduce an α-tilting device that stabilizes longitudinal products of inverse prob-ability weights by shrinking early decision rules toward the observed treatment mechanism (Section 3.1). We then formalize identification and the semiparametric structure of the resulting (tilted) regimen-response curve, highlighting the key nuisance quantities that 6arise in efficient estimation (Section 3.2). Building on this structure, we propose an un-dersmoothed inverse probability weighted estimator that attains nonparametric efficiency while avoiding explicit estimation of the large collection of time- and policy-indexed out-come regressions (Section 3.3). We conclude with practical implementation components: data-adaptive selection of the tilting level αn, investigator-driven elicitation of the feasible policy set Θ, and a modification to accommodate protocol-driven randomization ineligibil-ity (Sections 3.4, S3.1 and S3.2). 
+
+3.1 Tilted Policies 
+
+Common inverse probability weighted (IPW) or doubly robust estimators of the regimen-response curve typically involve products of time-specific weights: QTt=1 qθ,α t /π t,n . When T
+
+is large and the policy of interest substantially differs from the observed treatment mecha-nism, these products can be numerically unstable, resulting in bias and large variances in finite samples even when strong positivity holds by design. To mitigate the effect of such finite-sample positivity violations, we propose a policy-tilting device that shrinks earlier weights towards 1 by interpolating between the target policy and the treatment assignment process observed in the data. For α ∈ [0 , ∞), define the α-tilted policy 
+
+qθ,α t (At, H t) := ( t/T )αqθt (At, S t) + {1 − (t/T )α}πt, 0(At | Ht) . For α = 0, the tilted policy reduces to the original policy of interest, qθ, 0 
+
+> t
+
+= qθt , and the corresponding estimand coincides with the scientific target. For α > 0, tilting defines a distinct stochastic intervention and hence a different counterfactual mean; in Section 3.4 we select α to balance this estimand drift against the finite-sample variance reduction gained by stabilizing weights, and later results show that sufficiently small α yields asymptotically negligible drift. We note that although the scientific policy qθt is restricted to depend only on the current state St, the tilted rule qθ,α t depends on the full history Ht through the observed assignment mechanism πt, 0(· | Ht). To see the stabilization effect, we can write the time-t weight contribution for a generic observation as 
+
+W θ,α t, 0 (O) := qθ,α t (At, H t)
+
+πt, 0(At | Ht) = ( t/T )α qθt (At, S t)
+
+πt, 0(At | Ht) + {1 − (t/T )α} ,which is a convex combination of the usual IPW factor qθt /π t, 0 and 1. Because ( t/T )α → 07as α → ∞ for each t < T , we have W θ,α t, 0 (O) → 1 for all early decision points t < T . Hence, the product weight QTt=1 W θ,α t, 0 (O) shrinks toward a product with fewer volatile factors. Let Y θ,α denote the potential outcome under regimen {qθ,α t }Tt=1 and denote the α-tilted regimen-response curve by the mapping ( θ, α ) 7 → P0(Y θ,α ). By the previous logic, we have 
+
+P0(Y θ,α =0 ) = P0(Y θ). 
+
+Remark 1. In the motivating context of MRTs, strong positivity holds by design, and the un-tilted estimand P0(Y θ,α =0 ) is well defined and identified. We introduce α > 0 solely as a finite-sample stabilization device to mitigate numerical instability in products of inverse probability weights when the number of decision points is large, and our asymptotic results explicitly consider behavior as α → 0. Importantly, policy tilting does not repair violations of strong positivity: if a target policy assigns a positive probability to treatment values outside the support of the observed treatment mechanism, the corresponding counterfactual mean remains unidentified for any finite α. Formally, taking α = ∞ collapses the policy to the observed treatment mechanism for all t < T , thereby avoiding support violations at earlier decision points. Even in this case, strong positivity is required at T .
+
+3.2 Inverse Probability Weighting Mapping 
+
+Under the full data X, the mean counterfactual outcome under the tilted policy qθ,α t is defined as Ψ Fθ,α (PX ) = PX (Y θ,α ) where Ψ F : MF → R. For a fixed policy parameter 
+
+θ ∈ Θ and tilting parameter α ≥ 0, define the corresponding full data canonical gradient 
+
+DFθ,α (X, ΨF ) = Y θ,α − ΨFθ,α (PX ). A longitudinal inverse probability weighting mapping of 
+
+DFθ,α (X, ΨF ) to the observed data is given by U (O; θ, α, Ψ) = W θ,α (P )( O)Y − Ψ( P ) where 
+
+W θ,α (P )( O) = 
+
+> T
+
+Y
+
+> t=1
+
+(t/T )αqθt (At, S t) + {1 − (t/T )α}P (At | Ht)
+
+P (At | Ht) .Under Assumption 1, the target parameter Ψ Fθ,α (PX ) is identified by Ψθ,α (P ) := P {W θ,α (P )( O)Y } ,and P {U (O; θ, α, Ψ) | X} = DFθ,α (X, ΨF ). Let TCAR denote the nuisance tangent space corresponding to the sequential treatment mechanism. Because the treatment mecha-nism factorizes over time, this space decomposes as TCAR = TCAR ,1 ⊕ · · · ⊕ T CAR ,T where 
+
+TCAR ,t is the nuisance tangent space generated by the treatment assignment mechanism at 8time t, for t = 1 , 2, . . . , T . The canonical gradient of Ψ( P ) is given by D⋆(P )( O; θ, α ) = 
+
+Uπ(O; θ, α, ψ 0) − DCAR (P ), where DCAR (P ) is the projection of Uπ onto TCAR . Owing to the above decomposition, DCAR (P ) = PTt=1 DCAR ,t (O; η0, θ, α ) for nuisance parameters 
+
+η0. As shown in Lemma 2, the nuisance parameter η0 includes the regression functions 
+
+P0{(Q 
+
+> j>t
+
+W θ,α j, 0 )Y | At, H t}. This representation yields the efficient influence function for the regimen-response curve in the longitudinal stochastic intervention model. In observational settings under a nonparametric model, both the propensity scores and the regression functions generally must be estimated. When these nuisance functions are estimated nonparametrically, inconsistency in any of them can lead to an irregular estimator with substantial bias. This difficulty becomes especially severe when the number of decision points is large (Benkeser et al., 2017; Pham et al., 2025). This is particularly challenging for the regression functions, which must be estimated for each θ ∈ Θ whenever 
+
+t < T . In MRTs, the propensity scores are known by design, so the irregularity issue does not arise. However, inconsistent estimation of the regression functions can still lead to inefficiency. This motivates our proposed undersmoothed inverse probability weighted estimator, which only requires estimation of T propensity scores but still is √n-consistent and nonparametric efficient. 
+
+3.3 Undersmoothed Inverse Probability Weighting Estimator 
+
+The efficient influence function characterization in Section 3.2 suggests that nonparamet-ric efficient estimation of the regimen-response curve generally involves a large family of nuisance functions indexed by both time and policy, {μθ,α t, 0 : t < T, θ ∈ Θ}, which becomes impractical when T is large or when Θ is not discrete. We therefore construct an un-dersmoothed inverse probability weighted (UIPW) estimator that achieves nonparametric efficiency without explicitly estimating these policy-indexed outcome regressions, thereby offering a practically feasible approach for intensive longitudinal settings. The key idea is to estimate the time-specific propensity scores flexibly via the highly adaptive lasso (HAL; Benkeser and van der Laan, 2016) with deliberate undersmoothing so that the resulting fits approximately solve a rich collection of empirical score equations. This renders the bias asymptotically negligible while preserving the simplicity of a weighted-mean estimator. We proceed by summarizing the estimator and then describe an implementable procedure to select the undersmoothing level. The HAL is a nonparametric regression technique that estimates functions via a sparse 9linear combination of indicator basis functions indexed by observed covariate values. The estimator minimizes an empirical risk while constraining the L1-norm of its coefficients by λ, which controls the total sectional variational norm of the fitted function. Under mild conditions, HAL estimators achieve fast convergence rates (roughly n−1/3) for a wide class of c` adl` ag functions without requiring smoothness assumptions. Full technical details, including the precise definition of the basis and norm, are provided in Section S2.1. When the regimen response curve is estimated using IPW, the asymptotic expansion admits a remainder of the form 
+
+> T
+
+X
+
+> t=1
+
+Pn
+
+ft(O; θ, α, ¯πt,n , μ θ,α t, 0 ){At − πt,n (1 | Ht)} , (1) where the function ft involves the estimated weights from previous decision points i < t 
+
+and the true outcome regression function looking forward following a particular stochastic intervention at j ≥ t. Each term in the sum resembles PnDCAR ,t with the estimated propensity score plugged in place of the true propensity score for all s ≤ t. If the treatment model is estimated using a correctly specified parametric model, this term is Op(n−1/2)and is absorbed into the estimator’s influence function under the semiparametric model. However, if nonparametric methods are used, this term is generally not even Op(n−1/2), preventing valid inference. Ertefaie et al. (2023b) showed that undersmoothing the HAL—selecting a sufficiently large L1 bound that is typically greater than the cross-validated bound—ensures that the fitted model is rich enough to approximately solve these empirical score equations, rendering the term asymptotically negligible. Intuitively, this occurs because the HAL approximately solves score functions of the form Pn[φ(O){At,n − πt,n (1 | Ht)}] for the included basis functions φ. If the model is sufficiently undersmoothed, a rich enough collection of basis functions is retained. Hence, if ft,n can be approximated by these basis functions within an n−1/4 neighborhood, the HAL will approximately solve the bias term, rendering it asymptotically negligible. Section S2.2 contains full details regarding undersmoothing and formal statements of the previous conditions. While the undersmoothing condition provides a theoretical target for eliminating the leading remainder term, it leaves open the practical choice of tuning parameters, which must balance bias control against weight instability. Selecting too large of a penalty can induce oversmoothing and induce bias, whereas too small of a penalty can inflate finite-10 sample variance, cause numeric instability, and prevent convergence at the n−1/4 rate. One approach to selection is to directly target a cross-validated estimate of the leading IPW remainder (Equation (1)). However, this would require estimating the large set of nuisance outcome regression functions {μθ,α t, 0 : t < T, θ ∈ Θ}, and doing so fully nonpara-metrically is generally impractical. To retain this remainder-targeting motivation while avoiding this computational burden, we consider a pragmatic selector that plugs in a low-dimensional working approximation, μθ,α t,n . The bias is then approximated by 
+
+Rt,n,v (λ; θ) := P1
+
+> n,v
+
+ft(O; θ, α, ¯π(v) 
+
+> t−1,n,λ t,n, CV
+
+, μ (v) 
+
+> t,n
+
+, π (v) 
+
+> t,n,λ t,v, CV
+
+){At − π(v)
+
+> t,n,λ
+
+(At | Ht)} ,where v = 1 , . . . , V indexes folds, P1 
+
+> n,v
+
+denotes the empirical measure on the testing data from the vth fold. We then consider two selectors that minimize different norms of this bias approximation: 
+
+λt,n,L ∞ := arg min  
+
+> λ
+
+V −1
+
+> V
+
+X
+
+> v=1
+
+max 
+
+> θ∈Θtest
+
+|Rt,n,v (λ; θ)| , (2) and 
+
+λt,n,L 2 := arg min  
+
+> λ
+
+V −1|Θtest |−1
+
+> V
+
+X
+
+> v=1
+
+X
+
+> θ∈Θtest
+
+Rt,n,v (λ; θ)2 , (3) where Θ test ⊂ Θ is a holdout set of θ not used to train the working model μt,n . We refer to both λt,n,L ∞ and λt,n,L 2 as DCAR -based selectors because they minimize the norm of a term that resembles DCAR . The L∞ criterion is motivated by a desire to uniformly control Equation (1) over Θ to support curve-level inference and the construction of simultaneous confidence bands. The L2 criterion averages the remainder over Θ and is typically less sensitive to isolated, high-variance points, often yielding improved finite-sample stability. Additionally, we consider a score-based selector that depends only on the propensity score. That is, we pick λ by minimizing a cross-validated aggregated standardized score residual over the set of active HAL basis functions. For each t and v, let J (v) 
+
+> t
+
+(λ) denote the set of HAL basis functions retained (i.e., with nonzero basis coefficients) in the fitted 
+
+π(v)
+
+> t,n,λ
+
+. We select λ by 
+
+λt,n, score = arg min 
+
+> λ
+
+1
+
+V
+
+> V
+
+X
+
+> v=1
+
+1
+
+∥β(v)
+
+> t,n,λ
+
+∥1
+
+X  
+
+> φ∈J (v)
+> t(λ)
+
+P1
+
+> n,v
+
+(
+
+φ(Ht) At − π(v)
+
+> t,n,λ
+
+(1 | Ht)
+
+π(v)
+
+> t,n,λ
+
+(1 | Ht)
+
+)
+
+, (4) 11 where ∥βt,n,λ ∥1 is the fitted HAL coefficient L1 norm. This criterion is a computationally tractable proxy to targeting the remainder term that avoids estimating μθ,α t,n . It leverages the fact that the propensity scores enter the remainder terms through inverse-weight fac-tors; hence, minimizing aggregated standardized score residuals balances remainder control against weight instability. Finally, following Pham et al. (2025), we additionally impose a mild cap on oversmooth-ing to control the rate at which the basis grows and ensure that the HAL converges at the 
+
+n−1/4 rate. Full details of the DCAR and score based undersmoothing selectors are provided in Section S2.4. Under this framework, let {πt,n }Tt=1 be the undersmoothed propensity score estimates and let 
+
+W θ,α n =
+
+> T
+
+Y
+
+> t=1
+
+(t/T )αqθt (At, S t) + {1 − (t/T )α}πt,n (At | Ht)
+
+πt,n (At | Ht) .
+
+The UIPW regimen-response curve estimator is then ψn(θ; α) := Pn{(QTt=1 W θ,α t,n )Y }. Let 
+
+ψn(θ) := ψn(θ; α = 0) denote the untilted estimator. Estimation of ψ0(θ; α) enables the construction of policies by searching over Θ to iden-tify a θ that maximizes the expected distal outcome. However, we note that global maxi-mization over the unrestricted policy class Rp typically favors near-deterministic interven-tions that push treatment probabilities toward 0 or 1 in regions of the state space where treatment is beneficial or harmful. Consequently, under a bounded-probability feasible set Θ, the optimizer can behave like a constrained projection: along many directions in the parameter space the estimated mean function is approximately monotone, so the maxi-mizer is attained at the feasible point “closest” to the unconstrained maximizer, which generally lies on ∂Θ. Because boundary solutions can be numerically unstable and compli-cate optimizer-based inference, we maximize a penalized value function (Gao et al., 2025; Luckett et al., 2020): 
+
+Vn(θ; α) := ψn(θ; α) − P (θ) . In particular, we will focus on an inverse-distance barrier-weighted ridge penalty: 
+
+P(θ) = γ
+
+inf θ′∈∂Θ d(θ, θ ′) ∥˜θ∥22 ,for some fixed ridge penalty γ > 0 and distance function d. Here, θ is partitioned as ( θ0, ˜θ)when b(s) includes an intercept in the first coordinate (and ˜θ = θ otherwise) so as to avoid 12 penalizing the intercept, and ∂Θ denotes the boundary of Θ. This penalty diverges to + ∞
+
+as θ approaches ∂Θ, so the penalized value function assigns value −∞ on the boundary, thereby ensuring an interior maximizer. We note that this penalty works in parallel with the index set Θ: careful elicitation of Θ ensures a truly stochastic set of admissible policies, 
+
+P prevents a boundary maximizer within this set, and supports inference. The corresponding population value function is V0(θ; α) := ψ0(θ; α) − P (θ). We de-note the optimal policy by θ⋆
+
+> 0
+
+(α) := arg max θ∈Θ V0(θ; α), and consider the estimator 
+
+θ⋆n(α) := arg max θ∈Θ Vn(θ; α). Let θ⋆ 
+
+> 0
+
+= θ⋆
+
+> 0
+
+(α = 0) and θ⋆n = θ⋆n(α = 0) denote the un-tilted optimizers. 
+
+3.4 Data-Adaptive Tilting 
+
+The optimal amount of tilting will depend on a variety of conditions including the sample size, number of decisions, and distance from the optimal policy to the observed policy. If 
+
+T is small, n is large, and the optimal policy qθ⋆  
+
+> 0(0)
+> t
+
+(At, S t) approximates the observational policy πt, 0(At | Ht), the weights will be relatively stable near θ⋆
+
+> 0
+
+(0) without any tilting. Instead, if the optimal policy is far from the observed policy, the untilted weights may be volatile at θ⋆
+
+> 0
+
+(0). As α varies, tilting trades off two competing goals. For α near zero, the tilted pol-icy remains close to the untilted scientific intervention, so the corresponding target value 
+
+V0(·; α) is expected to be close to V0(·; 0). This limits estimand drift and helps keep the learned optimizer θ⋆n(α) close to the policy that is optimal for the untilted target. On the other hand, increasing α shrinks early weight factors toward one, reducing the variability and numerical instability induced by longitudinal products of inverse probability weights and thereby stabilizes ψn(·; α) and, in turn, Vn(·; α). We operationalize this tradeoff by selecting α to minimize the corresponding mean squared error (MSE) of the value function at the optimal policy. By setting the derivative of the asymptotic MSE to zero, we obtain 2P0
+
+ ¯Vn(α) − ¯V0(α = 0) P0
+
+ ∂∂α ¯Vn(α)
+
+
+
++ 2 n−1 ¯σ0(α) ∂∂α ¯σ0(α) = 0 , where ¯V·(α) := V·{θ⋆ 
+
+> ·
+
+(α); α}, is the θ-profiled value function for · ∈ { 0, n }, and ¯ σ20 (α) := 
+
+P0[ϕψ{O; η0, θ ⋆
+
+> 0
+
+(α), α }2]. We know that the optimal (up to a constant) bias-variance trade-off implies P0{ ¯Vn(α) − ¯V0(α = 0) } ≈ n−1/2 ¯σ0(α) (van der Laan et al., 2018). Hence, the 13 optimal α will also solve one of the following equations P0
+
+ ∂∂α ¯Vn(α) ± cn −1/2 ∂∂α ¯σ0(α) = 0, where c is a positive constant. We approximate these expressions via ∂∂α ¯Vn(α) ±
+
+cn −1/2 ∂∂α ¯σn(α) where ¯ σn(α) is a consistent estimator for ¯ σ0(α). The choice of which so-lution yields the minimizer depends on the sign of ∂∂α ¯Vn(α); because ¯V0(α) is generally decreasing in α, we propose selecting 
+
+αn := arg max 
+
+> α≥0
+
+¯Vn(α) − κn −1/2 ¯σn(α) , (5) for some fixed κ > 0. This is equivalent to selecting the value at which ¯Vn(α) attains the highest lower confidence interval bound at level Φ( κ) − Φ( −κ) where Φ is the standard normal distribution function. In practice, the lower-bound criterion can occasionally re-turn very small αn corresponding to negligible stabilization relative to α = 0. To avoid introducing an unnecessarily tilted estimand in such cases—and to align with asymptotic comparison to the untilted target developed later—we apply a simple clipping rule that sets αn to zero whenever it falls below a vanishing threshold: ˜αn =
+
+
+
+0 αn < n −1/4
+
+αn αn ≥ n−1/4 .Specifically, in Section 4 we show that, under the condition that the population profiled value ¯V0(α) is maximized at α = 0, using ˜ αn yields the asymptotic limit as the untilted estimator. 
+
+Remark 2. The lower-bound rule ¯Vn(α)−κn −1/2 ¯σn(α) is designed to select a tilt level that yields a high and stable estimated value. In asymptotic results developed later, we adopt the working assumption that the population profiled value ¯V0(α) := V0{θ⋆
+
+> 0
+
+(α); α} is maximized at α = 0 . Under this condition, ¯Vn(α) can be viewed heuristically as a proxy for the bias incurred by tilting away from the untilted estimand. This condition is not automatic and can fail for two conceptually different reasons: 1. Limited policy class. If the observational policy is near-optimal but the class {qθ :
+
+θ ∈ Θ} cannot approximate it well—either because Θ is too restrictive or the basis does not include enough covariates—then increasing α moves the estimand towards a policy that may be better than anything attainable at α = 0 within the class. 2. Tilt-penalty interaction. Even when the best untilted policy lies in the class, the 
+
+14 assumption may fail due to an interaction between tilting and penalization. As α in-creases, ψ0(θ; α) becomes less sensitive to θ because the observed component, invari-ant to θ, receives more weight. As a result, many θ can yield similar tilted outcomes while differing substantially in penalty. The optimizer may then move toward smaller-normed coefficients to reduce the penalty, thereby increasing ¯V0(α) even though there is no improvement in ψ0{θ⋆
+
+> 0
+
+(α); α}.When either phenomenon occurs, ¯Vn(α) should be interpreted primarily as an empirical criterion for stable policy learning rather than as a monotone proxy for drift relative to 
+
+α = 0 . In MRT settings with constant treatment probabilities, these issues are largely mitigated when the policy class includes an intercept and the penalty excludes it. There, the observational policy is representable by an intercept-only policy and incurs no penalty. 
+
+# 4 Theoretical Properties 
+
+We proceed from efficiency characterization to inference for both the regimen-response curve and the induced optimizer. We first establish identification of the tilted counterfac-tual mean as an observed-data functional expressed through longitudinal inverse probability weights (Lemma 1). We then derive the canonical gradient of ψ0(θ; α) under the nonpara-metric model (Lemma 2). This canonical gradient implies the nonparametric efficiency bound and the nuisance structure associated with efficient estimation. Building on this characterization, we show that the proposed UIPW estimator is regu-lar and asymptotically linear, and we establish both pointwise and uniform (over Θ) lim-iting results for the estimated regimen-response curve (Theorem 1). We then show that, for appropriately vanishing tilting sequence αn, the resulting estimator is asymptotically equivalent to the untilted estimator targeting ψ0(θ; 0) (Corollary 1). We then present anal-ogous results for the learned optimizer θ⋆n(α) and its counterpart under vanishing tilting (Theorem 2 and Corollary 2). Finally, we study the behavior of the data-adaptive tilting selector and provide sufficient conditions for it to attain the requisite rate to support the previous corollaries (Lemma 3). 
+
+4.1 Identification and Canonical Gradient 
+
+This subsection formalizes the observed-data parameter underlying our proposed estimator and characterizes its nonparametric efficiency bound. Under Assumption 1, the tilted coun-15 terfactual mean P0(Y θ,α ) is identifiable from the observed data law. While identification can be expressed via either outcome regression or inverse probability weighting, we fo-cus on an IPW change-of-measure representation because it yields a convenient parameter mapping for deriving the canonical gradient and motivates the efficient IPW construction used throughout. 
+
+Lemma 1. Under Assumption 1 the causal parameter P0(Y θ,α ) is identified by ψ0(θ; α) := 
+
+P0(W θ,α  
+
+> 0
+
+Y ), where W θ,α  
+
+> 0
+
+= QTt=1 W θ,α t, 0 is the product of time-specific weights of the form 
+
+W θ,α t, 0 = (t/T )αqθt (At, H t) + {1 − (t/T )α}πt, 0(At | Ht)
+
+πt, 0(At | Ht) .
+
+From this identification, we can obtain the canonical gradient, which characterizes the nonparametric efficiency bound for estimating ψ0(θ; α). Let 
+
+μθ,α t, 0 (At, H t) := P0
+
+hnY 
+
+> j>t
+
+W θ,α j, 0 (Aj , S j )
+
+o
+
+Y | At, H t
+
+i
+
+be the conditional expected outcome if an individual with covariate history {At, H t} were to follow regimen qθ,α j at decision points j ∈ { t+1 , . . . , T }. These regressions admit a standard backward recursion; we record it here for completeness: μθ,α T (AT , H T ) = P0(Y |AT , H T ), and 
+
+μθ,α t (At, H t) = P0
+
+X
+
+> a∈{ 0,1}
+
+qθ,α t+1 (At+1 = a, S t+1 )μθ,α t+1 (At+1 = a, H t+1 ) | At, H t
+
+ ,for t = 1 , . . . , T − 1. Let η0 := {π1,0, . . . , π T, 0, μ θ,α  
+
+> 1,0
+
+, . . . , μ θ,α T, 0} denote the set of nuisance functions corresponding to both sequential treatment assignment and outcome regressions. 
+
+Lemma 2. The canonical gradient of ψ0(θ; α) is 
+
+ϕψ(O; η0, θ, α ) = W θ,α  
+
+> 0
+
+Y −
+
+> T
+
+X
+
+> t=1
+
+DCAR ,t (O; η0, θ, α ) − ψ0(θ; α) ,where 
+
+DCAR ,t (O; η0, θ, α ) := 
+
+nY 
+
+> i<t
+
+W θ,α i, 0
+
+o
+
+(t/T )α X
+
+> a∈{ 0,1}
+
+μθ,α t, 0 (At = a, H t) qθt (a, S t) I(At = a) − πt, 0(a | Ht)
+
+πt, 0(a | Ht) , (6) 16 is the projection of Ψ( P0) onto the nuisance tangent space corresponding to the tth treatment mechanism, TCAR ,t .
+
+Lemma 2 shows that the canonical gradient decomposes into a na¨ ıve term, W θ,α  
+
+> 0
+
+Y −
+
+ψ0(θ; α) minus an augmentation term PTt=1 DCAR ,t (O; η0, θ, α ) that projects the IPW map-ping onto the nuisance tangent space associated with the sequential treatment mechanism. Each DCAR ,t term can be read as a weighted, scaled IPW residual at time t, providing a connection to the HAL score equations. This canonical gradient determines the nonpara-metric efficiency bound for ψ0(θ; α) and will serve as the reference influence function in our asymptotic linearity results. 
+
+4.2 Efficient Inference for the Regimen Response Curve 
+
+We state a set of regularity conditions used to control both the pointwise asymptotic linear expansion of ψn(θ; α) for fixed ( θ, α ) and the stronger uniform convergence needed for functional inference over Θ. Assumption 2 is a convenient sufficient condition that ensures the relevant influence functions and remainder terms are uniformly integrable and that the empirical process arguments used for ℓ∞(Θ) convergence apply without additional tail conditions. Assumption 3 enforces stochasticity and smoothness of the policy class; Assumption 3(c) is only needed for downstream results on optimizer inference and can be relaxed if one is only interested in curve-level inference. 
+
+Assumption 2. Suppose that the support Ht is bounded for all t = 1 , . . . , T and that Y is bounded. 
+
+Assumption 3. Suppose that the parametric stochastic intervention qθt (At, S t) satisfies the following. (a) There exist constants 0 < ¯
+
+q < ¯q < 1 such that ¯
+
+q ≤ qθt (a, s ) ≤ ¯q for all (a, s, t, θ ) ∈{0, 1} × STt=1 St × { 1, . . . , T } × Θ.(b) For each a ∈ { 0, 1}, qθt (a, ·) is c` adl` ag with sectional variational norm uniformly bounded over Θ.(c) For each a ∈ { 0, 1} and almost every St, the map θ 7 → qθt (a, S t) is thrice continuously differentiable. Furthermore, there exist constants C1, C 2, C 3 such that 
+
+sup 
+
+> θ∈Θ
+
+∥∇ θqθt (a, S t)∥ ≤ C1 , sup 
+
+> θ∈Θ
+
+∥∇ 2
+
+> θ
+
+qθt (a, S t)∥ ≤ C2 , and sup 
+
+> θ∈Θ
+
+∥∇ 3
+
+> θ
+
+qθt (a, S t)∥ ≤ C3 ,
+
+17 almost surely. 
+
+These conditions are readily verifiable for the logistic model paired with a compact index set Θ. However, deterministic interventions, given by qθt (1 , s ) = I{b(s)⊤θ > 0}, do not satisfy these conditions. We note that the indicator function can be retrieved from the logistic model by letting ∥θ∥ → ∞ ; this is in part why we do not consider the general index set Θ = Rp and require a compact subset. We now combine the canonical gradient representation from Lemma 2 with the under-smoothing condition to obtain an asymptotic linear expansion for ψn(θ; α). 
+
+Theorem 1. Suppose that Assumptions 1(c) and 2 hold and that πt,n is sufficiently un-dersmoothed such that Equation (S8) holds. Consider a fixed (θ, α ) ∈ Θ × [0 , ∞). Suppose that Assumptions S1 and S2 hold locally at (θ, α ). Then, 
+
+ψn(θ; α) − ψ0(θ; α) = ( Pn − P0)ϕψ(O; η0, θ, α ) + Rn(θ, α ) ,where Rn(θ, α ) = op(n−1/2). Consequently, 
+
+√n{ψn(θ, α ) − ψ0(θ, α )} ⇝ N 0, P0{ϕ2
+
+> ψ
+
+(O; η0, θ, α )} ,where Xn ⇝ X denotes weak convergence of Xn to X. Moreover, if Assumption 3 holds and Assumptions S1 and S2 hold uniformly for all θ ∈ Θ,
+
+√n{ψn(θ; α) − ψ0(θ; α)} ⇝ G(θ; α)
+
+in ℓ∞(Θ) , where G denotes a tight Gaussian process indexed by Θ with covariance 
+
+Cov {G(θ1; α), G(θ2; α)} = Cov {ϕψ(O, η 0, θ 1, α ), ϕ ψ(O; η0, θ 2, α )} ,and ℓ∞(T ) denotes the Banach space of all bounded functions f : T → R equipped with the uniform norm. 
+
+Theorem 1 states that, under regularity conditions and sufficient undersmoothing, 
+
+ψn(θ; α) is regular and asymptotically linear with influence function equal to the canonical gradient ϕψ, and therefore attains the nonparametric efficiency bound for each fixed ( θ, α ). The uniform weak convergence result strengthens this to support functional inference over Θ, providing the basis for simultaneous inference for the regimen-response curve. 18 Remark 3. Although these results show that one can obtain an asymptotically efficient estimator without estimating the outcome regression functions μθ,α t, 0 , the plug-in variance estimator Pn{ϕ(O; ηn, θ, α )2} requires a consistent estimator for these functions for every t
+
+and θ. To avoid estimating the outcome regression functions, the variance can be estimated using the bootstrap, or conservatively by treating the propensity score and weights as known. 
+
+The next corollary shows that, for a vanishing tilting sequence αn, the tilted estimator has the same first-order asymptotic linear representation—and hence limiting law—as the untilted estimator ψn(θ; 0). 
+
+Corollary 1. Suppose that Assumptions 1(c) and 2 hold, that πt,n is sufficiently under-smoothed. Fix θ ∈ Θ and suppose that Assumptions S1 and S2 hold for θ uniformly for all 
+
+α ∈ [0 , α ϵ] for some αϵ > 0. If αn = op(n−1/2), then 
+
+ψn(θ; αn) − ψ0(θ) = ( Pn − P0)ϕψ(O; η0, θ, α = 0) + op(n−1/2) ,and √n{ψn(θ; αn) − ψ0(θ)} ⇝ N 0, P0{ϕ2
+
+> ψ
+
+(O; η0, θ, α = 0) } .Likewise if Assumption 3 holds and Assumptions S1 and S2 hold uniformly for all (θ, α ) ∈
+
+Θ × [0 , α ϵ], then √n{ψn(θ; αn) − ψ0(θ)} ⇝ G(θ; α = 0) ,with G as defined in Theorem 1. 
+
+4.3 Efficient Policy Optimization 
+
+We now study the learned optimal policy parameter θ⋆n(α), defined as a maximizer of the penalized value function Vn(θ; α) over Θ. Our argument follows a standard argmax/M-estimation strategy: under suitable curvature, the optimizer can be characterized through a first-order condition, and its limiting behavior is governed by the corresponding gradient process. 
+
+Assumption 4. Suppose that θ⋆
+
+> 0
+
+(α) is a unique interior point of Θ and that H0(α) := 
+
+∇2
+
+> θ
+
+V0{θ⋆
+
+> 0
+
+(α); α} is negative definite in a neighborhood of θ⋆
+
+> 0
+
+(α).
+
+Assumption 4 imposes standard regularity for argmax functionals: uniqueness and in-teriority ensure that θ⋆
+
+> 0
+
+(α) is characterized by the first-order condition ∇θV0{θ⋆
+
+> 0
+
+(α); α} = 0, 19 while negative definiteness of H0(α) provides local curvature needed to invert the lineariza-tion and obtain a √n-rate expansion. Under this assumption, expanding the first-order condition, 
+
+θ⋆n(α) − θ⋆
+
+> 0
+
+(α) = −H0(α)−1∇θVn{θ⋆
+
+> 0
+
+(α); α} + op(n−1/2) . Consequently, inference for θ⋆n(α) reduces to establishing regular asymptotic linearity of the gradient ∇θVn(θ; α) evaluated at θ = θ⋆
+
+> 0
+
+(α). To that end, we show that, under one additional HAL condition regarding approxima-tion of the relevant gradient multipliers (Assumption S3), the gradient process is asymp-totically linear with influence function equal to the canonical gradient of ∇θV0(θ; α) (Lem-mas S7 and S9). It follows that the optimizer inherits an asymptotic linear expansion determined by the inverse Hessian, H0(α)−1, and the canonical gradient of ∇θψ0(θ; α). This is formalized in the following theorem. 
+
+Theorem 2. Let α ≥ 0 and suppose that Assumptions 1(c), 2, 3 and 4 hold, that πt,n 
+
+is sufficiently undersmoothed, and that Assumptions S1, S2 and S3 hold uniformly in a neighborhood of θ⋆
+
+> 0
+
+(α). Then, 
+
+θ⋆n(α) − θ⋆
+
+> 0
+
+(α) = ( Pn − P0) −H−10 (α)ϕ∇ψ{O; η0, η ′
+
+> 0
+
+, θ ⋆
+
+> 0
+
+(α), α } + op(n−1/2) ,and 
+
+√n{θ⋆n(α) − θ⋆
+
+> 0
+
+(α)} ⇝ N
+
+
+
+0, H −10 (α)P0[ϕ⊗2
+
+> ∇ψ
+
+{O; η0, η ′
+
+> 0
+
+, θ ⋆
+
+> 0
+
+(α), α }]H−10 (α)
+
+
+
+,where f ⊗2 = f f ⊤ for any measurable function f , and ϕ∇ψ is the canonical gradient of 
+
+∇θψ0(θ; α) as defined in Lemma S7. 
+
+Theorem 2 shows that, under curvature and undersmoothing conditions, θ⋆n(α) is a regular asymptotically linear estimator of θ⋆
+
+> 0
+
+(α) with a √n limit distribution. Relative to curve-level inference, the optimizer expansion introduces the additional nuisance compo-nent η′ 
+
+> 0
+
+:= {∇ θμθ,α t, 0 |θ=θ⋆ 
+
+> 0(α)
+
+}Tt=1 , reflecting that inference for an argmax depends on the behavior of the gradient process and therefore on derivatives of the forward regressions with respect to θ.Analogous to Corollary 1, if αn = op(n−1/2) then θ⋆n(αn) admits the same first-order asymptotic linear representation as the untilted optimizer estimator θ⋆n(0). 20 Corollary 2. Suppose that Assumptions 1(c), 2, 3 and S4 hold, that πt,n is sufficiently undersmoothed such that Equation (S8) holds, and that Assumptions S1, S2 and S3 hold at θ⋆
+
+> 0
+
+(α) uniformly over α ∈ [0 , α ϵ] for some αϵ > 0. Then if αn = op(n−1/2),
+
+θ⋆n(αn) − θ⋆ 
+
+> 0
+
+= ( Pn − P0) −H−10 ϕ∇ψ(O; η0, η ′
+
+> 0
+
+, θ ⋆
+
+> 0
+
+, α = 0) + op(n−1/2) ,and √n{θ⋆n(αn) − θ⋆
+
+> 0
+
+} ⇝ N
+
+h
+
+0, H −10 P0{ϕ⊗2
+
+> ∇ψ
+
+(O; η0, η ′
+
+> 0
+
+, θ ⋆
+
+> 0
+
+, α = 0) }H−10
+
+i
+
+.
+
+Remark 4. Similar to variance estimation for the regimen-response curve, the plug-in variance estimator Hn(α)−1Pn[ϕ⊗2
+
+> ∇ψ
+
+{O; ηn, η ′
+
+> n
+
+, θ ⋆n(α), α )}]Hn(α)−1 requires consistent es-timation of all outcome regression functions embedded in η0; however, this additionally requires consistent estimation of the derivatives of all outcome regression functions, as expressed through nuisance parameter η′
+
+> n
+
+. Again, variance estimation can instead be per-formed using the bootstrap or conservatively by treating the propensity score as fixed. 
+
+4.4 Data-Adaptive Tilting 
+
+The asymptotic results in Corollaries 1 and 2 require αn = op(n−1/2) so that the tilted estimators share the same first-order limit as the untilted analogs. The following lemma provides sufficient conditions for the trimmed lower-confidence-bound selector ˜ αn to attain the necessary rate. 
+
+Lemma 3. Let δ > 0. Suppose that Assumptions 1(c), 2 and 3 hold, that πt,n is suffi-ciently undersmoothed such that Equation (S8) holds, that Assumptions S1, S2 and S3 hold uniformly at θ⋆
+
+> 0
+
+(α) uniformly over α ∈ [0 , δ ], and that Assumption S4 holds. Moreover, suppose that (a) The population profiled value function satisfies α0 := arg max α≥0 ¯V0(α) = 0 , ¯V0(0) −
+
+¯V0(α) ≥ cα for all α ∈ [0 , δ ], and inf α>δ { ¯V0(0) − ¯V0(α)} ≥ ϵδ > 0.(b) The profiled standard error estimator satisfies sup α∈[0 ,δ ] n−1/2 ¯σn(α) = Op(n−1/2)
+
+Then, αn = Op(n−1/2) and ˜αn = op(n−1/2) for any κ ≥ 0.
+
+The first condition of Lemma 3 requires that the untilted regimen response curve attains the highest possible value function (as discussed in Remark 2) and that there is linear sep-aration near α = 0. The second condition ensures that sup α∈[0 ,δ ]|{ ¯Vn(α) − κn −1/2 ¯σn(α)} − 
+
+21 ¯V0(α)| = Op(n−1/2). We note that this is a weak assumption that generally holds under Assumptions 1(c) and 2. Together, these conditions enable an argmax argument for αn
+
+that accounts for the boundary maximizer. 
+
+# 5 Numerical Simulations 
+
+5.1 Simulation Setup 
+
+The simulation study was designed to generate longitudinal data with features that could plausibly arise in studies of mobile prompts intended to support cigarette quit attempts. In this setting, prompts may be useful when an individual is experiencing elevated negative affect, particularly when cigarettes are available, but may be burdensome when delivered at low-risk moments. We therefore generated repeated measurements of two time-varying state variables St, 1 and St, 2, intended to respectively represent negative affect and cigarette availability at time t. For participant i = 1 , . . . , n we generated the trajectory O := (S1, A 1, . . . , S T , A T , Y ) where St := ( St, 1, S t, 2) contains both state variables. The data generation process is described in Section S4. We considered the one-dimensional policy class qθt (At, S t) = expit( θS t, 1) with Θ = [−0.73 , 0.73]. This index set, constructed following Section S3.1, ensures that qθt (a, S t) ∈
+
+[0 .05 , 0.95] for all a ∈ { 0, 1}, St ∈ S t. Policy optimization was performed using a penalty weight of λ = 0 .01. We considered five IPW estimators, which differed only in how the treatment mech-anism was handled. The oracle estimator used the true treatment probabilities πt, 0. All other estimators used pooled propensity score models fit to observations from all T deci-sion points, with decision time included as a covariate. The parametric estimator used a correctly specified logistic regression model with linear terms for St, 1, St, 2, t, and St, 1St, 2.The remaining three estimators used the HAL to estimate the pooled propensity score as a function of St, 1, St, 2, and t, and were cross-fit over two external folds. The CV HAL es-timator used the standard HAL fit with the L1-norm selected by five-fold cross-validation. The UIPW-DCAR and UIPW-Score estimators selected undersmoothed HAL fits by mini-mizing, respectively, aggregated L2 DCAR (Equation (3)) and score (Equation (4)) criteria. Because a pooled propensity model was used, both UIPW selectors targeted sums of the corresponding time-specific criteria across t = 1 , . . . , T , matching the decomposition of the longitudinal IPW remainder. For each estimator, we considered both untilted ( α = 0) and 22 data-adaptive (Section 3.4) implementations. We implemented truncated product-weights for all estimators, forcing QTt=1 W θ,α t,n ≤ 20. We evaluated estimator performance under the following factorial design: a ∈ { 0, 0.25 }
+
+(where πt, 0(At = 1 | Ht) = expit( aS t, 1), thereby considering MRT and observational de-signs), n ∈ { 100 , 500 , 1000 }, and T ∈ { 10 , 25 , 50 }. We report relevant metrics, averaged across 200 Monte Carlo replications, as follows. For the regimen response curve, we sum-marize the pointwise bias, mean squared error (MSE), and coverage as a function of θ.For the optimal policy, we summarize the square root mean squared error (RMSE) and coverage. 
+
+5.2 Simulation Results 
+
+We summarize performance for both regimen-response curve estimation and policy learning under the MRT ( a = 0) and observational ( a = 0 .25) assignment mechanisms. Figure 1 presents the scaled bias of all estimators without tilting (i.e., α = 0) and shows that the bias was generally small in the MRT setting across all estimators. We note that in this setting, CV HAL often selected very small bases of 1–2 functions, and therefore behaved similarly to a low-dimensional or near-parametric estimator. In contrast, in the observational setting, CV HAL shows more pronounced scaled bias as n increases, especially when T = 10. In contrast, the UIPW estimators generally controlled the bias. This pattern supports the role of undersmoothing in reducing the leading IPW bias term when the treatment mechanism must be learned nonparametrically. Figure 2 demonstrates broadly similar pointwise coverage patterns across all untilted estimators, including the oracle IPW estimator. Coverage was generally close to the nomi-nal rate for moderate values of θ, while undercoverage was observed when the target policy differed more from the observational policy. The fact that undercoverage appears in simi-lar regions for all estimators—including the oracle IPW estimator—suggests that the main driver was not estimator-specific bias control or the variance estimator, but numerical pos-itivity issues associated with the longitudinal weights. Figure S1 compares coverage for the oracle and UIPW estimators using data-adaptive αn tilting. There, tilting resulted in decreased coverage for θ far from the observational policy; this was more pronounced in the MRT setting, where larger αn were generally selected, resulting in larger bias away from the observational policy. Figure 3 presents the relative efficiency of each estimator to the oracle IPW estimator 23 n: 100 n: 500 n: 1000 
+
+> t: 10  t: 25  t: 50
+
+−0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 
+
+−0.050 −0.025 0.000 0.025 0.050 
+
+−0.050 −0.025 0.000 0.025 0.050 
+
+−0.050 −0.025 0.000 0.025 0.050 
+
+θ
+
+> nE M(ψn − ψ 0)
+
+MRT Setting 
+
+n: 100 n: 500 n: 1000 
+
+> t: 10  t: 25  t: 50
+
+−0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 
+
+0.00 0.05 0.10 0.15 
+
+0.00 0.05 0.10 0.15 
+
+0.00 0.05 0.10 0.15 
+
+θ
+
+> nE M(ψn − ψ 0)
+
+Observational Setting 
+
+Estimator 
+
+Parametric 
+
+Oracle 
+
+CV HAL 
+
+UIPW (Score) 
+
+UIPW (L2 DCAR) 
+
+Fixed α = 0
+
+Regimen Response Curve Bias Figure 1: Scaled pointwise bias for the regimen response curve. 24 n: 100 n: 500 n: 1000 
+
+> t: 10  t: 25  t: 50
+
+−0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 
+
+85.0% 87.5% 90.0% 92.5% 95.0% 
+
+85.0% 87.5% 90.0% 92.5% 95.0% 
+
+85.0% 87.5% 90.0% 92.5% 95.0% 
+
+θ
+
+> Coverage
+
+MRT Setting 
+
+n: 100 n: 500 n: 1000 
+
+> t: 10  t: 25  t: 50
+
+−0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 
+
+70% 80% 90% 
+
+70% 80% 90% 
+
+70% 80% 90% 
+
+θ
+
+> Coverage
+
+Observational Setting 
+
+Estimator 
+
+Parametric 
+
+Oracle 
+
+CV HAL 
+
+UIPW (Score) 
+
+UIPW (L2 DCAR) 
+
+Fixed α = 0
+
+Regimen Response Curve Coverage Figure 2: Pointwise coverage for the regimen response curve. 25 in the absence of tilting. In the MRT setting, most estimators behaved similarly to the oracle IPW estimator. Score-based undersmoothing resulted in larger variances than all other estimators nearly uniformly across settings; this is likely the result of the score-based selector often selecting the maximum amount of undersmoothing allowed, resulting in potential numerical instability. In the observational setting, the relative efficiencies of all nonparametric estimators varied more strongly in θ. This heterogeneity reflects that the outcome regression functions μθ,α t, 0 that appear in the leading bias term, Equation (1), depend on θ. Hence, some regions of the policy class appear to induce more stable or easier-to-approximate empirical score functions than others; this is reflected in efficiency gains where these functions are adequately solved, and potential inefficiency otherwise. Figure 4 shows that adaptive tilting reduced the MSE for nearly all estimators and settings. These gains were not restricted to estimators with flexibly estimated propensity scores—oracle and correctly specified parametric IPW estimators also benefited. These gains were often largest in larger-T settings, consistent with the accumulation of weight variability across repeated decision points. Table 1 presents the scaled RMSE for each policy selector induced by the corresponding regimen response curve estimator, with and without adaptive tilting. Adaptive tilting generally improved policy RMSE relative to the untilted comparators; the largest gaps between tilted and untilted estimators tended to occur in high-T settings. Additionally, UIPW using the L2 DCAR selector generally had similar RMSE and regret to the optimal selector within each setting. Table 2 displays the coverage of each policy estimator. Most estimators attained or surpassed the nominal coverage rate for moderate n. In some settings, all estimators demonstrated overcoverage. 26 n: 100 n: 500 n: 1000 
+
+> t: 10  t: 25  t: 50
+
+−0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 
+
+0.8 0.9 1.0 1.1 
+
+0.8 0.9 1.0 1.1 
+
+0.8 0.9 1.0 1.1 
+
+θ
+
+> Relative Efficiency
+
+MRT Setting 
+
+n: 100 n: 500 n: 1000 
+
+> t: 10  t: 25  t: 50
+
+−0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 
+
+0.6 0.8 1.0 1.2 1.4 1.6 
+
+0.6 0.8 1.0 1.2 1.4 1.6 
+
+0.6 0.8 1.0 1.2 1.4 1.6 
+
+θ
+
+> Relative Efficiency
+
+Observational Setting 
+
+Estimator 
+
+Parametric 
+
+Oracle 
+
+CV HAL 
+
+UIPW (Score) 
+
+UIPW (L2 DCAR) 
+
+Fixed α = 0
+
+Relative Efficiency Versus Oracle IPW Estimator Figure 3: Pointwise relative efficiency for the regimen response curve versus the oracle inverse probability weighted estimator. Note: the vertical axis has been truncated below for visual clarity. 27 n: 100 n: 500 n: 1000 
+
+> t: 10  t: 25  t: 50
+
+−0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 
+
+1.00 1.25 1.50 1.75 2.00 
+
+1.00 1.25 1.50 1.75 2.00 
+
+1.00 1.25 1.50 1.75 2.00 
+
+θ
+
+> Relative MSE
+
+MRT Setting 
+
+n: 100 n: 500 n: 1000 
+
+> t: 10  t: 25  t: 50
+
+−0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 
+
+0.9 1.1 1.3 1.5 
+
+0.9 1.1 1.3 1.5 
+
+0.9 1.1 1.3 1.5 
+
+θ
+
+> Relative MSE
+
+Observational Setting 
+
+Estimator 
+
+Parametric 
+
+Oracle 
+
+CV HAL 
+
+UIPW (Score) 
+
+UIPW (L2 DCAR) 
+
+Relative Mean Squared Error of Adaptively Tilted Versus Untilted Estimators Figure 4: Pointwise relative mean squared error for the regimen response curve for each estimator with data-adaptive tilting versus its untilted analog. 28 Table 1: Scaled root mean squared error in estimating the optimal stochastic policy. 
+
+> √n pEB [{θ⋆n(αn) − θ⋆
+> 0 (0) }2]
+> T = 10  T = 25  T = 50 Estimator  Tilting  n = 100  n = 500  n = 1000  n = 100  n = 500  n = 1000  n = 100  n = 500  n = 1000 Micro-Randomized Trial UIPW (Score)  Adaptive  3.69  1.25  1.09  4.22  2.31  1.64  4.72  3.01  2.16 UIPW (Score)  Untilted  4.47  2.83  1.84  5.70  6.27  5.04  6.49  8.56  8.15 UIPW (L2 DCAR) Adaptive  3.45  1.27  1.12  4.43  2.25  1.18  4.83  3.06  1.74
+> UIPW (L2 DCAR) Untilted  4.08  2.30  1.91  5.54  5.38  4.83  6.41  8.24  7.08 CV HAL  Adaptive  3.46  1.28  1.14  4.48  2.25  1.17  4.88  3.30  1.75 CV HAL  Untilted  4.06  2.31  1.91  5.57  5.39  4.97  6.45  8.20  7.21 Parametric  Adaptive  3.68  1.10  1.16  4.52  2.04  1.86  4.86  3.02  1.87 Parametric  Untilted  4.14  2.25  1.97  5.64  5.63  4.87  6.32  8.21  7.55 Oracle  Adaptive  3.75  1.13  1.18  4.53  1.47  1.19  4.83  2.89  2.06 Oracle  Untilted  4.16  2.16  2.02  5.55  5.30  5.03  6.32  8.32  7.49 Observational UIPW (Score)  Adaptive  4.10  1.34  1.00  4.52  2.59  1.59  5.22  4.86  2.64
+> UIPW (Score)  Untilted  4.76  2.97  1.13  6.12  7.45  5.28  6.65  10.57  9.33 UIPW (L2 DCAR) Adaptive  3.56  0.74  0.86  4.16  2.67  0.95  4.90  4.83  2.93 UIPW (L2 DCAR) Untilted  4.06  1.78  1.12  5.58  6.85  4.68  6.54  10.52  8.70 CV HAL  Adaptive  3.41  0.73  0.85  4.12  2.63  0.93  4.81  4.93  2.94 CV HAL  Untilted  4.03  1.40  1.14  5.53  6.73  4.07  6.42  10.15  8.29 Parametric  Adaptive  4.00  1.38  1.67  4.60  3.58  1.36  5.33  5.23  3.29 Parametric  Untilted  4.63  2.64  1.35  5.95  7.57  4.25  6.85  11.13  9.30 Oracle  Adaptive  3.95  1.38  1.01  4.56  3.62  1.36  5.21  5.12  3.27 Oracle  Untilted  4.54  2.71  1.37  5.95  7.73  4.43  6.76  10.90  9.08
+> 29 Table 2: Coverage for the optimal stochastic policy.
+> Coverage (%) for  θ⋆
+> 0 (0)
+> T = 10  T = 25  T = 50 Estimator  Tilting  n = 100  n = 500  n = 1000  n = 100  n = 500  n = 1000  n = 100  n = 500  n = 1000 Micro-Randomized Trial UIPW (Score)  Adaptive  89  99  100  88  99  99  87  98  99 UIPW (Score)  Untilted  84  96  99  79  93  96  75  88  89 UIPW (L2 DCAR) Adaptive  90  99  100  87  99  99  86  98  99 UIPW (L2 DCAR) Untilted  86  98  98  80  92  96  76  85  87 CV HAL  Adaptive  90  99  100  86  99  99  86  98  99 CV HAL  Untilted  87  98  98  80  92  96  76  85  87 Parametric  Adaptive  89  100  100  85  99  99  87  99  99 Parametric  Untilted  86  98  99  80  93  96  76  85  87 Oracle  Adaptive  89  100  100  86  99  99  86  99  99 Oracle  Untilted  86  97  98  80  92  95  76  86  86 Observational UIPW (Score)  Adaptive  88  100  100  87  98  100  82  96  99 UIPW (Score)  Untilted  85  99  99  78  89  97  74  82  87 UIPW (L2 DCAR) Adaptive  91  100  100  88  97  100  83  95  98 UIPW (L2 DCAR) Untilted  87  99  100  78  87  94  72  77  83 CV HAL  Adaptive  92  100  100  88  97  100  83  94  98 CV HAL  Untilted  87  99  99  79  87  94  72  77  82 Parametric  Adaptive  89  100  100  87  98  100  82  96  99 Parametric  Untilted  86  99  100  79  91  97  71  79  86 Oracle  Adaptive  90  100  100  87  98  100  83  97  99 Oracle  Untilted  86  99  100  78  90  97  72  80  86
+> 30
+
+5.3 Simulation Conclusions 
+
+In our simulations, we observed that correctly specified parametric and oracle IPW es-timators can be more efficient than the UIPW estimators in small-to-moderate samples, despite our asymptotic efficiency theory. This suggests that the undersmoothing required to control the leading IPW bias can introduce non-negligible finite-sample variability. This pattern is consistent with prior work showing that practical undersmoothing implementa-tions can have inflated variance at smaller sample sizes, diminishing with n. In the fully randomized setting studied by Ertefaie et al. (2023b), undersmoothing based on the score criterion yielded larger mean squared errors than both an unadjusted estimator and an IPW estimator using cross-validated HAL propensity scores, while DCAR-based under-smoothing was typically the most stable of the undersmoothing rules considered. Simi-larly, Pham et al. (2025) reported that, at smaller sample sizes, UIPW variants selected by either score- or DCAR -based criteria can exhibit inflated variance compared with the cross-validated HAL IPW and DR estimators, with these gaps diminishing as n increases. Our simulations show a similar pattern in longitudinal settings: the score-based selector often appeared to undersmooth aggressively and produced larger MSEs, whereas the L2
+
+DCAR selector was generally more stable and yielded policy RMSE and regret close to the best-performing selector across many settings. Thus, although undersmoothing is essential for first-order remainder control in the nonparametric setting, its finite-sample performance depends strongly on how the undersmoothing level was selected. The pragmatic L2 DCAR 
+
+selector used here based on a working parametric model provides one way to target the relevant longitudinal remainder while avoiding full nonparametric estimation of the policy-and time- indexed outcome regressions, but further stabilization may be possible. More broadly, the empirical efficiency gains available from undersmoothing and other asymptotically efficient estimation approaches may be smaller in the stochastic setting rel-ative to the well-established gains in the deterministic setting. Because stochastic interven-tions remain probabilistic, they typically yield more stable weights, leaving less variability for efficient augmentation or undersmoothing-based corrections to mitigate. This inter-pretation is consistent with the additional simulations in Section S9, which suggest that potential efficiency gains associated with (nonparametric) efficient estimation increase as stochastic interventions approach near-deterministic regimes. 31 6 Discussion 
+
+In this work, we address estimation and optimization of policies for distal outcomes in settings with many decision points, as arise in MRTs and other JITAI designs. In such settings, standard semiparametric-efficient estimation typically requires estimating a large collection of forward outcome regression functions indexed by both time and policy, which becomes impractical and potentially fragile as T and the policy space Θ grow. Moreover, inverse probability weighted estimators involve products of weights across decision points, and can be numerically unstable when T is large. We proposed a UIPW approach for estimating the regimen-response curve and optimal policy over a parametric stochastic policy class. Our approach is nonparametrically efficient yet avoids explicit modeling of the policy-indexed outcome regressions. To improve finite-sample stability, we introduced a data-adaptive tilting device that interpolates between the target policy and the observed treatment mechanism. We showed that the estimated regimen-response curve converges to a Gaussian process over Θ, enabling the construction of simultaneous confidence bands. We also derived an asymptotic linearization for the policy optimizer, allowing inference for the learned optimal policy. Our approach can be viewed as a saturated estimator of the regimen-response curve, in contrast to MSM analyses that summarize this curve through a lower-dimensional working model. Ertefaie et al. (2023a) provided a complementary perspective in the single-decision point setting by defining a fully nonparametric MSM in which the covariate-adjusted regimen-response curve is characterized as a risk minimizer over a rich c` adl` ag function class with bounded sectional variational norm. A natural future direction is to extend this nonparametric MSM framework to our longitudinal stochastic setting by targeting a co-variate adjusted curve m0(θ; V ) for V ⊆ S1 to support V -specific optimal policies, all while using undersmoothing to avoid outcome regression estimation. Because our stochastic pol-icy parameterization already induces substantial smoothness in θ through smoothly varying weights, we expect the primary gains of such an MSM formulation to arise from covariate adjustment and structured estimation across V , rather than from additional smoothing across θ alone. We introduced an α-tilting device that interpolates between the target policy and ob-served treatment mechanism at each decision point, yielding a stabilized policy family that shrinks early weight contributions toward one. Although our default tilting schedule pri-oritizes stabilization of earlier weights, one could instead use an approach that preserves 32 the target policy more strongly at earlier decision points if early actions are thought to drive distal outcomes. More flexibly, one could allow the direction of tilting to depend on a signed tuning parameter, selected in a data-adaptive way. This interpolation has a close conceptual parallel to incremental propensity score interventions, which conceptualize shifting the propensity score away from the observed mechanism, rather than determinis-tically setting treatment (Kennedy, 2019). A key contrast is that incremental and related approaches are motivated as positivity-robust estimands whereas our tilted estimand was developed to ease estimation when overlap holds by design but products of weights are numerically volatile; it does not resolve genuine support violations. In summary, these developments were motivated by the practical goal of constructing JITAIs using intensive longitudinal data when the scientific objective is a distal end-of-study outcome rather than a discounted sum of proximal rewards. By providing functional inference for the regimen–response curve and principled inference for the induced optimizer in a high-T setting, the proposed framework helps close the methodological gap between MRT data structures and the inferential targets that commonly drive JITAI design. 
+
+# References 
+
+Athey, S. and Wager, S. (2021). Policy learning with observational data. Econometrica ,89(1):133–161. Benkeser, D., Carone, M., van der Laan, M. J., and Gilbert, P. B. (2017). Doubly robust nonparametric inference on the average treatment effect. Biometrika , 104(4):863–880. Benkeser, D. and van der Laan, M. (2016). The highly adaptive lasso estimator. In 2016 IEEE International Conference on Data Science and Advanced Analytics (DSAA) , pages 689–696. Boruvka, A., Almirall, D., Witkiewitz, K., and Murphy, S. A. (2018). Assessing time-varying causal effect moderation in mobile health. Journal of the American Statistical Association , 113(523):1112–1121. Ertefaie, A., Duttweiler, L., Johnson, B. A., and van der Laan, M. J. (2023a). Nonparamet-ric estimation of a covariate-adjusted counterfactual treatment regimen response curve. arXiv:2309.16099 [math]. 33 Ertefaie, A., Hejazi, N. S., and van der Laan, M. J. (2023b). Nonparametric inverse-probability-weighted estimators based on the highly adaptive lasso. Biometrics ,79(2):1029–1041. Ertefaie, A. and Strawderman, R. L. (2018). Constructing dynamic treatment regimes over indefinite time horizons. Biometrika , 105(4):963–977. Gao, D., Liu, Y., and Zeng, D. (2025). Asymptotic inference for multi-stage station-ary treatment policy with variable selection. Journal of Machine Learning Research ,26(167):1–50. Gill, R. D., van der Laan, M. J., and Wellner, J. A. (1995). Inefficient estimators of the bivariate survival function for three models. Annales de l’I.H.P. Probabilit´ es et statistiques , 31(3):545–597. Haneuse, S. and Rotnitzky, A. (2013). Estimation of the effect of interventions that modify the received treatment. Statistics in Medicine , 32(30):5260–5277. Joffe, M. M., Have, T. R. T., Feldman, H. I., and Kimmel, S. E. (2004). Model selection, confounder control, and marginal structural models: Review and new applications. The American Statistician , 58(4):272–279. Kang, J. D. Y. and Schafer, J. L. (2007). Demystifying double robustness: A comparison of alternative strategies for estimating a population mean from incomplete data. Statistical Science , 22(4):523–539. Kennedy, E. H. (2019). Nonparametric causal effects based on incremental propensity score interventions. Journal of the American Statistical Association , 114(526):645–656. Klasnja, P., Hekler, E. B., Shiffman, S., Boruvka, A., Almirall, D., Tewari, A., and Murphy, S. A. (2015). Microrandomized trials: An experimental design for developing just-in-time adaptive interventions. Health Psychology , 34(Suppl):1220–1228. Liao, P., Klasnja, P., and Murphy, S. (2021). Off-policy estimation of long-term aver-age outcomes with applications to mobile health. Journal of the American Statistical Association , 116(533):382–391. 34 Luckett, D. J., Laber, E. B., Kahkoska, A. R., Maahs, D. M., Mayer-Davis, E., and Kosorok, M. R. (2020). Estimating dynamic treatment regimes in mobile health using V-learning. 
+
+Journal of the American Statistical Association , 115(530):692–706. McClean, A., Levis, A. W., Williams, N., and Diaz, I. (2025). Longitudinal weighted and trimmed treatment effects with flip interventions. arXiv:2506.09188 [stat]. Murphy, S. A., van der Laan, M. J., and Robins, J. M. (2001). Marginal mean models for dynamic regimes. Journal of the American Statistical Association , 96(456):1410–1423. Mu˜ noz, I. D. and van der Laan, M. (2012). Population intervention causal effects based on stochastic interventions. Biometrics , 68(2):541–549. Nahum-Shani, I., Potter, L. N., Lam, C. Y., Yap, J., Moreno, A., Stoffel, R., Wu, Z., Wan, N., Dempsey, W., Kumar, S., Ertin, E., Murphy, S. A., Rehg, J. M., and Wetter, D. W. (2021). The mobile assistance for regulating smoking (MARS) micro-randomized trial design protocol. Contemporary Clinical Trials , 110:106513. Nahum-Shani, I., Smith, S. N., Spring, B. J., Collins, L. M., Witkiewitz, K., Tewari, A., and Murphy, S. A. (2017). Just-in-time adaptive interventions (JITAIs) in mobile health: Key components and design principles for ongoing health behavior support. Annals of Behavioral Medicine: A Publication of the Society of Behavioral Medicine , 52(6):446– 462. Orellana, L., Rotnitzky, A., and Robins, J. M. (2010). Dynamic regime marginal structural mean models for estimation of optimal dynamic treatment regimes, part I: Main content. 
+
+The International Journal of Biostatistics , 6(2). Pham, C. T., Baer, B. R., and Ertefaie, A. (2025). Nonparametric assessment of regimen response curve estimators. Biometrics , 81(2):ujaf066. Qian, T., Walton, A. E., Collins, L. M., Klasnja, P., Lanza, S. T., Nahum-Shani, I., Rabbi, M., Russell, M. A., Walton, M. A., Yoo, H., and Murphy, S. A. (2022). The microrandomized trial for developing digital interventions: Experimental design and data analysis considerations. Psychological Methods , 27(5):874–894. Qian, T., Yoo, H., Klasnja, P., Almirall, D., and Murphy, S. A. (2021). Estimating time-varying causal excursion effects in mobile health with binary outcomes. Biometrika ,108(3):507–527. 35 Robins, J. (1986). A new approach to causal inference in mortality studies with a sus-tained exposure period—application to control of the healthy worker survivor effect. 
+
+Mathematical Modelling , 7(9):1393–1512. Robins, J. M., Hern´ an, M. A., and Brumback, B. (2000). Marginal structural models and causal inference in epidemiology. Epidemiology (Cambridge, Mass.) , 11(5):550–560. van der Laan, M. J., Bibaut, A., and Luedtke, A. R. (2018). CV-TMLE for Nonpathwise Differentiable Target Parameters. In van der Laan, M. J. and Rose, S., editors, Targeted Learning in Data Science: Causal Inference for Complex Longitudinal Studies , pages 455–481. Springer International Publishing, Cham. van der Laan, M. J. and Petersen, M. L. (2007). Causal effect models for realistic individu-alized treatment and intention to treat rules. The International Journal of Biostatistics ,3(1):Article 3. van der Vaart, A. W. (2007). Asymptotic Statistics . Number 3 in Cambridge series on statistical and probabilistic mathematics. Cambridge University Press, Cambridge, first paperback edition, 8th printing edition. Zhao, Y., Kosorok, M. R., and Zeng, D. (2009). Reinforcement learning design for cancer clinical trials. Statistics in Medicine , 28(26):3294–3315. Zhou, X., Mayer-Hamblett, N., Khan, U., and Kosorok, M. R. (2017). Residual weighted learning for estimating individualized treatment rules. Journal of the American Statis-tical Association , 112(517):169–187. 36 Appendix 
+
+This appendix does the following: 
+
+Section S1 presents supplemental figures. 
+
+Section S2 describes the highly adaptive lasso (Section S2.1). It includes theoretical un-dersmoothing conditions (Section S2.2), a strengthened version of Lemma 1 from Ertefaie et al. (2023b) to offer supremum norm control of remainder terms (Sec-tion S2.3), and practical undersmoothing implementation details (Section S2.4). 
+
+Section S3 offers practical implementation details including index set elicitation (Sec-tion S3.1) and accounting for randomization ineligibility common in mobile health trials (Section S3.2). 
+
+Section S4 describes the full longitudinal data generation process used in the numerical simulations. 
+
+Section S5 provides auxiliary statements and proofs used throughout the rest of the ap-pendix. 
+
+Section S6 supports theoretical arguments regarding regimen-response curve estimation, proving Lemmas 1 and 2, Theorem 1, and Corollary 1. 
+
+Section S7 supports theoretical arguments regarding policy optimization, proving Theo-rem 2 and Corollary 2. 
+
+Section S8 supports theoretical results regarding data-adaptive tilting, proving Lemma 3. 
+
+Section S9 discusses how the efficiency gains of asymptotically efficient estimators beyond conventional IPW estimators may be reduced for stochastic versus deterministic in-terventions. 37 38 S1 Supplemental Figures n: 100 n: 500 n: 1000 
+
+> t: 10  t: 25  t: 50
+
+−0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 
+
+80% 85% 90% 95% 
+
+80% 85% 90% 95% 
+
+80% 85% 90% 95% 
+
+θ
+
+> Coverage
+
+MRT Setting 
+
+n: 100 n: 500 n: 1000 
+
+> t: 10  t: 25  t: 50
+
+−0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 −0.8 −0.4 0.0 0.4 0.8 
+
+70% 80% 90% 
+
+70% 80% 90% 
+
+70% 80% 90% 
+
+θ
+
+> Coverage
+
+Observational Setting 
+
+Estimator Oracle UIPW (L2 DCAR) Tilting Fixed Adaptive 
+
+Regimen Response Curve Coverage 
+
+Figure S1: Pointwise regimen response curve coverage for both fixed and data-adaptive 
+
+αn-tilting. 39 n: 100 n: 500 n: 1000               
+
+> t: 10  t: 25  t: 50
+> 010 20 30 40 010 20 30 40 010 20 30 40
+> 0% 20% 40% 60% 80%
+> 0% 20% 40% 60% 80%
+> 0% 20% 40% 60% 80%
+
+Undersmoothing Level 
+
+> Percentage
+
+MRT Setting                 
+
+> n: 100 n: 500 n: 1000
+> t: 10  t: 25  t: 50
+> 010 20 30 40 010 20 30 40 010 20 30 40
+> 0% 20% 40% 60% 80%
+> 0% 20% 40% 60% 80%
+> 0% 20% 40% 60% 80%
+
+Undersmoothing Level 
+
+> Percentage
+
+Observational Setting 
+
+Selector L2 DCAR Score 
+
+Undersmoothing Selection Figure S2: Undersmoothing selection. To align with hal9001 parameterization in practice, undersmoothing was performed by manipulating the cross-validated L1-norm penalty , λCV .Undersmoothed models were fit with penalty λu = λcv × (0 .95) u.40 n: 100 n: 500 n: 1000               
+
+> t: 10  t: 25  t: 50
+> 010 20 30 40 010 20 30 40 010 20 30 40
+> 0.15 0.16 0.17 0.18 0.19
+> 0.15 0.16 0.17 0.18 0.19
+> 0.15 0.16 0.17 0.18 0.19
+
+Undersmoothing Level 
+
+> L∞−Integrated Error
+
+MRT Setting                 
+
+> n: 100 n: 500 n: 1000
+> t: 10  t: 25  t: 50
+> 010 20 30 40 010 20 30 40 010 20 30 40
+> 0.16 0.18 0.20
+> 0.16 0.18 0.20
+> 0.16 0.18 0.20
+
+Undersmoothing Level 
+
+> L∞−Integrated Error
+
+Observational Setting 
+
+L∞−Integrated Error By Undersmoothing Figure S3: Average L∞-integrated absolute error (sup θ∈Θ|ψn(θ) − ψ0(θ)|) as a function of the undersmoothing level. The level with the minimum integrated error is denoted by a triangle. 41 n: 100 n: 500 n: 1000 
+
+> t: 10  t: 25  t: 50
+
+0 10 20 30 40 0 10 20 30 40 0 10 20 30 40 
+
+75% 80% 85% 90% 95% 100% 
+
+75% 80% 85% 90% 95% 100% 
+
+75% 80% 85% 90% 95% 100% 
+
+Undersmoothing Level 
+
+> Average Coverage
+
+MRT Setting 
+
+n: 100 n: 500 n: 1000 
+
+> t: 10  t: 25  t: 50
+
+0 10 20 30 40 0 10 20 30 40 0 10 20 30 40 
+
+75% 80% 85% 90% 95% 100% 
+
+75% 80% 85% 90% 95% 100% 
+
+75% 80% 85% 90% 95% 100% 
+
+Undersmoothing Level 
+
+> Average Coverage
+
+MRT Setting 
+
+Integrated Coverage Across Θ By Undersmoothing Figure S4: Average integrated pointwise coverage as a function of the undersmoothing level. 42 n: 100 n: 500 n: 1000 
+
+> t: 10  t: 25  t: 50
+
+0.0 2.5 5.0 7.5 10.0 0.0 2.5 5.0 7.5 10.0 0.0 2.5 5.0 7.5 10.0 
+
+0% 20% 40% 60% 80% 
+
+0% 20% 40% 60% 80% 
+
+0% 20% 40% 60% 80% 
+
+αn
+
+> Count
+
+MRT Setting 
+
+n: 100 n: 500 n: 1000 
+
+> t: 10  t: 25  t: 50
+
+0.0 2.5 5.0 7.5 10.0 0.0 2.5 5.0 7.5 10.0 0.0 2.5 5.0 7.5 10.0 
+
+0% 25% 50% 75% 
+
+0% 25% 50% 75% 
+
+0% 25% 50% 75% 
+
+αn
+
+> Count
+
+Observational Setting 
+
+Estimator Oracle UIPW (L2 DCAR) 
+
+Data−Adaptive Tilting Selection Figure S5: Data-adaptive αn selection for the oracle IPW and UIPW ( L2-DCAR) estima-tors. 43 S2 The Highly Adaptive Lasso and Undersmoothing 
+
+S2.1 The Highly Adaptive Lasso 
+
+Let D[0 , τ ] denote the Banach space of real-valued c` adl` ag functions from [0 , τ ] ⊂ Rd to R.Here, τ < ∞ is the upper bound of the support of all functions in this space. Consider some subset of the covariates: s ⊂ { 1, . . . , d } and function f ∈ D[0 , τ ], let the sth section of f be given by fs(u) = f {I(1 ∈ s)u1, . . . , I (d ∈ s)ud}, that is, varying the function along the variables in s but setting all other variables to 0. The sectional variational norm of f
+
+is then given by aggregating all subsets’ variational norms: 
+
+∥f ∥⋆v := |f (0) | + X
+
+> s⊂{ 1,...,d }
+
+Z τs
+
+> 0s
+
+|dfs(u)| .Consider the propensity score at a given t ∈ { 1, . . . , T }, πt, 0. Given that πt, 0 is c` adl` ag with finite sectional variational norm, Gill et al. (1995) shows that logit πt, 0(w) = logit πt, 0(0) + X
+
+> s⊂{ 1,...,d }
+
+Z ws
+
+> 0s
+
+d logit πt, 0,s (u)= logit πt, 0(0) + X
+
+> s⊂{ 1,...,d }
+
+Z τs
+
+> 0s
+
+I(us ≤ ws)d logit πt, 0,s (u) . (S7) The HAL approximates the integral from Equation (S7) by logit πt, 0(w; β) = βt, 0 + X
+
+> s⊂{ 1,...,d }
+> n
+
+X
+
+> i=1
+
+βt,s,i φt,s,i (ws) , where φt,s,i (ws) = I(ws ≥ ut,s,i ) and ut,s,i is the ith observed value of the sth section of the covariates at decision point t. The HAL estimator βt,n,λ is obtained by solving the constrained minimization problem: βt,n,λ = arg min PnL(logit πt,n,λ n,t ) subject to |βt, 0| +
+
+P
+
+> s⊂{ 1,...,d }
+
+Pni=1 |βt,s,i | < λ .44 S2.2 Undersmoothing Details 
+
+Suppose that the set of L1-norms for each HAL fit, λn = {λ1,n , . . . , λ T,n }, is chosen such that, for all t = 1 , . . . , T ,min 
+
+> (s,j )∈J t,n
+
+Pn
+
+dd logit πt,n,λ n,t 
+
+L(logit πt,n,λ n,t )( φt,s,j ) = op(n−1/2) , (S8) where L(·) is the log-likelihood loss and Jt,n is the set of indices for the basis functions where βt,s,j ̸ = 0. Here, d /d logit πt,n,λ n,t {L(logit πt,n,λ n,t )( φt,s,j )} is d /dϵ{L(logit πt,n,λ n,t +
+
+ϵφ t,sj }, which denotes the directional derivative of the loss along the path logit πϵt,n,λ n,t =logit πt,n,λ n,t + ϵφ s,j . Under the log-likelihood loss, the derivative is ddϵ L(logit πt,n,λ n,t )( φt,s,j ) ϵ=0 
+
+= φt,s,j {At − πt,n,λ n,t (1 | Ht)} ,the corresponding score function. Hence, an equivalent statement of the supposition is that min 
+
+> (s,j )∈J t,n
+
+Pnφt,s,j {At − πt,n,λ n,t (1 | Ht)} = op(n−1/2) . (S9) Although unrestricted maximum likelihood estimation exactly solves these score equations, the L1 restriction generally prevents exact solutions. The assumption that this term is 
+
+op(n−1/2) is hence equivalent to assuming that the L1 restriction is weakened until one of the score equations is solved to a precision of op(n−1/2). We say that the HAL is “sufficiently undersmoothed” if Equation (S8) holds for each t = 1 , . . . , T .We make the following assumptions to allow the undersmoothed HAL basis to suffi-ciently approximate the leading terms in the DCAR remainders (thereby satisfying the premise of Lemma S1 throughout various applications). These are stated as pointwise assumptions, but we will often assume they hold uniformly in ( θ, α ) over some subset of Θ × [0 , ∞). 
+
+Assumption S1. Let μθ,α t, 0 and πt, 0 be c` adl` ag with finite sectional variational norm for all 
+
+t ∈ { 1, . . . , T }.
+
+Assumption S2. Let 
+
+f θ,α t, 0 (Ht) := 
+
+(Y
+
+> i<t
+
+W θ,α i, 0 (Hi)
+
+)
+
+(t/T )αn μθ,α t, 0 (1 , H t)qθt (1 , S t)
+
+πt, 0(1 | Ht) − μθ,α t, 0 (0 , H t)qθt (0 , S t)
+
+πt, 0(0 | Ht)
+
+o
+
+,
+
+45 and let ˜f θ,α t, 0 denote the projection of f θ,α t, 0 (Ht) onto the linear span of basis functions φt,s,j in 
+
+L2(P0) for φt,s,j satisfying Equation (S8) . Then, assume that ∥f θ,α t, 0 − ˜f θ,α t, 0 ∥2,P0 = Op(n−1/4)
+
+for all t ∈ { 1, . . . , T }.
+
+Remark 5. Assumption S2 requires that the leading remainder multiplier f θ,α t, 0 (Ht) be well-approximated by the HAL basis used for πt,n (1 | Ht). In particular, this effectively requires that the variables needed to represent μθ,α t, 0 (At, H t) (and hence f θ,α t, 0 ) are included among the variables used to model πt,n (1 | Ht). Thus, if one imposes a Markov restriction on 
+
+πt,n (e.g., πt,n depends only on the current state St), then Assumption S2 is most plausible when the corresponding μθ,α t, 0 (At, H t) can also be represented as depending only on St. If 
+
+μθ,α t, 0 (At, H t) is believed to depend on additional variables, these should be included in the model for πt,n .
+
+The following assumption is used to ensure that ∇θψn(θ; α) is also regular and asymp-totically linear, which is needed for the asymptotic properties of θ⋆n(α). 
+
+Assumption S3. Let 
+
+gθ,α t, 0 (Ht):= 
+
+Y 
+
+> i<t
+
+W θ,α i, 0
+
+
+
+(t/T )α
+
+"X 
+
+> j<t
+
+∇θ log W θ,α j, 0
+
+( μθ,α t, 0 (1 , H t)qθt (1 , S t)
+
+πt, 0(1 | Ht) − μθ,α t, 0 (0 , H t)qθt (0 , S t)
+
+πt, 0(0 | Ht)
+
+)
+
++ {∇ θμθ,α t, 0 (1 , H t)}qθt (1 , S t) + μθ,α t, 0 (1 , H t){∇ θqθt (1 , S t)}
+
+πt, 0(1 | Ht)
+
+− {∇ θμθ,α t, 0 (0 , H t)}qθt (0 , S t) + μθ,α t, 0 (0 , H t){∇ θqθt (0 , S t)}
+
+πt, 0(0 | Ht)
+
+#
+
+,and let ˜gθ,α t, 0 denote its coordinatewise projection onto the linear span of basis functions φt,s,j 
+
+in L2(P0) for φt,s,j satisfying Equation (S8) . Assume that ∥gθ,α t, 0 − ˜gθ,α t, 0 ∥2,P0 = Op(n−1/4)
+
+for all t ∈ { 1, . . . , T }.
+
+S2.3 Formal Lemma and Proof 
+
+To control remainders uniformly across Θ, we require a strengthened version of Ertefaie et al. (2023b) Lemma 1. The original lemma provides pointwise control of terms of the form Pn{f × (At − πn)} when πt,n is a sufficiently undersmoothed HAL estimate of the propensity score. We extend the result to offer uniform control over a class of leading 46 functions fθ : θ ∈ Θ. This proof largely follows the argument provided to bound PnD( ˜f, π n)pointwise in Ertefaie et al. (2023b); the key differences are that the κθ is now bounded uniformly, and that obtaining a bound on D(f, π n) from the bound on D( ˜f, π n) requires a stronger empirical process argument that leverages uniform convergence of ˜fθ to fθ.
+
+Lemma S1. Fix t ∈ { 1, . . . , T } and let πn := πt,n be a HAL estimator for π0 := πt, 0
+
+with L1-norm bound λn := λt,n chosen such that Equation (S8) holds. Let D(fθ, π n) = 
+
+fθ · (A − πn) where the function class {fθ : θ ∈ Θ} is c` adl` ag with uniformly bounded sectional variational norm. Let ˜fθ be the projection of fθ onto the linear span of basis functions φs,j := φt,s,j satisfying Equation (S8) . Then, sup θ∈Θ|PnD( ˜f θ, π n)| = op(n−1/2).Moreover, if sup θ∈Θ ∥fθ − ˜fθ∥ 2,P0 = Op(n−1/4), then sup θ∈Θ|PnD(f θ, π n)| = op(n−1/2).Proof of Lemma S1. Let π† := logit π. Consider a path on the logit scale indexed by ϵ for some bounded vector h, π† 
+
+> ϵ
+
+= π†
+
+> n
+
+(1 + ϵ P 
+
+> (s,j )
+
+h(s, j )βn,s,j φs,j ); the corresponding score is 
+
+Sh(πn) = ( A − πn,λ n ) X
+
+> (s,j )
+
+h(s, j )βn,s,j φs,j .Then, for sufficiently small ϵ,
+
+X
+
+> (s,j )
+
+|1 + ϵh (s, j )}βn,s,j | = X
+
+> (s,j )
+
+{1 + ϵh (s, j )}| βn,s,j |
+
+= X
+
+> (s,j )
+
+|βn,s,j | + ϵr (h, π n) , where r(h, π n) = P 
+
+> (s,j )
+
+h(s, j )|βn,s,j |. It follows that if h satisfies r(h, π n) = 0, then 
+
+PnSh(πn) = 0. Let D(fθ, π n) = fθ · (A − πn) and let ˜fθ be the projection of fθ onto the basis functions satisfying Equation (S8). Then for any θ ∈ Θ, D( ˜fθ, π n) ∈ { Sh(πn) : ∥h∥∞ < ∞} and there exists some h⋆θ with ∥h⋆θ∥∞ < ∞ such that D( ˜fθ, π n) = Sh⋆θ (πn). We note that 
+
+r(h⋆θ, π n) may be nonzero; to correct this, construct hθ such that hθ(s, j ) = h⋆θ(s, j ) for (s, j )̸ = ( s⋆, j ⋆) and 
+
+hθ(s⋆, j ⋆) := −| βn,s ⋆,j ⋆ |−1 X
+
+> (s,j )̸=( s⋆,j ⋆)
+
+h⋆θ(s, j )|βn,s,j | ,where ( s⋆, j ⋆) are the arguments of the minima of the left hand side of Equation (S8). It 47 follows that r(hθ, π n) = 0 and PnShθ (πn) = 0 for all θ ∈ Θ. Now, consider PnShθ (πn) − PnD{ ˜fθ(O), π n}. We have 
+
+PnShθ (πn) − PnD{ ˜fθ(O), π n} = κθ(s⋆, j ⋆)Pn
+
+ ddπ†
+
+> n
+
+L(π†
+
+> n
+
+)( φt,s ⋆,j ⋆ )
+
+
+
+,where 
+
+κθ(s⋆, j ⋆) = {hθ(s⋆, j ⋆) − h⋆θ(s⋆, j ⋆)}βn,s ⋆,j ⋆
+
+= −| βn,s ⋆,j ⋆ |−1βn,s ⋆,j ⋆
+
+X
+
+> (s,j )̸=( s⋆,j ⋆)
+
+h⋆θ(s, j )|βn,s,j | − h⋆θ(s⋆, j ⋆)}βn,s ⋆,j ⋆ .From the second equality, |κθ(s⋆, j ⋆)| ≤ P 
+
+> (s,j )
+
+|h⋆θ(s, j )βn,s,j |. Given that fθ has uniformly bounded sectional variational norm, the L1-norm of coefficients approximating f will be finite which implies that sup θ∈Θ
+
+P 
+
+> (s,j )
+
+|h⋆θ(s, j )βn,s,j | = Op(1) and sup θ∈Θ |κθ(s⋆, j ⋆)| =
+
+Op(1). Thus sup 
+
+> θ∈Θ
+
+PnShθ (πn) − PnD{ ˜fθ(O), π n} = Op
+
+
+
+Pn
+
+ ddπ†
+
+> n
+
+L(π†
+
+> n
+
+)( φt,s ⋆,j ⋆ )
+
+ 
+
+= op(n−1/2) , with the final equality following from the undersmoothing criteria (Equation (S8)). Given the fact that PnShθ (πn) = 0 for all θ, it follows that ∥PnD{ ˜fθ(O), π n}∥ Θ = op(n−1/2) as well. We conclude by uniformly bounding the quantity of interest, ∥PnD{fθ(O), π n}∥ Θ =
+
+op(n−1/2). We have 
+
+PnD{ ˜fθ(O), π n} − PnD{fθ(O), π n}
+
+= Pn
+
+
+
+( ˜fθ − fθ)
+
+ ddπ†
+
+> n
+
+L(π†
+
+> n
+
+)
+
+ 
+
+= Pn
+
+"
+
+( ˜fθ − fθ)
+
+(
+
+ddπ†
+
+> 0
+
+L(π†
+
+> 0
+
+)
+
+)# 
+
++ Pn
+
+n
+
+( ˜fθ − fθ)( π0 − πn)
+
+o
+
+= ( Pn − P0)
+
+"
+
+( ˜fθ − fθ)
+
+(
+
+ddπ†
+
+> 0
+
+L(π†
+
+> 0
+
+)
+
+)# 
+
++ ( Pn − P0)
+
+n
+
+( ˜fθ − fθ)( π0 − πn)
+
+o
+
++ P0
+
+n
+
+( ˜fθ − fθ)( π0 − πn)
+
+o
+
+.48 Each of these terms is bounded uniformly. For the first term, let c(O) := ddπ†
+
+> 0
+
+L(π†
+
+> 0
+
+) = At − π0, gθ(O) := { ˜fθ(O) − fθ(O)}c(O), and G := {gθ : θ ∈ Θ}. We obtain a bound for ∥Gn∥G using an empirical-process argu-ment. Let G := M |cθ(O)| where M := sup θ∈Θ | ˜fθ(O) − fθ(O)| and |c(O)| ≤ 1. More-over, as fθ and ˜fθ are c` adl` ag with bounded sectional variational norm, M = Op(1). Hence, |gθ(O)| ≤ M G (O) = Op(1) and the G has an Op(1) envelope. Additionally, 
+
+∥G∥2,P0 ≤ sup θ∈Θ ∥ ˜fθ − fθ∥ 2,P0 ≤ Op(n−1/4) by assumption. Finally, G is Donsker so sup θ∈Θ |(Pn − P0)gθ| = op(n−1/2) by Lemma S2. Then, sup 
+
+> θ∈Θ
+
+(Pn − P0)
+
+n
+
+( ˜fθ − fθ)( π0 − πn)
+
+o
+
+≤ sup 
+
+> θ∈Θ
+
+|(Pn − P0)( ˜fθ − fθ)| | (Pn − P0)( π0 − πn)|
+
+= Op(n−1/4)op(n−1/4)= op(n−1/2) , under the assumption that sup θ∈Θ ∥fθ − ˜fθ∥ 2,P0 = Op(n−1/4) and the HAL convergence rate for πn.Finally, sup 
+
+> θ∈Θ
+
+Pn
+
+n
+
+( ˜fθ − fθ)( π0 − πn)
+
+o
+
+≤ sup 
+
+> θ∈Θ
+
+∥ ˜fθ − fθ∥ 2,P0 ∥π0 − πn∥2,P0
+
+= Op(n−1/4)op(n−1/4)= op(n−1/2) , again under the assumption that sup θ∈Θ ∥fθ − ˜fθ∥ 2,P0 = Op(n−1/4) and the convergence rate for πn.Therefore we have sup 
+
+> θ∈Θ
+
+PnD{ ˜fθ(O), π n} − PnD{fθ(O), π n} = op(n−1/2) . Hence, sup θ∈Θ |PnD{fθ(O), π n}| = op(n−1/2), which completes the proof. 49 S2.4 Undersmoothing in Practice 
+
+The original undersmoothing criteria (Equation (S8)) ensures that the penalty parameters for each propensity score model, λ1,n , . . . , λ T,n , are chosen such that the bias term in the asymptotic representation of √n{ψn(θ; α) − ψ0(θ; α)} is op(n−1/2). However, this does not directly imply a procedure to select λn.Given that the goal of the undersmoothing is to ensure that the bias term satisfies 
+
+Pn{DCAR ,t (μθ,α  
+
+> 0
+
+, π n; θ, α )} = op(n−1/2) for all t = 1 , . . . , T ; one approach is to directly minimize an approximation of this quantity. Ertefaie et al. (2023a,b); Pham et al. (2025) all offer selectors that directly approximate the DCAR term by nonparametrically esti-mating all nuisance functions and minimize a cross-validated estimate. However, this is computationally prohibitive in our longitudinal policy-index setting because the augmen-tation term involves the forward regressions {μθ,α t, 0 (At, H t) : t < T, θ ∈ Θ}, and hence would require estimating a large family of nuisance functions jointly indexed by time and policy. Instead, we use a pragmatic DCAR-approximated selector that targets the same remain-der but replaces μθ,α t, 0 with a low-dimensional working approximation fit only for tuning. We target performance for the untilted estimator and therefore fix α = 0 henceforth. For each fold v ∈ 1 . . . , V and time t, we construct pseudo-outcomes on the training sample of the form Zθ,α i,t = {Q 
+
+> j>t
+
+W θ,α i,j, ref }Yi, where W θ,α i,j, ref uses a reference propensity score πt,j, ref 
+
+that is equal to either the cross-validated HAL estimate (i.e., no undersmoothing) or the known propensity score in MRT settings. We then fit working regressions μ−(v) 
+
+> t,n
+
+(a, h ; θ) by pooling pseudo-outcomes across a modest training subset Θ train ⊂ Θ and modeling Zθ,α t as a function of ( Ht, A t) together with a smooth basis g(θ) (e.g., a spline basis) and optional interactions. Then, given μ−(v) 
+
+> t,n
+
+, for each undersmoothing level λ we evaluate 
+
+R(v)(λ; θ) := P1
+
+> n,v
+
+nY 
+
+> i<t
+
+W θ,α i,n,λ 
+
+o
+
+(t/T )α
+
+× X
+
+> a∈{ 0,1}
+
+μ−(v) 
+
+> t,n
+
+(a, H t; θ) qθt (a, S t) I(At = a) − π(−v)
+
+> t,n,λ
+
+(a | Ht)
+
+π(−v)
+
+> t,n,λ
+
+(a | Ht) ,where P1 
+
+> n,v
+
+denotes the empirical measure on the testing data from the vth fold. We then 50 select λt,n by minimizing either an L2-integrated criterion 
+
+λt,n,L 2 := arg min  
+
+> λ
+
+V −1
+
+> V
+
+X
+
+> v=1
+
+|Θtest |−1 X
+
+> θ∈Θtest
+
+{R(v)(λ; θ)}2 ,or a uniform criterion 
+
+λt,n,L ∞ := arg min  
+
+> λ
+
+V −1
+
+> V
+
+X
+
+> v=1
+
+max 
+
+> θ∈Θtest
+
+|R(v)(λ; θ)| ,where Θ test := Θ \ Θtrain .Alternatively, we propose the alternate selection criteria based solely on the score func-tion for the propensity score model: 
+
+λt,n, score = arg min  
+
+> λ
+
+V −1
+
+> V
+
+X
+
+> v=1
+
+1
+
+∥βn,λ,v ∥1
+
+X  
+
+> (s,j )∈J (v)
+> n(λ)
+
+|P1 
+
+> n,v
+
+˜St,s,j (ϕ, π t,n,λ,v )| , (S10) where J (v) 
+
+> n
+
+(λ) is a set of indices for the active basis functions such that βt,s,j,n,λ,v ̸ = 0, and ˜St,s,j (φ, π t,n,λ,v ) = φt,s,j (Ht){At − πt,n,λ,v (1 | Ht)}{ πt,n,λ,v (1 | Ht)}−1
+
+is the component of the score equation corresponding to βt,s,j divided by the estimated propensity score. This criterion only requires estimating the T propensity scores used in the general estimation procedure. Finally, to ensure that the undersmoothed HAL fit still converges at the op(n−1/4) rate, as needed for our asymptotic theory, we impose a cap such that the basis does not grow too quickly, as proposed by Pham et al. (2025). Let ˜λt,n := max {λ : V −1 PVv=1 |J (v) 
+
+> n
+
+(λ)| < n 1/2}
+
+be the largest L1 norm that yields an active basis with fewer than n1/2 functions. We then select min {λt,n, ·, ˜λt,n } for · ∈ { L2, L ∞, score }.
+
+# S3 Practical Implementation Considerations 
+
+S3.1 Index Set Elicitation 
+
+Many policy-learning approaches enforce regularity implicitly through generic parameter-norm constraints or penalties (e.g., L1 or L2 regularization), which can be difficult to 51 interpret in terms of scientifically meaningful limits on intervention frequency. By con-trast, we impose regularity by directly bounding treatment probabilities, which yields an immediately interpretable constraint on intervention frequency. To ensure that the explored policies are genuinely stochastic at all decision points and covariate values, we fix user-specified constants 0 < ¯
+
+q < ¯q < 1 and restrict attention to policies satisfying 
+
+qθt (1 , S t) ∈ [¯
+
+q, ¯q] for all St ∈ S t . (S11) This constraint directly encodes investigator-specified minimum and maximum tolerable treatment probabilities (e.g., “the policy never treats with probability below ¯
+
+q or above ¯q”). Suppose that the intervention is characterized by some monotone link function g and linear predictor b(St): qθt (1 , S t) = g{b(St)⊤θ}. Then, Equation (S11) is equivalent to a uni-form bound on the linear predictor. Let ℓ := g−1(¯
+
+q) and u := g−1(¯ q). Then Equation (S11) holds if and only if 
+
+ℓ ≤ b(s)⊤θ ≤ u for all s ∈ S .Under this framework, given probability bounds ¯
+
+q and ¯ q, define Θ := 
+
+
+
+θ ∈ Rp : inf  
+
+> s∈S
+
+b(s)⊤θ ≥ ℓ and sup 
+
+> s∈S
+
+≤ u
+
+
+
+.This set is closed and convex; under mild conditions on the basis, it is also compact. In many applications, qθt will follow a form based on a generalized linear model with a linear basis. In this setting, Θ can be constructed analytically. Suppose for exposition, without loss of generality, that b(s) = (1 , s 1, . . . , s d)⊤, that is, including all covariate main effects but no interactions or higher-order terms. Let sj ∈ [aj , b j ] denote the bounds for each component. Moreover, suppose that S = Qdj=1 [aj , b j ] is a hyper-rectangle. Violations of this supposition may result in overly conservative Θ; however, the desired bound on qθ
+
+is still attained. Expressing θ = ( θ0, θ 1, . . . , θ d)⊤, M0 := 1 and Mj := max {| aj |, |bj |} for 
+
+j = 1 , . . . , d , we have, for any θ,sup 
+
+> s∈S
+
+b(s)⊤θ =
+
+> d
+
+X
+
+> 0=1
+
+|θj |Mj , and 52 inf  
+
+> s∈S
+
+b(s)⊤θ =
+
+> d
+
+X
+
+> 0=1
+
+|θj |Mj .Then, the index set can be written as the weighted ℓ1-ball: Θ = 
+
+n
+
+θ ∈ Rd+1 :
+
+> d
+
+X
+
+> j=0
+
+|θj |Mj ≤ min( −ℓ, u )
+
+o
+
+.
+
+S3.2 Randomization Ineligibility 
+
+In many mobile health studies, the protocol may prohibit intervention delivery at certain decision points due to practical or ethical constraints (e.g., if the participant is driving). In such cases, the decision rule is partially constrained by design: when randomization is disallowed, the study assigns a default “do nothing” action. This feature is easily accom-modated in our framework by a minor refinement of the policy class, with no other changes downstream. Let Et ∈ { 0, 1} denote an eligibility indicator determined prior to assignment at each decision point t (i.e., such that the temporal ordering is St → Et → At). We assume without loss of generality that when Et = 0, the protocol deterministically assigns At = 0. To enforce the design constraint, define the corresponding policy qθt, Elig by 
+
+qθt, Elig (a, S t, E t) := Etqθt (a, S t) + (1 − Et)I(a = 0) . That is, when Et = 1, the policy collapses to qθt ; otherwise it assigns At = 0 deterministi-cally. This modified policy both respects the support of the observed data, and prevents the consideration of policies that would intervene on ineligible participants. Similarly, the behavioral assignment mechanism is 
+
+πt, ·,Elig (a | Ht, E t) := Etπt, ·(a | Ht, E t = 1) + (1 − Et)I(a = 0) , for · ∈ { 0, n }. Importantly, the inner propensity score is now conditioned on eligibility. Under this construction, all expressions remain valid after replacing qθt and πt, · with their new counterparts. In particular, the time-specific weights qθt, Elig (At, S t, E t)/π t, ·,Elig (At |
+
+Ht, E t) equal the standard weights qθt (At, S t)/π t, ·(At | Ht, E t = 1) when Et = 1, whereas if 
+
+Et = 0 then At = 0 and the weight is equal to one. Consequently, ineligible decision points contribute multiplicative factors of one and can equivalently be omitted from the product. 53 S4 Simulation Details 
+
+The first state component (representing negative affect) was initialized as S1,1 ∼ N (0 , 1) and then evolved according to a persistent autoregressive process with prompt effects. Specifically for t ≥ 2, 
+
+St, 1 = clip ρS t−1,1 + At−1τ (St−1) + σϵ t, −4, 4 ,where ρ = 0 .96 and σ = (1 − ρ2)1/2. Clipping restricts states to the closed interval [ −4, 4], preventing extreme simulated trajectories and aligning with Assumption 2 while preserving temporal dependence. Thus, in the absence of treatment, negative affect follows a highly-persistent mean-zero process. Treatment can shift the subsequent affect through prompt effect τ , which depends on the current state and is detailed in the following paragraph. The second component (representing cigarette availability) was generated as an independent Bernoulli variable: St, 2 ∼ Bernoulli( p2) with p2 = 0 .25. The prompt model encodes two behavioral features. First, randomization to a prompt is helpful when an individual has high negative affect and has a high potential for benefit. Conversely, the prompt carries a burden cost when an individual is doing relatively well. To implement this, we define the smooth vulnerability score Vt := expit {k(St, 1 − c)} for 
+
+k = 3 and c = 0 .2. The prompt effect is then given by 
+
+τ (St−1) = −γhelp Vt−1(1 + γavail St−1,2) + γharm (1 − Vt−1){1 + γavail (1 − St−1,2)} ,with γhelp = 0 .35, γharm = 0 .18 and γavail = 0 .6. Treatment assignments were generated through a logistic model with potential depen-dence on the current state: πt, 0(At = 1 | Ht) = expit( aS t, 1). We considered a ∈ { 0, 0.25 }.When a = 0, treatment is assigned with probability 0 .5 at every decision point, corre-sponding to a micro-randomized trial. When a = 0 .25, participants with higher negative affect are more likely to receive treatment; this represents a generally good observational policy that moves treatment in the same direction as the optimal stochastic policy in our policy class. The distal outcome was generated as a nonlinear function of the final state, thereby generating nonlinear outcome regression models and challenging bias terms to control. Let 54 B := log {1 + exp( ST, 1 − 1) } and H = (max {0, S T, 1 − 0.8})2. The outcome mean was then 
+
+m = expit {ηsoft B − ηhinge H + ηS2 ST, 2 − ηS1S2 ST, 1ST, 2} ,with ηsoft = 0 .9, ηhinge = 0 .9, ηS2 = 0 .3, and ηS1S2 = −0.2. Finally, we let Y = clip( m +
+
+ϵY , 0, 1), where ϵY ∼ N (0 , 0.05 2). The term B acts as a softplus function that introduces a smooth penalty for elevated negative affect whereas H is a squared hinge term that imposes an additional penalty once negative affect exceeds a higher threshold. Thus, moderate increases in negative affect at time T reduce the outcome gradually, but more extreme affects are penalized more sharply. The terms involving ST, 2 allow cigarette availability to directly influence the final outcome and modify the association between negative affect and the outcome. 
+
+# S5 Auxiliary Results 
+
+We present the following result, which is used to control the supremum of several terms throughout the theoretical results. 
+
+Lemma S2. Let F be P0-Donsker and define ρ(f, g ) := ∥f − g∥2,P0 . Let An ⊆ F × F be a random set such that sup (f,g )∈A n ρ(f, g ) = op(1) . Then, 
+
+sup 
+
+> (f,g )∈A n
+
+|Gn(f − g)| = op(1) .Equivalently, 
+
+sup 
+
+> (f,g )∈A n
+
+|(Pn − P0)( f − g)|= op(n−1/2) .Proof of Lemma S2. By assumption, there exists a deterministic δn ↓ 0 such that 
+
+P0
+
+
+
+sup 
+
+> (f,g )∈A n
+
+ρ(f, g ) > δ n
+
+
+
+→ 0 . Hence, for any ϵ > 0, 
+
+P0
+
+
+
+sup 
+
+> (f,g )∈A n
+
+|Gn(f − g)| > ϵ 
+
+
+
+≤ P0
+
+
+
+sup 
+
+> (f,g )∈A n
+
+ρ(f, g ) > δ n
+
+
+
++ P0
+
+
+
+sup 
+
+> (f,g )∈A n
+> ρ(f,g )≤δn
+
+|Gn(f − g)| > ϵ 
+
+
+
+.55 The first term tends to zero by construction. The second tends to zero by the asymptotic uniform equicontinuity with respect to the semimetric ρ of the empirical process on the 
+
+P0-Donsker class F. Therefore, sup (f,g )∈A n |Gn(f − g)| = op(1). 
+
+# S6 Proofs Regarding Regimen-Response Curve Estimation 
+
+S6.1 Identification 
+
+Proof of Lemma 1. We begin with a more rigorous definition of the potential outcome, 
+
+Y θ,α . Let ¯Aθ,α be generated sequentially as follows. For t = 1 , . . . , T ,
+
+• Given history Hθ,α t = ( ¯Sθ,α t , ¯Aθ,α t−1), draw Aθ,α t ∼ qθ,α t (· | Hθ,α t ). 
+
+• Draw counterfactual state variables Sθ,α t+1 given ( Hθ,α t , A θ,α t ) according to the same conditional law as under P0.Then, define Y θ,α := Y ¯Aθ,α 
+
+, as the potential outcome that would be observed if treat-ment were assigned according to this stochastic policy. Under Assumption 1, the joint distribution of ( ¯Sθ,α , ¯Aθ,α , Y θ,α ) is fully characterized by replacing the observed treatment mechanism πt, 0(at | Ht) with qθ,α t (at | Ht) and leaving the conditional laws of the covariates and outcome unchanged. Let Pθ,α  
+
+> 0
+
+denote the induced distribution under this replacement. Then, for any integrable f (Y ), 
+
+P0{f (Y θ,α )} =
+
+Z
+
+f (y)d Pθ,α  
+
+> 0
+
+(o) ; specifically, 
+
+P0(Y θ,α ) = 
+
+Z
+
+ydPθ,α  
+
+> 0
+
+(o) . Under P0, the observed data law factorizes as dP0(o) = p(s1)
+
+( TY
+
+> t=1
+
+πt, 0(at | ht)
+
+)( T −1Y
+
+> t=1
+
+p(st+1 | ht, a t)
+
+)
+
+p(y | ¯s, ¯a) , whereas dPθ,α  
+
+> 0
+
+(o) = p(s1)
+
+( TY
+
+> t=1
+
+qθ,α t (at | ht)
+
+)( T −1Y
+
+> t=1
+
+p(st+1 | ht, a t)
+
+)
+
+p(y | ¯s, ¯a) . 56 Then, under Assumption 1(c), we have qθ,α t (· | Ht) ≪ πt, 0(· | Ht) almost surely and hence, 
+
+Pθ,α  
+
+> 0
+
+≪ P0. The Radon-Nikod` ym derivative of Pθ,α  
+
+> 0
+
+with respect to P0 is therefore dPθ,α 
+
+> 0
+
+dP0
+
+(o) = 
+
+> T
+
+Y
+
+> t=1
+
+qθ,α t (at | ht)
+
+πt, 0(at | ht) = W θ,α  
+
+> 0
+
+.Hence, for any integrable f ,
+
+Z
+
+f (o)d Pθ,α  
+
+> 0
+
+(o) = 
+
+Z
+
+f (o)
+
+> T
+
+Y
+
+> t=1
+
+qθ,α t (at | ht)
+
+πt, 0(at | ht) dP0(o) = P0{f (O)W θ,α  
+
+> 0
+
+} .Taking f (O) = Y we have P0(Y θ,α ) = R ydPθ,α  
+
+> 0
+
+(o) = P0(W θ,α  
+
+> 0
+
+Y ), which completes the proof. 
+
+S6.2 Canonical Gradient 
+
+Proof of Lemma 2. Let {Pϵ : ϵ ∈ R} be a regular parametric submodel through P0 with density pϵ and Pϵ=0 = P0. We denote by h(O) the mean-zero score of the submodel at ϵ = 0, in the sense that for any integrable f , [ ∂ϵPϵf ]ϵ=0 = [ ∂ϵ
+
+R f (o) pϵ(o) d o]ϵ=0 = P0{f (O)h(O)}.For each P, let πt, P(a | Ht) denote the propensity at time t, and define W θ,α t (P)( At, H t) = 1 + ( t/T )α{ qθt (At,H t) 
+
+> πt, P(At|Ht)
+
+− 1} with product weight W θ,α (P)( O) = QTt=1 W θ,α t (P)( At, H t). The target parameter introduced in Section 3.2 is Ψ( P, θ, α ) = P{W θ,α (P)( O)Y }. By the defin-ing property of the canonical gradient at P0, there exists a mean-zero measurable function 
+
+ϕψ(O; η0, θ, α ) such that {∂ϵψ(Pϵ, θ, α )}ϵ=0 = P0{ϕψ(O; η0, θ, α )h(O)}. We continue by computing this pathwise derivative and verifying the stated closed-form for ϕψ.We consider the general case of perturbation weights δ = ( δ1, . . . , δ T ) ∈ [0 , 1] T in place of the weights ( t/T )α. Under this notation, 
+
+W θ,δ t 
+
+> t
+
+(Pϵ) := (1 − δt) + δt
+
+qθt (At, S t)
+
+πt,ϵ (At | Ht) , W θ,δ (Pϵ) := 
+
+> T
+
+Y
+
+> t=1
+
+W θ,δ t 
+
+> t
+
+(Pϵ) , and ψ0(θ, δ ; Pϵ) = Pϵ{W θ,δ (Pϵ)Y }. We have 
+
+∂ϵψ0(θ, δ ; Pϵ)|ϵ=0 
+
+57 = ∂ϵP0
+
+"( TY
+
+> t=1
+
+δtqθt + (1 − δt)πt,ϵ 
+
+πt,ϵ 
+
+)
+
+Y {1 + ϵh (O)}
+
+#
+
+> ϵ=0
+
+= P0
+
+"( TY
+
+> t=1
+
+δtqθt + (1 − δt)πt, 0
+
+πt, 0
+
+)
+
+Y h (O)
+
+#
+
++ P0
+
+"
+
+∂ϵ
+
+( TY
+
+> t=1
+
+qθt + (1 − δt)πt,ϵ 
+
+πt,ϵ 
+
+)
+
+Y
+
+> ϵ=0
+
+#
+
+.Then, 
+
+P0
+
+"
+
+∂ϵ
+
+( TY
+
+> t=1
+
+δtqθt + (1 − δt)πt,ϵ 
+
+πt,ϵ 
+
+)
+
+Y
+
+> ϵ=0
+
+#
+
+= P0
+
+" TX
+
+> t=1
+
+∂ϵ
+
+ δtqθt + (1 − δt)πt,ϵ 
+
+πt,ϵ 
+
+
+
+> ϵ=0
+
+(Y 
+
+> j̸=t
+
+δtqθt + (1 − δt)πt, 0
+
+πt, 0
+
+)
+
+Y
+
+#
+
+= P0
+
+" TX
+
+> t=1
+
+(
+
+−δtqθt
+
+πt, 0
+
+h(At | Ht)
+
+)( Y 
+
+> j̸=t
+
+δtqθt + (1 − δt)πt, 0
+
+πt, 0
+
+)
+
+Y
+
+| {z }
+
+> =: Xt
+
+#
+
+=
+
+> T
+
+X
+
+> t=1
+
+P0(Xt) , where 
+
+P0(Xt)= P0{P0(Xt | Ht)}
+
+= P0
+
+"
+
+−δt
+
+Y 
+
+> j<t
+
+W θ,δ j, 0
+
+ qθt
+
+πt, 0
+
+h(At | Ht) P0
+
+Y 
+
+> s>t
+
+W θ,δ j, 0
+
+
+
+Y | Ht
+
+| {z } 
+
+> =μθ,δ t(Ht,A t)
+
+#
+
+= P0
+
+"
+
+−δt
+
+Y 
+
+> j<t
+
+W θ,δ j, 0
+
+ X
+
+> a∈{ 0,1}
+
+(
+
+I(At = a)qθt (a, S t)
+
+πt, 0(At | Ht)
+
+)
+
+μθ,δ t (Ht, a )h(At | Ht)
+
+#
+
+= P0
+
+"
+
+−δt
+
+Y 
+
+> j<t
+
+W θ,δ j, 0
+
+ X
+
+> a∈{ 0,1}
+
+(
+
+I(At = a)qθt (a, S t)
+
+πt, 0(At | Ht)
+
+)
+
+μθ,δ t (Ht, a )h(At | Ht)
+
+#
+
+− P0
+
+"
+
+−δt
+
+Y 
+
+> j<t
+
+W θ,δ j, 0
+
+ X
+
+> a∈{ 0,1}
+
+qθt (a, S t)μθ,δ t (Ht, a )h(At | Ht)
+
+#
+
+58 = P0
+
+"
+
+−δ
+
+Y 
+
+> j<t
+
+W θ,δ j, 0
+
+ X
+
+> a∈{ 0,1}
+
+I(At = a) − πt, 0(At | Ht)
+
+πt, 0(At | Ht) qθt (a, H t)μθ,δ t (Ht, a )
+
+| {z } 
+
+> =: f(At,H t)
+
+h(At | Ht)
+
+#
+
+= P0{f (At, H t)h(O)} ,where the final equality holds because f (At, H t) is mean zero conditional on Ht. It follows that the canonical gradient is 
+
+ϕψ(O) = W θ,δ  
+
+> 0
+
+Y
+
+−
+
+> T
+
+X
+
+> t=1
+
+δt
+
+Y 
+
+> j<t
+
+W θ,δ j, 0
+
+ X
+
+> a∈{ 0,1}
+
+I(At = a) − πt, 0(At | Ht)
+
+πt, 0(At | Ht) qθt (At = a, H t)μθ,δ t (Ht, A t = a)
+
+− ψ0(θ, δ ) . Finally, the result of Lemma 2 is given by letting δt = ( t/T )α.
+
+S6.3 Theorem 1 
+
+Proof of Theorem 1. We begin with an algebraic decomposition of ψn(θ; α) − ψ0(θ; α) for any given ( θ, α ). We have 
+
+ψn(θ; α) − ψ0(θ; α) = ( Pn − P0)( W θ,α  
+
+> 0
+
+Y ) + Pn(W θ,α n Y − W θ,α  
+
+> 0
+
+Y )= ( Pn − P0)( W θ,α  
+
+> 0
+
+Y ) + P0(W θ,α n Y − W θ,α  
+
+> 0
+
+Y ) + R1,n (θ, α ) , where R1,n (θ, α ) = ( Pn − P0)( W θ,α n Y − W θ,α  
+
+> 0
+
+Y ). We continue with the second term, P0(W θ,α n Y −W θ,α  
+
+> 0
+
+Y ) = P0{(QTt=1 W θ,α t,n −QTt=1 W θ,α t, 0 )Y }.We factor the difference of products using the following identity: QTt=1 at − QTt=1 bt =
+
+PTt=1 (Q 
+
+> i<t
+
+ai)( at − bt)( Q 
+
+> j>t
+
+bj ). We have that 
+
+W θ,α t,n − W θ,α t, 0 = ( t/T )αqθt (At, ¯St)
+
+ 1
+
+πt,n (At | Ht) − 1
+
+πt, 0(At | Ht)
+
+
+
+= ( t/T )αqθt (At, ¯St) πt, 0(At | Ht) − πt,n (At | Ht)
+
+πt, 0(At | Ht)πt,n (At | Ht) ,59 Hence, 
+
+P0
+
+ W θ,α n Y − W θ,α  
+
+> 0
+
+Y 
+
+= P0
+
+
+
+> T
+
+X
+
+> t=1
+
+Y 
+
+> i<t
+
+W θ,α i,n 
+
+o
+
+(t/T )α qθt (At, S t) πt, 0(At | Ht) − πt,n (At | Ht)
+
+πt, 0(At | Ht)πt,n (At | Ht)
+
+Y 
+
+> j>t
+
+W θ,α j, 0
+
+
+
+Y
+
+
+
+= P0
+
+" TX
+
+> t=1
+
+Y 
+
+> i<t
+
+W θ,α i,n 
+
+
+
+(t/T )α qθt (At, S t) πt, 0(At | Ht) − πt,n (At | Ht)
+
+πt, 0(At | Ht)πt,n (At | Ht) μθ,α t, 0 (Ht, A t)
+
+#
+
+= P0
+
+
+
+> T
+
+X
+
+> t=1
+
+Y 
+
+> i<t
+
+W θ,α i,n 
+
+
+
+(t/T )α X
+
+> a∈{ 0,1}
+
+I(At = a)μθ,α t, 0 (Ht, a ) qθt (a, S t) πt, 0(a | Ht) − πt,n (a | Ht)
+
+πt, 0(a | Ht)πt,n (a | Ht)
+
+
+
+= P0
+
+
+
+> T
+
+X
+
+> t=1
+
+Y 
+
+> i<t
+
+W θ,α i,n 
+
+
+
+(t/T )α X
+
+> a∈{ 0,1}
+
+μθ,α t, 0 (Ht, a ) qθt (a, S t) I(At = a) − πt,n (a | Ht)
+
+πt,n (a | Ht)
+
+ . (S12) Let DCAR (μθ,α  
+
+> 0
+
+, π n; θ, α ) := PTt=1 DCAR ,t (μθ,α  
+
+> 0
+
+, π n; θ, α ), where 
+
+DCAR ,t (μθ,α  
+
+> 0
+
+, π n; θ, α ):= 
+
+Y 
+
+> i<t
+
+W θ,α i,n 
+
+
+
+(t/T )α X
+
+> a∈{ 0,1}
+
+μθ,α t, 0 (Ht, a ) qθt (a, S t) I(At = a) − πt,n (a | Ht)
+
+πt,n (a | Ht)=
+
+Y 
+
+> i<t
+
+W θ,α i,n 
+
+
+
+(t/T )αn μθ,α t, 0 (1 , H t)qθt (1 , S t)
+
+πt,n (1 | Ht) − μθ,α t, 0 (0 , H t)qθt (0 , S t)
+
+πt,n (0 | Ht)
+
+o
+
+{At − πt,n (1 | Ht)} .That is, DCAR ,t (μθ,α  
+
+> 0
+
+, π n; θ, α ) is the argument of the expectation in Equation (S12). Then, 
+
+P0{DCAR (μθ,α  
+
+> 0
+
+, π n; θ, α )}
+
+= ( P0 − Pn){DCAR (μθ,α  
+
+> 0
+
+, π n; θ, α )} + Pn{DCAR (μθ,α  
+
+> 0
+
+, π n; θ, α )}
+
+= ( P0 − Pn){DCAR (μθ,α  
+
+> 0
+
+, π 0; θ, α )} + Pn{DCAR (μθ,α  
+
+> 0
+
+, π n; θ, α )} + R2,n (θ, α ) , where DCAR (μθ,α  
+
+> 0
+
+, π 0; θ, α ) is the augmentation term from the canonical gradient ϕψ as given in Lemma 2, and R2,n (θ, α ) = ( P0 − Pn){DCAR (μθ,α  
+
+> 0
+
+, π n; θ, α ) − DCAR (μθ,α  
+
+> 0
+
+, π 0; θ, α )}.Combining everything, we have 
+
+ψn(θ; α) − ψ0(θ; α)60 = ( Pn − P0)( W θ,α  
+
+> 0
+
+Y ) + ( P0 − Pn){DCAR (μθ,α  
+
+> 0
+
+, π 0; θ, α )} + Pn{DCAR (μθ,α  
+
+> 0
+
+, π n; θ, α )}
+
++ ( R1,n + R2,n )( θ, α )= ( Pn − P0){ϕψ(O; η0, θ, α )} + Pn{DCAR (μθ,α  
+
+> 0
+
+, π n; θ, α )} + ( R1,n + R2,n )( θ, α ) . (S13) We prove that Pn{DCAR (μθ,α  
+
+> 0
+
+, π n; θ, α )} and the two remainder terms and are bounded uniformly over Θ in Lemmas S3, S4 and S5, respectively. Together, these bounds give sup 
+
+> θ∈Θ
+
+|Pn{DCAR (μθ,α  
+
+> 0
+
+, π n; θ, α )} + ( R1,n + R2,n )( θ, α )| = op(n−1/2) . This immediately gives the desired pointwise result for any fixed θ:
+
+ψn(θ; α) − ψ0(θ; α) = ( Pn − P0)ϕψ(O; η0, θ, α ) + op(n−1/2) , and, hence, √n{ψn(θ, α ) − ψ0(θ, α )} ⇝ N 0, P0{ϕ2
+
+> ψ
+
+(O; η0, θ, α )} .Finally, we argue that the leading term in Equation (S13) is a tight empirical process indexed by Θ. Let F = {ϕ(O, η 0, θ, α ) : θ ∈ Θ} denote the function class. First, note that 
+
+F has finite sectional variational norm under Assumption S1 and therefore F is Donsker and is bounded by some envelope function F with P0F 2 < ∞. Moreover, Θ is compact and 
+
+ϕ is almost surely continuous in θ. It follows that √n(Pn − P0){ϕ(O, η 0, θ, α )} ⇝ G(θ; α)in ℓ∞(Θ), where G(·; α) is a mean-zero Gaussian process with covariance Cov {G(θ1; α), G(θ2; α)} = Cov {ϕ(O, η 0, θ 1, α ), ϕ (O, η 0, θ 2, α )} . (S14) Combining this with the uniform bounds on the remainder terms, we have 
+
+√n{ψn(θ, α ) − ψ0(θ, α )} ⇝ G(θ; α) , as desired. We conclude this subsection by providing bounds for the non-leading terms in Equa-tion (S12). The bias term is controlled by Lemma S1, which extends the general UIPW re-sult from (Ertefaie et al., 2023b, Lemma 1). We proceed by applying this result (Lemma S1) to the specific bias terms that arise in the longitudinal setting. Finally, we establish bounds for the remainder terms using standard empirical process theory arguments. 61 Lemma S3. Suppose that Assumptions 1(c) and 3 hold, that Assumptions S1 and S2 hold uniformly in Θ at α, and that πt,n is sufficiently undersmoothed. Then 
+
+sup 
+
+> θ∈Θ
+
+|Pn{DCAR (μθ,α  
+
+> 0
+
+, π n; θ, α )}| = op(n−1/2) .Proof of Lemma S3. We show that for any given t, DCAR ,t (μθ,α  
+
+> 0
+
+, π n; θ, α )} = D{fθ(O), π n}
+
+where fθ satisfies the conditions of Lemma S1. Let 
+
+f θ,α t,n (O) := 
+
+nY 
+
+> i<t
+
+W θ,α i,n (Hi)
+
+o
+
+(t/T )αn μθ,α t, 0 (1 , H t)qθt (1 , S t)
+
+πt,n (1 | Ht) − μθ,α t, 0 (0 , H t)qθt (0 , S t)
+
+πt,n (0 | Ht)
+
+o
+
+so 
+
+DCAR (O, μ θ,α  
+
+> 0
+
+, π n; θ, α ) = f θ,α t,n (O){At − πt,n (1 | Ht)} =: D(f θ,α t,n , π t,n ) . Likewise let 
+
+f θ,α t, 0 (O) := 
+
+nY 
+
+> i<t
+
+W θ,α i, 0 (Hi)
+
+o
+
+(t/T )αn μθ,α t, 0 (1 , H t)qθt (1 , S t)
+
+πt, 0(1 | Ht) − μθ,α t, 0 (0 , H t)qθt (0 , S t)
+
+πt, 0(0 | Ht)
+
+o
+
+be a version that uses the true treatment model. We first show that f θ,α t,n is c` adl` ag with uniformly bounded total SVN. First, under As-sumption S1, μθ,α t, 0 is c` adl` ag with uniformly bounded total SVN. Likewise we have that πt, 0
+
+is c` adl` ag with finite total SVN; under Assumption 1(c), the same holds for π−1 
+
+> t, 0
+
+. Moreover, 
+
+πi,n : i < t are c` adl` ag with finite total SVN by construction and, by the universal consis-tency of the HAL, so are π−1 
+
+> i,n
+
+. Finally, qθi : i ≤ t is c` adl` ag with finite total SVN under Assumption 3. It follows that f θ,α t,n is a finite product of terms which are all c` adl` ag with uniformly bounded total SVN and therefore f θ,α t,n is also c` adl` ag with uniformly bounded total SVN. We conclude by showing that the projection error is controlled uniformly to invoke Lemma S1. Under Assumption S2, we have sup θ∈Θ ∥ ˜f θ,α t, 0 − f θ,α t, 0 ∥2,P0 = Op(n−1/4). Fur-thermore, sup θ∈Θ ∥f θ,α t,n − f θ,α t, 0 ∥2,P0 = op(n−1/4) by the HAL convergence of πi,n for i < t .Then, by the triangle inequality, sup 
+
+> θ∈Θ
+
+∥f θ,α t,n − ˜f θ,α t,n ∥ ≤ sup 
+
+> θ∈Θ
+
+∥f θ,α n,t − f θ,α t ∥ + sup 
+
+> θ∈Θ
+
+∥ ˜f θ,α n,t − ˜f θ,α t ∥ + sup 
+
+> θ∈Θ
+
+∥f θ,α t − ˜f θ,α t ∥
+
+62 ≤ 2 sup 
+
+> θ∈Θ
+
+∥f θ,α n,t − f θ,α t ∥ + sup 
+
+> θ∈Θ
+
+∥f θ,α t − ˜f θ,α t ∥
+
+= op(n−1/4) + Op(n−1/4) . Hence, sup θ∈Θ ∥f θ,α t,n − ˜f θ,α t,n ∥ = Op(n−1/4). The conditions are met to apply Lemma S1 for f θ,α t,n , hence sup θ∈Θ|Pn{DCAR ,t (μθ,α  
+
+> 0
+
+, π n; θ, α )| = op(n−1/2) for each t ∈ { 1, . . . , T }. It follows that sup θ∈Θ|Pn{DCAR (μθ,α  
+
+> 0
+
+, π n; θ, α )| = op(n−1/2). 
+
+Lemma S4. The remainder R1,n (θ, α ) is uniformly bounded in θ:
+
+sup 
+
+> θ∈Θ
+
+|(Pn − P0){Wn(O; θ, α )Y − W0(O; θ, α )Y }| = op(n−1/2) .Proof of Lemma S4. Consider the following function class indexed by θ:
+
+Fn, 1 := fn,θ,α (O) = {Wn(O; θ, α ) − W0(O; θ, α )} Y : θ ∈ Θ .First, we establish a uniformly bounded envelope function. Note that under strong positivity (Assumption 1), |W θ,α t, 0 (At, H t)| is bounded uniformly over ( θ, α ); let CW be the maximum of these bounds over all t. Additionally, given that πt,n is consistent for πt, 0,we also have that |W θ,α t,n (At, H t)| < C W with high probability. Moreover, we note that the difference in time-specific weights is bounded. Recall that W θ,α t, 0 − W θ,α t,n = ( t/T )αqθt (πt, 0 −
+
+πt,n )/(πt,n πt, 0). Hence, 
+
+|W θ,α t, 0 − W θ,α t,n | ≤ (t/T )α∥qθt ∥ ∞∥π−1 
+
+> t,n
+
+∥ ∞∥π−1 
+
+> t, 0
+
+∥ ∞|πt, 0 − πt,n | . (S15) This bound is finite under strong positivity of both πt,n and πt, 0. Using a telescoping expansion, we have that 
+
+> T
+
+Y
+
+> t=1
+
+W θ,α t, 0 −
+
+> T
+
+Y
+
+> t=1
+
+W θ,α t,n ≤
+
+> T
+
+X
+
+> t=1
+
+W θ,α t, 0 − W θ,α t,n CT −1 
+
+> W
+
+< C ′ 
+
+> W
+
+.Thus, we obtain the envelope function F1(O) := CY C′ 
+
+> W
+
+with ∥F1(O)∥P0,p < ∞ for all 
+
+p ≥ 1. Next, we control the L2(P0)-seminorm of the function class. Equation (S15) and strong positivity give 
+
+∥W θ,α t, 0 − W θ,α t,n ∥ P0,2 ≲ ∥πt, 0 − πt,n ∥ P0,2 .63 Under consistency of πt,n for πt, 0, ∥πt, 0 − πt,n ∥ P0,2 → 0, and therefore sup 
+
+> θ∈Θ
+
+∥W θ,α t, 0 − W θ,α t,n ∥ P0,2 → 0 . Therefore, we have that sup 
+
+> θ∈Θ
+
+∥fn,θ,α ∥ P0,2 ≤ CY CT −1
+
+> WT
+
+X
+
+> t=1
+
+sup 
+
+> θ∈Θ
+
+∥W θ,α t, 0 − W θ,α t,n ∥ P0,2 → 0 . Additionally, the entropy of the index class is controlled. Under Assumption S1, πt, 0
+
+has finite sectional variational norm. Likewise, πt,n has finite sectional variational norm by construction. Therefore the classes {πt, ·(At | Ht)} for · ∈ { 0, n } and {qθt (At, H t) : θ ∈ Θare Donsker. Under strong positivity, {π−1 
+
+> t, ·
+
+(At | Ht)} is also Donsker. Given that finite products and sums of Donsker functions are Donsker we have that Fn, 1 is also Donkser. Finally, applying Lemma S2, we have sup θ∈Θ |R1,n | = op(n−1/2). 
+
+Lemma S5. The remainder term R2,n (θ, α ) is bounded uniformly in θ:
+
+sup 
+
+> θ∈Θ
+
+(P0 − Pn){DCAR (μθ,α  
+
+> 0
+
+, π n; θ, α ) − DCAR (μθ,α  
+
+> 0
+
+, π 0; θ, α )} = op(n−1/2) .Proof of Lemma S5. Fix t ∈ { 1, . . . , T } and consider the function class indexed by θ:
+
+Fn, 2 := fn,θ,α (O) = {gn,θ,α (O) − g0,θ,α (O)} : θ ∈ Θ .where gn,θ,α := DCAR ,t (μθ,α  
+
+> 0
+
+, π n; θ, α ) and g0,θ,α := DCAR ,t (μθ,α  
+
+> 0
+
+, π 0; θ, α ). Recall that, by a telescoping decomposition, 
+
+Y
+
+> i<t
+
+W θ,α i,n − Y
+
+> i<t
+
+W θ,α i, 0 ≤ C X
+
+> i<t
+
+|πi,n − πi, 0| ,and Y
+
+> i<t
+
+W θ,α i,n − Y
+
+> i<t
+
+W θ,α i, 0
+
+> P0,2
+
+≤ C X
+
+> i<t
+
+∥πi,n − πi, 0∥P0,2 ,for C < ∞ that does not depend on ( θ, α ). Moreover, for Rθ,α t, · = P 
+
+> a∈{ 0,1}
+
+μθ,α t, 0 qθt {I(At =64 a) − πt, ·}/π t, 0, we have 
+
+∥Rθ,α t,n − Rθ,α t, 0 ∥P0,2 ≤ C∥πt,n − πt, 0∥P0,2 .Therefore, we have 
+
+gn,θ,α − g0,θ,α =
+
+Y 
+
+> i<t
+
+W θ,α i,n − Y
+
+> i<t
+
+W θ,α i, 0
+
+
+
+Rθ,α t,n +
+
+Y 
+
+> i<t
+
+W θ,α i, 0
+
+
+
+(Rθ,α t,n − Rθ,α t, 0 ) , and 
+
+∥gn,θ,α − g0,θ,α ∥P0,2 ≤ C′ X
+
+> i≤t
+
+∥πi,n − πi, 0∥P0,2 ,for some C′ which does not depend on ( θ, α ). Therefore sup 
+
+> θ∈Θ
+
+∥fn,θ,α ∥P0,2 ≤ C′ X
+
+> i≤t
+
+∥πi,n − πi, 0∥P0,2 = op(n−1/4) = op(1) . Finally, given that Fn, 2 is Donsker, we have that ∥Gn∥Fn, 2 = op(1) by Lemma S2, and sup 
+
+> θ∈Θ
+
+(Pn − P0){DCAR ,t (μθ,α  
+
+> 0
+
+, π n; θ, α ) − DCAR ,t (μθ,α  
+
+> 0
+
+, π 0; θ, α )} = op(n−1/2) , for all t = 1 , . . . , T . Taking the sum over 1 , . . . , T , we have that sup 
+
+> θ∈Θ
+
+(Pn − P0){DCAR (μθ,α  
+
+> 0
+
+, π n; θ, α ) − DCAR (μθ,α  
+
+> 0
+
+, π 0; θ, α )} = op(n−1/2) , as desired. 
+
+S6.4 Corollary 1 
+
+Before proving results as αn = op(n−1/2) we introduce some auxiliary results. 
+
+Lemma S6. Fix αϵ > 0. Suppose Assumptions 1(c) and 2 hold and that πt,n is sufficiently undersmoothed such that Equation (S8) holds. Assume moreover that Assumptions S1 and S2 hold uniformly over θ ∈ Θ and α ∈ [0 , α ϵ]. Then, (a) Uniform remainder control. Writing the expansion from Theorem 1, 
+
+ψn(θ; α) − ψ0(θ; α) = ( Pn − P0)ϕψ(O; η0, θ, α ) + Rn(θ, α )65 we have 
+
+sup 
+
+> θ∈Θ,α ∈[0 ,α ϵ]
+
+|Rn(θ; α)| = op(n−1/2) .(b) Stochastic equicontinuity at α = 0 . For any αn = op(1) ,
+
+sup 
+
+> θ∈Θ
+
+|(Pn − P0) {ϕψ(O; η0, θ, α n) − ϕψ(O; η0, θ, 0) }| = op(n−1/2)
+
+(c) Uniform drift bound. For any α ∈ [0 , α ϵ], sup θ∈Θ|ψ0(θ; α) − ψ0(θ; 0) | ≤ Cα , for some finite constant C.Proof of Lemma S6. The first statement follows by replicating the bounds obtained in Lemmas S4 and S5 uniformly over α ∈ [0 , α ϵ]. These hold under the assumption that Assumptions S1 and S2 hold uniformly in Θ × [0 , α ϵ] because α only enters through the multipliers ( t/T )α ∈ [(1 /T )αϵ , 1]. Hence, all arguments about bounded weight and Donsker envelope arguments go through with constraints replaced by suprema over α ∈ [0 , α ϵ]. We proceed with stochastic equicontinuity. Note that dt(α) := ( t/T )α is differentiable and Lipschitz on [0 , α ϵ] with 
+
+|dt(α) − dt(0) | ≤ α sup 
+
+> ˜α∈[0 ,α ϵ]
+
+|∂αdt(˜ α)| = α sup 
+
+> ˜α∈[0 ,α ϵ]
+
+dt(˜ α)|log( t/T )| ≤ α|log( t/T )| .Thus max t≤T |dt(α) − 1| ≲ α. Moreover, the form of ϕψ as bounded products of weights and bounded Y , there exists some C < ∞ such that sup 
+
+> θ∈Θ
+
+∥ϕψ(·; η0, θ, α ) − ϕψ(·; η0, θ, 0) ∥2,P0 ≤ Cα, α ∈ [0 , α ϵ] . Then, define the class 
+
+Fδ := fθ,α (·) = ϕψ(·; η0, θ, α ) − ϕψ(·; η0, θ, 0) : θ ∈ Θ, α ∈ [0 , δ ] .For each fixed δ ≤ αϵ, Fδ is Donsker by the same arguments used in the proof of Theorem 1. Moreover, the previous argument gives sup f ∈F δ ∥f ∥2,P0 ≲ δ. Lemma S2 then implies sup 
+
+> θ∈Θ
+
+|(Pn − P0) {ϕψ(O; η0, θ, α n) − ϕψ(O; η0, θ, 0) }| = op(n−1/2) , as desired. 66 Finally we prove the uniform drift bound. By Taylor’s Theorem, for each θ,
+
+ψ0(θ; α) = ψ0(θ; 0) + α∂ αψ0(θ; 0) + 12 α2∂2
+
+> α
+
+ψ0(θ; ˜ α), ˜α ∈ (0 , α ) . Standard bounding arguments leveraging Assumptions 1(c), 2 and 3 give us the following remainder bound: sup θ∈Θ| 12 α2∂2
+
+> α
+
+ψ0(θ; ˜ α)| ≲ α2. Hence, sup θ∈Θ|ψ0(θ; α) − ψ0(θ; 0) | ≤ Cα 
+
+for α ∈ [0 , α ϵ]. 
+
+Proof of Corollary 1. We consider the decomposition: 
+
+ψn(θ; αn) − ψ0(θ, 0) = ψn(θ, α n) − ψ0(θ; αn)
+
+| {z }
+
+> estimation error
+
+− ψ0(θ; αn) − ψ0(θ; 0) 
+
+| {z }
+
+> estimand drift
+
+.The first term represents the estimation error from Theorem 1. Under Assumptions 1(c), 3 and 2, sufficient undersmoothing Equation (S8), and uniform Assumptions S1 and S2 over Θ ×[0 , α ϵ] we have, by Theorem 1 and the uniform control over [0 , α ϵ] from Lemma S6, sup 
+
+> θ∈Θ
+
+|{ ψn(θ; αn) − ψ0(θ; αn) − (Pn − P0)ϕψ(O; η0, θ, α n}| = op(n−1/2) . That is, that Theorem 1’s expansion holds at a random αn that lies within [0 , α ϵ] with high probability. Next, by the stochastic continuity result of Lemma S6, sup 
+
+> θ∈Θ
+
+|(Pn − P0) {ϕψ(O; η0, θ, α n) − ϕψ(O; η0, θ, 0) }| = op(n−1/2) . Combining the two displayed equations gives the uniform linearization sup 
+
+> θ∈Θ
+
+|{ ψn(θ; αn) − ψ0(θ; 0) } − (Pn − P0)ϕψ(O; η0, θ, 0) | .Hence, the estimation error is uniformly linear with influence function equal to the influence function from Theorem 1 with fixed α = 0. Next we control the estimand drift. By Lemma S6, for α ∈ [0 , α ϵ], sup θ∈Θ|ψ0(θ; α) −
+
+ψ0(θ; 0) | ≤ Cα . Therefore, as αn = op(n−1/2), sup 
+
+> θ∈Θ
+
+|ψ0(θ; αn) − ψ0(θ; 0) | ≤ Cα n = op(n−1/2) . 67 Combining these two results into the original decomposition gives 
+
+ψn(θ; αn) − ψ0(θ; 0) = ( Pn − P0)ϕψ(O; η0, θ, 0) + op(n−1/2)uniformly in Θ. That is, sup 
+
+> θ∈Θ
+
+|ψn(θ; αn) − ψ0(θ; 0) − (Pn − P0)ϕψ(O; η0, θ, 0) | = op(n−1/2) . (S16) Finally, we prove weak convergence in ℓ∞(Θ). Theorem 1 yields 
+
+√n(Pn − P0)ϕψ(O; η0, θ, 0) ⇝ G(θ; 0) in ℓ∞(Θ). Multiplying the previous linearization (Equation (S16)) by √n gives sup 
+
+> θ∈Θ
+
+|√n {ψn(θ; αn) − ψ0(θ; 0) } − √n(Pn − P0)ϕψ(O; η0, θ, 0) | = op(1) . Hence, by Slutsky’s theorem, 
+
+√n {ψn(θ; αn) − ψ0(θ; 0) } ⇝ G(θ; 0) in ℓ∞(Θ). Finally, the pointwise result at a fixed θ0 is a special case of this result. 
+
+# S7 Proofs Regarding Policy Optimization 
+
+S7.1 Supporting Results 
+
+Before proving Theorem 2 and Corollary 2, we establish some supporting lemmata regard-ing the derivatives of the regimen-response curve. 
+
+Lemma S7. Suppose Assumptions 1(c), 2 and 3 hold. Then, 1. The map θ 7 → ψ0(θ; α) is continuously differentiable on Θ, with gradient 
+
+∇θψ0(θ; α) = P0
+
+(
+
+W θ,α  
+
+> 0
+
+Y
+
+> T
+
+X
+
+> t=1
+
+(t/T )α
+
+W θ,α t, 0 πt, 0
+
+∇θqθt
+
+)
+
+.
+
+68 2. The parameter ∇θψ0(θ; α) is pathwise differentiable with canonical gradient 
+
+ϕ∇ψ(O; η0, θ, α ) = ∇θϕψ(O; η0, θ, α ) − P0{∇ θϕψ(O; η0, θ, α )} ,where ϕψ is the canonical gradient given in Lemma 2. Proof of Lemma S7. We have ∇θW θ,α t, 0 = ( t/T )α∇θqθt (At, S t)π−1 
+
+> t, 0
+
+(At | Ht). Then, 
+
+∇W θ,α  
+
+> 0
+
+= W θ,α 
+
+> 0
+> T
+
+X
+
+> t=1
+
+∇θW θ,α t, 0
+
+W θ,α t, 0
+
+= W θ,α 
+
+> 0
+> T
+
+X
+
+> t=1
+
+(t/T )α
+
+W θ,α t, 0 πt, 0
+
+∇θqθt .Under Assumption 3, W θ,α  
+
+> 0
+
+Y is almost surely differentiable in θ with derivative dominated an integrable envelope uniformly in θ. Hence, by the dominated convergence theorem 
+
+∇θP0(W θ,α  
+
+> 0
+
+Y ) = P0(∇θW θ,α  
+
+> 0
+
+Y )∇θP0(W θ,α  
+
+> 0
+
+Y ) = P0
+
+(
+
+W θ,α  
+
+> 0
+
+Y
+
+> T
+
+X
+
+> t=1
+
+(t/T )α
+
+W θ,α t, 0 πt, 0
+
+∇θqθt
+
+)
+
+.The parameter ∇θψ0(θ; α) is pathwise differentiable. Under Assumption 3, θ 7 → ψ0(θ; α)is continuously differentiable and its canonical gradient is differentiable in θ. Because differentiation with respect to θ is a linear and continuous operator, the canonical gradient of ∇θψ0(θ; α) is given by the derivative of the canonical gradient of ψ0(θ; α), centered to have mean zero. That is, 
+
+ϕ∇ψ(O; η0, θ, α ) = ∇θϕψ(O; η0, θ, α ) − P0 {∇ θϕψ(O; η0, θ, α )} .Recall that the canonical gradient of the regimen-response curve is given by ϕψ(O; η0, θ, α ) = 
+
+W θ,α  
+
+> 0
+
+(O)Y − DCAR (O; η0, θ, α ) − ψ0(θ; α). All that remains is to derive ∇θϕψ(O; η0, θ, α ). The augmentation is given by DCAR (O; η0, θ, α ) = PTt=1 DCAR ,t (O; η0, θ, α ). We have 
+
+∇θDCAR ,t (O; η0, θ, α ) = 
+
+ X 
+
+> j<t
+
+Ξθ,α j
+
+
+
+DCAR ,t (O; η0, θ, α )+ ( t/T )α Y 
+
+> j<t
+
+W θ,α j, 0
+
+ X
+
+> a∈{ 0,1}
+
+I(At = a) − πt, 0(a | Ht)
+
+πt, 0(a | Ht)
+
+×
+
+hn 
+
+∇θqθt (a, H t)
+
+o
+
+μθ,α t (a | Ht) + qθt (a, H t)
+
+n
+
+∇θμθ,α t (a | Ht)
+
+oi 
+
+,(S17) 69 where Ξθ,α t := ∇θ log W θ,α j, 0 = (t/T )α
+
+W θ,α t, 0 πt, 0
+
+∇θqθt . (S18) This term is seen to have mean zero by conditioning on Ht. Therefore, the canonical gradient is given by 
+
+ϕ∇ψ(O; η0, θ, α ) = Y W θ,α (O)
+
+> T
+
+X
+
+> t=1
+
+(t/T )α
+
+W θ,α t, 0 πt, 0
+
+∇θqθt −
+
+> T
+
+X
+
+> t=1
+
+∇θDCAR ,t (O; θ, α ) + ∇θψ0(θ; α) . 
+
+Lemma S8. Suppose that Assumptions 3 and S1 hold, then for each t ∈ { 1, . . . , T },
+
+(Ht, A t) 7 → ∇ θμθ,α t, 0 (At, H t) is c` al` ag with finite total SVN. Proof of Lemma S8. We prove by backward recursion. Let t = T . Then 
+
+μθ,α T, 0(AT , H T ) = P0(Y | HT , A T ) , which does not depend on θ and hence ∇θμθ,α T, 0 = 0, which is trivially c` adl` ag with finite total SVN. Assume that for some t < T , ∇θμθ,α t+1 ,0 is c` adl` ag with finite total SVN. Then, 
+
+∇θμθ,α t, 0 (At, H t) = P0
+
+h X
+
+> at+1 ∈{ 0,1}
+
+n
+
+∇θqθ,α t+1 (at+1 , H t+1 )
+
+o
+
+μθ,α t+1 ,0(at+1 , H t+1 )+ qθ,α t+1 (at+1 , H t+1 )
+
+n
+
+∇θμθ,α t+1 ,0(at+1 , H t+1 )
+
+o
+
+| At, H t
+
+i
+
+.Each term inside the conditional expectation is a product of two c` adl` ag functions of Ht+1 
+
+with finite total SVN by either the induction hypothesis ( ∇θμθ,α t+1 ), Assumption 3 ( qθ,α t and 
+
+∇θqθ,α t ), or Assumption S1 ( μθ,α t+1 ). It follows that ∇θμθ,α t, 0 is c` adl` ag with finite total SVN. By backward induction, the result holds for all t.
+
+Lemma S9. Suppose that Assumptions 1(c), 2 and 3 hold. Moreover, suppose that πt,n is sufficiently undersmoothed, satisfying Equation (S8) , that Assumption S1 holds, and now that Assumption S3 holds. Then, for any θ on the interior of Θ,
+
+∇θψn(θ; α) − ∇ θψ0(θ; α) = ( Pn − P0){ϕ∇ψ(O; η0, θ, α )} + op(n−1/2) .
+
+70 Proof. Recall that 
+
+ψn(θ; α) − ψ0(θ; α) = ( Pn − P0){ϕ(O; η0, θ, α )} + Pn{DCAR (μθ,α  
+
+> 0
+
+, π n; θ, α )}
+
++ ( R1,n + R2,n )( θ, α ) . Hence, 
+
+∇θψn(θ; α) − ∇ θψ0(θ; α) = ( Pn − P0){∇ θϕ(O; η0, θ, α )}
+
++ Pn{∇ θDCAR (μθ,α  
+
+> 0
+
+, π n; θ, α )}
+
++ ( ∇θR1,n + ∇θR2,n )( θ, α ) . The leading term is equal to ( Pn − P0){ϕ∇ψ(O; η0, θ, α )}. We show all of the remaining terms are op(n−1/2): 
+
+∇θR1,n is the empirical process term, ( Pn − P0){∇ θWn(O; θ, α )Y − ∇ θW0(O; θ, α )Y }. Un-der Assumptions 1(c), 2, 3 and S1, O 7 → ∇ θWn(O; θ, α )Y − ∇ θW0(O; θ, α )Y lies in a fixed Donsker class. Because ∥πt,n − πt, 0∥2,P0 = op(1) for all t, ∥∇ θWn(O; θ, α )Y −∇θW0(O; θ, α )Y ∥2,P0 = op(1), and ∇θR1,n (θ, α ) = op(n−1/2) by van der Vaart (2007, Lemma 19.24). 
+
+∇θR2,n is equal to ( P0 −Pn){∇ θDCAR (μθ,α  
+
+> 0
+
+, π n; θ, α )−∇ θDCAR (μθ,α  
+
+> 0
+
+, π 0; θ, α )}. The deriva-tive for the πt, 0 case is given in Equation (S17). Using similar bounding argu-ments to what was used for ∇θRn, 2(θ, α ), we are able to show that f2,n,t (O) := 
+
+∇θDCAR ,t (μθ,α  
+
+> 0
+
+, π n; θ, α )−∇ θDCAR ,t (μθ,α  
+
+> 0
+
+, π 0; θ, α ) is bounded and belongs to a Donsker class. Furthermore, using a telescoping decomposition similar to the proof of Lemma S5 we can show that ∥f2,n,t (O; θ, α )∥2,P0 ≲ P
+
+> i≤t
+
+∥πi,n − πi, 0∥2,P0 = op(1). It follows that ∇θRn, 3(θ, α ) = op(n−1/2) under empirical process theory (van der Vaart, 2007, Lemma 19.24). 
+
+Pn{∇ θDCAR (μθ,α  
+
+> 0
+
+, π n; θ, α )} is the bias term, which is once again controlled by under-smoothing. Then, as in the proof of Lemma S3, the empirical DCAR remainder at time t can be written as 
+
+DCAR ,t (μθ,α  
+
+> 0
+
+, π n; θ, α ) = f θ,α t,n (Ht){At − πt,n (1 | Ht)} ,71 where 
+
+f θ,α t,n (Ht) = 
+
+Y 
+
+> i<t
+
+W θ,α i,n 
+
+
+
+(t/T )α
+
+( μθ,α t, 0 (1 , H t)qθt (1 , S t)
+
+πt,n (1 | Ht) − μθ,α t, 0 (0 , H t)qθt (0 , S t)
+
+πt,n (0 | Ht)
+
+)
+
+.Since πt,n is estimated independently of θ, differentiation with respect to θ only acts on the weights, the target policy, and the forward regressions. Hence, letting 
+
+gθ,α t,n (Ht) := ∇θf θ,α t,n (Ht), we have 
+
+∇θDCAR ,t (μθ,α  
+
+> 0
+
+, π n; θ, α ) = gθ,α t,n (Ht){At − πt,n (1 | Ht)} .Deriving, we obtain 
+
+gθ,α t,n (Ht)=
+
+Y 
+
+> i<t
+
+W θ,α i,n 
+
+
+
+(t/T )α
+
+"X 
+
+> j<t
+
+∇θ log W θ,α j,n 
+
+( μθ,α t, 0 (1 , H t)qθt (1 , S t)
+
+πt,n (1 | Ht) − μθ,α t, 0 (0 , H t)qθt (0 , S t)
+
+πt,n (0 | Ht)
+
+)
+
++ {∇ θμθ,α t, 0 (1 , H t)}qθt (1 , S t) + μθ,α t, 0 (1 , H t){∇ θqθt (1 , S t)}
+
+πt,n (1 | Ht)
+
+− {∇ θμθ,α t, 0 (0 , H t)}qθt (0 , S t) + μθ,α t, 0 (0 , H t){∇ θqθt (0 , S t)}
+
+πt,n (0 | Ht)
+
+#
+
+,and 
+
+∇θ log W θ,α j,n = (j/T )α∇θqθj (Aj , S j )(j/T )αqθj (Aj , S j ) + {1 − (j/T )α}πj,n (Aj | Hj ) .Let gθ,α t, 0 denote the population version obtained by replacing π·,n and W θ,α  
+
+> ·,n
+
+by π·,0
+
+and W θ,α  
+
+> ·,0
+
+, respectively. By Assumption S3, gθ,α t, 0 is approximated by the active HAL basis to order Op(n−1/4) in L2(P0): ∥gθ,α t, 0 − ˜gθ,α t, 0 ∥2,P0 = Op(n−1/4). Moreover, by consistency of the HAL propensity score estimator, ∥gθ,α t,n − gθ,α t, 0 ∥2,P0 = op(n−1/4). By the triangle inequality, we obtain ∥gθ,α t,n − ˜gθ,α t,n ]∥2,P0 = Op(n−1/4). Moreover, gθ,α t,n 
+
+term is finite product of c` adl` ag functions with finite total SVN (see Assumptions 3 and S1, Lemma S8, and the proof of Lemma S3) and therefore is c` adl` ag with finite total SVN. Hence, conditions are met to apply Lemma S1 at ( θ, α ). 72 Applying Lemma S1 yields 
+
+Pn∇θDCAR ,t (μθ,α  
+
+> 0
+
+, π n; θ, α ) = Pngθ,α t,n (Ht){At − πt,n (1 | Ht)} = op(n−1/2)for each fixed t. Since T is fixed, 
+
+Pn∇θDCAR (μθ,α  
+
+> 0
+
+, π n; θ, α ) = 
+
+> T
+
+X
+
+> t=1
+
+Pn∇θDCAR ,t (μθ,α  
+
+> 0
+
+, π n; θ, α ) = op(n−1/2) . Combining, we have ∇θψn(θ; α) − ∇ θψ0(θ; α) = ( Pn − P0){ϕ∇ψ(O; η0, θ, α )} + op(n−1/2). This completes the proof. 
+
+Lemma S10. Suppose that Assumptions 1(c), 2 and 3 hold. Then, (a) The Hessian H0(θ0; α0) := ∇2
+
+> θ
+
+ψ0(θ0; α0) exists and is finite for any fixed θ0, α 0.(b) The Hessian is Lipschitz continuous in Θ:
+
+∥∇ 2
+
+> θ
+
+ψ·(θ1; α) − ∇ 2
+
+> θ
+
+ψ·(θ2; α)∥ ≤ L∥θ1 − θ2∥ ,for some L < ∞.(c) The Hessian of ψn converges uniformly in Θ:
+
+sup 
+
+> θ∈Θ
+
+∥∇ 2
+
+> θ
+
+ψn(θ; α) − ∇ 2
+
+> θ
+
+ψ0(θ; α)∥ = op(1) .Proof of Lemma S10. First, recall from Lemma S7 that ∇θψ0(θ; α) = P0{W θ,α  
+
+> 0
+
+Y f θ(O)}
+
+where f θ(O) is a smooth function of {qθt , ∇θqθt }Tt=1 . Differentiating once more in θ intro-duces terms involving ∇2
+
+> θ
+
+qθt and ∇θqθt (∇θqθj )⊤ All such terms are c` adl` ag with finite total SVN under Assumption 3, and the Dominated Convergence Theorem justifies ∇2
+
+> θ
+
+ψ0(θ; α) = 
+
+P0{∇ 2
+
+> θ
+
+W θ,α  
+
+> 0
+
+Y }.We proceed with establishing a Lipschitz condition by bounding the third derivative and applying the Mean Value Theorem to the Hessian. Under Assumption 3 we have 
+
+∇kθ ψ·(θ; α) = P·(Y ∇kθ W θ,α  
+
+> ·
+
+) , 73 for any k ∈ { 1, 2, 3} and · ∈ { 0, n } by the Dominated Convergence Theorem. Recall that W θ,α  
+
+> ·
+
+= QTt=1 W θ,α t, · for W θ,α t, · = 1 + ( t/T )α{qθt (At, S t)π−1 
+
+> t, ·
+
+(At | Ht) − 1}. Under Assumptions 3 and 1(c), each weight and its inverse ( W θ,α t, · )−1 are uniformly bounded over Θ. Then, as πt, · does not depend on θ, we have 
+
+∇kθ W θ,α t, · = ( t/T )α ∇kθ qθt (At, S t)
+
+πt, ·(At | Ht) .Moreover, Assumption 3 gives sup θ∈Θ ∥∇ kθ qθt (At, S t)∥ < ∞ almost surely for k ∈ { 1, 2, 3}.Hence, each derivative ∇kθ W θ,α t, · is uniformly bounded over Θ for k ∈ { 1, 2, 3}. Repeated application of the product rule for derivatives shows that ∇θW θ,α  
+
+> ·
+
+is a finite sum of finite products of 
+
+∇θW θ,α r, ·
+
+W θ,α r, ·
+
+, ∇2
+
+> θ
+
+W θ,α s, ·
+
+W θ,α s, ·
+
+, and ∇3
+
+> θ
+
+W θ,α t, ·
+
+W θ,α t, ·
+
+,multiplied by W θ,α  
+
+> ·
+
+. Each of these components is uniformly bounded over Θ; hence sup 
+
+> θ∈Θ
+
+∥∇ 3
+
+> θ
+
+W θ,α  
+
+> ·
+
+∥ < ∞
+
+almost surely. Then, under Assumption 2, ∥Y ∥∞ < ∞, and hence sup 
+
+> θ∈Θ
+
+∥∇ 3
+
+> θ
+
+ψ·(θ; α)∥ ≤ ∥ Y ∥∞ sup 
+
+> θ∈Θ
+
+∥∇ 3
+
+> θ
+
+W θ,α  
+
+> ·
+
+∥ < ∞
+
+almost surely. Finally, by the Mean Value Theorem. for any θ1, θ 2 ∈ Θ, 
+
+∥∇ 2
+
+> θ
+
+ψ·(θ1; α) − ∇ 2
+
+> θ
+
+ψ·(θ2; α)∥ ≤ sup 
+
+> θ∈Θ
+
+∥∇ 3
+
+> θ
+
+ψ·(θ; α)∥ ∥ θ1 − θ2∥ .Since the third derivative is uniformly bounded, it follows that the Hessian is globally Lipschitz continuous. Finally, we prove uniform convergence. We denote ∇2
+
+> θ
+
+ψn(θ; α) = Pn{H(O; θ, α, π n)}
+
+and ∇2
+
+> θ
+
+ψ0(θ; α) = P0{H(O; θ, α, π 0)}. For brevity, let H(θ; π) := H(O; θ, α, π ). Consider the decomposition: 
+
+∇2
+
+> θ
+
+ψn(θ; α) − ∇ 2
+
+> θ
+
+ψ0(θ; α) = ( Pn − P0)H(θ, π 0) + ( Pn − P0)H(θ, π n) − H(θ, π 0)
+
++ P0
+
+H(θ, π n) − H(θ, π 0) .74 We proceed by controlling the three terms separately. 
+
+• The first term is an empirical process term. Define the deterministic class 
+
+H0 := H(·; θ, α, π 0) : θ ∈ Θ .We claim that H0 is Glivenko-Cantelli with an integrable envelope. The integrable envelope exists following similar logic used to bound ∇3
+
+> θ
+
+ψ·(θ, α ) previously in this proof. Moreover, under Assumption 3, H0 inherits bounded sectional variational norm and therefore is Glivenko-Cantelli under Assumption 2. Hence, sup 
+
+> θ∈Θ
+
+∥(Pn − P0)H(·; θ, α, π 0)∥ = op(1) . 
+
+• The second term also an empirical process term. We have that H(O; θ, π 0) is Donsker and ∥H(O; θ, π n) − H(O; θ, π )∥P0,2 = op(1). It follows that ( Pn − P0){H(θ, π n) −
+
+H(θ, π )} = op(n−1/2) = op(1) by van der Vaart (2007, Lemma 19.24). 
+
+• The final term represents the plug-in bias. First, note that for any x, y ∈ [ϵπ/2, 1], 
+
+|x−1 − y−1| = |x − y|
+
+xy ≤ 4
+
+ϵ2
+
+> π
+
+|x − y| .Because π enters H(O; θ, α, π ) only through a finite number of factors π(· | Ht)−1
+
+inside the weights and their θ-derivatives, repeated application of the previous in-equality and the product rule yields the existence of an integrable envelope G such that sup 
+
+> θ∈Θ
+
+∥H(O; θ, α, π n) − H(O; θ, α, π 0)∥ ≤ G(O) max  
+
+> t≤T
+
+|πt,n (1 | Ht) − πt, 0(1 | Ht)| .That is, that H is Lipschitz in π. Then, by Cauchy-Schwawrz, we have sup 
+
+> θ∈Θ
+
+∥P0 {H(θ; πn) − H(θ; π0)}∥ ≤ ∥ G∥2,P0 max  
+
+> t≤T
+
+∥πt,n − πt, 0∥2,P0 .HAL consistency gives ∥πt,n − πt, 0∥2,P0 → 0 for each t; hence, the term is op(1). Combining the three terms, we have sup θ∈Θ ∥∇ 2
+
+> θ
+
+ψn(θ; α) − ∇ 2
+
+> θ
+
+ψ0(θ; α)∥ = op(1) . 75 S7.2 Theorem 2 
+
+Proof of Theorem 2. Recall that V·(θ; α) = ψ·(θ; α)−P (θ) where · ∈ { 0, n }, and that θ⋆
+
+> 0
+
+(α)is the unique interior maximizer of V0(·; α), which exists by Assumption 4. By definition θ⋆n(α) satisfies the first order condition ∇θVn{θ⋆n(α); α} = 0 and likewise 
+
+∇θV0{θ⋆
+
+> 0
+
+(α); α} = 0. Moreover, by Lemma S7, θ 7 → ∇ θV0(θ; α) is continuously differen-tiable in a neighborhood of θ⋆
+
+> 0
+
+(α) with Hessian H0(α) = ∇2
+
+> θ
+
+V0{θ⋆
+
+> 0
+
+(α); α) that is negative definite under Assumption 4. By a first order Taylor expansion to ∇θVn(·; α) about θ⋆
+
+> 0
+
+(α), we obtain 0 = ∇θVn{θ⋆n(α); α} = ∇θVn{θ⋆
+
+> 0
+
+(α); α} + H0(α){θ⋆n(α) − θ⋆
+
+> 0
+
+(α)} + Rn ,where 
+
+Rn = ∇2
+
+> θ
+
+Vn(˜θn; α) − ∇ 2
+
+> θ
+
+V0{θ⋆
+
+> 0
+
+(α); α}{θ⋆n(α) − θ⋆
+
+> 0
+
+(α)} ,and ˜θn lies on the line segment between θ⋆n(α) and θ⋆
+
+> 0
+
+(α). Note that ∇θVn(θ; α)−∇ θV0(θ; α) = 
+
+∇θψn(θ; α) − ∇ θψ0(θ; α). Evaluating the previous equality at θ⋆
+
+> 0
+
+(α) we obtain 
+
+∇θVn{θ⋆
+
+> 0
+
+(α); α} = ∇θψn{θ⋆
+
+> 0
+
+(α); α} − ∇ θψ0{θ⋆
+
+> 0
+
+(α); α} .Substituting into the Taylor expansion and rearranging we obtain 
+
+θ⋆n(α) − θ⋆
+
+> 0
+
+(α) = −H−10 (α)∇θψn{θ⋆
+
+> 0
+
+(α); α} − ∇ θψ0{θ⋆
+
+> 0
+
+(α); α} − H0(α)−1Rn . (S19) Under Assumptions 1(c), 2, 3, S1, S2 and S3 and sufficient undersmoothing (Equation (S8)), the leading term satisfies 
+
+∇θψn{θ⋆
+
+> 0
+
+(α); α} − ∇ θψ0{θ⋆
+
+> 0
+
+(α); α} = ( Pn − P0)ϕ∇ψ{O; η0, θ ⋆
+
+> 0
+
+(α), α } + op(n−1/2) . by Lemma S9. Substituting into Equation (S19) we obtain 
+
+θ⋆n(α)−θ⋆
+
+> 0
+
+(α) = ( Pn−P0)−H0(α)−1ϕ∇ψ{O; η0, θ ⋆
+
+> 0
+
+(α), α }−H0(α)−1Rn+op(n−1/2) . (S20) It remains to show that Rn = op(n−1/2). We decompose 
+
+∇2
+
+> θ
+
+Vn(˜θn; α) − ∇ 2
+
+> θ
+
+V0{θ⋆
+
+> 0
+
+(α); α} = ∇2
+
+> θ
+
+Vn(˜θn; α) − ∇ 2
+
+> θ
+
+V0(˜θn; α)
+
++ ∇2
+
+> θ
+
+V0(˜θn; α) − ∇ 2
+
+> θ
+
+V0{θ⋆
+
+> 0
+
+(α); α}
+
+76 The first term concerns the convergence of the Hessian of the value function We note that 
+
+∇2
+
+> θ
+
+Vn(θ; α) − ∇ 2
+
+> θ
+
+V0(θ; α) = ∇2
+
+> θ
+
+ψn(θ; α) − ∇ 2
+
+> θ
+
+ψ0(θ; α) and that the latter term is controlled by Lemma S10. Hence, sup 
+
+> θ∈Θ
+
+∥∇ 2
+
+> θ
+
+Vn(θ; α) − ∇ 2
+
+> θ
+
+V0(θ; α)∥ = sup 
+
+> θ∈Θ
+
+∥∇ 2
+
+> θ
+
+ψn(θ; α) − ∇ 2
+
+> θ
+
+ψ0(θ; α)∥ = op(1) , and 
+
+∥∇ 2
+
+> θ
+
+Vn(˜θn; α) − ∇ 2
+
+> θ
+
+V0(˜θn; α)∥ = op(1) . The second term is controlled by the Lipschitz condition of Lemma S10 under Assump-tions 1(c) and 3 and Equation (S11): 
+
+∥∇ 2
+
+> θ
+
+V0(˜θn; α) − ∇ 2
+
+> θ
+
+V0{θ⋆
+
+> 0
+
+(α); α}∥ ≲ ∥˜θn − θ⋆
+
+> 0
+
+(α)∥ = op(1) . Thus, 
+
+∥Rn∥ ≤ op(1) ∥θ⋆n(α) − θ⋆
+
+> 0
+
+(α)∥ .Returning to Equation (S20) and taking norms, we have 
+
+∥θ⋆n(α) − θ⋆
+
+> 0
+
+(α)∥ ≤ ∥ H0(α)−1∥∥ (Pn − P0)ϕ∇ψ{O; η0, θ ⋆
+
+> 0
+
+(α), α }∥ + ∥H0(α)−1∥∥ Rn∥
+
+= Op(n−1/2) + op(1) ∥θ⋆n(α) − θ⋆
+
+> 0
+
+(α)∥ .Hence, 
+
+∥θ⋆n(α) − θ⋆
+
+> 0
+
+(α)∥ = Op(n−1/2) . Combining ∥Rn∥ ≤ op(1) ∥θ⋆n(α) − θ⋆
+
+> 0
+
+(α)∥ with the previous bound gives ∥Rn∥ = op(n−1/2). Finally, substituting into Equation (S20) we obtain 
+
+θ⋆n(α) − θ⋆
+
+> 0
+
+(α) = ( Pn − P0)−H0(α)−1ϕ∇ψ{O; η0, θ ⋆
+
+> 0
+
+(α), α } + op(n−1/2) , establishing asymptotic linearity. Asymptotic normality follows immediately by the Central Limit Theorem with covariance 
+
+H−10 (α)P0
+
+ϕ⊗2
+
+> ∇ψ
+
+{O; η0, θ ⋆
+
+> 0
+
+(α), α }H−10 (α) . 77 S7.3 Corollary 2 
+
+Before proving Corollary 2 we provide some auxiliary results analogous to Lemma S6. First, we require a stronger uniform version of Assumption 4. 
+
+Assumption S4. Let αϵ > 0. Suppose that (a) For all α ∈ [0 , α ϵ], θ⋆
+
+> 0
+
+(α) exists uniquely in the interior. (b) There exists a m > 0 such that for all α ∈ [0 , α ϵ] and all θ on the line segment 
+
+L(α) := {(1 − t)θ⋆
+
+> 0
+
+(0) + tθ ⋆
+
+> 0
+
+(α) : t ∈ [0 , 1] },
+
+−∇ 2
+
+> θ
+
+V0(θ; α) ⪰ mI .Equivalently, sup α∈[0 ,α ϵ] sup θ∈L (α)∥{∇ 2
+
+> θ
+
+V0(θ; α)}−1∥ ≤ m−1.
+
+Lemma S11. Fix αϵ > 0. Suppose that Assumptions 1(c), 2, 3 and S4 hold, that πt,n 
+
+is sufficiently undersmoothed such that Equation (S8) holds, and that Assumptions S1, S2 and S3 hold in a neighborhood of θ⋆
+
+> 0
+
+(α) uniformly over α ∈ [0 , α ϵ].(a) Uniform remainder control. Writing the expansion from Theorem 2, 
+
+θ⋆n(α) − θ⋆
+
+> 0
+
+(α) = ( Pn − P0) −H−10 (α)ϕ∇ψ{O; η0, η ′
+
+> 0
+
+, θ ⋆
+
+> 0
+
+(α), α } + Rn(α) ,we have 
+
+sup 
+
+> α∈[0 ,α ϵ]
+
+|Rn(α)| = op(n−1/2) .(b) Stochastic equicontinuity at α = 0 . For any αn = op(1) ,
+
+(Pn − P0)H0(αn)−1ϕ∇ψ{· ; θ⋆
+
+> 0
+
+(αn), α n} − H0(0) −1ϕ∇ψ{· ; θ⋆
+
+> 0
+
+(0) , 0} = op(n−1/2) .(c) Uniform drift bound. For any α ∈ [0 , α ϵ], ∥θ⋆
+
+> 0
+
+(α) − θ⋆
+
+> 0
+
+(0) ∥ ≤ Cα for some finite constant C.Proof of Lemma S11. We begin with claim (a) and note that this result largely follows the logic of Theorem 2. Let ∆ n(α) := θ⋆n(α) − θ⋆
+
+> 0
+
+(α). From Equation (S19) we have that ∆n(α) = −H−10 (α)∇θψn{θ⋆
+
+> 0
+
+(α); α} − ∇ θψ0{θ⋆
+
+> 0
+
+(α); α} − H0(α)−1Rn(α) , 78 where Rn(α) = [ ∇2
+
+> θ
+
+Vn{˜θn(α); α} − ∇ 2
+
+> θ
+
+V0{θ⋆
+
+> 0
+
+(α); α}]{θ⋆n(α) − θ⋆
+
+> 0
+
+(α)} and ˜θn(α) lies on the line segment between θ⋆n(α) and θ⋆
+
+> 0
+
+(α). Lemma S9 gives a pointwise result for the leading term: 
+
+∇θψn{θ⋆
+
+> 0
+
+(α); α} − ∇ θψ0{θ⋆
+
+> 0
+
+(α); α} = ( Pn − P0){ϕ∇ψ(O; η0, θ, α )} + op(n−1/2) . Using similar logic to Lemma S6 and the strengthened versions of Assumptions S1, S2 and S3, which hold uniformly over α ∈ [0 , α ϵ] and in a neighborhood of θ⋆
+
+> 0
+
+(α), we claim that result can be taken uniformly over α ∈ [0 , α ϵ]. Next, we decompose the Hessian difference in Rn(α) as 
+
+∇2
+
+> θ
+
+Vn{˜θn(α); α} − ∇ 2
+
+> θ
+
+V0{θ⋆
+
+> 0
+
+(α); α} = ∇2
+
+> θ
+
+Vn{˜θn(α) α} − ∇ 2
+
+> θ
+
+V0{˜θn(α); α}
+
++ ∇2
+
+> θ
+
+V0{˜θn(α); α} − ∇ 2
+
+> θ
+
+V0{θ⋆
+
+> 0
+
+(α); α} .Lemma S10(c) applied uniformly over α ∈ [0 , α ϵ] implies that the first bracketed term is uniformly op(1) in α. Moreover, Lemma S10(b) gives Lipschitz continuity of ∇2
+
+> θ
+
+V0(·; α) in 
+
+θ and sup α∈[0 ,α ϵ]∥˜θ⋆n(α) − θ⋆
+
+> 0
+
+(α)∥ = op(1); hence, the second term is uniformly op(1) as well. Consequently, sup 
+
+> α∈[0 ,α ϵ]
+
+∥Rn(α)∥ ≤ op(1) sup 
+
+> α∈[0 ,α ϵ]
+
+∥∆n(α)∥ .Returning to Equation (S20) and taking norms we have sup 
+
+> α∈[0 ,α ϵ]
+
+∥∆n(α)∥ ≤ sup 
+
+> α∈[0 ,α ϵ]
+
+∥H0(α)−1∥Op(n−1/2) + op(1) sup 
+
+> α∈[0 ,α ϵ]
+
+∥∆n(α)∥ .= Op(n−1/2) + op(1) sup 
+
+> α∈[0 ,α ϵ]
+
+∥∆n(α)∥ ,noting that ∥H0(α)−1∥ is uniformly bounded over [0 , α ϵ] by Assumption S4. By parallel logic to Theorem 2, we obtain sup α∈[0 ,α ϵ]∥∆n(α)∥ = Op(n−1/2) and sup α∈[0 ,α ϵ]∥Rn(α)∥ =
+
+op(n−1/2), establishing claim (a). We continue with claim (b). Let 
+
+gα(O) := H0(α)−1ϕ∇ψ{O; η0, η ′
+
+> 0
+
+, θ ⋆
+
+> 0
+
+(α), α } .We show that for any αn = op(1), ( Pn − P0){gαn − g0} = op(n−1/2). For any δ ∈ (0 , α ϵ], 79 consider the function class 
+
+Gδ := {gα − g0 : α ∈ [0 , δ ]} .By the same smoothness-in-α arguments used in Lemma S6 together with uniform cur-vature/invertibility from Assumption S4, the mapping α 7 → θ⋆
+
+> 0
+
+(α) is locally Lipschitz (see the proof of part (c)), α 7 → H0(α)−1 is uniformly bounded and locally Lipschitz, and ( θ, α ) 7 → ϕ∇ψ(·; θ, α ) is Lipschitz in L2(P0) under moment/smoothness conditions in-voked in Theorem 1 and Lemma S6. Consequently, there exists some finite L such that 
+
+∥gα − gα′ ∥2,P0 ≤ L|α − α′| for all α, α ′ ∈ [0 , α ϵ], and hence sup α∈[0 ,δ ]∥gα − g0∥2,P0 ≤ Lδ .Taking δ = αn = op(1), Lemma S2 yields sup 
+
+> α∈[0 ,α n]
+
+∥(Pn − P0)( gα − g0)∥ = op(n−1/2) , and hence (Pn − P0)( gαn − g0) = op(n−1/2) . We conclude with claim (c). Under the first order conditions we have 
+
+∇θV0{θ⋆
+
+> 0
+
+(α); α} − ∇ θV0{θ⋆
+
+> 0
+
+(0); α} = −∇θV0{θ⋆
+
+> 0
+
+(0); α} − ∇ θV0{θ⋆
+
+> 0
+
+(0); 0 } .By the Mean Value Theorem, there exists some ˜θα ∈ L (α) (i.e., on the line segment between 
+
+θ⋆
+
+> 0
+
+(0) and θ⋆
+
+> 0
+
+(α)) such that 
+
+∇V0{θ⋆
+
+> 0
+
+(α); α} − ∇ θV0{θ⋆
+
+> 0
+
+(0); α} = ∇2
+
+> θ
+
+V0(˜θα; α){θ⋆
+
+> 0
+
+(α) − θ⋆
+
+> 0
+
+(0) } .Combining and taking norms, 
+
+∥∇ 2
+
+> θ
+
+V0(˜θα; α){θ⋆
+
+> 0
+
+(α) − θ⋆
+
+> 0
+
+(0) }∥ = ∥∇ θV0{θ⋆
+
+> 0
+
+(0); α} − ∇ θV0{θ⋆
+
+> 0
+
+(0); 0 }∥ .Then, by Assumption S4, the Hessian is negative definite with eigenvalues uniformly bounded away from 0 and there exists some m > 0 such that sup  
+
+> α,θ ∈[0 ,α ϵ]×N r(Θ ⋆)
+
+∥{∇ 2
+
+> θ
+
+V0(θ; α)}−1∥ ≤ m−1 .80 It follows that 
+
+∥θ⋆
+
+> 0
+
+(α) − θ⋆
+
+> 0
+
+(0) ∥ ≤ m−1∥∇ θV0{θ⋆
+
+> 0
+
+(0); α} − ∇ θV0{θ⋆
+
+> 0
+
+(0); 0 }∥ .We proceed by bounding the second term. Note that, as the penalty P(θ) does not depend on α, the α-dependence of V0(θ; α) = ψ0(θ; α) − P (θ) is inherited entirely from ψ0(θ; α). By similar arguments used in Theorem 1 and Lemma S6, we have sup 
+
+> θ∈Θ
+
+∥∇ θV0(θ; α) − ∇ θV0(θ; 0) ∥ ≤ Lα 
+
+for all α ∈ [0 , α ϵ], where L is a finite constant. Evaluating at θ = θ⋆
+
+> 0
+
+(α) and combining with the previous result yields ∥θ⋆
+
+> 0
+
+(α) − θ⋆
+
+> 0
+
+(0) ∥ ≤ m−1Lα . Hence, for C := m−1L < ∞ we have 
+
+∥θ⋆
+
+> 0
+
+(α) − θ⋆
+
+> 0
+
+(0) ∥ ≤ Cα 
+
+for all α ∈ [0 , α ϵ], establishing the drift bound. 
+
+Proof of Corollary 2. Consider the decomposition 
+
+θ⋆n(αn) − θ⋆
+
+> 0
+
+(0) = θ⋆n(αn) − θ⋆
+
+> 0
+
+(αn)
+
+| {z }
+
+> estimation error
+
++ θ⋆
+
+> 0
+
+(αn) − θ⋆
+
+> 0
+
+(0) 
+
+| {z }
+
+> estimand drift
+
+.We begin with the estimation error. Theorem 2 gives, for any fixed α ≥ 0, 
+
+θ⋆n(α) − θ⋆
+
+> 0
+
+(α) = ( Pn − P0)H0(α)−1ϕ∇ψ{· ; θ⋆
+
+> 0
+
+(α), α } + op(n−1/2) . The first result of S11 gives sup 
+
+> α∈[0 ,α ϵ]
+
+{θ⋆n(α) − θ⋆
+
+> 0
+
+(α)} − (Pn − P0)H0(α)−1ϕ∇ψ{· ; θ⋆
+
+> 0
+
+(α), α } = op(n−1/2) . Given that αn → 0, we have αn ∈ [0 , α ϵ] with high probability and hence, 
+
+θ⋆n(αn) − θ⋆
+
+> 0
+
+(αn) = ( Pn − P0)H0(αn)−1ϕ∇ψ{· ; θ⋆
+
+> 0
+
+(αn), α n} + op(n−1/2) . Next, Lemma S11(b) gives stochastic equicontinuity of the leading empirical process term 81 at α = 0. Thus, (Pn − P0)H0(αn)−1ϕ∇ψ{· ; θ⋆
+
+> 0
+
+(αn), α n} − H0(0) −1ϕ∇ψ{· ; θ⋆
+
+> 0
+
+(0) , 0} = op(n−1/2) . Combining the two previous displays yields 
+
+θ⋆n(αn) − θ⋆
+
+> 0
+
+(αn) = ( Pn − P0)H0(0) −1ϕ∇ψ{· ; θ⋆
+
+> 0
+
+(0) , 0} + op(n−1/2) . It remains to show that the estimand drift is negligible. Lemma S11(c) gives the bound 
+
+∥θ⋆
+
+> 0
+
+(α) − θ⋆
+
+> 0
+
+(0) ∥ ≤ Cα 
+
+for all α ∈ [0 , α ϵ], for C < ∞. Evaluating at α = αn = op(n−1/2) gives 
+
+∥θ⋆
+
+> 0
+
+(αn) − θ⋆
+
+> 0
+
+(0) ∥ ≤ Cα n = op(n−1/2) . Therefore, the estimand drift does not contribute to the first-order asymptotic expansion. Returning to the decomposition, we conclude that 
+
+θ⋆n(αn) − θ⋆
+
+> 0
+
+(αn) = ( Pn − P0)H0(0) −1ϕ∇ψ{· ; θ⋆
+
+> 0
+
+(0) , 0} + op(n−1/2) . The final result follows from the Central Limit Theorem. 
+
+# S8 Proofs Regarding Data-Adaptive Tilting 
+
+Proof of Lemma 3. Let Ln(α) := ¯Vn(α)−κn −1/2 ¯σn(α) so that αn = arg max α≥0 Ln(α). We first show that profiling over θ preserves the relevant convergence rate. For each α ∈ [0 , δ ], 
+
+| ¯Vn(α) − ¯V0(α)| = |sup 
+
+> θ∈Θ
+
+Vn(θ; α) − sup 
+
+> θ∈Θ
+
+V0(θ; α)| ≤ sup 
+
+> θ∈Θ
+
+|Vn(θ; α) − V0(θ; α)| .Moreover, since Vn(θ; α) − V0(θ; α) = ψn(θ; α) − ψ0(θ; α), it follows that sup 
+
+> α≥0
+
+| ¯Vn(α) − ¯V0(α)| ≤ sup 
+
+> α≥0
+
+sup 
+
+> θ∈Θ
+
+|ψn(θ; α) − ψ0(θ; α)| .82 By the global uniform consistency of ψn(θ; α) we have that sup 
+
+> α≥0
+
+| ¯Vn(α) − ¯V0(α)| = op(1) . (S21) Moreover, by Lemma S6 we have the sharper rate over α ∈ [0 , δ ]: sup 
+
+> α∈[0 ,δ ]
+
+| ¯Vn(α) − ¯V0(α)| ≤ sup 
+
+> (θ,α )∈Θ×[0 ,δ ]
+
+|ψn(θ; α) − ψ0(θ; α)| = Op(n−1/2) . (S22) We next show that the maximizer αn lies in the interval [0 , δ ] with probability tending to 1. By the global separation condition, there exists some ϵδ > 0 such that inf 
+
+> α>δ
+
+{ ¯V0(0) − ¯V0(α)} ≥ ϵδ .Then, because κ ≥ 0 and ¯ σn(α) ≥ 0, Ln(α) = ¯Vn(α) − κn −1/2 ¯σn(α) ≤ ¯Vn(α) for every 
+
+α ≥ 0. Hence, sup 
+
+> α>δ
+
+Ln(α) ≤ sup 
+
+> α>δ
+
+¯Vn(α) . Using Equation (S21) and global separation, sup 
+
+> α>δ
+
+Ln(α) ≤ sup 
+
+> α>δ
+
+¯V0(α) + sup 
+
+> α≥0
+
+| ¯Vn(α) − ¯V0(α)| ≤ ¯V0(0) − ϵδ + op(1) . (S23) On the other hand, Ln(0) = ¯Vn(0) − κn −1/2 ¯σn(0). By Equation (S22) taken at α = 0 and the assumed standard error bound we have ¯Vn(0) − ¯V0(0) = Op(n−1/2) and n−1/2 ¯σn(0) = 
+
+Op(n−1/2). Therefore 
+
+Ln(0) = ¯V0(0) + Op(n−1/2) . (S24) Combining Equations (S23) and (S24), we obtain P0{sup α>δ Ln(α) < L n(0) } → 1 and hence 
+
+P0(αn ∈ [0 , δ ]) → 1 . Condition on the high probability event, {αn ∈ [0 , δ ]}. It remains to show the local rate Define rn := sup α∈[0 ,δ ]|Ln(α) − ¯V0(α)|. By Equation (S22) and sup α∈[0 ,δ ] n−1/2 ¯σn(α) = 
+
+Op(n−1/2), we have rn = Op(n−1/2). On the event {αn ∈ [0 , δ ]}, we have Ln(α) ≥ Ln(0) 83 and ¯V0(0) − ¯V0(αn) = { ¯V0(0) − Ln(0) } + {Ln(0) − Ln(αn)} + {Ln(αn) − ¯V0(αn)}≤ rn + 0 + rn
+
+= 2 rn .By local linear separation, ¯V0(0) − ¯V0(α) ≥ cα for all α ∈ [0 , δ ]. Given that αn ∈ [0 , δ ], we obtain 
+
+cα n ≤ ¯V0(0) − ¯V0(αn) ≤ 2rn .Hence, α ≤ 2c−1rn = Op(n−1/2) on an event with probability tending toward 1. It follows that 
+
+αn = Op(n−1/2) . Finally, since αn = Op(n−1/2), P (αn < n −1/4) → 1. On this event, the clipped selector satisfies ˜ αn = 0. Therefore P (˜ αn = 0) → 1. Because ˜ αn ≥ 0 this implies ˜ αn = op(n−1/2). 
+
+# S9 Potential for Efficiency Gains in Deterministic Versus Stochastic Regimes 
+
+Our proposed UIPW framework targets stochastic policy classes and uses tilting to stabilize longitudinal inverse-probability weights in high–decision-point settings. A recurring em-pirical pattern in our simulations is that, relative to oracle or correctly specified parametric IPW benchmarks, the incremental efficiency gains from undersmoothing can be modest. A key reason is structural: stochastic intervention targets are typically closer to the observed treatment mechanism, so the corresponding change-of-measure weights are less variable and often bounded, leaving less variance for augmentation to reduce. To isolate this phenomenon in the simplest possible setting, we conducted a point-exposure simulation comparing a deterministic estimand, P0{Y (1) }, to a continuum of incremental propensity score (IPS; Kennedy, 2019) stochastic estimands P0[Y {Q(δ)}] in-dexed by an odds-multiplier δ > 1. IPS interventions provide a natural bridge between stochastic and deterministic regimes: as δ increases, the intervention shifts treatment prob-abilities toward 1 and approaches an always-treat intervention wherever π(x) > 0, so the 84 IPS targets become increasingly near deterministic. This setup therefore directly probes how the potential efficiency gain changes as we move from stochastic to near-deterministic regimes. We use the Kang and Schafer (2007) design employed in Kennedy (2019)’s simulation study for IPS interventions: X = ( X1, . . . , X 4) ∼ N (0 , I 4), P0(A = 1 | X) = expit( −X1 +0.5X2 −0.25 X3 −0.1X4), ( Y | A, X ) ∼ N {μ(X, A ), 1}, and μ(x, a ) = 200+ a{10+13 .7(2 x1 +
+
+x2 +x3 +x4)}. This design is known to induce variable propensities and highlight instability in deterministic weighting estimands. Of note, the original design includes an intercept of 200, which makes the IPW estimator incredibly variable; we additional perform simulations with an intercept of −10 such that P0{μ(X, 1) } = 0. We compare two estimands: ψDet 0 := P0{Y (1) }, and ψIPS 0 (δ) := P0[Y {Q(δ)}], where the IPS intervention replaces π(X) with the odds-shifted treatment probability qδ(X) = 
+
+δπ (X)/{δπ (X) + 1 − π(X)}.To focus on efficiency, we consider correctly specified parametric models for both the propensity score and outcome regression throughout our simulations. We consider the following estimators. For ψDet 0 we consider (i) standard IPW using πn, and (ii) augmented IPW (AIPW) that additionally uses μn to debias. For ψIPW 0 (δ) we consider: (i) IPS-IPW using a weighted mean representation: Pn[( δA + 1 − A)/{δπ n(X) + 1 − πn(X)}Y ], and (ii) an EIF-based estimator based on Kennedy (2019, Corollary 2). We performed 1000 Monte Carlo simulations for each δ with δ = 2 1, 21.5, . . . , 25. We summarized the Monte Carlo variance of each estimator and, for each estimand, reported the relative efficiency of the AIPW estimator to the IPW benchmark (Figure S6). Our results suggest that there is a larger potential for efficiency gains when targeting determin-istic, rather than stochastic, regimes. At multiple decision points, the same qualitative mechanism typically amplifies: de-terministic regime evaluation produces products of inverse propensity terms over time, which can yield highly variable (and often heavy-tailed) weights even when each single-step propensity is reasonable. In contrast, stochastic regimes that remain close to the observed treatment mechanism tend to keep each step’s Radon–Nikodym factor nearer to 1 (and often bounded), so the longitudinal weight product is substantially more stable. As a result, baseline IPW estimators under stochastic regimes are already closer to their efficient limits, leaving less variance for EIF/AIPW-style corrections (or undersmoothing refinements) to remove. 85 n: 500 n: 1000 n: 5000               
+
+> Original Intercept = 200
+> Centered Intercept = −10
+> 24816 32 24816 32 24816 32
+> 1310 30
+> 135
+
+Incremental Propensity Score δ (log2 Scale) 
+
+> Relative Efficiency (log10 Scale)
+
+Intervention Deterministic Incremental Propensity Score 
+
+Relative Efficiency in Deterministic and Stochastic Interventions Figure S6: Relative efficiency, defined as Var( ψIPW 
+
+n )/ Var( ψAIPW 
+
+n ), plotted versus the IPS odds-multiplier δ.86
