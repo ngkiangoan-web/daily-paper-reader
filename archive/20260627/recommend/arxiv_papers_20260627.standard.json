@@ -1,0 +1,259 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-27T20:24:30.317202+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 3,
+    "deep_cap": 7,
+    "deep_selected": 3,
+    "quick_candidates": 3,
+    "quick_skim_target": 12,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "biorxiv-10-64898-2026-06-21-733648-v1",
+      "source": "biorxiv",
+      "title": "Tired and wired: sleep deprivation prevents emotional adaptation to prolonged and ambiguous threat",
+      "abstract": "Sleep deprivation amplifies emotional reactivity to brief, overt threats in the external environment. However, its effects on emotional responses to prolonged, ambiguous threat remain unclear. In this pre-registered study, we combined virtual reality, psychophysiology and multidimensional experience sampling to test the hypothesis that sleep deprivation disrupts emotional adaptation to sustained or resolving threat. Following a night of restful sleep or total sleep deprivation, healthy young adults navigated an immersive virtual world that alternated between ambiguously threatening and non-threatening contexts. Despite initial increases in emotional arousal, sleep-rested individuals quickly downregulated affective responses to ambiguous threat, reflecting efficient adaptation to the aversive virtual environment. Sleep-deprived individuals, by contrast, were unable to overturn elevated arousal responses, and exhibited a breakdown of goal-orientated, emotional control. Interestingly, resting heart rate variability, an index of affective regulatory capacity, mitigated arousal responses to ambiguous threat after sleep deprivation. These findings suggest that insufficient sleep prevents an adaptive renormalisation of emotional arousal during prolonged and ambiguous threat, giving rise to a maladaptive state of anxiety.",
+      "authors": [
+        "Sullivan, E. C.",
+        "McCall, C.",
+        "Croissant, M.",
+        "Henderson, L.",
+        "Schofield, G.",
+        "Cairney, S."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-06-25T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.21.733648v1.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "uses multidimensional experience sampling to study sleep deprivation effects on emotional adaptation",
+      "llm_evidence_cn": "使用多维经验采样法研究睡眠剥夺对情绪适应的影响",
+      "llm_evidence": "使用多维经验采样法研究睡眠剥夺对情绪适应的影响",
+      "canonical_evidence": "使用多维经验采样法研究睡眠剥夺对情绪适应的影响",
+      "llm_tldr_en": "Combining VR, psychophysiology, and experience sampling, this study finds that sleep deprivation disrupts emotional adaptation to prolonged ambiguous threat, while sleep-rested individuals quickly downregulate affective responses.",
+      "llm_tldr_cn": "该研究结合虚拟现实、心理生理学和多维经验采样法，探讨睡眠剥夺如何影响对持续模糊威胁的情绪适应。结果显示，睡眠充足的个体能够快速下调情绪反应，而睡眠剥夺者则无法适应，提示睡眠在情绪调节中的关键作用。",
+      "llm_tldr": "该研究结合虚拟现实、心理生理学和多维经验采样法，探讨睡眠剥夺如何影响对持续模糊威胁的情绪适应。结果显示，睡眠充足的个体能够快速下调情绪反应，而睡眠剥夺者则无法适应，提示睡眠在情绪调节中的关键作用。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ecological momentary assessment EMA in sleep and mental health",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.21474v1",
+      "source": "arxiv",
+      "title": "Towards Transparent Mental Health Insights: An Explainable AI Model for Career-Related Depression and Anxiety Among University Students Using Structured Data",
+      "abstract": "Career anxiety and depression among university students present a growing challenge to mental health and academic achievement. This study proposes an Explainable AI (XAI) framework using multimodal data and Federated Learning (FL) to identify early indicators of career-related mental health problems in a privacy-preserving and culturally responsive manner. The framework combines structured behavioral data and facial emotion features from interview videos via an intermediate fusion neural network with attention mechanisms. Label smoothing was applied to improve model generalizability. FL was used across institutions to enable collaborative training without raw data sharing. Evaluation was conducted using the Student Mental Health Survey dataset from university students across Pakistan. Our model attained an F1-score of 89.12%, recall of 86.54%, accuracy of 92.08%, and precision of 91.88%. Using Integrated Gradients and SHAP, the model identified key behavioral markers of depression including avoidance of direct gaze, lower facial expressiveness, and social withdrawal, consistent with psychological theory. This research presents an interpretable, scalable, and context-sensitive AI system for mental health pre-diagnosis with potential integration into student support services globally.",
+      "authors": [
+        "Arsham Azam",
+        "Rasikh Ali",
+        "Tayyaba Farhat",
+        "Sheeraz Akram"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-19T14:23:41+00:00",
+      "link": "https://arxiv.org/pdf/2606.21474v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "assesses depression and anxiety from structured behavioral data and facial features",
+      "llm_evidence_cn": "通过结构行为数据和面部特征评估抑郁和焦虑",
+      "llm_evidence": "通过结构行为数据和面部特征评估抑郁和焦虑",
+      "canonical_evidence": "通过结构行为数据和面部特征评估抑郁和焦虑",
+      "llm_tldr_en": "Proposes an explainable AI framework combining structured data and facial emotion features via intermediate fusion and federated learning to detect career-related depression and anxiety in university students.",
+      "llm_tldr_cn": "大学生职业相关心理问题日益严峻。该论文提出可解释AI框架，融合结构化行为数据和面试视频面部特征，利用中间融合注意力和联邦学习，在保护隐私的同时早期识别抑郁和焦虑指标。模型通过标签平滑提高泛化能力，实验验证其有效性。",
+      "llm_tldr": "大学生职业相关心理问题日益严峻。该论文提出可解释AI框架，融合结构化行为数据和面试视频面部特征，利用中间融合注意力和联邦学习，在保护隐私的同时早期识别抑郁和焦虑指标。模型通过标签平滑提高泛化能力，实验验证其有效性。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "depression mood assessment",
+      "matched_requirement_id": "req-14",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26506v1",
+      "source": "arxiv",
+      "title": "TinyCNNDeep: Lightweight Attention-Based CNN for EEG Classification of Eye States and Sleep Deprivation",
+      "abstract": "Sleep deprivation impairs vigilance and cognitive function, yet jointly identifying the sleep condition (normal vs deprived) and the eye state (open vs closed) from electroencephalography (EEG) remains underexplored. We address this four-class problem with TinyCNNDeep, a lightweight convolutional neural network that combines residual learning with a Squeeze-and-Excitation (SE) attention module. We convert short multi-channel EEG segments from five physiologically relevant channels (Fp1, Fp2, O1, Oz, O2) into 224x224 grayscale images through per-channel Z-score normalization, min-max scaling, and center padding, enabling 2D convolutions to jointly model inter-channel and temporal structure. On a 35-subject dataset recorded under normal-sleep and sleep-deprivation sessions, TinyCNNDeep attains a subject-wise mean accuracy of 83.69%, outperforming the strongest baseline (Random Forest with combined time-frequency features, 47.66%) by 36.03 percentage points, while three established EEG architectures (EEGNet, ShallowConvNet, DeepConvNet) operate near chance. Per-subject analysis quantifies inter-subject variability, and confusion-matrix inspection shows that residual misclassifications concentrate between eyes-closed states across sleep conditions. These results indicate that an image-based EEG representation paired with residual feature extraction and channel attention provides an accurate and computationally efficient framework for multiclass sleep-related EEG classification under a minimal electrode configuration.",
+      "authors": [
+        "Thien Nhan Vo",
+        "Yen Nhi Tran Thi",
+        "Ngan Nguyen Xuan Phuong",
+        "Xuan-The Tran"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-06-25T01:25:13+00:00",
+      "link": "https://arxiv.org/pdf/2606.26506v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "classifies sleep deprivation from EEG, addressing sleep quality assessment",
+      "llm_evidence_cn": "通过EEG分类睡眠剥夺，涉及睡眠质量评估",
+      "llm_evidence": "通过EEG分类睡眠剥夺，涉及睡眠质量评估",
+      "canonical_evidence": "通过EEG分类睡眠剥夺，涉及睡眠质量评估",
+      "llm_tldr_en": "Proposes TinyCNNDeep, a lightweight CNN with SE attention, to classify sleep deprivation and eye state from multi-channel EEG, achieving high accuracy on 35-subject dataset.",
+      "llm_tldr_cn": "睡眠剥夺严重影响认知功能。该论文提出TinyCNNDeep轻量卷积神经网络，结合残差学习和SE注意力模块，将多通道EEG转换为灰度图像进行分类。在35名受试者数据集上，模型有效分类睡眠状态（正常/剥夺）和眼状态（开/闭），为睡眠质量评估提供了非侵入性EEG方法。",
+      "llm_tldr": "睡眠剥夺严重影响认知功能。该论文提出TinyCNNDeep轻量卷积神经网络，结合残差学习和SE注意力模块，将多通道EEG转换为灰度图像进行分类。在35名受试者数据集上，模型有效分类睡眠状态（正常/剥夺）和眼状态（开/闭），为睡眠质量评估提供了非侵入性EEG方法。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.23864v1",
+      "source": "arxiv",
+      "title": "Generative Modeling for Physiological Signals",
+      "abstract": "Physiological signals support clinical diagnosis, health monitoring, rehabilitation, wearable sensing, and human--machine interaction. However, their applications are often constrained by limited labeled data, class imbalance, noisy or incomplete recordings, heterogeneous acquisition settings, and privacy restrictions. Generative modeling has therefore attracted increasing attention as a means of addressing some of these barriers. Recent studies have used generative models to augment scarce datasets, restore degraded recordings, translate between modalities, and synthesize conditional physiological waveforms. This review summarizes recent work on generative modeling for cardiovascular, neural, muscular, peripheral, and specialized physiological signals. Major model families are covered, including generative adversarial networks (GANs), autoencoders and variational autoencoders (AEs/VAEs), diffusion models, autoregressive sequence models, and hybrid architectures. In addition, it organizes existing evaluation practices into a hierarchical framework spanning signal-level similarity, dataset-level distribution, physiological validity, task-oriented utility, and assessments of generalization and robustness. By linking signal-specific constraints, generative roles, model families, and evaluation evidence, this review provides structured guidance for the future use and evaluation of generative models in physiological-signal research.",
+      "authors": [
+        "Xinqi Bao",
+        "Ernest Kamavuako",
+        "Saikat Chatterjee"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP"
+      ],
+      "published": "2026-06-22T19:03:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.23864v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "generative models for physiological signals applicable to mobile health and EMA data augmentation",
+      "llm_evidence_cn": "生理信号生成模型可应用于移动健康和EMA数据增强",
+      "llm_evidence": "生理信号生成模型可应用于移动健康和EMA数据增强",
+      "canonical_evidence": "生理信号生成模型可应用于移动健康和EMA数据增强",
+      "llm_tldr_en": "This review summarizes generative models for physiological signals, including cardiovascular and neural signals, addressing data scarcity and privacy, relevant for mobile health EMA.",
+      "llm_tldr_cn": "该综述总结了生成模型在心血管、神经、肌肉等生理信号中的应用，包括数据增强、去噪和跨模态翻译，这些技术能够解决移动健康和生态瞬时评估中面临的标签数据有限、噪声和隐私问题，为EMA研究提供重要的方法论支持。",
+      "llm_tldr": "该综述总结了生成模型在心血管、神经、肌肉等生理信号中的应用，包括数据增强、去噪和跨模态翻译，这些技术能够解决移动健康和生态瞬时评估中面临的标签数据有限、噪声和隐私问题，为EMA研究提供重要的方法论支持。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25606v1",
+      "source": "arxiv",
+      "title": "Expresso-AI: Explainable Video-Based Deep Learning Models for Depression Diagnosis",
+      "abstract": "Given the widespread prevalence of depression and its consequential impact on individuals and society, it is crucial to obtain objective measures for early diagnosis and intervention. As a multidisciplinary topic, these objective measures should be interpretable and accessible to health care professionals, ensuring effective collaboration and treatment planning in the realm of mental health care. Even though current automated depression diagnosis approaches improved over the last decade, a critical gap exists as they often lack affect-specificity and interpretability, limiting their practical application and potential impact on mental health care. In particular, interpretability from temporal activities from videos when deep models are used is not fully explored. In this study, we present a novel framework for analyzing Deep Neural Networks' decisions when trained on facial videos, specifically focusing on automatic depression severity diagnosis. By fine-tuning Deep Convolutional Neural Networks (DCNN) pre-trained on Action Recognition datasets on depression severity facial videos from AVEC depression dataset, our framework is able to interpret the model's saliency maps by examining face regions and temporal expression semantics. Our approach generates both visual and quantitative explanations for the model's decisions, providing greater insight into its reasoning. In addition to this interpretability, our video-based modeling has improved upon previous single-face benchmarks for visual depression diagnosis, resulting in enhanced predictive performance. Overall, our work demonstrates the successful development of a framework capable of generating hypotheses from a facial model's decisions while simultaneously improving depression's predictive capabilities.",
+      "authors": [
+        "Felipe Moreno",
+        "Sharifa Alghowinem",
+        "Hae Won Park",
+        "Cynthia Breazeal"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-24T09:14:53+00:00",
+      "link": "https://arxiv.org/pdf/2606.25606v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "focuses on depression diagnosis using video-based deep learning models, relevant to depression mood assessment",
+      "llm_evidence_cn": "关注使用基于视频的深度学习模型进行抑郁诊断，与抑郁情绪评估相关",
+      "llm_evidence": "关注使用基于视频的深度学习模型进行抑郁诊断，与抑郁情绪评估相关",
+      "canonical_evidence": "关注使用基于视频的深度学习模型进行抑郁诊断，与抑郁情绪评估相关",
+      "llm_tldr_en": "Proposes explainable video-based deep learning models for depression diagnosis, addressing interpretability gap in automated mental health assessment.",
+      "llm_tldr_cn": "该论文针对现有自动化抑郁诊断方法缺乏可解释性和情感特异性的问题，提出了基于视频的可解释深度学习模型Expresso-AI。通过分析视频中的时间活动特征，模型在抑郁诊断中取得了良好性能，同时提供可解释的结果，有助于临床协作和治疗规划。研究为心理健康领域的客观评估提供了新的可解释工具。",
+      "llm_tldr": "该论文针对现有自动化抑郁诊断方法缺乏可解释性和情感特异性的问题，提出了基于视频的可解释深度学习模型Expresso-AI。通过分析视频中的时间活动特征，模型在抑郁诊断中取得了良好性能，同时提供可解释的结果，有助于临床协作和治疗规划。研究为心理健康领域的客观评估提供了新的可解释工具。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "depression mood assessment",
+      "matched_requirement_id": "req-14",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-06-21-732147-v1",
+      "source": "biorxiv",
+      "title": "Alterations in sleep state boundaries and sleep dynamics following acute total and chronic partial sleep loss: a state space model exploration",
+      "abstract": "Chronic partial and acute total sleep loss have a distinct impact on sleep architecture. Namely, acute sleep deprivation primarily leads to a strong rebound of slow wave sleep, while chronic sleep restriction results in an increased propensity of REM sleep. The aim of this work was to examine whether these different effects would translate into quantifiable changes in sleep state boundaries and dynamics using a model-based method.\n\nBesides conventional sleep stage scoring, we applied an EEG model (state space approach) for dynamic analysis of nocturnal EEG recordings in 14 healthy subjects under experimental chronic sleep restriction (last of 7 nights with 5 hours of time in bed) and after acute sleep deprivation (sleep following 40 hours of wakefulness), in comparison to baseline sleep.\n\nSubjects under chronic sleep restriction revealed increased similarities in the frequency composition of REM sleep and wakefulness and thus, a decreased differentiation of state boundaries between the two behavioral states. Contrarily, acute sleep deprivation affected the spectral composition of NREM sleep. Only acute sleep deprivation resulted in more stable slow wave sleep.\n\nOur explorative study confirmed that the distinct effects of increased REM sleep and slow wave sleep propensity following acute total and chronic partial sleep loss are reflected in differential changes of behavioral state boundaries and sleep dynamics. This suggests that these sleep structure characteristics are state dependent, which may allow using such measures in the future to track treatment effects in clinical populations characterized by sleep behavioral state dysregulation.",
+      "authors": [
+        "Reutimann, S.",
+        "Imbach, L.",
+        "Burkhard, Z.",
+        "Baumann, C. R.",
+        "Maric, A."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-06-25T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.21.732147v1.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "examines sleep state boundaries and dynamics after sleep loss, relevant to sleep quality assessment and measurement",
+      "llm_evidence_cn": "研究睡眠剥夺后睡眠状态边界和动力学的变化，与睡眠质量评估和测量相关",
+      "llm_evidence": "研究睡眠剥夺后睡眠状态边界和动力学的变化，与睡眠质量评估和测量相关",
+      "canonical_evidence": "研究睡眠剥夺后睡眠状态边界和动力学的变化，与睡眠质量评估和测量相关",
+      "llm_tldr_en": "Applies a state space model to EEG recordings to quantify changes in sleep state boundaries and dynamics after acute and chronic sleep loss.",
+      "llm_tldr_cn": "该论文针对急性和慢性睡眠剥夺对睡眠结构的不同影响，采用状态空间模型分析夜间EEG记录。研究发现，睡眠剥夺导致睡眠状态边界和动力学的可量化变化，急性剥夺以慢波睡眠反弹为主，慢性限制则增加REM睡眠倾向。该方法为睡眠质量评估提供了新的动态分析工具。",
+      "llm_tldr": "该论文针对急性和慢性睡眠剥夺对睡眠结构的不同影响，采用状态空间模型分析夜间EEG记录。研究发现，睡眠剥夺导致睡眠状态边界和动力学的可量化变化，急性剥夺以慢波睡眠反弹为主，慢性限制则增加REM睡眠倾向。该方法为睡眠质量评估提供了新的动态分析工具。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

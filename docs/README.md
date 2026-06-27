@@ -6,29 +6,40 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-25
-- 运行时间：2026-06-25 22:27:24 UTC
+- 最新运行日期：2026-06-27
+- 运行时间：2026-06-27 20:27:17 UTC
 - 运行状态：成功
-- 本次总论文数：3
-- 精读区：1
-- 速读区：2
+- 本次总论文数：6
+- 精读区：3
+- 速读区：3
 
 ### 今日简报（AI）
-今天共处理3篇论文，其中1篇精读聚焦非参数估计最优随机及时适应干预，2篇速读关注可穿戴设备在癌症幸存者日常活动中的自主神经分析与压力检测个性化方法。最值得关注的是精读论文提出的动态干预优化框架，以及速读中结合大模型的可穿戴压力检测方案。建议普通读者深入了解可穿戴健康监测的实时数据分析潜力，并关注个性化干预模型的实际应用前景。
-- 详情：[/202606/25/README](/202606/25/README)
+1. 今日日报聚焦睡眠剥夺对情绪适应的阻碍及可解释AI在大学生抑郁焦虑诊断中的应用。  
+2. 最值得关注：睡眠剥夺会让人无法适应持久威胁(9.0分)，可解释AI模型能有效识别职业相关抑郁焦虑(8.0分)。  
+3. 建议普通读者重视睡眠质量以维持情绪韧性，并留意可解释AI工具在心理健康筛查中的实用潜力。
+- 详情：[/202606/27/README](/202606/27/README)
 
 ### 精读区论文标签
-1. [Nonparametric Estimation of Optimal Stochastic Just-In-Time Adaptive Interventions for Distal Outcomes](/202606/25/2606.25107v1-nonparametric-estimation-of-optimal-stochastic-just-in-time-adaptive-interventions-for-distal-outcomes)  
-   标签：评分：8.0/10、query:ema-mental
-   evidence：移动健康中即时自适应干预的优化方法
+1. [Tired and wired: sleep deprivation prevents emotional adaptation to prolonged and ambiguous threat](/202606/27/biorxiv-10-64898-2026-06-21-733648-v1-tired-and-wired-sleep-deprivation-prevents-emotional-adaptation-to-prolonged-and-ambiguous-threat)  
+   标签：评分：9.0/10、query:sleep-mental
+   evidence：使用多维经验采样法研究睡眠剥夺对情绪适应的影响
+2. [Towards Transparent Mental Health Insights: An Explainable AI Model for Career-Related Depression and Anxiety Among University Students Using Structured Data](/202606/27/2606.21474v1-towards-transparent-mental-health-insights-an-explainable-ai-model-for-career-related-depression-and-anxiety-among-university-students-using-structured-data)  
+   标签：评分：8.0/10、query:sleep-mental
+   evidence：通过结构行为数据和面部特征评估抑郁和焦虑
+3. [TinyCNNDeep: Lightweight Attention-Based CNN for EEG Classification of Eye States and Sleep Deprivation](/202606/27/2606.26506v1-tinycnndeep-lightweight-attention-based-cnn-for-eeg-classification-of-eye-states-and-sleep-deprivation)  
+   标签：评分：8.0/10、query:sleep-mental
+   evidence：通过EEG分类睡眠剥夺，涉及睡眠质量评估
 
 ### 速读区论文标签
-1. [Analysis of Autonomic Regulation in Cancer Survivors During Daily Physical Activity: A Real-World Wearable ECG Study](/202606/25/2606.23461v3-analysis-of-autonomic-regulation-in-cancer-survivors-during-daily-physical-activity-a-real-world-wearable-ecg-study)  
+1. [Generative Modeling for Physiological Signals](/202606/27/2606.23864v1-generative-modeling-for-physiological-signals)  
+   标签：评分：7.0/10、query:ema-mental
+   evidence：生理信号生成模型可应用于移动健康和EMA数据增强
+2. [Expresso-AI: Explainable Video-Based Deep Learning Models for Depression Diagnosis](/202606/27/2606.25606v1-expresso-ai-explainable-video-based-deep-learning-models-for-depression-diagnosis)  
    标签：评分：6.0/10、query:sleep-mental
-   evidence：真实世界可穿戴心电图研究，进行动态监测
-2. [Retrieval-Augmented Personalization with Foundation Models for Wearable Stress Detection](/202606/25/2606.24985v1-retrieval-augmented-personalization-with-foundation-models-for-wearable-stress-detection)  
-   标签：评分：6.0/10、query:ema-mental
-   evidence：可穿戴压力检测作为EMA移动健康方法
+   evidence：关注使用基于视频的深度学习模型进行抑郁诊断，与抑郁情绪评估相关
+3. [Alterations in sleep state boundaries and sleep dynamics following acute total and chronic partial sleep loss: a state space model exploration](/202606/27/biorxiv-10-64898-2026-06-21-732147-v1-alterations-in-sleep-state-boundaries-and-sleep-dynamics-following-acute-total-and-chronic-partial-sleep-loss-a-state-space-model-exploration)  
+   标签：评分：6.0/10、query:sleep-mental
+   evidence：研究睡眠剥夺后睡眠状态边界和动力学的变化，与睡眠质量评估和测量相关
 
 
 <div class="dpr-home-promo-card">
