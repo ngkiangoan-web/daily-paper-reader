@@ -1,0 +1,39 @@
+{
+  "label": "2026-06-28",
+  "date": "2026-06-28",
+  "generated_at": "2026-06-28T21:21:30",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202606/28/2606.24228v1-uncertainty-intervals-for-multilevel-models-with-missing-not-at-random-data",
+      "section": "quick",
+      "title_en": "Uncertainty intervals for multilevel models with missing not at random data",
+      "authors": "Minna Genbäck",
+      "date": "2026-06-23",
+      "pdf": "https://arxiv.org/pdf/2606.24228v1",
+      "score": "6.0",
+      "evidence": "针对多水平模型中非随机缺失数据的敏感性分析方法，适用于EMA数据，以孤独感为例",
+      "tldr": "针对多层线性模型中的非随机缺失（MNAR）数据，本文提出一种敏感性分析方法。同时建模结果变量和脱落风险，利用多层模型推导出MNAR导致的偏差校正项，该偏差可基于观测数据估计，并依赖于敏感性参数的指定值。通过假设参数在合理范围内，在弱于随机缺失的条件下对感兴趣参数进行部分识别，获得估计和推断的边界。模拟研究和记忆轨迹数据分析验证了方法有效性。",
+      "tags": "query:ema-mental",
+      "abstract_en": "We propose a sensitivity analysis method for missing not at random (MNAR) data in the context of linear multilevel (mixed-effects) models. The outcome and dropout risk are both modelled using multilevel models and a bias adjustment due to MNAR data is derived. This bias can be estimated from observed data conditional on specified values of sensitivity parameter(s). Under the assumption that these parameters lie within a plausible range, the method partially identify the parameters of interest, yielding bounds for estimation and inference under assumptions weaker than missing at random. The proposed analysis is investigated in a simulation study and illustrated with an analysis of the association between loneliness and physical activity with memory trajectories, adjusting for demographic, socioeconomic, and health covariates.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/28/biorxiv-10-64898-2026-06-22-733821-v1-prefrontal-activation-predicts-response-latency-and-is-shaped-by-age-and-lifestyle",
+      "section": "quick",
+      "title_en": "Prefrontal activation predicts response latency and is shaped by age and lifestyle",
+      "authors": "Mitchell-Heggs, R., Tamkin, D., Scherdel, L., Snowdon-Farrell, A., Curry, A., Rosenior-Patten, O., Schultz, S. R.",
+      "date": "2026-06-28",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.22.733821v1.full.pdf",
+      "score": "6.0",
+      "evidence": "结合消费级可穿戴睡眠指标与脑成像，进行睡眠质量评估",
+      "tldr": "神经精神疾病影响广泛，但可改变生活方式与皮层血流动力学的关系尚不明确。本研究使用可穿戴设备与TD-fNIRS测量92名健康成人dlPFC激活，发现峰值激活与反应时间显著负相关，且具有中等重测信度和稳定个体差异。年龄是激活最强预测因子，睡眠和体力活动贡献微弱。结果表明dlPFC激活可作为纵向稳定、行为相关的神经标记，用于可扩展追踪可修改风险因素。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "Neurological and neuropsychiatric conditions affect 43% of the global population, many shaped by modifiable lifestyle exposures, yet their relationship to cortical haemodynamics is poorly characterised. The dorsolateral prefrontal cortex (dlPFC) is a particularly tractable target: it underpins executive function, is disrupted across neuropsychiatric and age-related conditions, and lies on the cortical surface, within reach of scalable, wearable-grade optical neuroimaging. We present LUCID, a longitudinal study of 92 healthy adults combining consumer wearable sleep and physical activity metrics with task-evoked dlPFC haemodynamics, measured by time-domain functional near-infrared spectroscopy (TD-fNIRS). Log-transformed peak dlPFC activation was negatively associated with reaction time (RT) across the 2N-Back and Stroop tasks and both hemispheres (r = -0.37 to -0.53), greater activation accompanying faster responses, consistent with a capacity/recruitment account. Activation showed moderate test-retest reliability (intraclass correlation coefficient, ICC = 0.56-0.71), with between-person variance exceeding within-person fluctuation, indicating stable individual differences. Demographic and lifestyle features incrementally predicted activation, with age the strongest predictor and modest contributions from sleep and physical activity. These findings establish TD-fNIRS dlPFC activation as a longitudinally stable, behaviourally relevant functional neural marker for scalable tracking of modifiable risk.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

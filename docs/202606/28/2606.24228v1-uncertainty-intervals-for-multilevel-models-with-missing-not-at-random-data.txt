@@ -1,0 +1,875 @@
+Title: Uncertainty intervals for multilevel models with missing not at random data
+
+URL Source: https://arxiv.org/pdf/2606.24228v1
+
+Published Time: Wed, 24 Jun 2026 00:37:04 GMT
+
+Number of Pages: 16
+
+Markdown Content:
+# Uncertainty intervals for multilevel models with missing not at random data 
+
+## Minna Genb¨ ack 
+
+Ume˚ a School of Business Economics and Statistics, Ume˚ a University, 901 87 Ume˚ a, Sweden. Contributing authors: minna.genback@umu.se; 
+
+Abstract 
+
+We propose a sensitivity analysis method for missing not at random (MNAR) data in the context of linear multilevel (mixed-effects) models. The outcome and dropout risk are both modelled using multilevel models and a bias adjustment due to MNAR data is derived. This bias can be estimated from observed data conditional on specified values of sensitivity param-eter(s). Under the assumption that these parameters lie within a plausible range, the method partially identify the parameters of interest, yielding bounds for estimation and inference under assumptions weaker than missing at random. The proposed analysis is investigated in a simulation study and illustrated with an analysis of the association between loneliness and physical activity with memory trajectories, adjusting for demographic, socioeconomic, and health covariates.  
+
+> Keywords: Non-ignorable dropout; Sensitivity analysis; Partial identification; mixed effects models; Non-monotone dropout
+
+# Acknowledgements 
+
+The work was funded by Swedish Research Council for health working life and welfare [2019-01064]. The author thank associate professors Maria Josefsson, Anders Lundquist and Xavier de Luna for helpful discussions. This paper uses data from SHARE wave 4-9. The SHARE data collection has been primarily funded by the European Commission, see www.share-eric.eu for more details. 
+
+# 1 Introduction 
+
+In longitudinal surveys, non-response is a common occurrence and it comprises not only of indi-viduals who never participate but also those who respond at only a subset of the measurement occasions. Non-response can reduce study quality—firstly by reducing sample sizes and thus the precision of estimates, and more severely, by introducing bias into the estimation of the parameters of interest, if certain assumptions about the missing data are not met. Analyses of data with non-response necessarily rely on untestable assumptions about the missingness mechanism to achieve full identification of the parameters of interest (Molenberghs et al. 2015). A widely used method for the analysis of longitudinal data is the multilevel (mixed-effects) models. Standard implementations of these models assume that data are missing at random (MAR), that is the probability of missingness only depend on the observed data Little and Rubin (2002). Among older populations, previous studies suggest that respondents tend to be healthier than non-respondents (Chatfield et al. 2005; Josefsson et al. 2012; Nummela et al. 2011). If so, in studies 1
+
+> arXiv:2606.24228v1 [stat.ME] 23 Jun 2026
+
+where the outcome is health-related, the MAR assumption may not fulfilled and therefore the conclusions if incorrectly assuming MAR could be misleading. Most methods that accommodate MNAR mechanisms fall into either selection models or pattern mixture models. In selection models, dropout is modeled as a dependent variable, whereas in pattern mixture models, it is treated as a predictor (Enders 2023; Carpenter and Kenward 2013). Within both frameworks, there are approaches that achieve full identification under alternative assumptions to MAR, such as additional distributional constraints (Enders 2011; Josefsson et al. 2016; Hammon and Zinn 2020). These assumptions are untestable from the data, and if made incorrectly may lead to misleading conclusions. An alternative approach, proposed in this paper, is to forgo full identification and instead adopt weaker assumptions about the missing data mechanism, thereby partially identifying the parame-ters of interest (Manski 2003; Vansteelandt et al. 2006). This strategy typically involves quantifying deviations from the MAR assumption using sensitivity parameter(s), where the width and direc-tion of the resulting bounds reflect the extent to which the sensitivity parameter departs from MAR. In this paper, we implement this by fitting two multilevel models: one for the outcome under the MAR framework and another for the dropout mechanism. Under MAR, the random compo-nents of these two regression models are independent; here, we allow them to be correlated, with correlation serving as the sensitivity parameter. This type of sensitivity parameter has previously been applied in settings other than multilevel models (Genb¨ ack et al. 2015; Genb¨ ack and de Luna 2019; Imai et al. 2010). We provide a general analytical expression for the bias as a function of the sensitivity parameter, which, to the authors’ knowledge, has previously only been derived for spe-cial cases that are not representative of longitudinal studies (Genton 2004; Gonz´ alez-Far´ ıas et al. 2004). The bias is then used to construct uncertainty intervals, analogous to confidence intervals but centered around bounds on the estimates, thereby allowing greater flexibility in assumptions about the missing data mechanism. This type of analysis is to the authors knowledge not common for multilevel models but have recently been suggested in a multiple imputation setting Wang et al. (2025). We apply the proposed methods to a study of the association between various lifestyle factors and memory trajectories among individuals aged 65 and older, using multilevel models fitted to longitudinal survey data. The survey data exhibit substantial dropout, which we suspect may follow a MNAR mechanism. In such cases, standard multilevel analyses may yield biased estimates. To address this, we adjust the standard analysis to account for uncertainty arising from the missing data. The paper is organized as follows. Section 2 introduces the general notation, model assumptions, and theoretical results. In Section 3, we describe the motivating example and specialize the notation and assumptions to this setting. Section 3.3 presents the results of the data analysis, and Section 4 describes a simulation study designed to assess the performance of the proposed sensitivity analysis. The paper is concluded in Section 5. 
+
+# 2 Theory 
+
+We model the outcome with a multilevel model (linear mixed effects model). Specifically, suppose that we have N clusters, each with ni observations. Let yi be an ni × 1 vector containing the outcomes, Xi a ni × m matrix of covariates and β an m × 1 vector of the parameters of interest. Then, 
+
+yi = Xiβ + ηi, (1) where ηi is multivariate normal with covariance matrix Σ i, thereby allowing for dependencies between the observations within each cluster. Note that, to ease notation we only use 2 levels in this section, but the results are easily adaptable to more levels by introducing more indexes, in particular we use 3 levels in the application in Section 3. Dropout is modeled with a generalized multilevel model (generalized linear mixed model) with a probit link. That is, let z∗ 
+
+> i
+
+be a latent ni × 1 vector with elements z∗
+
+> ik
+
+, k = 1 , ..., n i where yik is observed if zik = I(z∗ 
+
+> ik
+
+> 0) = 1, and let δ be an m × 1 parameter vector. Then, 2z∗ 
+
+> i
+
+= Xiδ + ui, (2) where ui is multivariate normal with covariance matrix Ω i, again allowing for within cluster dependence. Most statistical softwares that can fit both models (1) and (2) under the assumption that dropout is MAR, i.e. ui⊥⊥ηi. To allow for MNAR data, we introduce a sensitivity parameter matrix, ∆ i, the covariance between ui and ηi. We can then jointly specify the outcome and dropout processes as: 
+
+ yi
+
+z∗
+
+> i
+
+
+
+=
+
+ Xiβ
+
+Xiδ
+
+
+
++
+
+ ηi
+
+ui
+
+
+
+, where 
+
+ ηi
+
+ui
+
+
+
+∼ M V N 
+
+ 00
+
+
+
+,
+
+ Σi ∆i
+
+∆Ti Ωi
+
+ 
+
+. (3) 
+
+## 2.1 Estimator and bias 
+
+Let yobs  
+
+> i
+
+denote the observed subset of the outcome vector for cluster i (yobs  
+
+> i
+
+= {yik |zik = 1 , k =1, ..., n i} ) and {} obs denote the corresponding subset for any general vector. Similarly, let Xobs  
+
+> i
+
+be the observed subset of the covariate matrix, and Σ obs  
+
+> i
+
+the corresponding submatrix of Σ i. Then, the generalized least squares estimator (GLS) of β under model (1) using the observed data is (Demidenko 2004), ˜βGLS =
+
+" NX
+
+> i=1
+
+(Xobs  
+
+> i
+
+)′(Σ obs  
+
+> i
+
+)−1Xobs 
+
+> i
+
+#−1 " NX
+
+> i=1
+
+(Xobs  
+
+> i
+
+)′(Σ obs  
+
+> i
+
+)−1yobs 
+
+> i
+
+#
+
+. (4) As previously noted, this estimator may be biased if dropout is MNAR. 
+
+Theorem 1 The bias of the the generalized least squares estimator (4) of β under the model (3), when 
+
+∆i̸ = 0, is: bias (˜βGLS ) = 
+
+" NX
+
+> i=1
+
+(Xobs  
+
+> i
+
+)′(Σ obs  
+
+> i
+
+)−1Xobs 
+
+> i
+
+#−1 " NX
+
+> i=1
+
+(Xobs  
+
+> i
+
+)′(Σ obs  
+
+> i
+
+)−1 n
+
+∆iΩ−1 
+
+> i
+
+E (vi)
+
+oobs 
+
+#
+
+where vi =
+
+
+
+ui
+
+ uobs   
+
+> i>−Xiobs δ
+> umis i<−Ximis δ
+
+
+
+, Xi
+
+
+
+is a double truncated multivariate normal distribution with mean zero and covariance matrix Ωi. The truncations are from below if zik = 1 , and from above if zik = 0 ,both at −xik δ.Proof 
+
+bias( ˜βGLS ) = E
+
+˜βGLS 
+
+
+
+− β = E
+
+" NX
+
+> i=1
+
+(Xobs  
+
+> i
+
+)′(Σ obs  
+
+> i
+
+)−1Xobs 
+
+> i
+
+#−1 " NX
+
+> i=1
+
+(Xobs  
+
+> i
+
+)′(Σ obs  
+
+> i
+
+)−1yobs 
+
+> i
+
+# − β
+
+= E
+
+ E
+
+" NX
+
+> i=1
+
+(Xobs  
+
+> i
+
+)′(Σ obs  
+
+> i
+
+)−1Xobs 
+
+> i
+
+#−1 " NX
+
+> i=1
+
+(Xobs  
+
+> i
+
+)′(Σ obs  
+
+> i
+
+)−1yobs 
+
+> i
+
+#
+
+X
+
+ − β
+
+= E
+
+" NX
+
+> i=1
+
+(Xobs  
+
+> i
+
+)′(Σ obs  
+
+> i
+
+)−1Xobs 
+
+> i
+
+#−1 " NX
+
+> i=1
+
+(Xobs  
+
+> i
+
+)′(Σ obs  
+
+> i
+
+)−1E
+
+
+
+yobs  
+
+> i
+
+X
+
+# − β
+
+= E
+
+" NX
+
+> i=1
+
+(Xobs  
+
+> i
+
+)′(Σ obs  
+
+> i
+
+)−1Xobs 
+
+> i
+
+#−1 " NX
+
+> i=1
+
+(Xobs  
+
+> i
+
+)′(Σ obs  
+
+> i
+
+)−1
+
+
+
+Xobs  
+
+> i
+
+β +
+
+n
+
+∆iΩ−1 
+
+> i
+
+E (vi)
+
+oobs # − β
+
+= E
+
+" NX
+
+> i=1
+
+(Xobs  
+
+> i
+
+)′(Σ obs  
+
+> i
+
+)−1Xobs 
+
+> i
+
+#−1 " NX
+
+> i=1
+
+(Xobs  
+
+> i
+
+)′(Σ obs  
+
+> i
+
+)−1 n
+
+∆iΩ−1 
+
+> i
+
+E (vi)
+
+oobs 
+
+# ,
+
+where the second to last last equality follows from Lemma 1 in Appendix A. □
+
+3It is possible to estimate Ω −1 
+
+> i
+
+and δ from model (2), and Σ obs  
+
+> i
+
+from model (1) using most statistical software, such as lme4 in R (Bates et al. 2015; R Core Team 2024). However, convergence issues may arise when using complex covariance structures. We estimate E(vi) using the R package 
+
+MomTrunc (Galarza and Lachos 2024), plugging in the estimate of δ. Thus, for fixed values of ∆ i,Theorem 1 enable us to consistently estimate the bias due to MNAR dropout. Note that, similar sensitivity analyses have been proposed previously (Genton 2004; Gonz´ alez-Far´ ıas et al. 2004), though without applications or simulations. These works suggest that ˜βGLS 
+
+follows a closed skew-normal or SUN distribution, which holds only under the, for longitudinal settings, unrealistic assumption that each cluster has either all outcomes observed or all missing. Grilli and Rampichini Grilli and Rampichini (2010) discuss bias in special cases of the model but do not provide analytical expressions for the bias, as we do here. 
+
+## 2.2 Sensitivity analysis 
+
+As mentioned in the previous section, for fixed values of the sensitivity parameter matrix ∆ i,the bias of this estimator can be quantified using Theorem 1, under the modelling assumptions stated at the beginning of this section. Thus, point estimates and confidence intervals for β can be constructed by combining the two—provided that ∆ i is known, i.e., under specific MNAR assumptions. While ∆ i is general in the sense that it accommodates a wide range of missingness mechanisms, it may be difficult to specify and interpret in practice. We therefore recommend defining one or more univariate sensitivity parameters to clarify the assumptions about the missing data mechanism, and using these to construct ∆ i (see the example in Section 3). Even with univariate sensitivity parameters, it is rarely realistic to know their exact values. We therefore suggest specifying a plausible range for each sensitivity parameter, which yields a corresponding range of point estimates and confidence intervals for β. If the true values of the sensitivity parameters lie within these pre-specified ranges, then the union of the resulting confi-dence intervals—referred to as uncertainty interval—will cover β with at least (1 −α)% probability. Uncertainty intervals is a useful compliment to the MAR analysis to illustrate the stability of the conclusions to different assumptions. For a more detailed theoretical discussion of uncertainty intervals (Vansteelandt et al. 2006; Genb¨ ack and de Luna 2019). 
+
+# 3 Motivating example 
+
+## 3.1 Data 
+
+We use data from the Survey of Health, Ageing and Retirement in Europe (SHARE) (SHARE-ERIC 2024a,b,c,d,e,f). SHARE is a cross-national longitudinal survey conducted approximately every two years across various European countries B¨ orsch-Supan et al. (2013). Data are collected through computer-assisted personal interviews and include extensive information on objective and subjective health measures, socioeconomic status, and social networks. The sample is defined on household level, meaning that all individuals in sampled households are included. We use data from waves 4–9, collected between 2011 and 2022. Wave 4 is chosen as the baseline, as a large refreshment sample was introduced in this wave. At baseline, 29,613 individuals aged 65 or older participated, of whom 2,300 had partially missing data on one or more variables of interest and were therefore excluded. This results in a final study sample of 27,313 individuals across 20,981 households. In each wave, efforts are made to re-interview all sampled individuals. However, a substantial proportion of the baseline sample either drop out entirely or miss one or more waves. Some of the missing data are due to countries opting not to participate in certain waves; these are assumed to be missing at random. In waves 5 through 9, respectively, 25%, 37%, 46%, 68%, and 67% of the study sample in participating countries are missing. It is important to note that death is poorly recorded in SHARE, making it difficult to distinguish between attrition and death for most individuals; this is therefore not addressed in the analysis. Our aim is to investigate the association between baseline loneliness and physical activity with memory trajectories, adjusting for demographic, socioeconomic, and health-related covariates, for 4individuals aged 65 and above. The outcome of interest is a memory score, based on the number of words (out of 10) recalled immediately and after a delay, yielding a total score between 0 and 20. Loneliness is measured using the question: “How often do you feel left out of things?” with response options: often, sometimes, rarely, or never. Physical activity is assessed by the question: “How often do you engage in vigorous physical activities such as sports, heavy housework, or a job that involves physical labor?” and is categorized as ≥ 1/week versus 1–3/month or less. Control variables are collected at baseline and include age at baseline (in 2011), region (north: Sweden, Denmark, Estonia; west: France, Austria, Germany, Netherlands, Switzerland, Belgium; east: Czech Republic, Slovenia, Hungary, Poland; south: Spain, Italy, Portugal), living alone, edu-cation level (based on ISCED 1997, categorized as ≤ 2, 3 − 4 or ≥ 5), self-rated health (recoded into very good: excellent or very good; good: good; or poor: fair or poor), depression (”In the last month, have you been sad or depressed?”) and time (years since baseline). 
+
+## 3.2 Notation and setting, example 
+
+Suppose that we have N households, with Hi individuals in household i, and nij observations for each individual j = 1 , ..., H i in household i = 1 , ..., N .
+
+Outcome model 
+
+A special case of the outcome regression model (1) can be rewritten as: 
+
+yij = Xij β + ( ai + bij ) + ( ci + dij )time ij + εij , i = 1 , ..., N, j = 1 , ..., H i, (5) where εij is an nij × 1 vector of i.i.d. normally distributed error terms, independent of the random effects ( ai, bij , ci, dij ), which are also normally distributed with mean zero. The random effects allow for between-individual variation in baseline memory (random intercept bij ) and change over time (random slope dij ), as well as between-household variation ( ai and ci). 
+
+Dropout model 
+
+The sensitivity analysis accounts for dropout but not for initial selection into the study. That is, we condition on participation in wave 4 (baseline). Thus, the generalized multilevel model for dropout includes a fixed intercept. The dropout model (2) under these conditions is: 
+
+z∗ 
+
+> ij
+
+= Xij δ + ( νi + γij )time ij + ξij , i = 1 , ..., N, j = 1 , ..., H i, (6) where z∗ 
+
+> ij
+
+is an nij × 1 latent vector with elements z∗
+
+> ijk
+
+, k = 1 , . . . , n ij , and yijk is observed if 
+
+zijk = I(zijk > 0) = 1. The error terms ξijk are i.i.d. normal with standard deviation σξ , and the individual-specific random slopes γij are independent of ξij , and normally distributed with mean zero. 
+
+Sensitivity parameter matrix 
+
+As described in Section 2, the sensitivity parameter ∆ i represents the covariance between the random components of the outcome and dropout models. Under MAR, ∆ i = 0, and the linear mixed effects model yields consistent estimates of β. We allow ∆ i to be an arbitrary covariance matrix, but it must be specified in advance for the sensitivity analysis. In this example, we hypothe-size that individuals with declining memory are more likely to drop out. Thus, we allow dropout risk to be associated with the outcome through the random slopes in equations (5) and (6). Specifically, we define as sensitivity parameters the following correlations: ρhh = cor( ci, ν i), ρind = cor( dij , γ ij ), and ρerr = cor( ξij , εij ), assuming that they all are within [0 , 0.5], consistent with the idea both long term and momentary memory decline is associated with increased long term and momentary dropout risk. We assume no other marginal associations between the random components of the outcome and dropout models. Given the nested design, elements of ∆ i (the sensitivity parameter matrix for household i)depend on whether observations come from the same individual ( j = h) or different individuals 5(j̸ = h), and on the time points k and l. We use estimates of σa, σ b, σ c, σ d, ρ ac , and ρbd to derive ∆i for different values of ρhh , ρind and ρerr .∆i{jh }{ kl } = cov( ηijk , u ihl ) = cov(( ai + bij ) + ( ci + dij )time ijk + εijk , (νi + γih )time ihl + ξihl )= ... = M1 + M2 + M3
+
+where 
+
+M1 = time ihl (ρac ρhh σaσν ) + time ijk time ihl (σcσν ρhh )
+
+M2 = [ time ihl (ρbd ρind σbσγ ) + time ijk time ihl (σdσγ ρind )] I(j = h)
+
+M3 = [ ρerr σεσξ ]I(j = h&k = l)Note that, we rely on estimates calculated under MAR assumptions to specify ∆ i thereby risking misspecification of the sensitivity parameter matrix. However, directly specifying ∆ i is too complex to be a realistic alternative. Note also that, if we fit an unnested model (i.e. ignore the household clustering) then M1 = 0, making the specification of ∆ i less cumbersome. 
+
+## 3.3 Results 
+
+There are notable differences in baseline characteristics between the subsample that participated in all waves and the subsample that opted out of at least one wave. The always participants were, on average, younger, had higher levels of education, reported better self-rated health, were less likely to frequently feel left out, and were more likely to engage in vigorous physical activity at least once per week (see Table 1). Assuming MAR, frequently feeling left out was associated with an average decrease of 0.59 (95% CI: 0.47, 0.70) words in memory score (out of 20 words) over time, while engaging in vigorous physical activity at least once per week was associated with an average increase of 0.41 (95% CI: 0.34, 0.48) words. Sensitivity analyses suggest that if dropout is related to poorer memory, these estimates may be slightly low, but the overall conclusions remain similar (see Table 2). The multilevel models for both the outcome and dropout processes, equations (5)–(6), were also fitted without accounting for household clustering, yielding nearly identical results (not shown). 
+
+# 4 Simulation study 
+
+## 4.1 Simulation design 
+
+The purpose of the simulation study is to evaluate how well the bias correction performs in finite sample sizes and under various violations of the missing at random (MAR) assumption, in scenarios resembling the motivating example. For simplicity, we include only two covariates in addition to time. In all simulation designs, covariates are generated at baseline, with x1 ∼ N (0 , 1) and x2 ∼
+
+Be(0 .3). The third covariate is time since baseline, which—similar to the motivating example—takes values [0, 2, 4, 6] years for individuals without missing data. Across all designs, we use β =[2 , 1, 0.5, 1] and δ = [2 .5, −2, 2, −0.2]. Designs 1 and 2 are nested (i.e., there is dependence between individuals within the same household), while Designs 3–4 are unnested (i.e., individuals within the same household are independent); see Table 3 for exact parameter values. We use lme4 to estimate ˜β, δ and all variance and covariance parameters in table 3 except for ρhh , ρind and ρerr , which must be pre-specified in order to estimate the bias due to MNAR. Estimates of the covariance matrices ˆΣ, ˆΩ, and ˆ∆ are then derived from these estimates ( ρhh , ρind and ρerr are required for ˆ∆). We consider sample sizes of 500 (results in Appendix B) and 2000 households, with two individuals per household, and perform 1000 replications. For each design, we fit two multilevel models (using lmer 
+
+and glmer ): one nested and one unnested. The exact model specifications are provided in Table 4. All models are fitted using the optimizer bobyqa with a maximum of 10 6 function evaluations, regardless of convergence issues. Note that ˆΣ may be slightly biased due to MNAR data. While this is not problematic for estimating ˜β (since the expected value remains unchanged), it may affect the derivation of standard errors and bias (as ˆ∆ is derived using ˆΣ). However, we choose to ignore 6Complete Missing Total (N=5628) (N=21685) (N=27313) 
+
+age in 2011 
+
+mean (sd) 71.1 (4.9) 74.8 (6.9) 74.0 (6.7) 
+
+region 
+
+south 923 (16.4%) 3660 (16.9%) 4583 (16.8%) east 1054 (18.7%) 4823 (22.2%) 5877 (21.5%) west 2249 (40.0%) 8863 (40.9%) 11112 (40.7%) north 1402 (24.9%) 4339 (20.0%) 5741 (21.0%) 
+
+education 
+
+0-2 2346 (41.7%) 11377 (52.5%) 13723 (50.2%) 3-4 2057 (36.5%) 6889 (31.8%) 8946 (32.8%) 5-8 1225 (21.8%) 3419 (15.8%) 4644 (17.0%) 
+
+living alone 
+
+not alone 4151 (73.8%) 15498 (71.5%) 19649 (71.9%) alone 1477 (26.2%) 6187 (28.5%) 7664 (28.1%) 
+
+self-rated health 
+
+poor 2061 (36.6%) 11553 (53.3%) 13614 (49.8%) good 2147 (38.1%) 6893 (31.8%) 9040 (33.1%) very good 1420 (25.2%) 3239 (14.9%) 4659 (17.1%) 
+
+depressed 
+
+no 3418 (60.7%) 12617 (58.2%) 16035 (58.7%) yes 2210 (39.3%) 9068 (41.8%) 11278 (41.3%) 
+
+feel leftout 
+
+not often 5358 (95.2%) 19553 (90.2%) 24911 (91.2%) often 270 (4.8%) 2132 (9.8%) 2402 (8.8%) 
+
+vigorous 
+
+not active 2847 (50.6%) 14258 (65.8%) 17105 (62.6%) active 2781 (49.4%) 7427 (34.2%) 10208 (37.4%)  
+
+> Table 1 Baseline characteristics of the subsample that participated in all available waves (complete), the subsample that opted out of at least one wave (missing), and the total study sample. Note that some countries only participated in a subset of waves 5–9; therefore, for these countries, the complete subsample have participated in fewer than six waves. For categorical variables, the number of individuals and the corresponding percentages for each response category are presented.
+
+this potential issue, as we believe that any correction would not sufficiently improve the results to justify the additional computational cost. Finally, we use the estimates of the standard errors for ˆ˜β (default estimates returned by lmer using the incomplete data) as an approximation of the standards errors of ˆβ = ˆ˜β − \bias (˜β). 
+
+## 4.2 Simulation results 
+
+Estimation of both the dropout and outcome models using a nested approach results in error messages in most replications across all designs (see Web Table 1). In contrast, the unnested model demonstrates greater stability: the outcome model is estimated without error messages in all replications, and the dropout model is estimated without error messages in over 80% of the replications. Note that, we disregard all warnings related to poor convergence and proceed with the estimates provided by the functions. Using nested and unnested models yields nearly identical estimates of ˜β (i.e. default estimates returned by lmer using the incomplete data) and corresponding standard errors. The main dif-ference between the models lies in the bias correction: while the corrections are similar for the intercept, x1, and x2, they differ for the time variable. In this case, the unnested model performs better across all designs (see Figure 1). In fact, the unnested model is nearly unbiased in all designs, including those generated under a nested structure (i.e. Design 1 and 2). As expected (see Section 7MAR MNAR (ρhh , ρind ) ∈ [0 , 0.5] MNAR (ρhh , ρind , ρerr ) ∈ [0 , 0.5] 
+
+est 95% ci est 95% ui est 95% ui 
+
+(Intercept) 5.73 ( 5.64, 5.83) ( 5.73, 5.77) ( 5.64, 5.86) ( 5.55, 5.77) ( 5.45, 5.86) 
+
+age in 2011 -1.22 (-1.26, -1.19) (-1.24, -1.20) (-1.27, -1.16) (-1.31, -1.20) (-1.34, -1.16) 
+
+region 
+
+east 0.60 ( 0.49, 0.71) ( 0.58, 0.61) ( 0.47, 0.72) ( 0.56, 0.61) ( 0.46, 0.72) west 1.31 ( 1.21, 1.41) ( 1.28, 1.31) ( 1.19, 1.41) ( 1.25, 1.31) ( 1.15, 1.41) north 1.08 ( 0.97, 1.19) ( 1.07, 1.08) ( 0.96, 1.19) ( 1.07, 1.10) ( 0.96, 1.21) 
+
+education 
+
+3 − 4 1.22 ( 1.14, 1.29) ( 1.21, 1.22) ( 1.14, 1.29) ( 1.21, 1.23) ( 1.14, 1.30) 5 − 8 2.23 ( 2.14, 2.32) ( 2.23, 2.24) ( 2.13, 2.33) ( 2.23, 2.27) ( 2.13, 2.37) 
+
+living alone 0.20 ( 0.13, 0.27) ( 0.20, 0.25) ( 0.13, 0.32) ( 0.20, 0.29) ( 0.13, 0.37) 
+
+self-rated health 
+
+good 0.65 ( 0.57, 0.72) ( 0.64, 0.66) ( 0.56, 0.73) ( 0.64, 0.71) ( 0.56, 0.78) very good 1.03 ( 0.93, 1.12) ( 1.01, 1.04) ( 0.92, 1.13) ( 1.01, 1.11) ( 0.92, 1.21) 
+
+depressed -0.03 (-0.10, 0.03) (-0.04, -0.03) (-0.10, 0.04) (-0.04, -0.01) (-0.10, 0.05) 
+
+feel left out often -0.59 (-0.70, -0.47) (-0.59, -0.58) (-0.71, -0.46) (-0.66, -0.58) (-0.77, -0.46) 
+
+physically active 0.41 ( 0.34, 0.48) ( 0.41, 0.42) ( 0.34, 0.49) ( 0.41, 0.46) ( 0.34, 0.53) 
+
+time -0.14 (-0.15, -0.14) (-0.18, -0.14) (-0.19, -0.14) (-0.25, -0.14) (-0.25, -0.14) 
+
+Table 2 Comparison of estimates of the fixed effects from a multilevel model and 95% confidence intervals (ci) assuming MAR, and bounds for estimates and 95% uncertainty intervals (ui) under two different MNAR assumptions. Age is rescaled to improve convergence. 
+
+ρac ρbd ρhh ρind ρerr σa σb σc σd σν σγ σξ σϵ
+
+Design 1 -0.2 -0.2 0.3 0.3 0 2 0.5 0.5 0.5 0.3 0.5 1 2Design 2 -0.2 -0.2 0.3 0.3 0.3 Design 3 0 -0.2 0 0.3 0 0 2 0 0.5 0 0.6 1 2Design 4 0 -0.2 0 0 0.5 
+
+Table 3 Parameters that generate the covariance matrices of the data generating process. The standard deviations and correlations of the table refer the parameters of equations (5) - (6) where for instance σa is the standard deviation of a and ρab is the correlation between a and b.Fixed effects Random effects Nested design Unnested design Outcome model y ∼ x1 + x2 + time +(1 + time |id/hhid ) +(1 + time |id )Dropout model z ∼ x1 + x2 + time +(0 + time |id/hhid ) +(0 + time |id )
+
+Table 4 Formulas used for estimation of parameters, where id is individual identifier and hhid is household identifier. The formula consists of the fixed effects and one of the two expressions of random effects. 
+
+4.1), the estimated standard errors are not always unbiased (see Figure 2). This issue is most pro-nounced for the time variable in the nested design, where the estimated standard errors are only 70 − 80% of the desired value for Designs 1–3, resulting in empirical coverage of approximately 40% (see Table 5 and B3). For the other parameters and for Design 4, the standard errors appear to be adequate approximations. Consequently, the bias-corrected estimates achieve empirical cov-erage of at least 87%, and often between 90% and 95% (see Table 5). The results using a smaller sample size (500 households) are similar to these results, see Appendix B. 
+
+# 5 Concluding remarks 
+
+The aim with this paper was to develop analysis tools that allow for less restrictive assumptions than MAR when using multilevel models, as previous research indicate that MAR may not be fulfilled when investigating health and ageing. The proposed method can be used as a sensitivity analysis of the MAR assumption, enabling comparison of estimates under different missing data 8Design 1 Design 2 Design 3 Design 4        
+
+> (Intercept)  time  x1  x2
+> biased corrected biased corrected biased corrected biased corrected
+> 1.8 1.9 2.0 2.1 2.2 2.3
+> 0.95 1.00 1.05 1.10
+> 0.9 1.0 1.1 1.2
+> 0.2 0.4 0.6 0.8
+> Estimand
+> nested
+> unnested
+
+Fig. 1 Boxplot of the biased estimates and corrected biased estimates using the estimates from lmer and glmer 
+
+along with the ρhh , ρind and ρerr that was used to generate data for each Design for the sample size with 2000 households. 
+
+mechanisms. The simulation study seems to support that the bias correction works reasonably well in finite samples. One limitation of the approach is that, although the theoretical framework accommodates large clusters, the computational burden becomes substantial when clusters contain many observations. The main challenge lies in numerically deriving the expected value of a doubly truncated multivariate distribution, which becomes computationally intensive in high dimensions. As a result, it is not feasible to implement a nested design with country as a hierarchical level, even though this would more accurately reflect the sampling scheme of the motivating example. The sensitivity analysis was applied to a longitudinal study and suggests that the conclusions about the parameters of interest of a MAR analysis are similar under the milder assumptions that poor memory may be associated with higher dropout. However, some caution is warranted when interpreting the results, as the target population is somewhat ill-defined. Some individuals in the sample may have died before the final wave (wave 9), and selection into the study was not accounted for. Finally, a future aim is to incorporate the method into the R package ui (Genb¨ ack 2019) which contain tools for similar sensitivity analyses for other types of regression models. 
+
+# References 
+
+Bates D, M¨ achler M, Bolker B, Walker S. Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software. 2015;67(1):1–48. https://doi.org/10.18637/jss.v067.i01. B¨ orsch-Supan A, Brandt M, Hunkler C, Kneip T, Korbmacher J, Malter F, et al. Data resource profile: the Survey of Health, Ageing and Retirement in Europe (SHARE). International journal 9Design 1 Design 2 Design 3 Design 4        
+
+> (Intercept)  time  x1  x2
+> biased corrected biased corrected biased corrected biased corrected
+> 0.8 0.9 1.0
+> 0.8 0.9 1.0
+> 0.95 1.00 1.05
+> 0.96 1.00 1.04
+> Estimand
+> Relative size of the estimated standard error compared to the target
+> model
+> nested
+> unnested
+
+Fig. 2 Boxplot of the quotient between the estimated standard errors (default from lmer) and the Monte Carlo (mc) standard errors of the estimates of ˜β and β (the bias correction was estimated using ρhh , ρind and ρerr from the data generating process). Note that, the estimated standard errors are the same for for the unnested and nested design up to 4 decimals, we also do not adjust the estimated standard errors to incorporate the bias correction when estimating β, therefore the difference in the quotient between within the same design and parameter is due to difference in the mc standard errors. 
+
+of epidemiology. 2013;42(4):992–1001. Carpenter JR, Kenward MG. Multiple imputation and its application. United Kingdom: John Wiley & Sons; 2013. Chatfield MD, Brayne CE, Matthews FE. A systematic literature review of attrition between waves in longitudinal studies in the elderly shows a consistent pattern of dropout between differing studies. Journal of clinical epidemiology. 2005;58(1):13–19. Demidenko E. Mixed Models: Theory and Applications. Hoboken: Wiley; 2004. Enders CK. Missing not at random models for latent growth curve analyses. Psychological methods. 2011;16(1):1. Enders CK. Missing data: An update on the state of the art. Psychological Methods. 2023;30:322–339. Galarza CE, Lachos VH. MomTrunc: Moments of Folded and Doubly Truncated Multivariate Distributions. R Foundation for Statistical Computing, Vienna, Austria; 2024, https://CRAN. R-project.org/package=MomTrunc, r package version 6.1. 10 Design 1 Design 2 Design 3 Design 4 estimand MSE bias cov MSE bias cov MSE bias cov MSE bias cov ˜βInt 0.4 -1.1 89.6 1.1 8.2 63.5 0.3 -0.4 94.7 2.5 15.0 16.5 ˜βInt 0.4 -1.1 89.6 1.1 8.2 63.5 0.3 -0.4 94.7 2.5 15.0 16.5                                                                                                                                                                                 
+
+> βInt 0.4 -0.8 89.5 0.4 0.5 89.2 0.3 -0.1 94.8 0.3 1.8 93.9
+> βInt 0.4 0.4 90.0 0.4 1.7 88.7 0.3 0.7 95.1 0.3 1.5 94.6 ˜βtime 0.3 5.6 6.6 0.5 7.1 0.6 0.2 4.5 3.7 0.1 2.2 57.3 ˜βtime 0.3 5.6 6.6 0.5 7.1 0.6 0.2 4.5 3.7 0.1 2.2 57.3
+> βtime 0.1 3.3 43.4 0.1 3.2 42.0 0.1 3.0 36.7 0.0 -0.1 93.6
+> βtime 0.0 0.7 89.7 0.0 0.8 87.3 0.0 0.7 91.3 0.0 0.3 94.2 ˜βx10.4 4.5 81.6 1.9 13.1 17.3 0.4 4.3 81.8 2.3 14.5 7.7 ˜βx10.4 4.5 81.6 1.9 13.1 17.3 0.4 4.3 81.8 2.3 14.5 7.7
+> βx10.3 2.1 92.0 0.3 2.2 92.0 0.3 3.0 88.3 0.2 1.0 94.1
+> βx10.2 2.1 92.2 0.3 2.4 91.3 0.2 1.7 93.4 0.2 1.3 94.1 ˜βx20.9 -3.6 93.3 2.1 -11.6 73.5 0.9 -4.5 91.2 2.3 -12.7 66.0 ˜βx20.9 -3.6 93.3 2.1 -11.6 73.5 0.9 -4.5 91.2 2.3 -12.7 66.0
+> βx20.8 -1.5 95.1 0.8 -2.6 94.4 0.8 -3.3 92.5 0.7 -1.4 94.8
+> βx20.8 -1.6 94.7 0.8 -2.8 94.3 0.7 -2.2 93.1 0.7 -1.6 94.7
+> Table 5 Mean squrare error (MSE) as well as empirical bias and coverage of 95% confidence intervals for β, using the default estimates from lmer (i.e.the estimand ˜β) and corrected for bias assuming correct values for the sensitivity parameters ρhh ,ρind and ρerr (i.e. the estimand β). The whte rows have used a nested design in the model specification when estimating the multilevel model and the gray have an unnested design (see table 4). The sample size is 2000 households. All values have been multiplied by 10 2.
+
+Genb¨ ack M. ui: Uncertainty Intervals and Sensitivity Analysis for Missing Data; 2019, https: //CRAN.R-project.org/package=ui, r package version 0.1.1. Genb¨ ack M, de Luna X. Causal inference accounting for unobserved confounding after outcome regression and doubly robust estimation. Biometrics. 2019;75(2):506–515. Genb¨ ack M, Stanghellini E, de Luna X. Uncertainty intervals for regression parameters with non-ignorable missingness in the outcome. Statistical papers. 2015;56(3):829–847. Genton MG. Skew-Elliptical Distributions and Their Applications: A Journey Beyond Normality. Boca Raton: Chapman & Hall/CRC; 2004. Gonz´ alez-Far´ ıas G, Dom´ ınguez-Molina A, Gupta AK. Additive properties of skew normal random vectors. Journal of Statistical Planning and Inference. 2004;126(2):521–534. Grilli L, Rampichini C. Selection bias in linear mixed models. METRON - International Journal of Statistics. 2010;68(3):309–329. Hammon A, Zinn S. Multiple imputation of binary multilevel missing not at random data. Journal of the Royal Statistical Society Series C: Applied Statistics. 2020;69(3):547–564. Imai K, Keele L, Tingley D. A general approach to causal mediation analysis. Psychological methods. 2010;15(4):309. Josefsson M, Luna X, Daniels MJ, Nyberg L. Causal inference with longitudinal outcomes and non-ignorable dropout: estimating the effect of living alone on cognitive decline. Journal of the Royal Statistical Society: Series C (Applied Statistics). 2016;65(1):131–144. Josefsson M, de Luna X, Pudas S, Nilsson LG, Nyberg L. Genetic and lifestyle predictors of 15-year longitudinal change in episodic memory. Journal of the American Geriatrics Society. 2012;60(12):2308–2312. Little RJA, Rubin DB. Statistical analysis with missing data. 2 ed. Hoboken, New Jersey: Wiley and Sons; 2002. 11 Manski CF. Partial Identification of Probability Distributions. New York: Springer; 2003. Molenberghs G, Fitzmaurice G, Kenward MG, Tsiatis A, Verbeke G. Handbook of missing data methodology. Boca Raton: CRC Press; 2015. Nummela O, Sulander T, Helakorpi S, Haapola I, Uutela A, Heinonen H, et al. Register-based data indicated nonparticipation bias in a health study among aging people. Journal of clinical epidemiology. 2011;64(12):1418–1425. R Core Team. R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria; 2024, https://www.R-project.org/. SHARE-ERIC.: Survey of Health, Ageing and Retirement in Europe (SHARE) Wave 4. Release version: 9.0.0. SHARE-ERIC; 2024. https://doi.org/10.6103/SHARE.w4.900. SHARE-ERIC.: Survey of Health, Ageing and Retirement in Europe (SHARE) Wave 5. Release version: 8.0.0. SHARE-ERIC; 2024. https://doi.org/10.6103/SHARE.w5.900. SHARE-ERIC.: Survey of Health, Ageing and Retirement in Europe (SHARE) Wave 6. Release version: 8.0.0. SHARE-ERIC; 2024. https://doi.org/10.6103/SHARE.w6.900. SHARE-ERIC.: Survey of Health, Ageing and Retirement in Europe (SHARE) Wave 7. Release version: 8.0.0. SHARE-ERIC; 2024. https://doi.org/10.6103/SHARE.w7.900. SHARE-ERIC.: Survey of Health, Ageing and Retirement in Europe (SHARE) Wave 8. Release version: 8.0.0. SHARE-ERIC; 2024. https://doi.org/10.6103/SHARE.w8.900. SHARE-ERIC.: Survey of Health, Ageing and Retirement in Europe (SHARE) Wave 9. Release version: 9.0.0. SHARE-ERIC; 2024. https://doi.org/10.6103/SHARE.w9.900. Vansteelandt S, Goetghebeur E, Kenward MG, Molenberghs G. Ignorance and uncertainty regions as inferential tools in a sensitivity analysis. Statistica Sinica. 2006;16(3):953–979. Wang X, Larson MG, Liu C. Two-stage multiple imputation with a longitudinal composite variable. BMC Medical Research Methodology. 2025;25(1):1–16. 
+
+# Appendix A 
+
+Lemma 1 
+
+E yi
+
+"
+
+zobs  
+
+> i
+
+= 1 
+
+zmis i = 0 
+
+#
+
+, Xi
+
+!
+
+= Xiβ + ∆ iΩ−1 
+
+> i
+
+E ui
+
+" uobs  
+
+> i
+
+> −Xiobs δ
+
+umis i < −Ximis δ
+
+#
+
+, Xi
+
+!
+
+Proof Let wi = ηj − ∆iΩ−1 
+
+> i
+
+ui. Then E( wi) = 0 and wi is independent of ui since both wi and ui are normally distributed and cov( wi, ui) = cov( ηj , ui) − cov(∆ iΩ−1 
+
+> i
+
+ui, ui) = ∆ i − ∆iΩ−1 
+
+> i
+
+Ωi = 0.
+
+Therefore, 
+
+E ηi
+
+" uobs  
+
+> i
+
+> −Xiobs δ
+
+umis i < −Ximis δ
+
+#
+
+, Xi
+
+!
+
+= E wi + ∆ iΩ−1 
+
+> i
+
+ui
+
+" uobs  
+
+> i
+
+> −Xiobs δ
+
+umis i < −Ximis δ
+
+#
+
+, Xi
+
+!
+
+= E wi
+
+" uobs  
+
+> i
+
+> −Xiobs δ
+
+umis i < −Ximis δ
+
+#
+
+, Xi
+
+!
+
++ E ∆iΩ−1 
+
+> i
+
+ui
+
+" uobs  
+
+> i
+
+> −Xiobs δ
+
+umis i < −Ximis δ
+
+#
+
+, Xi
+
+!
+
+= 0 + ∆ iΩ−1 
+
+> i
+
+E ui
+
+" uobs  
+
+> i
+
+> −Xiobs δ
+
+umis i < −Ximis δ
+
+#
+
+, Xi
+
+!
+
+□
+
+12 Appendix B 
+
+In this appendix, we present the frequency of different error codes observed in the simulations (see Tables B1 and B2), along with simulation results for a sample size of 500 households. These include the corresponding figures and tables as in Section 4.2. The results for 500 households are similar to those obtained with a sample size of 2000 households. 
+
+Design 1 Design 2 Design 3 Design 4 glmer lmer glmer lmer glmer lmer glmer lmer nested formula Message 1 132 459 134 479 135 441 145 453 Message 2 629 248 645 259 604 345 619 332 Message 3 365 390 348 372 385 350 376 376 Message 4 364 390 348 372 385 350 376 376 Message 5 1 22 0 21 0 113 0 89 Message 6 1 0 0 0 0 0 0 0total = 0 0 68 1 73 0 32 0 34 total = 1 511 355 527 351 495 337 486 306 total = 2 486 577 468 576 501 631 512 660 total = 3 3 0 4 0 4 0 2 0unnested formula Message 1 162 0 168 0 176 0 169 0Message 2 147 0 158 0 163 0 161 0Message 3 6 0 4 0 3 0 1 0Message 4 6 0 4 0 3 0 1 0Message 5 0 0 0 0 0 0 0 0Message 6 0 0 0 0 0 0 0 0total = 0 832 1000 828 1000 821 1000 830 1000 total = 1 16 0 14 0 13 0 13 0total = 2 151 0 154 0 166 0 152 0total = 3 1 0 4 0 0 0 5 0 
+
+> Message 1 = ”Model failed to converge with max |grad |= ... ” Message 2 = ”Model is nearly unidentifiable: large eigenvalue ratio - Rescale variables?” Message 3 = ”Model failed to converge: degenerate Hessian with ? negative eigenvalues” Message 4 = ”unable to evaluate scaled gradient” Message 5 = ”boundary (singular) fit: see help(’isSingular’)” Message 6 = ”Hessian is numerically singular: parameters are not uniquely determined”
+
+Table B1 Frequency of different error messages from glmer (missing data regression) and lmer (outcome regression) (all error messages were ignored) for the different simulation designs using sample size with 2000 households 
+
+13 Design 1 Design 2 Design 3 Design 4 glmer lmer glmer lmer glmer lmer glmer lmer nested formula Message 1 93 5 83 0 83 7 85 9Message 2 548 455 535 490 559 452 573 452 Message 3 425 505 432 475 408 495 402 491 Message 4 424 505 429 475 407 495 402 491 Message 5 1 33 1 29 0 53 1 57 Message 6 2 0 4 0 1 0 0 0total = 0 0 7 0 6 0 0 0 0total = 1 509 483 518 519 544 498 539 500 total = 2 489 510 480 475 454 502 459 500 total = 3 2 0 2 0 2 0 2 0unnested formula Message 1 105 0 119 0 91 0 112 0Message 2 70 0 80 0 65 0 76 0Message 3 2 0 3 0 3 0 2 0Message 4 2 0 3 0 3 0 2 0Message 5 0 0 0 0 0 0 0 0Message 6 0 0 0 0 0 0 0 0total = 0 893 1000 878 1000 906 1000 886 1000 total = 1 35 0 39 0 26 0 36 0total = 2 72 0 83 0 68 0 78 0total = 3 0 0 0 0 0 0 0 0 
+
+> Message 1 = ”Model failed to converge with max |grad |= ... ” Message 2 = ”Model is nearly unidentifiable: large eigenvalue ratio - Rescale variables?” Message 3 = ”Model failed to converge: degenerate Hessian with ? negative eigenvalues” Message 4 = ”unable to evaluate scaled gradient” Message 5 = ”boundary (singular) fit: see help(’isSingular’)” Message 6 = ”Hessian is numerically singular: parameters are not uniquely determined”
+
+Table B2 Frequency of different error messages from glmer (missing data regression) and lmer (outcome regression) (all error messages were ignored) for the different simulation designs using sample size with 500 households Design 1 Design 2 Design 3 Design 4 estimand MSE bias cov MSE bias cov MSE bias cov MSE bias cov ˜βInt 1.5 -0.4 91.2 2.0 7.7 86.0 1.1 -0.7 94.9 3.4 15.3 68.8 ˜βInt 1.5 -0.4 91.2 2.0 7.7 86.0 1.1 -0.7 94.9 3.4 15.3 68.8 
+
+βInt 1.5 -0.2 90.7 1.5 0.0 90.7 1.1 -0.4 95.1 1.1 2.2 95.0 
+
+βInt 1.5 1.1 90.6 1.5 1.2 91.1 1.1 0.4 94.9 1.1 1.9 94.9 ˜βtime 0.4 5.7 52.1 0.6 7.0 35.8 0.3 4.5 55.3 0.1 2.2 84.4 ˜βtime 0.4 5.7 52.1 0.6 7.0 35.8 0.3 4.5 55.3 0.1 2.2 84.4 
+
+βtime 0.2 3.4 73.8 0.2 3.1 75.3 0.1 2.8 78.5 0.1 -0.1 94.0 
+
+βtime 0.1 0.8 89.2 0.1 0.8 89.5 0.1 0.7 94.6 0.1 0.3 93.6 ˜βx1 1.1 4.4 91.6 2.8 13.7 64.9 0.9 4.6 91.8 3.1 15.4 54.9 ˜βx1 1.1 4.4 91.6 2.8 13.7 64.9 0.9 4.6 91.8 3.1 15.4 54.9 
+
+βx1 0.9 2.0 94.1 1.0 2.8 92.1 0.8 3.0 93.4 0.8 1.8 94.0 
+
+βx1 0.9 2.0 94.0 1.0 3.0 92.6 0.7 2.0 94.9 0.8 2.2 94.2 ˜βx2 3.1 -4.0 94.7 4.2 -11.0 90.4 3.0 -3.5 93.7 4.6 -13.0 87.5 ˜βx2 3.1 -4.0 94.7 4.2 -11.0 90.4 3.0 -3.5 93.7 4.6 -13.0 87.5 
+
+βx2 3.0 -1.9 95.4 3.1 -1.9 95.0 2.9 -2.2 94.1 2.9 -1.6 93.5 
+
+βx2 3.0 -2.0 95.2 3.1 -2.1 94.8 2.8 -1.2 94.0 2.9 -1.9 93.5 
+
+Table B3 Mean squrare error (MSE) as well as empirical bias and coverage of 95% confidence intervals for β, using the default estimates from lmer (i.e.the estimand ˜β) and corrected for bias assuming correct values for the sensitivity parameters ρhh , ρind and ρerr (i.e. the estimand β). The white rows have used a nested design in the model specification when estimating the multilevel model and the gray have an unnested design (see table 4). The sample size is 500 households. All values have been multiplied by 10 2.
+
+14 Design 1 Design 2 Design 3 Design 4        
+
+> (Intercept)  time  x1  x2
+> biased corrected biased corrected biased corrected biased corrected
+> 1.50 1.75 2.00 2.25 2.50
+> 0.9 1.0 1.1
+> 0.8 1.0 1.2 1.4
+> 0.0 0.4 0.8
+
+Estimand 
+
+> nested
+> unnested
+
+Fig. B1 Boxplot of the biased estimates and corrected biased estimates using the estimates from lmer and glmer 
+
+along with the ρhh , ρind and ρerr that was used to generate data for each Design for the sample size with 500 households. 
+
+15 Design 1 Design 2 Design 3 Design 4        
+
+> (Intercept)  time  x1  x2
+> biased corrected biased corrected biased corrected biased corrected
+> 0.8 0.9 1.0
+> 0.8 0.9 1.0 1.1
+> 0.85 0.90 0.95 1.00 1.05 1.10 1.15
+> 0.90 0.95 1.00 1.05 1.10
+> Estimand
+> Relative size of the estimated standard error compared to the target
+> model
+> nested
+> unnested
+
+Fig. B2 Boxplot of the quotient between the estimated standard errors (default from lmer) and the Monte Carlo (mc) standard errors of the estimates of ˜β and β (the bias correction was estimated using ρhh , ρind and ρerr from the data generating process) for the sample size with 500 households. Note that, the estimated standard errors are the same for for the unnested and nested design up to 4 decimals, we also do not adjust the estimated standard errors to incorporate the bias correction when estimating β, therefore the difference in the quotient between within the same design and parameter is due to difference in the mc standard errors. 
+
+16

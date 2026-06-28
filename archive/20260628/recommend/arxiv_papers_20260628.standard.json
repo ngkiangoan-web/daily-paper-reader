@@ -1,0 +1,97 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-28T21:20:36.061233+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 0,
+    "deep_cap": 7,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 12,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.24228v1",
+      "source": "arxiv",
+      "title": "Uncertainty intervals for multilevel models with missing not at random data",
+      "abstract": "We propose a sensitivity analysis method for missing not at random (MNAR) data in the context of linear multilevel (mixed-effects) models. The outcome and dropout risk are both modelled using multilevel models and a bias adjustment due to MNAR data is derived. This bias can be estimated from observed data conditional on specified values of sensitivity parameter(s). Under the assumption that these parameters lie within a plausible range, the method partially identify the parameters of interest, yielding bounds for estimation and inference under assumptions weaker than missing at random. The proposed analysis is investigated in a simulation study and illustrated with an analysis of the association between loneliness and physical activity with memory trajectories, adjusting for demographic, socioeconomic, and health covariates.",
+      "authors": [
+        "Minna Genbäck"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-06-23T07:17:25+00:00",
+      "link": "https://arxiv.org/pdf/2606.24228v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "sensitivity analysis method for MNAR in multilevel models applicable to EMA data with loneliness example",
+      "llm_evidence_cn": "针对多水平模型中非随机缺失数据的敏感性分析方法，适用于EMA数据，以孤独感为例",
+      "llm_evidence": "针对多水平模型中非随机缺失数据的敏感性分析方法，适用于EMA数据，以孤独感为例",
+      "canonical_evidence": "针对多水平模型中非随机缺失数据的敏感性分析方法，适用于EMA数据，以孤独感为例",
+      "llm_tldr_en": "Proposes a sensitivity analysis method for missing not at random data in multilevel models, providing inference bounds under weaker assumptions. Illustrated with loneliness and physical activity data, useful for EMA studies with missingness.",
+      "llm_tldr_cn": "提出了一种针对多水平模型中非随机缺失数据的敏感性分析方法。该方法通过对结果和缺失风险联合建模，引入敏感参数估计偏差，在弱于随机缺失的假设下获得参数边界。模拟研究和孤独感与体力活动对记忆影响的实际数据分析表明，该方法能有效处理EMA等纵向数据中的缺失问题，为研究者提供更稳健的推断工具。",
+      "llm_tldr": "提出了一种针对多水平模型中非随机缺失数据的敏感性分析方法。该方法通过对结果和缺失风险联合建模，引入敏感参数估计偏差，在弱于随机缺失的假设下获得参数边界。模拟研究和孤独感与体力活动对记忆影响的实际数据分析表明，该方法能有效处理EMA等纵向数据中的缺失问题，为研究者提供更稳健的推断工具。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "Ecological Momentary Assessment mental health research",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-06-22-733821-v1",
+      "source": "biorxiv",
+      "title": "Prefrontal activation predicts response latency and is shaped by age and lifestyle",
+      "abstract": "Neurological and neuropsychiatric conditions affect 43% of the global population, many shaped by modifiable lifestyle exposures, yet their relationship to cortical haemodynamics is poorly characterised. The dorsolateral prefrontal cortex (dlPFC) is a particularly tractable target: it underpins executive function, is disrupted across neuropsychiatric and age-related conditions, and lies on the cortical surface, within reach of scalable, wearable-grade optical neuroimaging. We present LUCID, a longitudinal study of 92 healthy adults combining consumer wearable sleep and physical activity metrics with task-evoked dlPFC haemodynamics, measured by time-domain functional near-infrared spectroscopy (TD-fNIRS). Log-transformed peak dlPFC activation was negatively associated with reaction time (RT) across the 2N-Back and Stroop tasks and both hemispheres (r = -0.37 to -0.53), greater activation accompanying faster responses, consistent with a capacity/recruitment account. Activation showed moderate test-retest reliability (intraclass correlation coefficient, ICC = 0.56-0.71), with between-person variance exceeding within-person fluctuation, indicating stable individual differences. Demographic and lifestyle features incrementally predicted activation, with age the strongest predictor and modest contributions from sleep and physical activity. These findings establish TD-fNIRS dlPFC activation as a longitudinally stable, behaviourally relevant functional neural marker for scalable tracking of modifiable risk.",
+      "authors": [
+        "Mitchell-Heggs, R.",
+        "Tamkin, D.",
+        "Scherdel, L.",
+        "Snowdon-Farrell, A.",
+        "Curry, A.",
+        "Rosenior-Patten, O.",
+        "Schultz, S. R."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-06-28T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.22.733821v1.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Combines consumer wearable sleep metrics with brain imaging for sleep quality assessment",
+      "llm_evidence_cn": "结合消费级可穿戴睡眠指标与脑成像，进行睡眠质量评估",
+      "llm_evidence": "结合消费级可穿戴睡眠指标与脑成像，进行睡眠质量评估",
+      "canonical_evidence": "结合消费级可穿戴睡眠指标与脑成像，进行睡眠质量评估",
+      "llm_tldr_en": "This longitudinal study uses consumer wearable sleep and activity metrics alongside fNIRS to investigate how dlPFC activation predicts response latency and is modulated by age and lifestyle.",
+      "llm_tldr_cn": "该纵向研究整合了消费级可穿戴设备收集的睡眠和体力活动指标与功能性近红外光谱测量的前额叶皮层血氧动力学数据，揭示了前额叶激活可预测反应潜伏期，且这种关系受年龄和生活方式调节。为可穿戴睡眠质量评估与脑功能关联研究提供了范例。",
+      "llm_tldr": "该纵向研究整合了消费级可穿戴设备收集的睡眠和体力活动指标与功能性近红外光谱测量的前额叶皮层血氧动力学数据，揭示了前额叶激活可预测反应潜伏期，且这种关系受年龄和生活方式调节。为可穿戴睡眠质量评估与脑功能关联研究提供了范例。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
