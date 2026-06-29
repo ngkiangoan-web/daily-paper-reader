@@ -1,0 +1,108 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-29T21:46:06.843435+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 1,
+    "deep_cap": 7,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 12,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2606.28261v1",
+      "source": "arxiv",
+      "title": "Habitual lifestyle timing explains circadian timing, but daily lifestyle changes do not, in free-living humans across 2000 days",
+      "abstract": "Background: Both between- and within-subject variations in circadian timing matter for health. If lifestyle changes could be used to regulate circadian timing, they would offer accessible and scalable routes to chronotherapy, but this link remains unclear under real-life conditions. Here, we explore how lifestyle 'traits' (such as typical wake time) and 'states' (day-to-day deviations from traits, such as waking up later than typical) explain between- and within-subject variation in acrophase (peak time) of the circadian rhythm of heart rate (CRHR). Methods: We collected free-living wearable data (smartwatch, continuous glucose monitor) from healthy volunteers for up to 4 weeks. The CRHR was derived from activity-adjusted heart rate, and acrophase was defined as time-of-day at daily CRHR peak. Sleep, food, and physical activity 'factors' were calculated and split into traits and states. Using a linear mixed-effects model, we tested how traits and states associate with between- and within-subject acrophase variance. Findings: Data from 105 healthy volunteers (66 female, age = 42.5 $\\pm$ 15.7 years) spanning ~2000 days (18.8 $\\pm$ 8.30 days each) were analysed. Traits were substantially more influential than states, explaining 42.3% versus 0.9% of total acrophase variance. Accordingly, traits explained 86.5% of between-subject variance, whereas states explained only 1.8% of within-subject variance. Sleep, food and physical activity factors contributed both jointly and uniquely, and lifestyle timing mattered most. Interpretation: Between-subject lifestyle traits explained acrophase better than within-subject lifestyle states. This asymmetry, alongside the considerable overlap between factors, supports sustained, holistic, timing-focused lifestyle adjustments as chronotherapy targets, testable through future interventional studies.",
+      "authors": [
+        "Billy C. Smith",
+        "Zeel Pansara",
+        "Rosanne H. Timmerman",
+        "Emmanuel Molefi",
+        "Tiago Da Silva Costa",
+        "Christopher Thornton",
+        "Lucas G. S. França",
+        "Rachel E. Stirling",
+        "Sarah E. Heaps",
+        "Philippa J. Karoly",
+        "Mario Leocadio-Miguel",
+        "Peter N. Taylor",
+        "Karoline Leiberg",
+        "Yujiang Wang"
+      ],
+      "primary_category": "q-bio.QM",
+      "categories": [
+        "q-bio.QM",
+        "stat.AP"
+      ],
+      "published": "2026-06-26T16:47:04+00:00",
+      "link": "https://arxiv.org/pdf/2606.28261v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "free-living wearable data collection over 2000 days linking lifestyle timing to circadian rhythms, similar to EMA in sleep and mental health",
+      "llm_evidence_cn": "自由生活可穿戴数据收集，将生活方式时间与昼夜节律关联，类似于睡眠与心理健康中的EMA",
+      "llm_evidence": "自由生活可穿戴数据收集，将生活方式时间与昼夜节律关联，类似于睡眠与心理健康中的EMA",
+      "canonical_evidence": "自由生活可穿戴数据收集，将生活方式时间与昼夜节律关联，类似于睡眠与心理健康中的EMA",
+      "llm_tldr_en": "Analyzes how habitual and daily lifestyle changes affect circadian timing using wearable data from 2000 days, supporting EMA-like ambulatory assessment in sleep research",
+      "llm_tldr_cn": "该研究利用长达2000天的自由生活可穿戴数据，探讨了习惯性生活方式时间与每日变化如何影响昼夜节律。通过智能手表和连续血糖监测仪收集数据，发现习惯性生活方式时间可解释昼夜节律的个体间差异，而每日变化影响较小。研究展示了生态瞬时数据收集在睡眠与心理健康领域中的应用价值。",
+      "llm_tldr": "该研究利用长达2000天的自由生活可穿戴数据，探讨了习惯性生活方式时间与每日变化如何影响昼夜节律。通过智能手表和连续血糖监测仪收集数据，发现习惯性生活方式时间可解释昼夜节律的个体间差异，而每日变化影响较小。研究展示了生态瞬时数据收集在睡眠与心理健康领域中的应用价值。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ecological momentary assessment EMA in sleep and mental health",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.26723v1",
+      "source": "arxiv",
+      "title": "State-Specific Respiratory Signatures for Affective and Stress Recognition: Interpretable Respiratory Markers, Autocorrelation Lags, and Compact CNN Models",
+      "abstract": "Respiratory activity is a direct and interpretable physiological channel for wearable stress and affective-state recognition, yet many studies emphasize classification accuracy without identifying which respiratory properties separate different states. This work reframes RESP-based recognition as a joint predictive and explanatory problem. Using the chest respiratory channel of the WESAD dataset, we analyze 60 s windows under leave-one-subject-out validation and combine two complementary branches: compact raw-signal one-dimensional convolutional neural networks (1D-CNNs) and physically grouped handcrafted respiratory signatures. The primary application task is binary stress versus non-stress detection, while baseline, stress, amusement, and meditation are additionally analyzed in a one-vs-rest setting to reveal state-specific respiratory markers. The feature space is organized into respiratory timing, breath-to-breath variability, waveform statistics, spectral/time-frequency descriptors, and autocorrelation/nonlinear predictability descriptors, with the raw 60 s signal treated as a sixth representation for the CNN branch. We introduce autocorrelation transition lags (Zpm/Zmp) as interpretable markers of respiratory correlation scale and separately evaluate exploratory FEG-Pro/Lyapunov-like descriptors. In the final CNN refit setting, the raw-signal model achieved the strongest stress-vs-rest performance, with accuracy 96.72 percent, macro-F1 95.30 percent, and MCC 90.61 percent. In contrast, compact feature models were stronger for baseline, with MCC 65.34 percent, amusement, with MCC 35.69 percent, and especially meditation, with MCC 88.65 percent. These results show that CNNs are most useful for the practical stress detector, whereas interpretable respiratory signatures provide stronger and more physiologically transparent state-specific markers for several non-stress conditions.",
+      "authors": [
+        "Andrei Velichko",
+        "Mehmet Tahir Huyut"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP",
+        "cs.LG",
+        "q-bio.QM"
+      ],
+      "published": "2026-06-25T08:01:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.26723v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "uses respiratory signals for affective state recognition, enabling digital phenotyping",
+      "llm_evidence_cn": "利用呼吸信号进行情感状态识别，支持数字表型分析",
+      "llm_evidence": "利用呼吸信号进行情感状态识别，支持数字表型分析",
+      "canonical_evidence": "利用呼吸信号进行情感状态识别，支持数字表型分析",
+      "llm_tldr_en": "Proposes interpretable respiratory markers and compact CNN models for affective and stress recognition from wearables, enabling ambulatory digital phenotyping.",
+      "llm_tldr_cn": "该研究针对可穿戴设备的情感与压力识别问题，提出结合1D-CNN和手工呼吸特征的双分支方法。利用WESAD数据集呼吸通道，通过留一被试验证实现了二元状态分类。该方法强调可解释性，识别出区分不同状态的呼吸属性，为数字表型分析提供了新的生理标记。",
+      "llm_tldr": "该研究针对可穿戴设备的情感与压力识别问题，提出结合1D-CNN和手工呼吸特征的双分支方法。利用WESAD数据集呼吸通道，通过留一被试验证实现了二元状态分类。该方法强调可解释性，识别出区分不同状态的呼吸属性，为数字表型分析提供了新的生理标记。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "digital phenotyping using EMA in mental health",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
