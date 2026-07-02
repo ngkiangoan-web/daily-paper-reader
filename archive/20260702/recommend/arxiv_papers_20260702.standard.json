@@ -1,0 +1,57 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-02T21:50:34.242508+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 0,
+    "deep_cap": 7,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 12,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.00986v1",
+      "source": "arxiv",
+      "title": "Automatic Detection of Stress from Speech in the Trier Social Stress Test",
+      "abstract": "Automatically detecting stress in speech provides an unobtrusive way to gain insights relevant to behavioral research or clinical assessment. This study investigates the automatic differentiation between a stressful and non-stressful situation, and the prediction of physiological and affective stress responses. Speech data was collected from 50 participants who either completed the Trier Social Stress Test (TSST) or a non-stressful control condition. With a processing pipeline that included speaker diarization and machine learning models, we achieved stress detection performance significantly above a mean baseline. Moreover, relevant physiological and affective stress responses were partially predictable from acoustic-prosodic features. Feature-importance analyses identified the most informative predictors contributing to model performance. The findings demonstrate that speech can serve as a meaningful and unobtrusive indicator of multiple dimensions of the human stress response.",
+      "authors": [
+        "Hanna Drimalla",
+        "Wieland R. Cremer",
+        "Christine Kraus",
+        "Oliver T. Wolf"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-01T14:21:53+00:00",
+      "link": "https://arxiv.org/pdf/2607.00986v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "automatic stress detection from speech in TSST, ambulatory assessment potential",
+      "llm_evidence_cn": "从语音自动检测压力（特里尔社会应激测试），可用于可穿戴评估",
+      "llm_evidence": "从语音自动检测压力（特里尔社会应激测试），可用于可穿戴评估",
+      "canonical_evidence": "从语音自动检测压力（特里尔社会应激测试），可用于可穿戴评估",
+      "llm_tldr_en": "Uses speech features and machine learning to automatically detect stress in the Trier Social Stress Test, enabling unobtrusive stress monitoring for behavioral research.",
+      "llm_tldr_cn": "从语音中自动检测压力为行为研究和临床评估提供无侵入性手段。本研究使用50名被试的TSST录音，通过说话人分割和机器学习流水线区分压力与控制情境，并预测生理和情感应激反应。声学-韵律特征能部分预测生理指标。该方法可直接用于生态瞬时评估中的压力监测，是EMA工具的有益补充。",
+      "llm_tldr": "从语音中自动检测压力为行为研究和临床评估提供无侵入性手段。本研究使用50名被试的TSST录音，通过说话人分割和机器学习流水线区分压力与控制情境，并预测生理和情感应激反应。声学-韵律特征能部分预测生理指标。该方法可直接用于生态瞬时评估中的压力监测，是EMA工具的有益补充。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

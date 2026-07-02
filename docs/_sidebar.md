@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-02 <!--dpr-date:20260702-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/02/2607.00986v1-automatic-detection-of-stress-from-speech-in-the-trier-social-stress-test" data-sidebar-item="{&quot;title&quot;: &quot;Automatic Detection of Stress from Speech in the Trier Social Stress Test&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.00986v1-automatic-detection-of-stress-from-speech-in-the-trier-social-stress-test&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;sleep-mental&quot;}], &quot;evidence&quot;: &quot;从语音自动检测压力（特里尔社会应激测试），可用于可穿戴评估&quot;}">Automatic Detection of Stress from Speech in the Trier Social Stress Test</a>
   * 2026-06-29 <!--dpr-date:20260629-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/29/2606.28261v1-habitual-lifestyle-timing-explains-circadian-timing-but-daily-lifestyle-changes-do-not-in-free-living-humans-across-2000-days" data-sidebar-item="{&quot;title&quot;: &quot;Habitual lifestyle timing explains circadian timing, but daily lifestyle changes do not, in free-living humans across 2000 days&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.28261v1-habitual-lifestyle-timing-explains-circadian-timing-but-daily-lifestyle-changes-do-not-in-free-living-humans-across-2000-days&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;sleep-mental&quot;}], &quot;evidence&quot;: &quot;自由生活可穿戴数据收集，将生活方式时间与昼夜节律关联，类似于睡眠与心理健康中的EMA&quot;}">Habitual lifestyle timing explains circadian timing, but daily lifestyle changes do not, in free-living humans across 2000 days</a>

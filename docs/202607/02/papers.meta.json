@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-02",
+  "date": "2026-07-02",
+  "generated_at": "2026-07-02T21:51:06",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/02/2607.00986v1-automatic-detection-of-stress-from-speech-in-the-trier-social-stress-test",
+      "section": "quick",
+      "title_en": "Automatic Detection of Stress from Speech in the Trier Social Stress Test",
+      "authors": "Hanna Drimalla, Wieland R. Cremer, Christine Kraus, Oliver T. Wolf",
+      "date": "2026-07-01",
+      "pdf": "https://arxiv.org/pdf/2607.00986v1",
+      "score": "7.0",
+      "evidence": "从语音自动检测压力（特里尔社会应激测试），可用于可穿戴评估",
+      "tldr": "自动检测语音中的压力对行为研究和临床评估具有重要意义。本研究采集50名参与者在Trier Social Stress Test或对照条件下的语音，经说话人分离和机器学习模型处理，实现了显著高于基线的压力检测性能。声学韵律特征可部分预测生理和情感压力反应。结果表明语音可作为非侵入性指标反映压力反应的多个维度。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "Automatically detecting stress in speech provides an unobtrusive way to gain insights relevant to behavioral research or clinical assessment. This study investigates the automatic differentiation between a stressful and non-stressful situation, and the prediction of physiological and affective stress responses. Speech data was collected from 50 participants who either completed the Trier Social Stress Test (TSST) or a non-stressful control condition. With a processing pipeline that included speaker diarization and machine learning models, we achieved stress detection performance significantly above a mean baseline. Moreover, relevant physiological and affective stress responses were partially predictable from acoustic-prosodic features. Feature-importance analyses identified the most informative predictors contributing to model performance. The findings demonstrate that speech can serve as a meaningful and unobtrusive indicator of multiple dimensions of the human stress response.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
