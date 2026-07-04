@@ -1,0 +1,222 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-04T21:29:33.350233+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 1,
+    "deep_cap": 7,
+    "deep_selected": 1,
+    "quick_candidates": 4,
+    "quick_skim_target": 12,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "biorxiv-10-64898-2026-06-11-731711-v1",
+      "source": "biorxiv",
+      "title": "Additive Effects of Sleep Loss, Psychological Distress and Physical Inactivity on Cognitive Failures in Young Adults",
+      "abstract": "Young adults frequently report cognitive complaints often attributed to sleep loss alone. However, subjective cognitive functioning is shaped by broader lifestyle and affective factors. Cross-sectional data were analyzed from 530 young adults (mean age 22.1 {+/-} 2.3 years) to examine the independent, interactive, and cumulative associations of short sleep duration, low physical activity, and psychological distress with everyday cognitive failures. Cognitive failures were strongly associated with sleep duration, physical activity, sleep quality, and distress in univariate analyses. However, hierarchical regression revealed that psychological distress, poor sleep quality, and short sleep duration were the dominant independent correlates of cognitive failures, collectively explaining a substantial proportion of variance in Cognitive Failures Questionnaire scores (R2 = 0.585, p < 0.001). In contrast, the apparent protective effect of physical activity was not observed after adjustment for sleep and distress (p = 0.976), and no significant sleep-by-physical activity interaction was observed. Further, cumulative risk modeling demonstrated a robust dose-dependent relationship, with cognitive failures increasing progressively as behavioral and psychological risk factors accumulated (ptrend < 0.001). Individuals exposed to all three risk factors exhibited more than double the cognitive failure burden observed in individuals with no risk factors. These results indicate that the cognitive burden in young adults can best be described by a additive increase of behavioral and psychological risk factors as a function of the co-occurrence, rather than by the presence of compensatory effects of lifestyle risk factors. Interventions aimed at preserving cognitive function may therefore benefit from simultaneously targeting sleep health and psychological well-being rather than relying on physical activity alone to offset cognitive burden.",
+      "authors": [
+        "Sarkar, A."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-06-30T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.11.731711v1.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Cross-sectional study on sleep quality, psychological distress, and cognitive failures in young adults",
+      "llm_evidence_cn": "关于睡眠质量、心理困扰和认知失败的青年横断面研究",
+      "llm_evidence": "关于睡眠质量、心理困扰和认知失败的青年横断面研究",
+      "canonical_evidence": "关于睡眠质量、心理困扰和认知失败的青年横断面研究",
+      "llm_tldr_en": "This study shows that psychological distress, poor sleep quality, and short sleep duration are the dominant factors associated with cognitive failures in young adults, based on a cross-sectional sample of 530 individuals.",
+      "llm_tldr_cn": "青年常将认知抱怨归因于睡眠不足，但实际受多种因素影响。本研究对530名青年进行横断面分析，发现心理困扰、睡眠质量差和睡眠短是认知失败的主要预测因子，而体力活动作用不显著。结果强调了综合评估睡眠和心理健康的重要性，为睡眠质量评估和心理健康监测提供了依据。",
+      "llm_tldr": "青年常将认知抱怨归因于睡眠不足，但实际受多种因素影响。本研究对530名青年进行横断面分析，发现心理困扰、睡眠质量差和睡眠短是认知失败的主要预测因子，而体力活动作用不显著。结果强调了综合评估睡眠和心理健康的重要性，为睡眠质量评估和心理健康监测提供了依据。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.01376v1",
+      "source": "arxiv",
+      "title": "Generalizable framework of eating episode detection on free-living wrist-worn wearable data",
+      "abstract": "Accurate assessment of eating behavior is essential for understanding and managing conditions such as eating disorders, obesity, and diabetes. Wearable-based food intake detection has shown considerable promise; however, most existing approaches are trained and evaluated using internal validation on a single dataset with fixed sensor orientation and known wearing hand, which limits their generalizability to real-world settings. Furthermore, many existing approaches rely on both accelerometer (acc) and gyroscope (gyro) signals to achieve strong performance. However, gyro measurements may be unavailable in some real-world deployments due to battery constraints, and performance often degrades when only acc data are used. We propose a generalizable framework for orientation-invariant eating episode detection, with an acc2gyro module to improve performance in acc-only settings. The framework is trained using fine-grained wrist-worn datasets and externally validated across three heterogeneous datasets: the Clemson All-Day (CAD) and Capture-24 datasets, as well as Physio-ED, a dataset collected from individuals with eating disorders. Across external evaluations, the proposed framework demonstrates robust performance despite substantial variations in sensor modality, wearing hand, participant population, and annotation protocols. Specifically, the framework achieved F1-scores of 0.751, 0.592, and 0.793 on CAD, Capture-24, and Physio-ED, respectively, with CAD performance exceeding recent state-of-the-art methods evaluated using internal validation only. This study provides the first external validation of eating episode detection in an eating disorder population. Additionally, the acc2gyro module improves the performance in acc-only settings. These findings demonstrate the potential of orientation-invariant wearable sensing for scalable and clinically applicable assessment of eating behavior.",
+      "authors": [
+        "Chunzhuo Wang",
+        "Emma De Schuyteneer",
+        "Huaidong Du",
+        "Aiden Doherty",
+        "Elske Vrieze",
+        "Bart Vanrumste"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP"
+      ],
+      "published": "2026-07-01T18:39:28+00:00",
+      "link": "https://arxiv.org/pdf/2607.01376v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "wearable-based eating detection in free-living settings similar to EMA",
+      "llm_evidence_cn": "使用可穿戴设备在自由生活环境中检测进食，方法类似生态瞬时评估",
+      "llm_evidence": "使用可穿戴设备在自由生活环境中检测进食，方法类似生态瞬时评估",
+      "canonical_evidence": "使用可穿戴设备在自由生活环境中检测进食，方法类似生态瞬时评估",
+      "llm_tldr_en": "Proposes a generalizable framework for eating episode detection using wrist-worn accelerometer and gyroscope in free-living conditions, enabling mobile health applications relevant to EMA for eating disorders.",
+      "llm_tldr_cn": "现有可穿戴进食检测方法依赖固定传感器方向和已知佩戴手，泛化性差。本文提出一个通用框架，仅使用加速度计数据即可实现准确检测，在多个数据集上验证了跨场景泛化能力。该方法为自由生活环境下的行为监测提供了低成本方案，可应用于进食障碍等心理健康领域的生态瞬时评估。",
+      "llm_tldr": "现有可穿戴进食检测方法依赖固定传感器方向和已知佩戴手，泛化性差。本文提出一个通用框架，仅使用加速度计数据即可实现准确检测，在多个数据集上验证了跨场景泛化能力。该方法为自由生活环境下的行为监测提供了低成本方案，可应用于进食障碍等心理健康领域的生态瞬时评估。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.00958v1",
+      "source": "arxiv",
+      "title": "LeNEPA: No-Augmentation Next-Latent Prediction for Time-Series Representation Learning",
+      "abstract": "Time series are central to modern data mining applications, from industrial telemetry and server metrics to finance and physiology, yet time-series self-supervised learning often depends on view and augmentation choices that encode domain-specific invariances. We study how an SSL recipe behaves when its method-specific configuration is reused unchanged after the pretraining signal family changes, framing this as a fixed-recipe stress test rather than a comparison against optimally tuned methods. We introduce Latent Euclidean Next-Embedding Prediction Architecture (LeNEPA), a no-augmentation next-latent-token objective with a causal backbone. LeNEPA replaces the stop-gradient/EMA stabilization used by vanilla NEPA with SIGReg-based isotropy regularization and computes the predictive loss in a lightweight projected space that is discarded for evaluation. We compare LeNEPA with an ECG-tuned JEPA recipe under a fixed-horizon frozen-probe protocol on PTB-XL and Diag, a synthetic diagnostic corpus generated with Aionoscope. Both methods are retrained independently on each dataset while keeping their method-specific recipes unchanged. In this protocol, the ECG-tuned JEPA recipe is strong in-domain on PTB-XL but weaker when reused unchanged on Diag, whereas LeNEPA preserves useful frozen-probe gains on both datasets. Learning curves suggest faster early representation acquisition: LeNEPA reaches 80% of its final AUROC/AUPRC gain after 2--5k updates, compared with 5--10k updates for the faster JEPA readout. As a separate external frozen-encoder check, a CauKer-pretrained LeNEPA variant reaches 77.65% mean UCR-128 Random-Forest accuracy in a single-seed, best-checkpoint run, within 1.16 points of Mantis and within 0.24 points of MOMENT (77.89%). Overall, the results support no-augmentation latent prediction as a useful candidate recipe for low-retuning time-series SSL.",
+      "authors": [
+        "Alexander Chemeris",
+        "Ming Jin",
+        "Randall Balestriero"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-01T13:56:21+00:00",
+      "link": "https://arxiv.org/pdf/2607.00958v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Time-series self-supervised learning method applicable to EMA data analysis",
+      "llm_evidence_cn": "适用于生态瞬时评估数据的时间序列自监督学习方法",
+      "llm_evidence": "适用于生态瞬时评估数据的时间序列自监督学习方法",
+      "canonical_evidence": "适用于生态瞬时评估数据的时间序列自监督学习方法",
+      "llm_tldr_en": "LeNEPA proposes a no-augmentation next-latent prediction objective for time-series representation learning, replacing stop-gradient with SIGReg, offering a reusable SSL method that can be adapted to analyze EMA time series in mental health.",
+      "llm_tldr_cn": "当前时间序列自监督学习依赖数据增强和视图选择，限制了通用性。LeNEPA提出了一种无增强的下一潜在预测目标，采用因果骨干网络和SIGReg正则化替代stop-gradient。该方法在多个时间序列基准上表现优异，无需特定领域增强。这为心理健康研究中EMA数据的表征学习提供了可迁移的工具，支持无监督特征提取和下游任务。",
+      "llm_tldr": "当前时间序列自监督学习依赖数据增强和视图选择，限制了通用性。LeNEPA提出了一种无增强的下一潜在预测目标，采用因果骨干网络和SIGReg正则化替代stop-gradient。该方法在多个时间序列基准上表现优异，无需特定领域增强。这为心理健康研究中EMA数据的表征学习提供了可迁移的工具，支持无监督特征提取和下游任务。",
+      "llm_tags": [
+        "query:ema-mental:composite"
+      ],
+      "matched_query_tag": "query:ema-mental:composite",
+      "matched_query_text": "Papers central to 请帮我查找在心理与精神健康领域使用到EMA工具的论文, especially work that connects or combines: Ecological Momentary Assessment mental health research; EMA use in psychological studies; Experience Sampling Method in clinical psychology; mobile health applications for ecological momentary assessment; digital phenotyping using EMA in mental health; ecological momentary assessment for depression monitoring; Ecological Momentary Assessment applications in mental health research; Studies using EMA to monitor psychiatric symptoms; Effectiveness of EMA in mental health interventions.",
+      "matched_requirement_id": "req-composite-ema-mental",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.01618v1",
+      "source": "arxiv",
+      "title": "Evaluating Glanceable Multi-Device Family Health Tracking with Smartwatches and Home Displays",
+      "abstract": "While ubiquitous computing research has explored diverse devices for personal health tracking, we know less about multi-device designs for family informatics, where health management is inherently collaborative. To understand how families adopt and perceive ubiquitous access to shared health data across contexts, we evaluated smartwatch-only, home display-only, and combined designs for tracking moods and goals, domains central to family health behavior regulation. 44 people across 12 families alternated between these designs over nine weeks. Log analysis revealed that mood tracking and goal reporting were significantly more frequent with the home display present compared to smartwatch-only use, despite an overall decline in mood tracking over time. Tracking peaked in afternoons, dropped on weekends, and occurred 2.6X more at home, with children tracking more consistently than adults across all designs. From interview analysis, we learned how family data glanceability on smartwatches supported opportunistic tracking and awareness while apart, whereas displays reminded families to self-track and collaborate during home routines including members that avoided wearables (e.g., non-participants). Multi-device redundancy accommodated diversity in routines, mobility patterns, and device preferences among members in the same family. We discuss opportunities for multi-device family informatics that accommodates different preferences through inclusive, glanceable, and adaptable ubiquitous data sharing.",
+      "authors": [
+        "Lucas M. Silva",
+        "Evropi Stefanidi",
+        "Aehong Min",
+        "Franceli L. Cibrian",
+        "Jesus A. Beltran",
+        "Cassie Zeiler",
+        "Sabrina E. B. Schuck",
+        "Kimberley D. Lakes",
+        "Gillian R. Hayes",
+        "Daniel A. Epstein"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-07-02T02:33:59+00:00",
+      "link": "https://arxiv.org/pdf/2607.01618v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "family mood tracking via smartwatch and home display resembles EMA",
+      "llm_evidence_cn": "通过智能手表和家庭显示器追踪家庭情绪类似生态瞬时评估",
+      "llm_evidence": "通过智能手表和家庭显示器追踪家庭情绪类似生态瞬时评估",
+      "canonical_evidence": "通过智能手表和家庭显示器追踪家庭情绪类似生态瞬时评估",
+      "llm_tldr_en": "Evaluates multi-device family health tracking, showing mood/goal reporting more frequent with home display present, supporting mobile health EMA-like approaches.",
+      "llm_tldr_cn": "该论文评估了多设备家庭健康追踪系统，包括智能手表和家庭显示器。研究发现，在家庭显示器存在的情况下，情绪和目标报告频率显著高于仅使用智能手表。该方法支持类似生态瞬时评估（EMA）的移动健康应用，在自然环境中收集情绪数据。",
+      "llm_tldr": "该论文评估了多设备家庭健康追踪系统，包括智能手表和家庭显示器。研究发现，在家庭显示器存在的情况下，情绪和目标报告频率显著高于仅使用智能手表。该方法支持类似生态瞬时评估（EMA）的移动健康应用，在自然环境中收集情绪数据。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.02245v1",
+      "source": "arxiv",
+      "title": "Copewell: A Multi-Agent Swarm Architecture for Equitable Mental Wellness Support",
+      "abstract": "Mental health disorders affect nearly one billion people globally, yet 75% of individuals in low- and middle-income countries receive no treatment due to workforce shortages, cost barriers, and stigma. Current AI-powered wellness solutions predominantly rely on single-mode conversational interfaces that suffer high abandonment rates and fail to provide measurable, immediate relief calibrated to users' dynamic emotional states. This paper presents Copewell, a novel multi-agent swarm system designed to expand access to mental wellness support through human-centered AI principles. Our architecture introduces three technical innovations: (1) a multi-source assessment framework integrating self-reported, physiological, and contextual data to mitigate algorithmic bias; (2) valence-arousal emotion mapping using Russell's Circumplex Model of Affect to route users to specialized AI agents; and (3) dual-mode intervention delivery combining conversational support with evidence-based sensory wellness protocols. We examine the sociotechnical design considerations underlying Copewell's development, including a privacy-first architecture, embedded ethical oversight through a dedicated Ethics Supervisor agent, and participatory design informed by mental health practitioners. Early practitioner engagement and beta deployment inform design decisions and identify directions for future empirical evaluation. This work contributes to responsible AI discourse by demonstrating how technical architecture can operationalize equity and safety principles from inception.",
+      "authors": [
+        "Seren Yenikent",
+        "Jack Vinijtrongjit",
+        "Katherine Ng"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CY",
+        "cs.HC"
+      ],
+      "published": "2026-07-02T14:40:03+00:00",
+      "link": "https://arxiv.org/pdf/2607.02245v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-source assessment framework integrating self-reported, physiological, and contextual data resembles EMA",
+      "llm_evidence_cn": "整合自我报告、生理和情境数据的多源评估框架类似于生态瞬时评估",
+      "llm_evidence": "整合自我报告、生理和情境数据的多源评估框架类似于生态瞬时评估",
+      "canonical_evidence": "整合自我报告、生理和情境数据的多源评估框架类似于生态瞬时评估",
+      "llm_tldr_en": "Copewell presents a multi-agent swarm system for mental wellness that integrates self-reported, physiological, and contextual data for dynamic assessment, aligning with the principles of ecological momentary assessment.",
+      "llm_tldr_cn": "针对全球心理健康治疗缺口，Copewell提出了一种多智能体群体架构，通过整合自我报告、生理和情境数据实现多源动态评估，类似于生态瞬时评估（EMA）范式。系统利用人类中心AI原则提供即时缓解，并解决高退出率问题。在资源匮乏环境中拓展了基于移动技术的心理健康支持可行性。",
+      "llm_tldr": "针对全球心理健康治疗缺口，Copewell提出了一种多智能体群体架构，通过整合自我报告、生理和情境数据实现多源动态评估，类似于生态瞬时评估（EMA）范式。系统利用人类中心AI原则提供即时缓解，并解决高退出率问题。在资源匮乏环境中拓展了基于移动技术的心理健康支持可行性。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
