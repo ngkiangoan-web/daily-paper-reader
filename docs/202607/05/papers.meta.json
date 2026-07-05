@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-05",
+  "date": "2026-07-05",
+  "generated_at": "2026-07-05T21:20:19",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/05/2606.29931v1-beyond-equidistant-assumptions-an-autoregressive-ordered-stereotype-model-for-ordinal-time-series",
+      "section": "quick",
+      "title_en": "Beyond Equidistant Assumptions: An Autoregressive Ordered Stereotype Model for Ordinal Time Series",
+      "authors": "Anna Nalpantidi, Dimitris Karlis, Daniel Fernández",
+      "date": "2026-06-29",
+      "pdf": "https://arxiv.org/pdf/2606.29931v1",
+      "score": "6.0",
+      "evidence": "提出用于序数睡眠状态时间序列的自回归模型",
+      "tldr": "传统有序时间序列模型假设类别等距，在婴儿睡眠状态等应用中不切实际。本文提出自回归有序刻板模型（AR-OSM），通过引入滞后响应作为协变量，并允许数据自动确定类别间距。婴儿睡眠数据分析和模拟研究表明，AR-OSM能有效捕捉序列依赖，突破等距限制，提升拟合灵活性。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "We propose an extension of the ordered stereotype model (OSM) for ordinal time series data, referred to as the Autoregressive OSM (AR-OSM). The model captures serial dependence by incorporating lagged values of the response as covariates in the systematic component. In contrast to existing regression models for ordinal time series, the AR-OSM does not assume equidistant categories, but instead allows the data to determine their relative spacing. This property makes the model particularly suitable for applications where the equidistance assumption is unrealistic. Such a case is illustrated through the analysis of infant sleep state data. Additionally, a comprehensive simulation study is conducted to assess the performance of the model under varying sample sizes and to investigate how parameter values influence the induced serial dependence structure.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
