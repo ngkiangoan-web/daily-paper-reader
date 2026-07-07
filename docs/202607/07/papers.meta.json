@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-07",
+  "date": "2026-07-07",
+  "generated_at": "2026-07-07T22:14:22",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/07/2607.04648v1-machine-learning-for-depression-screening-and-intervention-an-original-circadian-rhythm-score-based-methodology",
+      "section": "deep",
+      "title_en": "Machine Learning for Depression Screening and Intervention: an Original Circadian Rhythm Score-based Methodology",
+      "authors": "Bin Wang, Shuo Lian, Yuanyuan Hou, Dexian Wang, Peilan He, Feng Hong, Yanwei Yu, Tianrui Li",
+      "date": "2026-07-06",
+      "pdf": "https://arxiv.org/pdf/2607.04648v1",
+      "score": "8.0",
+      "evidence": "利用行为数据进行抑郁的数字表型，类似基于EMA的监测",
+      "tldr": "传统抑郁筛查孤立分析睡眠、活动等行为，忽视其联合昼夜节律结构。本文提出昼夜节律评分（CRS），将多维度日常行为压缩为统一表示，保留语义且几乎不损失预测能力。基于梯度提升树和SHAP构建可解释筛查框架，识别CRS与抑郁风险的非线性饱和关系。进一步通过交互建模和反事实回归估计异质剂量效应，在CHARLS队列（n=15,233）上实现0.825 AUC，并发现每周约300 MET-min的体力活动阈值和睡眠不足者约65分钟的最佳午睡时长。该工作为干预导向的抑郁筛查提供了可扩展的机器学习方法论。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Depression screening from large-scale behavioral data is challenged by fragmented circadian indicators, limited interpretability, and the lack of intervention-oriented analysis. Existing approaches typically analyze sleep, activity, and social behaviors in isolation, failing to capture their joint circadian structure. To address this limitation, we first propose the Circadian Rhythm Score (CRS), a composite index that compresses multi-domain daily behaviors into a unified representation of circadian rhythm. CRS is constructed to maximize discriminative power for depression screening while preserving behavioral semantics through non-negativity constraints. Empirical results demonstrate near-lossless compression, where a single CRS retains almost the full predictive capability compared with multiple raw behavioral indicators. Building upon CRS, we develop an interpretable depression screening framework based on gradient-boosted trees and SHAP analysis, revealing nonlinear and saturation-like associations between circadian rhythm and depression risk. Beyond risk prediction, we further integrate interaction modeling and counterfactual regression to estimate heterogeneous and dose-dependent behavioral effects, enabling intervention-oriented reasoning under different circadian contexts. Experiments on the China Health and Retirement Longitudinal Study (CHARLS, n=15,233), demonstrate robust screening performance (ROC-AUC=0.825) and identify actionable behavioral thresholds, including a minimum effective exercise dose of approximately 300 MET-min/week and an optimal restorative nap duration of approximately 65 minutes for sleep-deprived individuals. By bridging supervised representation learning and interpretable modeling, this work provides a scalable framework for depression screening and intervention-aware healthcare data mining.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
