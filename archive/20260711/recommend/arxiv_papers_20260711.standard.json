@@ -1,0 +1,273 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-11T21:25:41.101955+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 2,
+    "deep_cap": 7,
+    "deep_selected": 2,
+    "quick_candidates": 4,
+    "quick_skim_target": 12,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2607.05901v1",
+      "source": "arxiv",
+      "title": "Uncovering Latent Depression Severity for Binary Depression Detection via Advantage-weighting Ranking",
+      "abstract": "Automatic depression detection using audio-visual data faces significant challenges, particularly in disentangling overlapping feature distributions and establishing robust decision boundaries. To address this, we propose a fine-grained multimodal framework featuring a temporal encoder and a mutual transformer to facilitate deep cross-modal fusion. Our core contribution is the Binary Advantage-weighting Ranking Loss, which optimizes the latent space distribution through two complementary mechanisms: Advantage-weighted Separation, which mines hard pairs by computing a pairwise prediction difference matrix and dynamically weighting them based on their difficulty; and Advantage-weighted Compactness, which minimizes intra-class variance to force features to cluster around their respective class centers. Extensive experiments on D-vlog and LMVD demonstrate that our model reconstructs the latent ordinal structure by prioritizing hard pairs, thereby achieving state-of-the-art performance.",
+      "authors": [
+        "Manning Gao",
+        "Tingyi Liu",
+        "Leheng Zhang",
+        "Haifeng Hu",
+        "Yuncheng Jiang",
+        "Sijie Mai"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-07T06:56:55+00:00",
+      "link": "https://arxiv.org/pdf/2607.05901v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "automatic depression detection from audio-visual data",
+      "llm_evidence_cn": "基于音视频的自动抑郁检测",
+      "llm_evidence": "基于音视频的自动抑郁检测",
+      "canonical_evidence": "基于音视频的自动抑郁检测",
+      "llm_tldr_en": "Proposes a multimodal framework with temporal encoder and mutual transformer for fine-grained depression detection from audio-visual data, using a novel Binary Advantage-weighting Ranking loss to improve latent space separability.",
+      "llm_tldr_cn": "针对自动抑郁检测中特征分布重叠和决策边界模糊的问题，本文提出细粒度多模态框架。该框架利用时序编码器和互变换器实现深度跨模态融合，并通过二元优势加权排序损失优化潜在空间分布，增强类内紧凑性和类间可分离性。在公开数据集上取得了优异性能，为抑郁情绪评估提供了新方法。",
+      "llm_tldr": "针对自动抑郁检测中特征分布重叠和决策边界模糊的问题，本文提出细粒度多模态框架。该框架利用时序编码器和互变换器实现深度跨模态融合，并通过二元优势加权排序损失优化潜在空间分布，增强类内紧凑性和类间可分离性。在公开数据集上取得了优异性能，为抑郁情绪评估提供了新方法。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "depression mood assessment",
+      "matched_requirement_id": "req-14",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-07-06-736760-v1",
+      "source": "biorxiv",
+      "title": "Sleep-Related Respiratory Disruption is Associated with Altered Spindle Morphology and Poorer Attention in Children",
+      "abstract": "Study Objectives. To determine whether sleep-related respiratory disruption is associated with regionally specific alterations in sleep spindle topography and whether hypopnea-sensitive spindle features are associated with attentional performance in children. Methods. We recorded overnight high-density EEG in children across a wide range of respiratory disruption severity. Slow and fast spindle metrics were extracted per channel, and channel-wise regression models characterized topographic associations with hypopnea index (HI). Cluster-based permutation testing controlled for multiple comparisons. Hierarchically defined regions of interest were tested as predictors of attentional performance on the Test of Variables of Attention (TOVA). Results. Canonical slow-anterior and fast-posterior spindle organization was detectable across the cohort. Two HI-related topographic effects survived cluster-based permutation correction: higher HI was associated with shortened anterior fast spindle duration and with slower anterior slow spindle peak frequency. In cognitive models, anterior fast spindle duration was the strongest and most consistent predictor of attentional performance, associated with higher signal detection sensitivity, fewer omission errors, and fewer commission errors. By contrast, slow spindle peak frequency showed no attentional associations. Conclusions. Pediatric respiratory disruption is associated with regionally specific alterations in spindle morphology rather than global spindle reduction. Shortened anterior fast spindle duration showed convergent respiratory and attentional associations, suggesting that localized spindle integrity may provide a neurophysiological marker of cognitive vulnerability in pediatric sleep-disordered breathing beyond conventional clinical respiratory metrics.",
+      "authors": [
+        "Haber, I.",
+        "Taporoski, T.",
+        "Peterson, B.",
+        "Matthews, C.",
+        "Kille, T.",
+        "Myers, A.",
+        "Riedner, B.",
+        "Strainis, E.",
+        "Vascan, A. M.",
+        "Jones, S."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-07-10T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.07.06.736760v1.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "sleep respiratory disruption and spindle morphology for sleep quality",
+      "llm_evidence_cn": "睡眠呼吸紊乱与纺锤波形态关联睡眠质量",
+      "llm_evidence": "睡眠呼吸紊乱与纺锤波形态关联睡眠质量",
+      "canonical_evidence": "睡眠呼吸紊乱与纺锤波形态关联睡眠质量",
+      "llm_tldr_en": "Investigates association between sleep-related respiratory disruption and altered sleep spindle topography in children, linking hypopnea-sensitive spindle features to attentional performance.",
+      "llm_tldr_cn": "本研究探讨儿童睡眠呼吸紊乱与睡眠纺锤波形态的区域特异性关系。通过高密度EEG记录，发现呼吸暂停指数与纺锤波特征显著相关，且这些特征可预测注意力表现。结果表明呼吸障碍通过改变纺锤波影响儿童睡眠质量和日间功能，为睡眠质量评估提供生理标记。",
+      "llm_tldr": "本研究探讨儿童睡眠呼吸紊乱与睡眠纺锤波形态的区域特异性关系。通过高密度EEG记录，发现呼吸暂停指数与纺锤波特征显著相关，且这些特征可预测注意力表现。结果表明呼吸障碍通过改变纺锤波影响儿童睡眠质量和日间功能，为睡眠质量评估提供生理标记。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.07720v1",
+      "source": "arxiv",
+      "title": "Omni-Sleep: A Sleep Foundation Model via Hierarchical Contrastive Learning of CNS--ANS Dynamic",
+      "abstract": "Sleep physiology arises from the coordinated dynamics of the central nervous system (CNS) and autonomic nervous system (ANS), as reflected by multimodal polysomnography signals including EEG, EOG, EMG, ECG, and respiration. However, existing sleep foundation models often fuse heterogeneous biosignals in a topology-agnostic manner, overlooking their physiological organization. We introduce Omni-Sleep, a sleep foundation model that uses the CNS/ANS partition as a physiological prior for topology-constrained representation learning. Omni-Sleep learns structured representations through three objectives: intra-system consistency, which captures shared subsystem-level factors within neural and cardio-respiratory signals; inter-system synchronization, which aligns subsystem trajectories to model brain--body dynamics; and latent-space masked temporal modeling, which captures long-horizon sleep dynamics. Pre-trained on over 100,000 hours of multi-center multimodal PSG data, Omni-Sleep is evaluated on sleep staging and multi-disease classification. Across datasets and modality-ablation settings, Omni-Sleep outperforms strong foundation-model baselines, showing improved label efficiency, cross-dataset generalization, and robustness to missing modalities. These results highlight the value of physiological hierarchy for generalizable sleep representation learning. Code is available at https://github.com/AutoBrain-sleep/OmniSleep.",
+      "authors": [
+        "Zhoujie Hou",
+        "Song Wang",
+        "Kexin Lou",
+        "Mo Wang",
+        "Chen Wei",
+        "Quanying Liu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-07-04T13:45:39+00:00",
+      "link": "https://arxiv.org/pdf/2607.07720v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "sleep foundation model using CNS/ANS signals for sleep quality assessment",
+      "llm_evidence_cn": "利用中枢/自主神经信号的睡眠基础模型，用于睡眠质量评估",
+      "llm_evidence": "利用中枢/自主神经信号的睡眠基础模型，用于睡眠质量评估",
+      "canonical_evidence": "利用中枢/自主神经信号的睡眠基础模型，用于睡眠质量评估",
+      "llm_tldr_en": "Omni-Sleep is a sleep foundation model that leverages CNS/ANS partition as a physiological prior for structured representation learning from multimodal PSG signals, enabling sleep staging and potentially quality assessment.",
+      "llm_tldr_cn": "Omni-Sleep提出利用中枢神经系统与自主神经系统的分区作为生理先验，对多模态多导睡眠图信号进行层次化对比学习，学习结构化睡眠表征。该模型可应用于睡眠阶段分类和睡眠质量评估，为睡眠研究提供强大的基础工具。",
+      "llm_tldr": "Omni-Sleep提出利用中枢神经系统与自主神经系统的分区作为生理先验，对多模态多导睡眠图信号进行层次化对比学习，学习结构化睡眠表征。该模型可应用于睡眠阶段分类和睡眠质量评估，为睡眠研究提供强大的基础工具。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.04851v1",
+      "source": "arxiv",
+      "title": "SleepBand: Single-Source Domain Generalization for Sleep Staging via Physiologically Structured Spectral Modeling",
+      "abstract": "Generalizing sleep staging models to unseen datasets is challenging, and typical domain generalization (DG) methods often rely on multiple source domains or domain labels that are rarely available in practice. We tackle the stricter and more practical setting of single-source domain generalization: training on a single labeled source dataset, without domain labels or access to target data. We present SleepBand, a physiology-guided framework that embeds oscillatory priors via a learnable Morlet filter bank and a structured integration-and-recalibration pipeline. This anchors representations to domain-invariant sleep rhythms (e.g., slow waves, spindles), reducing reliance on dataset-specific artefacts. On five public datasets, SleepBand achieves state-of-the-art SDG performance and remains competitive under leave-one-domain-out (multi-source) DG. Analyses show that the learned filters align with canonical neurophysiology and that robustness stems from focusing on narrowband, physiologically meaningful cues. Our results suggest that principled, physiology-aware inductive biases are a promising path for robust single-domain sleep staging. Code is available at https://github.com/lzcn/sleep-band",
+      "authors": [
+        "Zhi Lu",
+        "Yang Hu",
+        "Yan Chen"
+      ],
+      "primary_category": "cs.MM",
+      "categories": [
+        "cs.MM",
+        "cs.LG"
+      ],
+      "published": "2026-07-06T09:21:54+00:00",
+      "link": "https://arxiv.org/pdf/2607.04851v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "sleep staging model for sleep quality assessment",
+      "llm_evidence_cn": "睡眠分期模型用于睡眠质量评估",
+      "llm_evidence": "睡眠分期模型用于睡眠质量评估",
+      "canonical_evidence": "睡眠分期模型用于睡眠质量评估",
+      "llm_tldr_en": "Proposes SleepBand, a physiology-guided framework for single-source domain generalization in sleep staging, using learnable Morlet filter bank to anchor representations to domain-invariant sleep rhythms, tested on five datasets.",
+      "llm_tldr_cn": "睡眠分期模型在不同数据集间泛化困难，而现有域泛化方法多依赖多源域或域标签，实际中难以获得。本文提出SleepBand，一个生理引导的框架，通过可学习的Morlet滤波器组嵌入振荡先验，将表征锚定于慢波、纺锤波等域不变睡眠节律，从而在仅有一个源域标签且无目标域数据的情况下实现鲁棒的睡眠分期。在五个公共数据集上的实验表明，该方法在跨数据集泛化上显著优于基线。",
+      "llm_tldr": "睡眠分期模型在不同数据集间泛化困难，而现有域泛化方法多依赖多源域或域标签，实际中难以获得。本文提出SleepBand，一个生理引导的框架，通过可学习的Morlet滤波器组嵌入振荡先验，将表征锚定于慢波、纺锤波等域不变睡眠节律，从而在仅有一个源域标签且无目标域数据的情况下实现鲁棒的睡眠分期。在五个公共数据集上的实验表明，该方法在跨数据集泛化上显著优于基线。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "biorxiv-10-64898-2026-07-06-736892-v1",
+      "source": "biorxiv",
+      "title": "Individual differences in post-encoding sleep continuity predict context memory accuracy and supporting ERPs in younger and older adults",
+      "abstract": "Post-encoding sleep plays an essential role in episodic memory consolidation. Much of the existing literature on sleep and memory relies on deprivation paradigms or laboratory-controlled sleep. Relatively few studies have examined how naturalistic post-encoding sleep relates to memory retrieval and its supporting neural activity, or whether age-related impairments in this sleep are linked to those in episodic memory. In the present study, we used actigraphy and electroencephalography to examine how post-encoding sleep quality relates to context memory performance and retrieval-related ERPs supporting performance in younger and older adults. Participants encoded object-scene pairs and were tested on matching and mismatching pairs after a 96-hour sleep-filled delay. We found that greater post-encoding sleep continuity predicted better delayed context memory performance for mismatching pairs across age groups. Post-encoding sleep continuity was also associated with larger ERP differences between context hits and misses for context-matching pairs, for ERP effects associated with post-retrieval monitoring operations across age groups. Together, these findings suggest that more continuous, naturalistic post-encoding sleep facilitates episodic memory performance and neural mechanisms supporting episodic memory retrieval across adult age.",
+      "authors": [
+        "Nyan, C. C.",
+        "Wachnin, A. J.",
+        "Mirjalili, S.",
+        "Ram, S.",
+        "Seraji, M.",
+        "Duarte, A."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-07-10T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.07.06.736892v1.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "sleep quality assessment using actigraphy, an ambulatory assessment method in clinical research",
+      "llm_evidence_cn": "使用体动记录仪评估睡眠质量，属于临床研究中的动态评估方法",
+      "llm_evidence": "使用体动记录仪评估睡眠质量，属于临床研究中的动态评估方法",
+      "canonical_evidence": "使用体动记录仪评估睡眠质量，属于临床研究中的动态评估方法",
+      "llm_tldr_en": "This study uses actigraphy and EEG to measure naturalistic post-encoding sleep continuity and its relation to memory, exemplifying ambulatory assessment in clinical research.",
+      "llm_tldr_cn": "该研究针对自然状态下睡眠质量如何影响情景记忆的问题，采用体动记录仪和脑电图对睡眠连续性进行动态评估。结果发现，年轻人和老年人中，编码后睡眠的连续性差异预测了情境记忆准确性和相关事件相关电位。研究展示了动态评估工具在临床研究中评估睡眠质量的实用价值。",
+      "llm_tldr": "该研究针对自然状态下睡眠质量如何影响情景记忆的问题，采用体动记录仪和脑电图对睡眠连续性进行动态评估。结果发现，年轻人和老年人中，编码后睡眠的连续性差异预测了情境记忆准确性和相关事件相关电位。研究展示了动态评估工具在临床研究中评估睡眠质量的实用价值。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.06617v1",
+      "source": "arxiv",
+      "title": "Inertia-1: An Open Exploration of Wearable Motion Foundation Models",
+      "abstract": "Wearable motion sensing provides a continuous and scalable window into human behavior and health, making it a natural fit for foundation models, yet its pretraining and scaling principles remain poorly understood. Prior work studies isolated design choices, such as sensor placement or sampling frequency, often under fixed settings and narrow downstream tasks that fail to capture real-world sensing diversity. We introduce Inertia-1, a fully open exploration of wearable motion foundation models. Using massive corpora of accelerometer data from global sources spanning more than 18.2M hours, we build a controlled framework for studying the full lifecycle of wearable motion foundation models, covering data choices such as sensor modality, device placement, sampling rate, window length; model choices such as architectures and model size; and training choices such as pretraining objective and data scale. Extensive evaluations across 15 datasets spanning human activity recognition, freezing-of-gait detection, and disease prediction reveal intriguing findings for building motion foundation models that generalize across tasks and sensing conditions. Collectively, Inertia-1 not only presents state-of-the-art recipes for diverse downstream tasks, but also serves as a comprehensive, practical, and open cookbook for wearable motion representation learning.",
+      "authors": [
+        "Zongzhe Xu",
+        "Aakarsh Anand",
+        "Sarah Jiang",
+        "Chuntung Zhuang",
+        "Zitao Shuai",
+        "Sriram Sankararaman",
+        "Yuzhe Yang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-07-07T09:22:33+00:00",
+      "link": "https://arxiv.org/pdf/2607.06617v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "wearable motion foundation models for ambulatory assessment",
+      "llm_evidence_cn": "可穿戴运动基础模型用于移动评估",
+      "llm_evidence": "可穿戴运动基础模型用于移动评估",
+      "canonical_evidence": "可穿戴运动基础模型用于移动评估",
+      "llm_tldr_en": "Inertia-1 introduces open exploration of wearable motion foundation models using over 18.2M hours of accelerometer data, enabling scalable ambulatory assessment of human behavior.",
+      "llm_tldr_cn": "该论文提出Inertia-1框架，系统探索可穿戴运动基础模型的设计原则。利用超过1820万小时的加速度计数据，研究了传感器模态、设备位置和采样率等数据选择的影响，为连续移动健康评估奠定了可扩展的基础。",
+      "llm_tldr": "该论文提出Inertia-1框架，系统探索可穿戴运动基础模型的设计原则。利用超过1820万小时的加速度计数据，研究了传感器模态、设备位置和采样率等数据选择的影响，为连续移动健康评估奠定了可扩展的基础。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

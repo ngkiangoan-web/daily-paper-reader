@@ -1,0 +1,1102 @@
+Title: Inertia-1: An Open Exploration of Wearable Motion Foundation Models
+
+URL Source: https://arxiv.org/pdf/2607.06617v1
+
+Published Time: Thu, 09 Jul 2026 00:02:00 GMT
+
+Number of Pages: 28
+
+Markdown Content:
+> 2026-7-9
+
+# Inertia-1 : An Open Exploration of Wearable Motion Foundation Models 
+
+Zongzhe Xu 1∗, Aakarsh Anand 1∗, Sarah Jiang 2∗, Chuntung Zhuang 3, Zitao Shuai 1, Sriram Sankararaman 1,Yuzhe Yang 1†  
+
+> 1University of California, Los Angeles, 2Duke University, 3John Hopkins University
+
+Wearable motion sensing provides a continuous and scalable window into human behavior and health, making it a natural fit for foundation models, yet its pretraining and scaling principles remain poorly understood. Prior work studies isolated design choices, such as sensor placement or sampling frequency, often under fixed settings and narrow downstream tasks that fail to capture real-world sensing diversity. We introduce Inertia-1 , a fully open exploration of wearable motion foundation models. Using massive corpora of accelerometer data from global sources spanning more than 18.2M hours, we build a controlled framework for studying the full lifecycle of wearable motion foundation models, covering data choices such as sensor modality, device placement, sampling rate, window length; 
+
+model choices such as architectures and model size; and training choices such as pretraining objective and data scale. Extensive evaluations across 15 datasets spanning human activity recognition , freezing-of-gait detection , and disease prediction reveal intriguing findings for building motion foundation models that generalize across tasks and sensing conditions. Collectively, Inertia-1 not only presents state-of-the-art recipes for diverse downstream tasks, but also serves as a comprehensive, practical, and open cookbook for wearable motion representation learning. 
+
+Code: https://github.com/yang-ai-lab/Inertia-1 
+
+Website: https://yang-ai-lab.github.io/Inertia-1 
+
+1. Introduction 
+
+Foundation models turn scale into reusable structure [46, 54, 59]. For wearable intelligence, motion is one of the most natural sources of such structure: continuous accelerometer and gyroscope streams record how people move, rest, and function in daily life, linking everyday behavior to mobility [10, 25, 43], physiology [33, 57], and personal health [17, 30]. Large population cohorts now collect longitudinal motion recordings over days or weeks [13, 17, 38], supporting applications from daily activity analysis and mobility assessment to disease risk stratification. Major studies such as UK Biobank [17] contain millions of hours of motion signals, yet most of these data remain unlabeled and underused. This creates a clear potential for wearable motion foundation models: learning general-purpose models from large unlabeled cohorts and transferring them across diverse behavioral and health tasks. Realizing this potential, however, is hindered by a fragmented research landscape. Such frag-mentation is layered: data pipelines differ in sampling rate, window length, sensor modality, body placement, and axis representation; methodologies differ in pretraining objective, architecture, representation domain, and training recipe; datasets differ in scale, duration, label density, and clinical context; and downstream evaluations differ across human activity recognition (HAR), gait    
+
+> ∗Equal contribution. †Correspondence to: yuzhey@ucla.edu. arXiv:2607.06617v1 [cs.LG] 7 Jul 2026 Inertia-1 : An Open Exploration of Wearable Motion Foundation Models Axis Aggregation
+> Window Size
+> Sampling Rate
+> Frequency vs. Time
+> Body Position
+> Sensor Type
+> Activity Recognition Gait Detection
+> Disease Prediction
+
+# Inertia -1        
+
+> ●15 datasets ●18M+ hours ●110,000+ participants
+> ...
+> ...
+
+Figure 1 | Overview of Inertia-1 . We present a unified and fully open exploration of wearable motion FMs, spanning large-scale accelerometer pretraining, diverse self-supervised objectives, controlled sensing setups, and downstream evaluation across activity recognition, gait analysis, and disease prediction. Inertia-1 
+
+covers 18.2M hours of motion data from over 115,000 individuals and 15 datasets, enabling systematic study of how data, model, and training choices shape transferable motion representations. More details are in Appendix A. 
+
+analysis, and disease prediction. As summarized in Table 1, existing motion studies typically cover only a subset of sensors, placements, tasks, and scales, leaving the field with strong local findings but limited guidance for building a general-purpose wearable motion foundation model. Specifically, the nature of this fragmentation is twofold. First , data configurations and modeling methods are rarely examined under a shared protocol. Prior work has studied diverse but isolated design factors such as windowing [3], sensor displacement [5], and device heterogeneity [47] across disjoint datasets, while recent foundation-model efforts explore reconstructive [31], contrastive [56], self-distillation [50], and frequency-domain objectives [26], often under fixed input settings. Yet, when objectives, preprocessing choices, sensing setups, and representation domains all vary together, it becomes difficult to attribute progress to any single design choice. Second , dataset scale and task definition are split across regimes. Large-scale cohorts provide population-level longitudinal data and health outcomes, but often release compressed motion representations, such as downsampled traces or vector-magnitude summaries [35, 38]. In contrast, datasets for HAR and freezing-of-gait (FoG) offer fine-grained, high-frequency signals, but are inherently small-scale , with limited participants and short sessions [43]. This leaves open whether massive unlabeled cohorts can produce representations that bridge both small, label-scarce motion tasks and population-level disease modeling. To fill the gaps, we present Inertia-1 , an open exploration of wearable motion foundation models. Rather than simply proposing a new architecture, Inertia-1 is designed to disentangle how pretraining objectives, sensing configurations, scale, and downstream tasks jointly shape transferable motion representations (see figure 1): ❶ Pretraining. We integrate 10 representative methods under the same training and evaluation settings, covering 5 classes of pretraining objectives, including general self-supervised as well as motion-specific approaches. ❷ Data pipelines. We evaluate models across a rigorous grid of experimental axes, including sampling rate, window length, sensor modality, sensor axis dimensionality, and body placement (Table 7). ❸ Scale. We aggregate, to our knowledge, the largest waveform-level wearable motion data collection to date, spanning 18.2M hours of motion  
+
+> 2Inertia-1 : An Open Exploration of Wearable Motion Foundation Models
+
+Table 1 | Comparisons of studies on wearable motion data modeling. We compare a subset of major device placements; the full set of covered placements in Inertia-1 is provided in Table 7.                                                                                                                                                                               
+
+> Study †# People # Hours Datasets Sensors Placements Tasks
+> (000s) ACC GYR MAG WR AR CH HP LG AN HAR FoG DP
+> Banos et al. [5] 17 ≪11✓✓✓✓✓✓✓✓✓✓✗✗
+> Stisen et al. [47] 9≪11✓✓✗✓✗✗✓✗✗✓✗✗
+> Haresamudram et al. [19] 320 410 ✓✗✗✓✗✗✓✓✓✓✓✗
+> Yuan et al. [58] 100,000 15,700 9✓✗✗✓✗✗✗✗✗✓✗✗
+> Logacjov et al. [26] 35,000 100 6✓✗✗✓✗✓✓✓✓✓✗✗
+> Hoddes et al. [20] 60 1.6 4✓✓✗✓✗✗✗✗✗✓✗✗
+> Xu et al. [52] 87,380 720 7✓✗✗✓✗✗✓✓✗✓✓✗
+> Inertia-1 (Ours) 115,450 18,224 15 ✓✓✓✓✓✓✓✓✓✓✓✓
+> ACC : Accelerometer. GYR : Gyroscope. MAG : Magnetometer. WR : Wrist. AR : Arm. CH : Chest. HP : Hip. LG : Leg. AN : Ankle.
+> HAR : Human Activity Recognition. FoG : Freezing of Gait Detection. DP : Disease Prediction. †Only raw-waveform studies considered.
+
+data from more than 115,000 people and 15 datasets (Table 1). ❹ Downstream tasks. We evaluate across 10 human activity recognition datasets, 3 freezing-of-gait datasets, and 7 disease prediction tasks, spanning both fine-grained motion understanding and population-level health modeling. 
+
+Inertia-1 is designed to be easily extensible, supporting new models, datasets, and tasks as the field evolves. With the unified framework and more than 1,000 trained models, we reveal intriguing lessons and future directions for building state-of-the-art wearable motion foundation models: 
+
+• Pretraining is beneficial, but not universal – Self-supervised pretraining consistently improves over supervised counterparts, yet no single objective dominates across all task families and metrics. 
+
+• Data representation is a first-order modeling choice – Triaxial motion signals outperform magnitude summaries, while sampling rate and window length matter differently across task granularities. 
+
+• Scale helps, but not all scale is equal – More (diverse) pretraining data yields steadier gains than larger model sizes, and multi-sensor fusion lead to strong gains in sensor-expansion settings. 
+
+• State-of-the-art motion foundation models require coordinated design – Performance depends on the joint choice of data fidelity, sensing setup, objective, and scale, rather than any single recipe. 
+
+• Inertia-1 as an open cookbook – As to date the most diverse and unified testbed, Inertia-1 offers a practical foundation for studying, extending, and deploying wearable motion foundation models. 
+
+2. Related Work 
+
+Applications of Wearable Motion Modeling. Wearable motion signals support tasks across very different temporal and clinical scales. HAR classifies short windows of inertial data into activities such as walking, sitting, running, or household actions [16, 23], while FoG detection identifies brief clinically meaningful gait events in Parkinson’s disease [22, 41]. At a larger scale, population studies use multi-day accelerometry to quantify rest-activity rhythms, sleep, mobility, sedentary behavior, and disease risk [17, 29, 45]. These areas have usually evolved separately: HAR emphasizes fine-grained labels and high-resolution windows, FoG emphasizes symptom-specific detection in targeted cohorts, and population-health studies emphasize aggregate longitudinal behavior. In contrast, Inertia-1 
+
+studies transfer across these regimes under one unified framework, with to date the broadest coverage, including ten HAR datasets, three FoG datasets, and six disease prediction tasks (Table 1). 
+
+Sensing Configurations and Deployment Settings. Wearable motion models are shaped not only by architecture, but also by how signals are collected and represented. Prior work has shown that window length affects recognition accuracy and latency [3], body placement and displacement  
+
+> 3Inertia-1 : An Open Exploration of Wearable Motion Foundation Models
+
+can cause large performance shifts [5, 15], and device heterogeneity leads to variation in sensing behavior, hardware, and operating-system processing [47]. Sampling rate, axis representation, and sensor modality also determine how much temporal and spatial motion structure is available [21, 55]. These factors are usually studied isolated at a time, often in supervised HAR settings and outside modern large-scale pretraining. Inertia-1 revisits these sensing and deployment choices under a unified pretraining setup, testing sampling frequency, window length, triaxial vs. reduced-axis input, time- vs. frequency-domain representation, sensor modality, placement, model size, and data scale (Table 1). 
+
+Self-Supervised Learning and Motion Foundation Models. Self-supervised learning (SSL) is a natural fit for wearable motion because unlabeled accelerometry is abundant, while dense labels are costly and task-specific. Early wearable SSL studies explored pretext and contrastive objectives for HAR [19, 48], while recent methods adapt masked reconstruction, contrastive, temporal prediction, self-distillation, and frequency-domain modeling to inertial signals [18, 26, 56, 58]. A parallel line scales pretraining to large cohorts such as UK Biobank [17], showing that large accelerometer corpora can improve activity recognition and health prediction [17, 34, 53, 58]. Related biosignal foundation models (FMs) further show the promise of large-scale physiological pretraining [1, 24]. However, existing motion FM studies often focus on a single objective, input format, corpus, or task setting. In contrast, Inertia-1 compares representative objectives under controlled conditions and studies how they transfer across activity recognition, gait analysis, and disease prediction, providing practical guidance for building wearable motion FMs that are robust, generalizable, and useful across datasets, tasks, input modalities, and deployment settings. 
+
+3. Inertia -1 Inertia -1
+
+> Chest
+> Back
+> Arm
+> Wrist
+> Hand
+> Hip
+> Thigh
+> Knee
+> Shank
+> Ankle
+> Accelero -
+> meter
+> Gyroscope
+> Magneto -
+> meter
+> 0.2 Hz
+> 1 Hz
+> 5 Hz
+> 20 Hz
+> 10 s 30 s
+> 60 s
+> 2 h
+> Time
+> Frequency
+> Uniaxial
+> Triaxial
+> 10M
+> 30M
+> 100M
+> Placement
+> Sensor
+> Frequency
+> Window
+> Domain
+> Axial
+> Model  Scale
+
+Figure 2 | Coverage breadth of Inertia-1 .
+
+Full settings are included in Table 7. 
+
+The goal of Inertia-1 is to turn the fragmented land-scape of wearable motion modeling into a unified space of controlled exploration. Rather than searching for one best architecture, we study motion FMs a joint problem over data, sensing configurations, pretraining algorithms, and downstream tasks. This is essential for motion sens-ing: the same behavior can appear differently across placements, sampling rates, sensor modalities, and tem-poral windows, while the same pretrained representation should transfer from short-term activity recognition to long-term disease prediction. 
+
+Inertia-1 is designed as an open, extensible frame-work for studying these interactions. It aggregates 15 
+
+datasets across 3 task families and 18 downstream tasks, pretrains a broad set of representative objectives, and evaluates models across a controlled grid of sensing and scaling choices. Together, these components allow us to ask not only which model performs best, but which design choices make wearable motion FMs robust, transferable, and useful across real-world conditions. figure 3 and Table 3.1 summarize the breadth of the explored space. 
+
+3.1. Data Regimes and Tasks 
+
+A central design goal of Inertia-1 is to bridge motion sensing regimes that have been studied separately: large cohorts provide scale, longitudinal coverage, and health outcomes, while targeted motion datasets provide high-frequency signals and fine-grained labels. We use NHANES [34] as  
+
+> 4Inertia-1 : An Open Exploration of Wearable Motion Foundation Models
+
+Table 2 | Overview of Inertia-1 datasets. Detailed statistics and setups are in Appendix A and Table 8.                                                              
+
+> Dataset Task Sensor Placement
+> CAPTURE-24 [11] HAR ACC WR HAR70+ [28] HAR ACC CH LG HARTH [27] HAR ACC CH LG HHAR [6] HAR ACC GYR WR MHEALTH [4] HAR ACC GYR MAG AR CH AN OPPORTUNITY [42] HAR ACC GYR MAG WR HN AR BK HP KN PAMAP2 [39] HAR ACC GYR MAG HN CH AN RecoFit [32] HAR ACC GYR AR WISDM [51] HAR ACC GYR WR WEAR [7] HAR ACC AR LG Daphnet FoG [43] FoG ACC HP LG AN OdayFoG [37] FoG ACC GYR WR CH HP LG AN FoGTurning [40] FoG ACC GYR SH NHANES [34] Disease ACC WR UK Biobank [17] Disease ACC WR
+
+the primary pretraining source because it connects these regimes, providing raw high-frequency accelerometer data from 14,000 par-ticipants over multiple days, together with rich health and survey variables. We further in-corporate the UK Biobank [17] accelerom-eter data (more than 100,000 participants) in scaling studies to examine how massive lower-resolution cohort data complement high-resolution waveform pretraining. Our down-stream evaluation spans three task families, as summarized in Table 3.1. More datasets de-tails and experimental setups are provided in Appendix A. 
+
+• Human activity recognition ( short-term ): 
+
+We include 10 HAR datasets spanning daily routines, free-living behavior, laboratory ac-tivities, and fine-grained exercise movements across diverse environments and sensor se-tups. These tasks evaluate whether pretrained representations capture short-term motion semantics such as walking, sitting, running, and household activity. 
+
+• Freezing-of-gait detection ( transient ): We select 3 FoG datasets targeting brief, clinically mean-ingful disruptions in locomotion. These tasks test whether motion representations pretrained on broad wearable data can detect subtle, transient abnormalities beyond standard activity categories. 
+
+• Disease prediction ( long-term ): We include 7 disease-related tasks from NHANES and UK Biobank ,covering population-level health modeling from longitudinal motion patterns. Unlike HAR and FoG, these tasks are not tied to isolated short-window actions, but to broader behavioral signatures. 
+
+3.2. Pretraining Algorithms 
+
+To study how different learning principles interact with wearable motion data, Inertia-1 compares representative pretraining algorithms under shared data, sensing, and evaluation settings. We include both (1) general SSL objectives, and (2) wearable-specific SSL methods, and compare them with 
+
+supervised baselines trained from scratch on each downstream task. In total, we cover 10 (pre)training approaches that represent the state-of-the-art in wearable motion FM. This design lets us separate whether pretraining helps from which form of pretraining is most useful for transferable motion representations. Additional details for each model are provided in Appendix B. 
+
+• Autoregressive prediction. GRU-based (AR G [14]) and Transformer-based (AR T [49]) models learn representations by predicting future motion from past context, testing whether sequential forecasting objectives capture transferable behavioral dynamics. 
+
+• Contrastive learning. SimCLR [12], SSL-Wearables [58], and RelCon [52] learn by aligning related motion views while separating unrelated ones. They cover both general contrastive learning and wearable-specific objectives designed around motion augmentations and temporal structure. 
+
+• Self-distillation. DINO [8] learns stable representations through teacher-student consistency training, testing whether non-contrastive representation learning transfers to wearable motion. 
+
+• Masked reconstruction. PatchTST [36], Self-PAB [26], and LSM [33] learn by recovering missing  
+
+> 5Inertia-1 : An Open Exploration of Wearable Motion Foundation Models
+
+signal segments, covering both time-domain and time-frequency reconstruction-style objectives. 
+
+3.3. Axes of Exploration Disentangling Sensing Configurations. To understand how motion FMs interact with with the physical constraints of wearable data, we evaluate selected pretraining objectives across four core input axes below: 
+
+• Uniaxial vs. Triaxial Input: Large population cohorts often release vector-magnitude summaries of acceleration to reduce data footprint and privacy risk [17, 38], whereas targeted motion datasets usually provide full triaxial signals [10, 42]. We compare these settings to quantify information loss from axis aggregation. 
+
+• Window Length: Prior work often favors short windows to isolate atomic movements and balance accuracy with latency [3]. {10 𝑠, 30 𝑠, 60 𝑠, 2ℎ} windows are used to test how temporal context affects diverse tasks across HAR, FoG, and disease prediction. 
+
+• Sampling Frequency: Motion datasets vary widely in sampling rate, from high-frequency segments to low-resolution monitoring. We downsample raw accelerometer to {20 𝐻𝑧, 5𝐻𝑧, 1𝐻𝑧, 0.2𝐻𝑧 } to test when temporal resolution is essential and whether pretraining can offset downsampling [55]. 
+
+• Representation Domain: Time-domain models are widely used for modern wearable SSL [48, 58], while frequency-domain methods may improve invariance to noise and phase shifts [26, 56]. We compare them under matched settings to answer which domain transfers better across tasks. 
+
+Spatial and Modality Robustness. Large-scale pretraining datasets are often dominated by wrist-worn accelerometers, whereas real-world and clinical studies involve more diverse placements and sensor suites. We therefore evaluate whether representations learned from common consumer-style sensing transfer to heterogeneous body locations and additional inertial modalities. 
+
+• Body Placements: Prior work often treats placement shift as a domain adaptation problem [2, 9, 44]. In contrast, we study direct transfer to other placements after large-scale pretraining on wrist-worn accelerometers, and test whether multi-placement fusion improves over single-placement ones. 
+
+• Sensor Modalities: Most cohort-scale data are accelerometer-based, whereas many high-fidelity datasets also include gyroscopes and magnetometers. We test whether accelerometer-pretrained models transfer to these modalities and whether additional sensors provide complementary benefits. 
+
+Model and Data Scaling. Finally, we examine whether scale can help resolve fragmented design choices in wearable motion modeling. We vary model capacity from small ( ∼5M) to medium ( ∼30M) and large ( ∼100M), and scale pretraining data volume using NHANES [34] and UK Biobank [17]. 
+
+4. Results and Analyses 
+
+4.1. Identifying Robust Pretraining Objectives 
+
+We first compare our suite of 10 model objectives against supervised baselines to identify which methods remain robust across the full task spectrum. Under the default setting of 20Hz sampling, 30s windows, and triaxial inputs, all models are pretrained on NHANES . We evaluate transfer through both full finetuning and linear probing across all HAR and FoG tasks. For disease prediction, we use frozen pretrained backbones with a specialized multi-instance learning (MIL) head to produce daily-level predictions [46]. Supervised baselines are trained from scratch on each downstream task. Additional training and evaluation details are provided in Appendix A & B. 
+
+Large-scale pretraining improves transfer across task families. As shown in Table 3, 4, and 
+
+> 6
+
+Inertia-1 : An Open Exploration of Wearable Motion Foundation Models 
+
+Table 3 | Comparisons of SSL models and supervised baselines across all HAR datasets. We report the linear probing AUROC of each model. AUPRC and full finetuning results are in Table 10 & 13. Model HHAR MHEALTH OPPORTUNITY PAMAP2 RecoFit CAPTURE-24 HAR70+ HARTH WEAR WISDM                                                                                                       
+
+> Supervised Models
+> ViT 83.9 93.8 72.9 92.0 97.7 92.9 96.6 98.7 97.7 94.1 CNN 89.1 90.7 69.5 95.5 97.0 90.9 94.5 98.7 98.0 94.8
+> General Pretraining Methods
+> PatchTST [36] 93.5 98.2 89.8 97.4 98.5 91.6 95.8 98.9 99.2 95.5 AR T[49] 88.6 96.0 92.1 95.6 98.9 92.3 95.5 99.0 99.3 94.8 AR G[14] 89.2 96.0 89.4 95.0 98.7 91.3 95.3 98.5 99.2 94.7 DINO [8] 73.4 87.2 87.8 82.7 98.1 92.0 95.4 98.9 98.5 85.2 SimCLR [12] 68.6 90.0 90.0 86.8 97.8 92.2 95.9 98.6 98.0 86.4
+> Domain-specific Methods
+> SSL-Wearables [58] 90.0 89.9 73.1 91.8 91.0 87.0 85.4 92.0 88.5 90.2 RelCon [52] 87.8 96.3 85.3 94.5 97.0 89.9 95.9 98.0 97.9 90.5 Self-PAB [26] 96.8 91.8 74.7 95.4 97.4 89.7 93.4 98.6 97.7 96.7
+
+Table 4 | Comparison of SSL models and supervised baselines across all FoG tasks. We report the linear probing AUROC of each model. AUPRC and full fine-tuning results are in Table 11 & 14. Model FoGTurning OdayFoG DaphnetFoG 
+
+Supervised Models 
+
+ViT 63.6 68.0 83.5 CNN 51.2 80.5 87.6 
+
+General Pretraining Methods 
+
+PatchTST [36] 85.7 65.4 95.0 
+
+AR T [49] 80.2 58.6 94.3 AR G [14] 83.0 71.6 93.4 DINO [8] 61.4 83.2 89.2 SimCLR [12] 91.4 66.7 94.8 
+
+Domain-specific Methods 
+
+SSL-Wearables [58] 91.6 62.0 71.4 RelCon [52] 87.5 78.2 93.0 Self-PAB [26] 80.4 55.0 92.5 
+
+Table 5 | Comparison of SSL models and super-vised baselines across disease prediction tasks. We report the AUROC of MIL on frozen backbone results for each model. Full results are in Table 12. Model Depr. Sev. Depr. Diabetes PD Sleep 
+
+Supervised Models 
+
+ViT 49.5 57.9 49.4 45.4 38.3 CNN 51.7 59.5 61.9 53.7 54.0 
+
+General Pretraining Methods 
+
+PatchTST [36] 55.0 77.0 53.8 72.8 59.6 AR T [49] 58.4 81.3 67.7 75.0 61.7 AR G [14] 60.6 76.2 53.2 72.4 61.1 DINO [8] 62.9 75.8 74.4 54.5 76.5 SimCLR [12] 58.0 70.7 78.8 51.3 77.2 
+
+Domain-specific Methods 
+
+SSL-Wearables [58] 65.8 60.5 78.2 74.4 65.3 RelCon [52] 57.8 72.6 70.5 51.0 56.8 Self-PAB [26] 52.0 65.3 59.6 60.3 58.5 
+
+5, self-supervised pretraining consistently outperforms supervised training from scratch across task categories. This suggests strong representations learned from unlabeled population cohorts regardless of the specific downstream application . While no single objective dominates all settings, specialized or predictive objectives are generally more robust for short-term recognition tasks than generic augmentation-based baselines, while these differences are less pronounced in disease prediction. Table 6 | Task variation in model performance. 
+
+SSL variance measures the task-level average gap between the best and median SSL AUROC. SSL gain measures the average gap between the best SSL AUROC and the best supervised AUROC. Task Type SSL Variance SSL Gains HAR 2.5 4.0 FoG 11.0 16.4 
+
+Disease Prediction 10.0 19.7 
+
+Overall, objective design remains important, but its benefit depends on the temporal structure and se-mantic granularity of the downstream task rather than a universally optimal pretraining strategy. 
+
+Task variation widens SSL variances and gains. 
+
+While differences between SSL objectives are modest for standard HAR, they grow significantly for other specialized tasks. Table 6 measures this using SSL variance , defined as the gap between the best and median SSL AUROC. This value is only 2.5 for HAR, but increases to 11.0 for FoG and 10.0 for disease  
+
+> 7Inertia-1 : An Open Exploration of Wearable Motion Foundation Models
+
+prediction. SSL gains over supervised training follow the same pattern, rising from 4.0 on HAR to 16.4 on FoG and 19.7 on disease prediction. These results suggest that basic HAR is closer to saturation, whereas clinical and disease-oriented tasks still benefit substantially from representations that capture subtle motion and physiological signatures. 
+
+4.2. When Does Scaling Help Motion Foundation Models? Model capacity saturates under fixed data. We first ask whether increasing encoder size alone improves motion representations. Under the default setting, we scale AR T from 10M to 30M and 100M parameters while keeping the pretraining corpus and input configuration fixed. As shown in Fig. 3, linear-probe performance largely plateaus across model sizes and task families, suggesting that additional capacity does not translate into better representations without additional data or stronger task alignment. Under full finetuning, larger models can even degrade performance, likely due to overfitting on smaller downstream datasets (Appendix D). These results suggest that motion FMs are less limited by parameter count than by the diversity and relevance of the pretraining signal. 
+
+Data scale improves transfer through both population diversity and behavioral coverage. We next test whether the scaling bottleneck can be reduced by expanding the pretraining data, using UK Biobank as a large-cohort testbed and evaluating frozen representations on patient-disjoint disease prediction tasks. As demonstrated in Fig. 4 & 11, increasing both (1) the number of individuals ,and (2) the number of segments per individual improves AUROC, suggesting that wearable disease representations benefit from population diversity as well as richer behavioral coverage within each Small 
+
+> Medium
+> Large
+> 60
+> 80
+> 100
+> AUROC
+> HAR
+> Small
+> Medium
+> Large
+> FOG
+> Small
+> Medium
+> Large
+> DP
+
+Figure 3 | Model scaling across tasks. We vary the model size and report linear probe performance across all tasks. 1% 
+
+> 10%
+> 100%
+> 55
+> 60
+> 65
+> AUROC
+> Patient Scaling
+> 1%
+> 10%
+> 100%
+> Segment Scaling
+> NHANES
+> + matched
+> UKB
+> + full
+> UKB
+> Cross-dataset Scaling
+
+Figure 4 | Data scaling across settings. We compare UK Biobank disease-prediction performance when scaling (left) 
+
+the number of individuals, (middle) the number of segments per individual, and (right) cross-dataset data mixtures. 
+
+person. We also observe gains when mix-ing UK Biobank with NHANES during pre-training, indicating that data diversity can improve transfer even when the original corpus is already large. 
+
+Scaling is data-first, but not model-free. Together, these experiments suggest that data volume and diversity provide a more reliable path to improved transfer than increasing model size alone. This does not mean model capacity is unimpor-tant; rather, larger encoders may require richer pretraining data, better objective de-sign, or more careful tuning before their ca-pacity yields consistent downstream gains. In this sense, scaling wearable motion FMs is not only a question of bigger networks, but of matching model capacity to signal diversity, temporal resolution, and down-stream task structure. We provide more re-sults and experimental details in Appendix D. 
+
+4.3. A Unified Lens over Sensing Design Space 
+
+To isolate the effect of core sensing configurations, we conduct controlled experiments using AR T and PatchTST, two robust methods from the objective comparison. We use 30s windows, 20Hz sampling, 
+
+> 8
+
+Inertia-1 : An Open Exploration of Wearable Motion Foundation Models HAR   
+
+> FOG Disease
+> 87.1
+> 89.3
+> 91.4
+> 93.6
+> 95.7
+> 64.4
+> 68.8
+> 73.2
+> 77.6
+> 82.0
+> 45.8
+> 51.5
+> 57.3
+> 63.1
+> 68.8
+> 1Hz 5Hz 20Hz
+
+Freq. HAR FOG DP Overall 1Hz 89.5 69.1 56.5 71.7 5Hz 92.7 82.0 54.4 76.4 20Hz 95.7 79.8 68.8 81.5 
+
+Sampling frequency HAR   
+
+> FOG Disease
+> 59.1
+> 68.3
+> 77.4
+> 86.6
+> 95.7
+> 58.2
+> 66.4
+> 74.6
+> 82.7
+> 90.9
+> 53.8
+> 57.5
+> 61.3
+> 65.1
+> 68.8
+> 10s 30s 60s
+
+Window HAR FoG DP Overall 10s 92.9 80.6 63.2 78.9 30s 95.7 79.8 68.8 81.5 
+
+60s 90.5 90.9 62.2 81.2 
+
+Window size 
+
+Figure 5 | Control studies: sampling frequencies and win-dow sizes. (Left) Full-finetuning AUROC across sampling rates. 
+
+(Right) Full-finetuning AUROC across window sizes. Lower sampling rates remain competitive for HAR, while disease prediction benefits from higher temporal resolution; window length effects are task-dependent. 
+
+and triaxial accelerometer inputs as the default setting, then vary one axis at a time, including sam-pling rate, window length, axis di-mensionality, and representation domain. For each setting, we pre-train a new model on the same cor-pus and finetune it across down-stream tasks following the protocol in Sec. 4.1. We report AR T results in Fig. 5 and Fig. 6; PatchTST re-sults and additional details are pro-vided in Appendix E. 
+
+Pretraining improves robust-ness to low-frequency sampling. 
+
+As shown in Fig. 5, performance generally improves with sampling frequency, but the degradation at lower rates is smaller than expected for HAR. Unlike prior studies that report sharp drops below 10Hz [55], pretrained representations remain competitive even at 1Hz, suggesting that large-scale pretraining captures contextual motion patterns that partly compensate for lost high-frequency detail. This robustness is weaker for disease prediction, where higher sampling rates provide clearer gains, indicating that clinical outcomes may depend on subtle biomechanical signatures that are attenuated by aggressive downsampling. 
+
+Window length is task-dependent. Window size has a more mixed effect. Shorter windows preserve discrete movement semantics and reduce label mixing, while longer windows provide broader temporal context. As shown in Fig. 5, 30s and 60s windows perform strongly overall, but no single duration is optimal across HAR, FoG, and Disease Prediction. This suggests that temporal context HAR  
+
+> FOG Disease
+> 83.1
+> 86.3
+> 89.4
+> 92.6
+> 95.7
+> 64.0
+> 67.9
+> 71.9
+> 75.9
+> 79.8
+> 61.8
+> 63.5
+> 65.3
+> 67.1
+> 68.8
+> Uniaxial Triaxial
+
+Axes HAR FoG DP Overall Uniaxial 90.6 76.7 67.7 78.3 Triaxial 95.7 79.8 68.8 81.5 
+
+Axes dimensionalities HAR  
+
+> FOG Disease
+> 75.2
+> 80.5
+> 85.7
+> 91.0
+> 96.2
+> 73.0
+> 75.9
+> 78.9
+> 81.9
+> 84.8
+> 53.6
+> 57.2
+> 60.9
+> 64.5
+> 68.1
+> Frequency Time
+
+Input HAR FoG DP Overall Freq. 94.3 76.3 60.0 76.9 Time 96.2 84.8 68.1 83.0 
+
+Representation domain 
+
+Figure 6 | Control studies: axis dimensionality and represen-tation domain. (Left) Full-finetuning AUROC for uniaxial versus triaxial inputs. (Right) Full-finetuning AUROC for frequency-domain versus time-domain representations. Triaxial inputs preserve stronger transferable motion structure, while time-domain modeling performs better for FoG and disease prediction. 
+
+should be matched to task gran-ularity: short-window activity la-bels favor localized motion struc-ture, whereas gait and health tasks may benefit from longer behavioral context. 
+
+Triaxial inputs preserve trans-ferable motion structure. Follow-ing common cohort preprocessing practice, we compare full triaxial acceleration with vector magnitude, which collapses three axes into one channel. As shown in Fig. 6, triax-ial inputs consistently outperform uniaxial inputs across task families. This indicates that directional and orientation-dependent motion pat-
+
+9Inertia-1 : An Open Exploration of Wearable Motion Foundation Models 
+
+terns carry transferable information that cannot be fully recovered after magnitude aggregation. Interestingly, AR T is relatively more resilient to this loss than PatchTST (Fig. 12c), suggesting that architecture can influence robustness to compressed input representations, but preserving raw axes remains the stronger default choice. 
+
+Time-domain modeling better preserves gait and disease signals. We compare frequency-domain reconstruction with direct temporal modeling by evaluating Self-PAB and PatchTST under matched settings. As shown in Fig. 6, the representation domain has limited impact on HAR, but time-domain modeling performs better for FoG and disease prediction. This suggests that gait events and disease-relevant movement signatures depend on precise temporal structure that may be weakened by spectrogram-style transformations. Overall, these results show that sensing choices are not secondary implementation details; they directly shape what information motion foundation models can transfer. 
+
+4.4. Multi-Stream Sensing Reveals Complementary Motion Structure Multiple synchronized streams add complementary motion views. Wearable datasets often contain richer signals than a single wrist-worn accelerometer stream, including multiple sensor modalities and body placements. We therefore ask whether representations improve when additional streams are fused, and whether a model pretrained only on wrist accelerometry can transfer to these different physical views of motion. To separate the effects of pretraining and stream fusion, we instantiate four settings: ❶ supervised single-stream, ❷ pretrained single-stream, ❸ supervised multi-stream fusion, and ❹ pretrained multi-stream fusion. For the single-stream setting, we use the wrist or accelerometer stream when available, falling back to the most common placement or modality otherwise. For multi-stream fusion, we temporally align windows across all available streams, process each stream with a separate encoder, and concatenate the resulting embeddings for downstream classification. Supervised models are trained from scratch, while pretrained models are initialized from the same pretrained wrist-accelerometer checkpoint. FoG Turning PAMAP2 RecoFit WISDM      
+
+> 0.6
+> 0.7
+> 0.8
+> 0.9
+> Macro F1
+> Sensor aggregation
+> OPPORTUNITY PAMAP2 Daphnet FoG HAR70+ HARTH WEAR
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> Macro F1
+> Placement aggregation
+> Single-stream
+> Multi-stream (Fused)
+> Supervised
+> Pretrained
+
+Figure 7 | Wrist-accelerometer pretraining transfers across sensors and placements. We report macro-F1 for default single-stream inputs and fused multi-stream inputs. 
+
+As shown in figure 7, adding streams consistently improves performance for both sensor-modality fu-sion and body-placement fusion. This shows that dif-ferent sensors and placements provide complemen-tary task-relevant information rather than redundant copies of the same signal. More importantly, the wrist-accelerometer pretrained model improves per-formance across both single-stream and multi-stream settings, even when evaluated on unseen placements or sensor modalities. This suggests that large-scale wrist pretraining learns a general representation of human motion, rather than a representation tied only to one device location or hardware channel. 
+
+Fusion improves representation geometry. We further examine whether multi-stream fusion changes the structure of the learned representation space. As shown in Fig. 8, embeddings from fused streams form better-separated activity clusters than embeddings from the default single stream. This pattern is visible for both placement fusion in WEAR and sensor fusion in 
+
+> 10
+
+Inertia-1 : An Open Exploration of Wearable Motion Foundation Models One Placement (right arm)                              
+
+> One Placement (right arm)
+> All Placements
+> jogging
+> jog (butt -kicks)
+> jog (rot. arms)
+> jog (sidesteps)
+> jog (skipping)
+> lunges
+> lunges (complex)
+> push -ups
+> push -ups (cplx.)
+> burpees
+> stretch (lunging)
+> bench -dips
+> sit -ups
+> sit -ups (cplx.)
+> stretch (hamstr.)
+> stretch (lumbar)
+> stretch (shoulder)
+> stretch (triceps)
+> One Sensor (accel.)
+> All Sensors
+> brushing teeth
+> clapping
+> jogging
+> kicking
+> stairs
+> walking
+> standing
+> eating soup
+> eating chips
+> eating pasta
+> drinking from cup
+> eating sandwich
+> sitting
+> writing
+> typing
+> dribbling
+> playing catch
+> folding clothes
+> Compound exercises
+> Isolated exercises
+> Jogging
+> Precision tasks
+> Physical activity
+> Vigorous wrist
+> Jogging
+> Sedentary / eating
+> Object handling
+
+Figure 8 | Multi-stream fusion improves representation geometry. Left: WEAR embeddings from a single right-arm placement vs. fused multi-placement. Right: WISDM embeddings from a single accelerometer stream 
+
+vs. fused multi-sensor. In both datasets, aggregating multiple streams produces more separated activity clusters. 
+
+WISDM , where multi-stream embeddings separate compound exercises, isolated exercises, jogging, object handling, physical activity, and sedentary behaviors more clearly. Quantitative cluster statistics in Table 17 further support this improved representation geometry. Together, these results suggest that multi-stream sensing provides complementary views of movement, and that pretraining helps align these views into a more separable and transferable motion representation. 
+
+5. Discussion 
+
+Limitations. While Inertia-1 provides a controlled exploration of wearable motion FMs, several limitations remain. First, not all pretraining objectives may respond similarly to each design axis. Our detailed ablations focus on top-performing representative methods, but contrastive, self-distillation, reconstructive, and predictive objectives may each have different sensitivities to sampling rate, window length, placement, modality, and scale. A finer objective-specific sweep may reveal additional design patterns. Second, our downstream evaluations are classification-based, whereas real-world wearable applications also include continuous health prediction, biomarker regression, longitudinal trajectory modeling, and event forecasting. Extending Inertia-1 to these settings is an important next step for understanding how motion FMs support broader health and behavior modeling. 
+
+Conclusion. We present Inertia-1 , a fully open exploration of wearable motion FMs that addresses fragmentation across the full lifecycle of motion representation learning. Across more than 1,000 models and evaluations on 18.2M hours of accelerometry data from 115,000+ individuals, we find that self-supervised pretraining consistently improves transfer over supervised training from scratch, but no single objective dominates across all task families. Our analyses further show that data representation, temporal resolution, placement, and pretraining scale can be as important as model architecture itself. Collectively, Inertia-1 provides state-of-the-art recipes for diverse downstream tasks and serves as a comprehensive, practical, and open cookbook for motion representation learning.  
+
+> 11 Inertia-1 : An Open Exploration of Wearable Motion Foundation Models
+
+Acknowledgments 
+
+We gratefully acknowledge the support by the Amazon Science Hub, the NVIDIA Academic Grant Program, and UCLA DataX. Any opinions, findings, conclusions, or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the funders. 
+
+References 
+
+[1] Salar Abbaspourazad, Oussama Elachqar, Andrew C. Miller, Saba Emrani, Udhyakumar Nal-lasamy, and Ian Shapiro. Large-scale training of foundation models for wearable biosignals, 2024. [2] Sungtae An, Alessio Medda, Michael N Sawka, Clayton J Hutto, Mindy L Millard-Stafford, Scott Appling, Kristine LS Richardson, and Omer T Inan. Adaptnet: Human activity recognition via bilateral domain adaptation using semi-supervised deep translation networks. IEEE Sensors Journal , 21(18):20398–20411, 2021. [3] Oresti Banos, Juan-Manuel Galvez, Miguel Damas, Hector Pomares, and Ignacio Rojas. Window size impact in human activity recognition. Sensors , 14(4):6474–6499, 2014. [4] Oresti Banos, Rafael Garcia, and Alejandro Saez. MHEALTH. UCI Machine Learning Repository, 2014. DOI: https://doi.org/10.24432/C5TW22. [5] Oresti Banos, M. Akos Toth, Miguel Damas, Hector Pomares, and Ignacio Rojas. Dealing with the effects of sensor displacement in wearable activity recognition. Sensors , 14(6):9995–10023, 2014. [6] Henrik Blunck, Sourav Bhattacharya, Thor Prentow, Mikkel Kjrgaard, and Anind Dey. Heterogeneity Activity Recognition. UCI Machine Learning Repository, 2015. DOI: https://doi.org/10.24432/C5689X. [7] Marius Bock, Hilde Kuehne, Kristof Van Laerhoven, and Michael Moeller. Wear: An outdoor sports dataset for wearable and egocentric activity recognition, 2024. [8] Mathilde Caron, Hugo Touvron, Ishan Misra, Hervé Jégou, Julien Mairal, Piotr Bojanowski, and Armand Joulin. Emerging properties in self-supervised vision transformers. In Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV) , pages 9650–9660, 2021. [9] Avijoy Chakma, Abu Zaher Md Faridee, Indrajeet Ghosh, and Nirmalya Roy. Domain adaptation for inertial measurement unit-based human activity recognition: A survey. arXiv preprint arXiv:2304.06489 , 2023. [10] Shing Chan, Yuan Hang, Catherine Tong, Aidan Acquah, Abram Schonfeldt, Jonathan Gershuny, and Aiden Doherty. Capture-24: A large dataset of wrist-worn activity tracker data collected in the wild for human activity recognition. Scientific Data , 11(1):1135, 2024. [11] Chan Chang, S Walmsley, R Gershuny, J Harms, T Thomas, E Milton, K Kelly, P Foster, C Wong, A Gray, N Haque, S Hollowell, and S Doherty. Capture-24: Activity tracker dataset for human activity recognition, 2021. [12] Ting Chen, Simon Kornblith, Mohammad Norouzi, and Geoffrey Hinton. A simple framework for contrastive learning of visual representations. In Proceedings of the 37th International Conference on Machine Learning (ICML) , pages 1597–1607. PMLR, 2020.  
+
+> 12 Inertia-1 : An Open Exploration of Wearable Motion Foundation Models
+
+[13] Zhengming Chen, Junshi Chen, Rory Collins, Yu Guo, Richard Peto, Fan Wu, and Liming Li. China kadoorie biobank of 0.5 million people: survey methods, baseline characteristics and long-term follow-up. International journal of epidemiology , 40(6):1652–1666, 2011. [14] Junyoung Chung, Caglar Gulcehre, KyungHyun Cho, and Yoshua Bengio. Empirical evaluation of gated recurrent neural networks on sequence modeling, 2014. [15] Anis Davoudi, Mamoun T Mardini, David Nelson, Fahd Albinali, Sanjay Ranka, Parisa Rashidi, and Todd M Manini. The effect of sensor placement and number on physical activity recognition and energy expenditure estimation in older adults: Validation study. JMIR Mhealth Uhealth ,9(5):e23681, May 2021. [16] Florenc Demrozi, Graziano Pravadelli, Azra Bihorac, and Parisa Rashidi. Human activity recognition using inertial, physiological and environmental sensors: A comprehensive survey. 
+
+IEEE Access , 8:210816–210836, 2020. [17] Aiden Doherty, Dan Jackson, Nils Hammerla, Thomas Plötz, Patrick Olivier, Malcolm H Granat, Tom White, Vincent T Van Hees, Michael I Trenell, Christoper G Owen, et al. Large scale population assessment of physical activity using wrist worn accelerometers: the uk biobank study. PloS one , 12(2):e0169649, 2017. [18] Harish Haresamudram, Apoorva Beedu, Varun Agrawal, Patrick L. Grady, Irfan Essa, Judy Hoffman, and Thomas Plötz. Masked reconstruction based self-supervision for human activity recognition. In Proceedings of the 2020 ACM International Symposium on Wearable Computers ,ISWC ’20, page 45–49, New York, NY, USA, 2020. Association for Computing Machinery. [19] Harish Haresamudram, Irfan Essa, and Thomas Plotz. Assessing the state of self-supervised human activity recognition using wearables. Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies , 6(3), 2022. [20] Tom Hoddes, Alex Bijamov, Saket Joshi, Daniel Roggen, Ali Etemad, Robert Harle, and David Racz. Scaling laws in wearable human activity recognition. arXiv preprint arXiv:2502.03364 ,2025. [21] Emily J. Huang, Kebin Yan, and Jukka-Pekka Onnela. Smartphone-based activity recognition using multistream movelets combining accelerometer and gyroscope data. Sensors , 22(7):2618, 2022. [22] Tinghuai Huang, Meng Li, and Jianwei Huang. Recent trends in wearable device used to detect freezing of gait and falls in people with parkinson’s disease: A systematic review. Frontiers in Aging Neuroscience , Volume 15 - 2023, 2023. [23] Oscar D. Lara and Miguel A. Labrador. A survey on human activity recognition using wearable sensors. IEEE Communications Surveys & Tutorials , 15(3):1192–1209, 2013. [24] Jun Li, Aaron D. Aguirre, Valdery Moura Junior, Jiarui Jin, Che Liu, Lanhai Zhong, Chenxi Sun, Gari Clifford, M. Brandon Westover, and Shenda Hong. An electrocardiogram foundation model built on over 10 million recordings. NEJM AI , 2(7):AIoa2401033, 2025. [25] Sirui Li, Shuhan Xiao, Mihir Joshi, Ahmed Metwally, Daniel McDuff, Wei Wang, and Yuzhe Yang. HEARTS: Benchmarking llm reasoning on health time series. arXiv preprint arXiv:2603.06638 ,2026.  
+
+> 13 Inertia-1 : An Open Exploration of Wearable Motion Foundation Models
+
+[26] Aleksej Logacjov, Sverre Herland, Astrid Ustad, and Kerstin Bach. Selfpab: Large-scale pre-training on accelerometer data for human activity recognition. Applied Intelligence , 54(6):4545– 4563, 2024. [27] Aleksej Logacjov, Atle Kongsvold, Kerstin Bach, Hilde Bremseth Bårdstu, and Paul Jarle Mork. HARTH. UCI Machine Learning Repository. DOI: https://doi.org/10.24432/C5NC90. [28] Aleksej Logacjov and Astrid Ustad. HAR70+. UCI Machine Learning Repository. DOI: https://doi.org/10.24432/C5CW3D. [29] Hiral Master, Jeffrey Annis, Shi Huang, Joshua A. Beckman, Francis Ratsimbazafy, Kayla Marginean, Robert Carroll, Karthik Natarajan, Frank E. Harrell, Dan M. Roden, Paul Harris, and Evan L. Brittain. Association of step counts over time with the risk of chronic disease in the all of us research program. Nature Medicine , 28(11):2301–2308, November 2022. [30] Ahmed A Metwally, A Ali Heydari, Daniel McDuff, Alexandru Solot, Zeinab Esmaeilpour, An-thony Z Faranesh, Menglian Zhou, Girish Narayanswamy, Maxwell A Xu, Xin Liu, et al. Insulin resistance prediction from wearables and routine blood biomarkers. Nature , pages 1–11, 2026. [31] Shenghuan Miao, Ling Chen, and Rong Hu. Spatial-temporal masked autoencoder for multi-device wearable human activity recognition. Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies , 7(4):1–25, 2024. [32] Dan Morris, T. Scott Saponas, Andrew Guillory, and Ilya Kelner. Recofit. Proceedings of the SIGCHI Conference on Human Factors in Computing Systems , page 3225–3234, Apr 2014. [33] Girish Narayanswamy, Xin Liu, Kumar Ayush, Yuzhe Yang, Xuhai Xu, Shun Liao, Jake Garri-son, Shyam A. Tailor, Jacob Sunshine, Yun Liu, Tim Althoff, Shrikanth Narayanan, Pushmeet Kohli, Jiening Zhan, Mark Malhotra, Shwetak Patel, Samy Abdel-Ghaffar, and Daniel McDuff. Scaling wearable foundation models. In The Thirteenth International Conference on Learning Representations (ICLR) , 2025. [34] National Center for Health Statistics. National Health and Nutrition Examination Survey (NHANES) 2011-2014 Physical Activity Monitor Data. Centers for Disease Control and Preven-tion, 2014. [35] Camille Nebeker, Shahin Samiei, and Santosh Kumar. Sharing digital health data responsibly: Balancing open science with participant privacy. PLOS Digital Health , 5(4):e0001377, 2026. [36] Yuqi Nie, Nam H Nguyen, Phanwadee Sinthong, and Jayant Kalagnanam. A time series is worth 64 words: Long-term forecasting with transformers. In International Conference on Learning Representations , 2023. [37] Johanna O’Day, Marissa Lee, Kirsten Seagers, Shannon Hoffman, Ava Jih-Schiff, Łukasz Kidziński, Scott Delp, and Helen Bronte-Stewart. Assessing inertial measurement unit locations for freezing of gait detection and patient preference. Journal of neuroengineering and rehabilitation , 19(1):20, 2022. [38] Theresa Patten, Edward A Preble, Hiral Master, Jennifer Adjemian, Andrea Ramirez, James McClain, and Amy Rose Price. The all of us research program’s wearables dataset. Nature Medicine , pages 1–9, 2026. [39] Attila Reiss. PAMAP2 Physical Activity Monitoring. UCI Machine Learning Repository, 2012. DOI: https://doi.org/10.24432/C5NW2H.  
+
+> 14 Inertia-1 : An Open Exploration of Wearable Motion Foundation Models
+
+[40] Caroline Ribeiro De Souza, Runfeng Miao, Júlia Ávila De Oliveira, Andrea Cristina De Lima-Pardini, Débora Fragoso De Campos, Carla Silva-Batista, Luis Teixeira, Solaiman Shokur, Bouri Mohamed, and Daniel Boari Coelho. A public data set of videos, inertial measurement unit, and clinical scales of freezing of gait in individuals with parkinson’s disease during a turning-in-place task. Frontiers in Neuroscience , Volume 16 - 2022, 2022. [41] Daniel Rodriguez-Martin, Albert Sama, Celia Perez-Lopez, Andreu Catala, Juan M. Moreno Arostegui, Joan Cabestany, and Alejandro Rodriguez-Molinero. Home detection of freezing of gait using support vector machines through a single waist-worn triaxial accelerometer. 
+
+PLOS ONE , 12(2):e0171764, 2017. [42] Daniel Roggen, Alberto Calatroni, Long-Van Nguyen-Dinh, Ricardo Chavarriaga, and Hesam Sagha. OPPORTUNITY Activity Recognition. UCI Machine Learning Repository, 2010. DOI: https://doi.org/10.24432/C5M027. [43] Daniel Roggen, Meir Plotnik, and Jeff Hausdorff. Daphnet Freezing of Gait. UCI Machine Learning Repository, 2010. DOI: https://doi.org/10.24432/C56K78. [44] Andrea Rosales Sanabria, Franco Zambonelli, and Juan Ye. Unsupervised domain adaptation in activity recognition: A gan-based approach. IEEE Access , 9:19421–19438, 2021. [45] Jinjoo Shim, Elgar Fleisch, and Filipe Barata. Wearable-based accelerometer activity profile as digital biomarker of inflammation, biological age, and mortality using hierarchical clustering analysis in nhanes 2011–2014. Scientific Reports , 13(1):9326, Jun 2023. [46] Zitao Shuai, Zongzhe Xu, David Yang, Wei Wang, and Yuzhe Yang. OSF: On pre-training and scaling of sleep foundation models. arXiv preprint arXiv:2603.00190 , 2026. [47] Allan Stisen, Henrik Blunck, Sourav Bhattacharya, Thor Siiger Prentow, Mikkel Baun Kjaergaard, Anind K. Dey, Tobias Sonne, and Mads Moller Jensen. Smart devices are different: Assessing and mitigating mobile sensing heterogeneities for activity recognition. In Proceedings of the 13th ACM Conference on Embedded Networked Sensor Systems , pages 127–140, 2015. [48] Chi Ian Tang, Ignacio Perez-Pozuelo, Dimitris Spathis, Soren Brage, Nick Wareham, and Cecilia Mascolo. Selfhar: Improving human activity recognition through self-training with unlabeled data. Proceedings of the ACM on interactive, mobile, wearable and ubiquitous technologies , 5(1):1– 30, 2021. [49] Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. Attention is all you need, 2017. [50] Hoang-Dieu Vu, Duc-Nghia Tran, Quang-Tu Pham, Hieu H Pham, Nicolas Vuillerme, and Duc-Tan Tran. Smooth-distill: A self-distillation framework for multitask learning with wearable sensor data. arXiv preprint arXiv:2507.00061 , 2025. [51] Gary Weiss. WISDM Smartphone and Smartwatch Activity and Biometrics Dataset . UCI Machine Learning Repository, 2019. DOI: https://doi.org/10.24432/C5HK59. [52] Maxwell A Xu, Jaya Narain, Gregory Darnell, Haraldur Hallgrimsson, Hyewon Jeong, Darren Forde, Richard Fineman, Karthik J Raghuram, James M Rehg, and Shirley Ren. Relcon: Rel-ative contrastive learning for a motion foundation model for wearable data. arXiv preprint arXiv:2411.18822 , 2025.  
+
+> 15 Inertia-1 : An Open Exploration of Wearable Motion Foundation Models
+
+[53] Maxwell A. Xu, Girish Narayanswamy, Kumar Ayush, Dimitris Spathis, Shun Liao, Shyam A. Tailor, Ahmed Metwally, A. Ali Heydari, Yuwei Zhang, Jake Garrison, Samy Abdel-Ghaffar, Xuhai Xu, Ken Gu, Jacob Sunshine, Ming-Zher Poh, Yun Liu, Tim Althoff, Shrikanth Narayanan, Pushmeet Kohli, Mark Malhotra, Shwetak Patel, Yuzhe Yang, James M. Rehg, Xin Liu, and Daniel McDuff. Lsm-2: Learning from incomplete wearable sensor data, 2025. [54] Zongzhe Xu, Zitao Shuai, Eideen Mozaffari, Ravi S Aysola, Rajesh Kumar, and Yuzhe Yang. SleepLM: Natural-language intelligence for human sleep. arXiv preprint arXiv:2602.23605 ,2026. [55] Takahiro Yamane, Moeka Kimura, and Mizuki Morita. Effects of sampling frequency on human activity recognition with machine learning aiming at clinical applications. Sensors , 25(12):3780, 2025. [56] Yuzhe Yang, Xin Liu, Jiang Wu, Silviu Borac, Dina Katabi, Ming-Zher Poh, and Daniel McDuff. Simper: Simple self-supervised learning of periodic targets. In International Conference on Learning Representations (ICLR) , 2023. [57] Yuzhe Yang, Yuan Yuan, Guo Zhang, Hao Wang, Ying-Cong Chen, Yingcheng Liu, Christopher G. Tarolli, Daniel Crepeau, Jan Bukartyk, Mithri R. Junna, et al. Artificial intelligence-enabled detection and assessment of parkinson’s disease using nocturnal breathing signals. Nature Medicine , 28(10):2207–2215, 2022. [58] Hang Yuan, Shing Chan, Andrew P. Creagh, Catherine Tong, Aidan Acquah, David A. Clifton, and Aiden Doherty. Self-supervised learning for human activity recognition using 700,000 person-days of wearable data. npj Digital Medicine , 7(1):91, 2024. [59] Yuwei Zhang, Kumar Ayush, Siyuan Qiao, A Ali Heydari, Girish Narayanswamy, Maxwell A Xu, Ahmed A Metwally, Shawn Xu, Jake Garrison, Xuhai Xu, et al. Sensorlm: Learning the language of wearable sensors. Neural Information Processing Systems (NeurIPS) , 2025.  
+
+> 16 Inertia-1 : An Open Exploration of Wearable Motion Foundation Models
+
+A. Experimental Scope, Data Regimes, and Evaluation Setup 
+
+A.1. Experimental axes 
+
+To make the design space explicit, Inertia-1 evaluates wearable motion foundation models across the major choices that can be made in wearables pipelines: self-supervised objective, model capacity, sampling frequency, window length, sensor axis dimensionality, sensor modality, body placement, and input representation domain. Table 7 summarizes the resulting grid of experimental axes used throughout the paper. The list of Device Placements in order of badges are: wrist, hand, arm, back, chest, hip, knee, leg, shank, ankle. Table 7 | Complete summary of Inertia-1 breadth and coverage.   
+
+> Component Coverage Sensors
+
+ACC ; GYR ; MAG  
+
+> Device Placements
+
+WR ; HN ; AR ; BK ; CH ; HP ; KN ; LG ; SH ; AN         
+
+> Sampling Frequency 20 Hz; 5 Hz; 1 Hz; 0.2 Hz
+> Window Length 10 s; 30 s; 60 s; 2 h
+> Representation Domains Time; Time–Frequency
+> Model Families GRU; Transformer; ViT (time); ViT (spectrogram); wave2vec CNN; wave2vec Transformer
+> Pretraining Objectives Autoregressive : AR G, AR T
+> Contrastive : RelCon, SSL-Wearables, SimCLR
+> Self-Distillation : DINO
+> Masked Reconstruction : PatchTST, Self-PAB, LSM
+> Model Scale Small ( ∼5M); Medium ( ∼30M); Large ( ∼100M)
+> Downstream Tasks HAR; FoG; Disease Prediction
+> Evaluation Protocol Linear Probing; Full Fine-tuning
+
+A.2. Pretraining data 
+
+Our pretraining corpus is mainly derived from the National Health and Nutrition Examination Survey ( NHANES ) accelerometry cohort from year 2011-2014. Participants wore a physical activity monitor continuously for seven days. Raw triaxial accelerometer signals were collected at 80 Hz, low-pass filtered using a 4th-order Butterworth filter with a 10 Hz cutoff, and downsampled to 20 Hz. The processed data are stored in ten-minute parquet segments, comprising 14,688 subjects and approximately 2.47 million subject-hours of recordings. This dataset provides large-scale, high-resolution unlabeled motion data suitable for representation learning. In addition, we utilize the UK Biobank accelerometer dataset for data scaling experiments, including cross-dataset mixing with NHANES . Approximately 100,000 participants wore a physical activity monitor continuously for seven days. Raw 100 Hz triaxial accelerometer signals were auto-calibrated to local gravity, gravity-corrected, and low-pass filtered using a 4th-order Butterworth filter with a 20 Hz cutoff. The processed Euclidean norm data available to us are stored as pre-computed five-second epoch time-series files, with non-wear periods imputed using time-of-day averages. Filtered for subjects meeting a minimum 72-hour wear-time threshold, this cohort comprises approximately 15.7 million subject-hours of recordings, further expanding the scale and diversity of our unlabeled pretraining corpus. 
+
+> 17
+
+Inertia-1 : An Open Exploration of Wearable Motion Foundation Models 
+
+A.3. Downstream datasets and task families 
+
+We evaluate learned representations on thirteen public HAR and FoG benchmarks, spanning diverse sensor placements, sampling frequencies, and activity label sets. In addition, we evaluate on five patient-level Disease Prediction tasks from NHANES and two patient-level Disease Prediction tasks derived from UK Biobank ICD10 codes, using multiple-instance pooling over windows from each subject. Train/val/test splits are selected on the subject level for all datasets. A comprehensive summary of downstream datasets is provided in Table 8. Table 8 | Summary of the datasets used in Inertia-1 . Train and test samples are reported in subjects for NHANES and UK Biobank , 30 second windows for HAR and FoG downstream datasets, and subject-days for the Disease Prediction tasks.         
+
+> Dataset Task # Class # Train # Val # Test Rate Sensors Placement
+> Pretraining:
+
+NHANES [34] Pretraining − 11.7K 1.5K 1.5K 1-20 Hz ACC WR UK Biobank [17] Pretraining − 80K − 20K 0.2 Hz ACC WR 
+
+> Downstream:
+
+CAPTURE-24 [11] HAR 10 214.8K 46.9K 45.8K 30 Hz ACC WR HAR70+ [28] HAR 5 27.3K 5.6K 6.0K 50 Hz ACC CH LG HARTH [27] HAR 9 86.9K 18.2K 18.0K 50 Hz ACC CH LG HHAR [6] HAR 6 10.4K 2.2K 2.2K 30 Hz ACC GYR WR MHEALTH [4] HAR 12 2.8K 2.0K 2.0K 50 Hz ACC GYR MAG AR CH AN OPPORTUNITY [42] HAR 4 25.6K 12.2K 9.8K 30 Hz ACC GYR MAG WR HN AR BK HP KN PAMAP2 [39] HAR 12 16.0K 9.4K 13.5K 100 Hz ACC GYR MAG HN CH AN RecoFit [32] HAR 22 63.1K 13.6K 13.4K 50 Hz ACC GYR AR WISDM [51] HAR 18 111.8K 24.6K 25.1K 20 Hz ACC GYR WR WEAR [7] HAR 18 29.0K 6.7K 6.5K 50 Hz ACC AR LG Daphnet FoG [43] FoG 2 12.5K 2.6K 2.8K 64 Hz ACC HP LG AN OdayFoG [37] FoG 2 1.7K .8K .8K 128 Hz ACC GYR WR CH HP LG AN FoGTurning [40] FoG 2 4.5K 1.0K 1.0K 128 Hz ACC GYR SH NHANES [34] (Sleep) Disease 2 1525 207 207 20 Hz ACC WR NHANES [34] (Depression) Disease 2 1764 168 221 20 Hz ACC WR NHANES [34] (Dep. Severity) Disease 5 2548 315 289 20 Hz ACC WR NHANES [34] (Parkinson’s) Disease 2 1267 162 153 20 Hz ACC WR NHANES [34] (Diabetes) Disease 2 1317 180 151 20 Hz ACC WR UK Biobank [17] (Osteoarthritis) Disease 2 89.6K 19.2K 19.2K 0.2 Hz ACC WR UK Biobank [17] (Osteoporosis) Disease 2 27.8K 6K 6K 0.2 Hz ACC WR 
+
+A.4. Training and evaluation protocol 
+
+Unless otherwise specified, models are pretrained for 170 𝑘 optimization steps using AdamW on 4 H200 GPUs. Default controlled experiments use 30 𝑠 windows of 20 Hz triaxial accelerometer data from wrist-worn devices, or the closest available placement when a dataset does not include a wrist-worn IMU. The default encoder capacity is the Small setting, corresponding to approximately 5–8M parameters, with Medium ( ∼30M) and Large ( ∼100M) variants used for scaling analyses. Downstream evaluation uses linear probing, where the pretrained encoder is frozen and only a lightweight classifier is trained, and full fine-tuning, where all model parameters are updated end-to-end. For patient-level Disease Prediction in NHANES , we use multiple-instance learning by sampling 1024 windows from each subject at predetermined times of the day and pooling their embeddings into a subject-level prediction. Labels are derived from NHANES survey reports and medications data.  
+
+> 18 Inertia-1 : An Open Exploration of Wearable Motion Foundation Models
+
+Parkinson’s disease, depression (binary), and diabetes are inferred through use of anti-Parkinson’s agents, antidepressants, and insulin, respectively. Additionally, we report the average metric across 5 run seeds for Disease Prediction to reduce performance variance due to low positive sample size. See Appendix D.3 for details on UK Biobank Disease Prediction. 
+
+B. Pretraining Algorithms and Model Implementations 
+
+Unless otherwise specified, method implementations use the shared default preprocessing and training configuration: 30-second windows sampled at 20 Hz, triaxial accelerometer input, a batch size of 1024, AdamW optimization with learning rate 2 × 10 −4 and weight decay 0.04, and 5 pretraining epochs. All pretraining runs utilized a learning rate scheduler with linear warmup and cosine decay. Downstream evaluation uses the linear-probing and full-finetuning protocols described in Appendix A.4. The probing and finetuning runs use learning rate 1 × 10 −3 and weight decay 0.01. Size-controlled experiments use the corresponding small, medium, and large configuration presets when applicable. 
+
+B.1. General self-supervised methods PatchTST. We implement PatchTST as a masked patch-reconstruction model for accelerometer windows [36]. The input window is divided into temporal patches and a random subset of patches is masked before being passed to the PatchTST encoder. We use patch length 10, stride 10, and mask ratio 0.4. The model predicts the original unmasked patch values, and the pretraining loss is mean-squared error evaluated only on masked patches. For downstream evaluation, we use the mean-pooled PatchTST backbone representation. In model-size experiments, the preset-controlled PatchTST sizes are: small (𝑑 = 512 , 𝐿 = 4, 𝐻 = 4, 𝑑 𝑓 𝑓 = 1024 ), medium (𝑑 = 768 , 𝐿 = 6, 𝐻 = 8, 𝑑 𝑓 𝑓 = 2048 ), and large (𝑑 = 1024 , 𝐿 = 8, 𝐻 = 16 , 𝑑 𝑓 𝑓 = 4096 ).
+
+AR T. The AR T is trained with a causal next-patch prediction objective. The input is divided into non-overlapping temporal patches of size 10 by default. The pretraining loss is mean-squared error between the predicted and target next patches. The model uses a linear patch projection, a causal Transformer encoder, and a linear prediction head. For downstream evaluation, the default representation is generated by mean pooling over all final layer positions. In model-size experiments, the preset-controlled AR T sizes are: small (𝑑 = 512 , 𝐿 = 4, 𝐻 = 4, 𝑑 𝑓 𝑓 = 1024 ), medium (𝑑 = 768 , 𝐿 =
+
+6, 𝐻 = 8, 𝑑 𝑓 𝑓 = 2048 ), and large (𝑑 = 1024 , 𝐿 = 8, 𝐻 = 16 , 𝑑 𝑓 𝑓 = 4096 ).
+
+AR G. The AR G uses the same next-patch prediction objective as AR T, but replaces the Transformer encoder with a recurrent GRU. The default patch length is 10 samples. Each patch is projected into the GRU hidden space, the GRU processes the patch sequence causally, and a linear head predicts the next patch. The pretraining loss is mean-squared error on next-patch prediction. For downstream evaluation, the default representation is the mean of the GRU hidden states over time. 
+
+DINO. We adapt DINO to wearable motion using a student–teacher self-distillation setup [8]. Both student and teacher use the same ViT-style motion encoder, and the teacher parameters are initialized from the student and then updated as an exponential moving average of the student parameters. Under the default configuration, both encoders use a patch size of 10 on the temporal axis for input embedding. The base augmentations are adapted from genertic augmentation strategies such as adding noises and masking inputs. Specifically, we use jitter with standard deviation 0.02, scaling with standard deviation 0.1, time masking with ratio sampled from [0.3, 0.6], and channel dropout  
+
+> 19 Inertia-1 : An Open Exploration of Wearable Motion Foundation Models
+
+over 0 or 1 channels. The DINO loss matches all student views to the teacher outputs from the global views. For downstream evaluation, the implementation uses the raw backbone representation from the student encoder by default and discards the DINO head. 
+
+SimCLR. We adapt SimCLR to wearable motion by generating two augmented views of each input window and training a shared encoder with a contrastive objective [12]. The default encoder is the same ViT-style motion encoder used in DINO, with patch size of 10. Training uses the NT-Xent loss with temperature 0.1. We use the same genertic augmentation strategies as DINO by default. For downstream evaluation, the implementation returns the raw encoder representation and discards the SimCLR projection head. 
+
+B.2. Domain-specific self-supervised methods SSL-Wearables. Following the original implementation by [58], we frame the SSL-Wearables pre-training objective as a three-task temporal transformation prediction problem. For each input window, the model constructs views corresponding to arrow-of-time, permutation, and time-warping tasks. We also follow the official codebase to dictate the transformation parameters and loss calculations. For downstream evaluation, we follow standard procedure by extracting features directly from the raw ResNet encoder and discarding the self-supervised prediction heads. 
+
+RelCon. Following the original implementation by [52], we employ a two-stage self-supervised approach that replaces fixed distance metrics with a learned reconstructability criterion. In the first stage, a distance model is trained to identify motion-specific motifs across accelerometer windows. In the second stage, this model is frozen and used to rank candidate windows for a relative contrastive loss. We strictly adhere to the official codebase to implement the loss formulation and default hyperparameters over a ResNet1D encoder. 
+
+Self-PAB. We implement Self-PAB as masked reconstruction in a spectrogram representation [26]. The module computes the short-time Fourier transform internally. The default STFT uses 𝑛 fft = 128 ,hop length 64, no centering, and magnitude-only input without phase to adjust for our longer window length. The masking procedure alters both time and frequency regions, and the reconstruction objective is masked L1 loss by default. For downstream evaluation, the model converts the raw window to its STFT representation without masking, applies through the model encoder, and returns the mean-pooled frame representation. 
+
+B.3. Supervised baselines CNN. The CNN baseline implementation uses a ResNet-style 1D convolutional encoder with input channels equal to the selected sensor axes. The method is trained by the downstream evaluation code with the task-specific supervised objective. 
+
+ViT. The ViT baseline divides each motion window into temporal patches and processes them with a 1D ViT encoder. The patch size is default to 10. As with the CNN baseline, the method is trained by the downstream evaluation code with the task-specific supervised objective, rather than by a self-supervised pretraining loss.  
+
+> 20 Inertia-1 : An Open Exploration of Wearable Motion Foundation Models
+
+Table 9 | Model sizes in millions of trainable parameters. Medium and large configurations are reported for best performing SSL methods.                                 
+
+> Model Small (M) Medium (M) Large (M)
+> AR T8.4 33.1 100.8 PatchTST 8.5 33.2 100.9 AR G3.9 ––DINO 8.1 ––SimCLR 5.8 ––RelCon 3.6 ––SSL-Wearables 10.5 –Self-PAB 3.3 ––Supervised CNN 5.0 ––Supervised ViT 5.4 ––
+
+B.4. Model capacity definitions 
+
+We report model capacity using the Small, Medium, and Large settings used in the scaling experiments. Table 9 lists the parameter counts for each backbone. 
+
+C. Supplementary Metrics for Main Results 
+
+The main paper reports linear probing AUROC as the primary metric because it allows comparison across all task families. Since several downstream datasets are class-imbalanced, we also report both linear probing and full finetuning AUPRC and task-specific breakdowns here (Table 10, Table 11, Table 12). In additon, we also include full finetuning AUROC across HAR (Table 13) and FoG (Table 14) tasks. Finally, we include the raw AUROC and AUPRC across all axes ablations discussed in the main paper (Table 15, Table 16). 
+
+D. Supplementary Scaling Analyses 
+
+D.1. Parameter scaling under fixed pretraining data 
+
+We investigate scaling behavior by varying model capacity (Small < 10M, Medium ∼30M, Large 
+
+∼100M parameters) and pretraining corpus size. figure 9 compares full fine-tuning against linear probing for AR T under the same fixed pretraining data and input configuration. The full-fine-tuning plots show a slight degradation in performance, suggesting that larger encoders alone are not a reliable recipe without corresponding gains in data scale, diversity, or task-specific optimization. All error bars in scaling plots reflect the standard deviation across specific disease tasks and trials, calculated via function call. Standard deviations were calculated using the Python function statistics.stdev() .
+
+D.2. PatchTST capacity under linear probing and full fine-tuning 
+
+figure 10 provides the capacity ablation for PatchTST. This analysis is included as a robustness check because the main text focuses primarily on AR T for controlled ablations. Across both pretrained models evaluated, we find that scaling model parameters alone does not yield meaningful improvements in representation. On the contrary, in the case of finetuning the entire model backbone, both AR T and PatchTST performances begin to degrade as the models overfit limited downstream training data. We 
+
+> 21
+
+Inertia-1 : An Open Exploration of Wearable Motion Foundation Models 
+
+Table 10 | Full results for AUPRC on HAR tasks with both linear probing and full finetuning results.  
+
+> Model
+
+HHAR MHEALTH OPPORTUNITY PAMAP2 RecoFit CAPTURE-24 HAR70+ HARTH WEAR WISDM                                                                                                                                                                                     
+
+> Supervised Models
+> ViT 60.2 70.7 38.1 59.5 80.1 55.3 58.7 82.2 86.2 66.5 CNN 76.1 69.9 34.9 76.2 76.2 50.7 57.2 87.2 88.1 74.7
+> Linear Probing
+> General Pretraining Methods
+> PatchTST 77.3 86.8 70.8 82.4 85.0 53.9 61.3 85.9 94.0 77.9
+> AR T67.9 74.2 79.5 73.1 87.8 55.2 59.3 86.6 94.8 72.8 AR G68.0 82.1 71.6 71.1 85.7 53.2 55.9 82.4 94.0 72.1 DINO 43.5 54.2 70.1 39.4 80.6 49.9 63.1 84.6 92.5 37.4 SimCLR 38.2 60.2 76.9 48.1 77.2 50.7 61.6 80.9 89.1 38.8
+> Domain-specific Methods
+> SSL-Wearables 64.3 57.5 42.6 65.2 44.3 39.9 61.4 56.7 42.0 51.1 RelCon 67.1 77.0 68.3 70.0 77.5 48.0 65.2 77.2 87.6 57.0 Self-PAB 87.8 55.4 40.3 74.0 75.7 48.7 64.1 84.7 87.1 77.0
+> Full Fine-tuning
+> General Pretraining Methods
+> PatchTST 86.2 89.0 62.9 86.8 83.6 58.1 67.4 85.0 92.4 85.7
+> AR T73.4 85.1 72.7 77.7 84.5 56.9 57.1 88.5 94.9 82.0 AR G75.0 83.6 63.9 83.0 83.4 54.4 57.9 84.4 93.1 79.7 DINO 43.5 67.6 64.5 44.8 83.8 57.0 65.4 78.7 91.0 57.1 SimCLR 40.0 67.4 68.8 47.4 80.4 56.2 62.3 79.0 92.2 64.1
+> Domain-specific Methods
+> SSL-Wearables 78.9 81.1 79.1 62.4 78.9 56.4 66.5 82.6 89.2 51.8 RelCon 77.2 90.2 60.9 82.8 84.5 51.9 67.9 78.4 92.5 79.9 Self-PAB 79.3 68.7 40.7 80.6 72.0 54.2 59.8 82.1 88.5 81.2
+
+Table 11 | Full results for AUPRC on FoG tasks. 
+
+FoGTurning OdayFoG DaphnetFoG                                     
+
+> Supervised Models
+> 39.4 72.4 59.2 22.6 72.4 76.8
+> Linear Probing
+> General Pretraining Methods
+> 61.4 66.0 87.5 61.3 56.5 86.2 71.4 69.5 82.9 37.7 77.8 77.6
+> 87.8 66.4 87.7
+> Domain-specific Methods
+> 84.6 52.3 39.1 76.2 77.1 79.3 63.3 61.0 77.3
+> Full Fine-tuning
+> General Pretraining Methods
+> 78.8 70.8 89.0 54.5 78.9 85.0 40.7 65.5 83.4 69.9 85.3 72.5 67.9 49.8 86.1
+> Domain-specific Methods
+> 96.1 57.4 85.2 83.4 75.6 90.9
+> 68.4 80.4 58.3
+
+find, however, that AR T, performance remains comparable as model capacity increases, regardless of finetuning method, suggesting that AR T scales more gracefully than does PatchTST. 
+
+D.3. Disease prediction scaling protocol 
+
+The UK Biobank disease scaling experiments use a scaling-specific pretraining and evaluation proto-col. In this setting, we separate two sources of additional unlabeled data: the number of pretraining individuals and the number of motion segments per individual. For these experiments, we train an AR T using 2-hour windows of accelerometer data downsampled to 0.2 Hz, corresponding to 1440 time steps per window. Each setting is pretrained for two epochs, and all model settings are checked to ensure normal training behavior. The pretraining split contains approximately 80% of eligible UK Biobank patients, or roughly 80k patients, while the remaining eligible patients are held out from pretraining and used for downstream disease evaluation. For each disease trait, we construct a case-control cohort from the held-out patients, using as close to a 1:5 case-control ratio as possible. This cohort is then split at the patient level into train, validation, and test folds for downstream multiple-instance learning. For downstream evaluation, each patient-day is treated as an independent bag. A patient-day consists of 12 consecutive 2-hour windows, giving up to seven bags per patient. All bags from the same patient share the same disease label and are assigned to the same train, validation, or test fold to prevent leakage across days. The frozen encoder embeds each 2-hour window independently, and the MIL classifier is trained on bags of 12 window embeddings. Performance is measured using AUROC on the held-out test set, with 95% bootstrap confidence intervals computed using 1000 resamples. The three scaling sweeps vary the number of pretraining patients, the number of windows available per patient, and the composition of the pretraining corpus. The patient-scaling sweep uses 1%, 10%, and 100% of the pretraining patients. The segment-scaling sweep caps the number of windows per 
+
+22 Inertia-1 : An Open Exploration of Wearable Motion Foundation Models 
+
+Table 12 | Disease prediction tasks. We report AUPRC per task. Best results are bolded and second best are underlined. Model Depr. Severity Depression Diabetes Parkinson’s Sleep                                                   
+
+> Supervised Models
+> ViT 28.3 62.6 35.2 27.0 44.5 CNN 29.8 55.4 40.5 38.4 48.6
+> General Pretraining Methods
+> PatchTST 26.6 70.7 42.9 49.8 59.1 AR T35.0 80.1 54.6 52.3 56.5 AR G33.7 69.9 45.2 50.1 61.7 DINO 34.5 76.2 67.9 45.1 78.1
+> SimCLR 32.4 71.9 70.9 44.9 77.3
+> Domain-specific Methods
+> SSL-Wearables 37.9 60.4 59.9 60.4 62.7 RelCon 32.6 73.7 64.0 53.9 54.7 Self-PAB 30.2 68.8 47.1 34.5 58.9
+
+patient at 1, 9, or 84. The mixing sweep compares NHANES -only pretraining, matched NHANES –UK Biobank mixtures, and full UK Biobank inclusion. 
+
+D.4. Disease prediction scaling with additional UK Biobank targets 
+
+figure 11 additionally visualizes performance on osteoarthritis prediction for the UK Biobank scaling experiments. We observe trends similar to osteoporosis, indicating that increasing the number of pretraining individuals, the number of windows per individual, and the diversity of the pretraining corpus can improve disease-relevant wearable representations across multiple targets. This further suggests that wearable disease representations benefit from both population diversity and repeated behavioral sampling within individuals. 
+
+E. Supplementary Controlled Configuration Studies 
+
+E.1. Sampling frequency and window length with PatchTST 
+
+The main text uses AR T as the primary backbone for controlled configuration studies due to its strong and balanced performance across tasks in both linear probing and full finetuning. To test whether the same qualitative trends hold for another architecture, figure 12 repeats the sampling-frequency and window-length ablations with PatchTST. Similar to the results with AR T in the main text, the highest temporal resolution of 20 Hz provides the greatest benefit to downstream performance, while window size effects are weaker and more task-dependent. Strikingly, model performance degrades significantly between 5Hz and 1Hz input streams. Even so, accounting for this degradation, the models pretrained at 1Hz are still able to perform sufficiently in HAR classification. This finding is critical for wearable foundation models as many large cohort studies of data report only aggregate metrics or low frequency data, potentially erasing important movement information from the data. Across window size, we find less stark of a contrast; increasing context does not yield significant performance gains. We note that this saturation of performance should not be attributed to the cleanliness of the data, i.e. recordings collected of a pure action, as our window cleaniness check reports an average >80% label purity for all of our HAR and FoG splits. Detailed results are reported 
+
+> 23
+
+Inertia-1 : An Open Exploration of Wearable Motion Foundation Models 
+
+Table 13 | Full reesults for AUROC on HAR tasks with both linear probing and full finetuning results.  
+
+> Model
+
+HHAR MHEALTH OPPORTUNITY PAMAP2 RecoFit CAPTURE-24 HAR70+ HARTH WEAR WISDM                                                                                                                                                                                         
+
+> Supervised Models
+> ViT 83.9 93.8 72.9 92.0 97.7 92.9 96.6 98.7 97.7 94.1 CNN 89.1 90.7 69.5 95.5 97.0 90.9 94.5 98.7 98.0 94.8
+> Linear Probing
+> General Pretraining Methods
+> PatchTST [36] 93.5 98.2 89.8 97.4 98.5 91.6 95.8 98.9 99.2 95.5 AR T[49] 88.6 96.0 92.1 95.6 98.9 92.3 95.5 99.0 99.3 94.8 AR G[14] 89.2 96.0 89.4 95.0 98.7 91.3 95.3 98.5 99.2 94.7 DINO [8] 73.4 87.2 87.8 82.7 98.1 92.0 95.4 98.9 98.5 85.2 SimCLR [12] 68.6 90.0 90.0 86.8 97.8 92.2 95.9 98.6 98.0 86.4
+> Domain-specific Methods
+> SSL-Wearables [58] 90.0 89.9 73.1 91.8 91.0 87.0 85.4 92.0 88.5 90.2 RelCon [52] 87.8 96.3 85.3 94.5 97.0 89.9 95.9 98.0 97.9 90.5 Self-PAB [26] 96.8 91.8 74.7 95.4 97.4 89.7 93.4 98.6 97.7 96.7
+> Full Fine-tuning
+> General Pretraining Methods
+> PatchTST [36] 96.1 98.6 87.6 97.1 98.1 93.0 96.9 98.3 98.8 97.4 AR T[49] 90.9 97.8 90.2 97.2 98.0 93.1 94.8 99.0 99.1 97.3 AR G[14] 92.4 97.7 88.2 97.4 98.2 92.5 95.6 98.8 98.9 96.6 DINO [8] 71.1 93.1 84.7 84.4 96.9 93.1 90.9 94.0 97.6 92.1 SimCLR [12] 62.4 89.4 84.2 79.0 95.8 93.2 91.2 94.6 97.0 91.3
+> Domain-specific Methods
+> SSL-Wearables [58] 94.8 96.1 91.6 90.3 98.1 93.4 92.7 98.6 97.9 90.8 RelCon [52] 85.8 98.4 86.4 95.3 96.5 89.8 76.5 95.5 97.4 94.0 Self-PAB [26] 92.9 94.4 67.3 97.0 97.4 91.5 93.4 98.5 97.8 97.4
+
+Table 14 | Full results for AUROC on FOG tasks. 
+
+FoGTurning OdayFoG DaphnetFoG                                     
+
+> Supervised Models
+> 63.6 68.0 83.5 51.2 80.5 87.6
+> Linear Probing
+> General Pretraining Methods
+> 85.7 65.4 95.0
+> 80.2 58.6 94.3 83.0 71.6 93.4 61.4 83.2 89.2 91.4 66.7 94.8
+> Domain-specific Methods
+> 91.6 62.0 71.4 87.5 78.2 93.0 80.4 55.0 92.5
+> Full Fine-tuning
+> General Pretraining Methods
+> 83.9 75.0 95.6 78.3 68.0 93.2 77.7 65.5 93.2 85.5 86.0 86.1 89.3 51.5 93.8
+> Domain-specific Methods
+> 98.2 73.3 93.6 89.5 81.2 96.6
+> 83.9 85.5 80.7
+
+in Table 15 and Table 16. 
+
+E.2. Sensor-axis dimensionality across additional backbones 
+
+Similar to the experiment in figure 6, we test for qualitative trends in sensor-axis dimensionality across additional model architectures in figure 12 (PatchTST). Triaxial inputs generally preserve useful orientation and movement structure that can be lost when reducing the signal to one channel. Both models substantially improve with triaxial input data, with PatchTST appearing to collapse when given only a single axis representation of the data. 
+
+F. Representation Geometry and Cluster Analysis 
+
+To study placement robustness—and specifically whether wrist-based pretraining extrapolates to other sensors or placements—we finetune separate models using data from specific sensors (gyroscope, magnetometer) or body locations (waist, chest, leg, ankle) after pretraining on wrist data and train a linear classifier on concatenated embeddings for each downstream dataset with the additional available data streams. The main text interprets improvements from synchronized multi-stream fusion using representation geometry and cluster structure. Table 17 reports the corresponding cluster-quality metrics averaged across all datasets from figure 7, providing quantitative support for the qualitative embedding visualizations and cluster interpretations discussed in the main paper. The noise control row displays cluster metrics when concatenating random normal vectors of the same dimensionality as the extra placement or sensor embeddings that were concatenated in the other comparisons. 
+
+24 Inertia-1 : An Open Exploration of Wearable Motion Foundation Models Small Medium Large 
+
+80 
+
+85 
+
+90 
+
+95 
+
+100 
+
+105 
+
+> AUROC
+
+HAR 
+
+Small Medium Large 
+
+70 
+
+80 
+
+90 
+
+100 FOG 
+
+Full fine-tuning Linear probe 
+
+Figure 9 | Parameter scaling under fixed pretraining data. Controlled ablations using AR T. We vary encoder size and compare full fine-tuning against linear probing while holding the pretraining corpus and input configuration fixed. Small Medium Large 
+
+80 
+
+85 
+
+90 
+
+95 
+
+100 
+
+105 
+
+> AUROC
+
+HAR 
+
+Small Medium Large 
+
+70 
+
+80 
+
+90 
+
+100 FOG 
+
+Full fine-tuning Linear probe 
+
+Figure 10 | Additional Model Capacity Ablations. Controlled ablations using PatchTST; we vary the capacity of the encoder and style of finetuning while holding the rest of the protocol fixed. 
+
+> 25
+
+Inertia-1 : An Open Exploration of Wearable Motion Foundation Models 
+
+Table 15 | Ablation study across task families. We report AUROC per dataset/task across axis settings. 
+
+Human Activity Recognition 
+
+Axis Model Axis Value HHAR MHEALTH OPPORTUNITY PAMAP2 RecoFit CAPTURE-24 HAR70+ HARTH WEAR WISDM 
+
+Window Size 
+
+AR T 10s 89.7 97.1 87.2 94.7 98.6 70.7 96.0 98.9 99.4 96.6 AR T 30s 90.9 97.8 90.2 97.2 98.0 93.1 94.8 99.0 99.1 97.3 AR T 60s 85.5 96.8 87.0 97.0 97.8 53.8 97.2 98.9 99.2 92.3 PatchTST 10s 93.8 96.4 88.0 95.0 98.3 72.5 95.8 98.4 99.0 96.6 PatchTST 30s 96.1 98.6 87.6 97.1 98.1 93.0 96.9 98.3 98.8 97.4 PatchTST 60s 86.2 97.5 85.8 96.0 97.6 45.5 97.8 98.1 97.8 90.4 
+
+Sampling Frequency 
+
+AR T 1Hz 76.3 96.1 88.6 94.5 97.6 51.4 99.2 97.5 98.5 95.4 AR T 5Hz 84.8 97.2 89.4 95.9 98.0 72.1 96.6 97.9 98.6 97.0 AR T 20Hz 90.9 97.8 90.2 97.2 98.0 93.1 94.8 99.0 99.1 97.3 PatchTST 1Hz 51.3 83.0 67.3 74.9 81.1 50.2 88.4 89.5 70.6 76.0 PatchTST 5Hz 90.6 94.3 92.6 94.0 97.7 53.6 96.7 97.7 98.1 96.3 PatchTST 20Hz 96.1 98.6 87.6 97.1 98.1 93.0 96.9 98.3 98.8 97.4 
+
+Sensor Axes 
+
+AR T Uniaxial 93.1 95.5 84.7 95.8 96.4 62.9 91.4 94.2 96.4 95.3 AR T Triaxial 90.9 97.8 90.2 97.2 98.0 93.1 94.8 99.0 99.1 97.3 PatchTST Uniaxial 71.8 76.5 54.9 72.6 86.6 49.0 54.8 85.5 70.8 84.2 PatchTST Triaxial 96.1 98.6 87.6 97.1 98.1 93.0 96.9 98.3 98.8 97.4 
+
+Freezing of Gait 
+
+Model Axis Value FoGTurning OdayFoG DaphnetFoG 
+
+Window Size 
+
+AR T 10s 79.9 68.5 93.2 AR T 30s 78.3 68.0 93.2 AR T 60s 94.4 82.6 95.8 PatchTST 10s 81.6 57.5 88.9 PatchTST 30s 83.9 75.0 95.6 PatchTST 60s 97.6 98.3 92.4 
+
+Sampling Frequency 
+
+AR T 1Hz 62.2 67.4 77.8 AR T 5Hz 91.4 68.4 86.2 AR T 20Hz 78.3 68.0 93.2 PatchTST 1Hz 56.0 68.5 59.6 PatchTST 5Hz 71.2 65.6 84.7 PatchTST 20Hz 83.9 75.0 95.6 
+
+Sensor Axes 
+
+AR T Uniaxial 64.0 78.0 87.9 AR T Triaxial 78.3 68.0 93.2 PatchTST Uniaxial 60.7 53.5 50.6 PatchTST Triaxial 83.9 75.0 95.6 
+
+Disease Prediction 
+
+Model Axis Value Depr. Severity Depression Diabetes Parkinson’s Sleep 
+
+Window Size 
+
+AR T 10s 58.9 76.2 52.7 71.5 56.6 AR T 30s 58.4 81.3 67.7 75.0 61.7 AR T 60s 53.8 74.2 62.3 69.6 51.3 PatchTST 10s 53.2 55.2 54.8 52.3 29.1 PatchTST 30s 55.0 77.0 53.8 72.8 44.7 PatchTST 60s 55.0 58.3 56.7 64.2 49.4 
+
+Sampling Frequency 
+
+AR T 1Hz 56.6 58.2 56.1 65.0 46.7 AR T 5Hz 56.1 72.9 54.2 68.5 32.4 AR T 20Hz 58.4 81.3 67.7 75.0 61.7 PatchTST 1Hz 50.7 50.7 50.4 50.4 50.0 PatchTST 5Hz 54.9 62.3 49.6 60.0 27.5 PatchTST 20Hz 55.0 77.0 53.8 72.8 59.6 
+
+Sensor Axes 
+
+AR T Uniaxial 57.8 77.6 64.6 65.8 72.7 AR T Triaxial 58.4 81.3 67.7 75.0 61.7 PatchTST Uniaxial 51.9 55.7 63.8 51.5 54.2 PatchTST Triaxial 55.0 77.0 53.8 72.8 59.6 
+
+26 Inertia-1 : An Open Exploration of Wearable Motion Foundation Models 
+
+Table 16 | Ablation study across task families. We report AUPRC per dataset/task across axis settings. 
+
+Human Activity Recognition 
+
+Axis Model Axis Value HHAR MHEALTH OPPORTUNITY PAMAP2 RecoFit CAPTURE-24 HAR70+ HARTH WEAR WISDM 
+
+Window Size 
+
+AR T 10s 68.3 81.1 66.4 71.1 85.2 34.2 67.6 89.0 92.3 77.6 AR T 30s 73.4 85.1 72.7 77.7 84.5 56.9 57.1 88.5 94.9 82.0 AR T 60s 57.1 77.2 69.0 76.1 81.6 22.6 77.8 83.0 92.6 68.6 PatchTST 10s 81.2 73.8 63.0 78.7 85.2 39.6 64.8 82.4 90.9 80.0 PatchTST 30s 86.2 89.0 62.9 86.8 83.6 58.1 67.4 85.0 92.4 85.7 PatchTST 60s 59.2 84.0 65.7 78.4 83.9 25.5 78.3 80.2 86.7 69.1 
+
+Sampling Frequency 
+
+AR T 1Hz 39.7 76.1 70.6 63.7 71.3 15.8 95.5 74.6 83.7 73.3 AR T 5Hz 53.3 78.1 72.3 68.4 80.9 36.7 74.6 75.6 92.0 81.7 AR T 20Hz 73.4 85.1 72.7 77.7 84.5 56.9 57.1 88.5 94.9 82.0 PatchTST 1Hz 20.5 29.6 32.7 29.8 17.7 15.3 60.7 41.7 12.6 18.3 PatchTST 5Hz 68.3 64.7 74.6 70.4 79.8 24.4 76.2 76.3 90.9 76.5 PatchTST 20Hz 86.2 89.0 62.9 86.8 83.6 58.1 67.4 85.0 92.4 85.7 
+
+Sensor Axes 
+
+AR T Uniaxial 68.6 69.1 59.9 70.4 65.1 29.3 58.0 68.5 72.2 66.5 AR T Triaxial 73.4 85.1 72.7 77.7 84.5 56.9 57.1 88.5 94.9 82.0 PatchTST Uniaxial 33.1 28.5 27.4 23.8 29.2 21.5 27.9 35.2 12.5 28.1 PatchTST Triaxial 86.2 89.0 62.9 86.8 83.6 58.1 67.4 85.0 92.4 85.7 
+
+Freezing of Gait   
+
+> Model Axis Value
+
+FoGTurning OdayFoG DaphnetFoG                                                          
+
+> Window Size
+> AR T10s 70.2 70.8 65.3 AR T30s 54.5 78.9 85.0 AR T60s 90.3 45.7 91.3 PatchTST 10s 68.8 65.0 59.2 PatchTST 30s 78.8 70.8 89.0 PatchTST 60s 95.0 22.1 84.6
+> Sampling Frequency
+> AR T1Hz 33.0 64.9 53.1 AR T5Hz 79.2 30.5 65.0 AR T20Hz 54.5 78.9 85.0 PatchTST 1Hz 28.5 55.7 34.5 PatchTST 5Hz 57.6 54.7 64.3 PatchTST 20Hz 78.8 70.8 89.0
+> Sensor Axes
+> AR TUniaxial 41.0 78.9 75.9 AR TTriaxial 54.5 78.9 85.0 PatchTST Uniaxial 29.1 38.1 23.8 patchtst Triaxial 78.8 70.8 89.0
+
+Disease Prediction                                                                                                      
+
+> Axis Model Axis Value Depr. Severity Depression Diabetes Parkinson’s Sleep
+> Window Size
+> AR T10s 35.0 72.5 48.0 40.0 56.3 AR T30s 35.0 80.1 54.6 52.3 56.5 AR T60s 31.4 66.6 46.8 44.9 53.4 PatchTST 10s 27.0 59.4 35.8 28.2 36.6 PatchTST 30s 26.6 70.7 42.9 49.8 46.6 PatchTST 60s 27.6 61.4 43.4 37.7 49.9
+> Sampling Frequency
+> AR T1Hz 32.7 58.2 41.6 43.5 48.4 AR T5Hz 31.2 67.2 37.3 43.7 41.3 AR T20Hz 35.0 80.1 54.6 52.3 56.5 PatchTST 1Hz 21.8 48.2 33.2 24.5 39.1 PatchTST 5Hz 29.8 61.2 37.0 36.8 36.7 PatchTST 20Hz 26.6 70.7 42.9 49.8 59.1
+> Sensor Axes
+> AR TUniaxial 33.2 78.0 51.8 55.5 70.0 AR TTriaxial 35.0 80.1 54.6 52.3 56.5 PatchTST Uniaxial 23.1 49.4 45.2 24.1 42.0 PatchTST Triaxial 26.6 70.7 42.9 49.8 59.1
+
+Table 17 | Overall cluster quality metrics on UMAP embeddings , averaged across datasets. Incorporating additional placements yields the best-separated representations. 
+
+Condition Silhouette ↑ kNN Purity ↑ Calinski-Harabasz ↑ Davies-Bouldin ↓
+
+All Placements 0.3686 0.8086 478.0 1.2991 
+
+All Sensors 0.0881 0.6635 135.8 3.5703 Default 0.0634 0.6671 171.0 5.1265 Noise Control -0.0534 0.5160 107.6 22.2653 
+
+27 Inertia-1 : An Open Exploration of Wearable Motion Foundation Models 826 
+
+(1%) 
+
+8,260 
+
+(10%) 
+
+82,600 
+
+(100%) 
+
+Pretraining patients 
+
+52.5 
+
+55.0 
+
+57.5 
+
+60.0 
+
+62.5 
+
+> AUROC
+
+Patient scaling 
+
+1
+
+(1%) 
+
+9
+
+(10%) 
+
+84 
+
+(100%) 
+
+Windows per patient 
+
+Segment scaling 
+
+333k h 
+
+NHANES 
+
+625k h 
+
++matched UKB 
+
+12.7M h 
+
++100% UKB 
+
+Pretraining data 
+
+Cross-dataset scaling 
+
+Osteoporosis Osteoarthritis 
+
+Figure 11 | UK Biobank disease scaling at 0.2 Hz. We evaluate how downstream AUROC changes as pretraining varies by number of individuals, number of segments per individual, and mixture of 
+
+NHANES and UK Biobank pretraining data. Individual and segment scaling both improve osteoporosis and osteoarthritis prediction, while adding in-domain UK Biobank data to NHANES pretraining provides a modest additional gain. HAR   
+
+> FOG Disease
+> 59.2
+> 68.5
+> 77.7
+> 87.0
+> 96.2
+> 57.0
+> 63.9
+> 70.9
+> 77.9
+> 84.8
+> 44.7
+> 49.5
+> 54.2
+> 58.9
+> 63.6
+> 1Hz 5Hz 20Hz
+
+Freq. HAR FoG DP Overall 1Hz 73.2 61.4 50.4 61.7 5Hz 91.2 73.8 50.9 72.0 20Hz 96.2 84.8 63.6 81.6 
+
+(a) Sampling frequency HAR   
+
+> FOG Disease
+> 67.2
+> 74.5
+> 81.7
+> 89.0
+> 96.2
+> 67.2
+> 74.4
+> 81.7
+> 88.9
+> 96.1
+> 44.1
+> 48.3
+> 52.4
+> 56.5
+> 60.7
+> 10s 30s 60s
+
+Window HAR FoG DP Overall 10s 93.4 76.0 48.9 72.8 30s 96.2 84.8 60.7 80.6 60s 89.3 96.1 56.7 80.7 
+
+(b) Window length HAR  
+
+> FOG Disease
+> 72.7
+> 78.6
+> 84.4
+> 90.3
+> 96.2
+> 57.3
+> 64.2
+> 71.1
+> 78.0
+> 84.8
+> 56.1
+> 58.0
+> 59.9
+> 61.7
+> 63.6
+> Uniaxial Triaxial
+
+Axes HAR FoG DP Overall Uniaxial 70.7 54.9 55.4 60.3 Triaxial 96.2 84.8 63.6 81.6 
+
+(c) Axis dimensionality 
+
+Figure 12 | Sensitivity to input and representation choices. Controlled ablations using PatchTST. (a)(b) We vary sampling frequency and window length while holding the rest of the protocol fixed. (c) We compare performance of PatchTST trained on uniaxial inputs vs. triaxial inputs. AUROC is reported across task families. 
+
+28
