@@ -1,0 +1,182 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-12T21:14:08.901978+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 1,
+    "deep_cap": 7,
+    "deep_selected": 1,
+    "quick_candidates": 3,
+    "quick_skim_target": 12,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2607.05685v1",
+      "source": "arxiv",
+      "title": "Depression Symptoms and Relational Patterns in 187k ChatGPT Histories",
+      "abstract": "Large language models are increasingly used as private, always-available conversational systems, but little is known about how people with depressive symptoms use them. Building on CSCW work on disclosure and peer support, we examine ChatGPT as an emerging informal support infrastructure: private, persistent, responsive, and available outside ordinary hours. We analyze 187,093 ChatGPT conversations from 766 participants who completed the PHQ-8, comparing those below the moderate-symptom threshold (score of 10) with those at or above it. Higher-PHQ participants used ChatGPT more for mental-health, interpersonal, loneliness, self-focused, and support-seeking conversations, with pronounced late-night and recurring month-level patterns. Their language contained more first-person singular pronouns and absolutist terms. They more often engaged ChatGPT in high-disclosure contexts, but professional redirection was not higher. Language-based prediction was modest and insufficient for screening (AUROC 0.591). We argue these histories should not be treated as clinical screening data but as evidence LLMs are increasingly used as informal support infrastructure.",
+      "authors": [
+        "Neil K. R. Sehgal",
+        "Dunigan Folk",
+        "Lyle Ungar",
+        "Sharath Chandra Guntuku"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.AI"
+      ],
+      "published": "2026-07-06T23:07:31+00:00",
+      "link": "https://arxiv.org/pdf/2607.05685v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "analyzes depression symptoms from large-scale ChatGPT conversations, akin to digital phenotyping",
+      "llm_evidence_cn": "从大规模ChatGPT对话中分析抑郁症状，类似于数字表型分析",
+      "llm_evidence": "从大规模ChatGPT对话中分析抑郁症状，类似于数字表型分析",
+      "canonical_evidence": "从大规模ChatGPT对话中分析抑郁症状，类似于数字表型分析",
+      "llm_tldr_en": "Analyzes 187k ChatGPT conversations from 766 participants with PHQ-8 scores; higher depression group shows more mental-health, interpersonal, and loneliness conversations with late-night patterns.",
+      "llm_tldr_cn": "本研究分析了766名参与者的18.7万条ChatGPT对话历史，结合PHQ-8抑郁量表评分，发现高抑郁症状组更频繁地讨论心理健康、人际孤独等话题，并表现出深夜使用和月度周期性模式。该结果展示了利用对话数据进行数字表型分析和抑郁监测的潜力，为移动健康和生态瞬时评估提供了新方法。",
+      "llm_tldr": "本研究分析了766名参与者的18.7万条ChatGPT对话历史，结合PHQ-8抑郁量表评分，发现高抑郁症状组更频繁地讨论心理健康、人际孤独等话题，并表现出深夜使用和月度周期性模式。该结果展示了利用对话数据进行数字表型分析和抑郁监测的潜力，为移动健康和生态瞬时评估提供了新方法。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "digital phenotyping using EMA in mental health",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.05626v1",
+      "source": "arxiv",
+      "title": "Population-Level Profiling of DSM-5 Depressive Symptoms Among Self-Reported ADHD and ASD Users on Twitter: An Exploratory Study Using Advanced NLP and Statistical Analysis",
+      "abstract": "Background: Depression frequently co-occurs with ADHD and autism spectrum disorder (ASD), but population-level differences in symptom expression between these groups remain underexplored. Objective: We examined whether social media users with ADHD and ASD differ in how they express DSM-5 depressive symptoms in their tweets, and whether differences persist across varying levels of depressive-content filtering. Methods: We analysed 1,282,437 tweets from 792 users (622 ADHD; 170 ASD) with self-reported diagnoses on Twitter. Tweets were pre-filtered for depressive relevance using zero-shot NLI, then classified into nine DSM-5 symptoms using MentalRoBERTa fine-tuned on ReDSM5. Profiles were mean-centered per user. We applied L1-penalised logistic regression with cross-validation to distinguish ADHD from ASD users, complemented by Pearson correlations for symptom co-occurrence, and tested robustness across five filtering thresholds using bootstrapping. Results: MentalRoBERTa achieved macro-F1 of 0.901 on a held-out set, outperforming the original ReDSM5 benchmark. ADHD vs ASD classification yielded stable but modest performance (cross-validated ROC-AUC 0.645-0.653). Cognitive issues, sleep issues, appetite change, and fatigue leaned toward ADHD, while suicidal ideation and anhedonia leaned toward ASD. A largely shared symptom co-occurrence structure emerged between groups; no pair met our criterion for a robust disorder-specific difference. Conclusions: Population-level differences in depression-related language between ADHD and ASD social media users were consistently observed across thresholds, reflecting reproducibility rather than clinical validity. Findings are exploratory and do not establish differing phenomenology at the individual level.",
+      "authors": [
+        "Muhammad Rizwan",
+        "David Nabergoj",
+        "Jure Demšar"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-07-06T20:33:13+00:00",
+      "link": "https://arxiv.org/pdf/2607.05626v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "depression symptom assessment via social media",
+      "llm_evidence_cn": "通过社交媒体进行抑郁症状评估",
+      "llm_evidence": "通过社交媒体进行抑郁症状评估",
+      "canonical_evidence": "通过社交媒体进行抑郁症状评估",
+      "llm_tldr_en": "This study uses NLP to profile DSM-5 depressive symptoms in ADHD and ASD Twitter users, offering a digital method for depression mood assessment.",
+      "llm_tldr_cn": "该论文利用自然语言处理技术，对Twitter上自报ADHD和ASD用户的推文进行分析，分类DSM-5抑郁症状。采用零样本NLI预过滤和MentalRoBERTa分类，发现两组表达抑郁症状的方式存在差异。该工作为抑郁情绪评估提供了一种新的数字行为测量方法，可补充传统量表。",
+      "llm_tldr": "该论文利用自然语言处理技术，对Twitter上自报ADHD和ASD用户的推文进行分析，分类DSM-5抑郁症状。采用零样本NLI预过滤和MentalRoBERTa分类，发现两组表达抑郁症状的方式存在差异。该工作为抑郁情绪评估提供了一种新的数字行为测量方法，可补充传统量表。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "depression mood assessment",
+      "matched_requirement_id": "req-14",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.08007v1",
+      "source": "arxiv",
+      "title": "Unit-Independent Low-Rate Wrist GSR Processing for Stress Detection Using Phasic nSCR Features",
+      "abstract": "Galvanic skin response (GSR) is widely used for stress detection, but wrist-based GSR remains challenging because its absolute amplitude can differ substantially from laboratory-grade palmar measurements. In this paper, we propose a unit-independent low-rate wrist GSR processing pipeline to extract the number of skin conductance responses per minute (nSCR/min) as a stress-related feature. We collect paired wrist and palmar GSR recordings from 31 participants during sitting baseline, standing baseline, neutral speaking, and the Trier Social Stress Test (TSST), a laboratory social stressor task. The proposed pipeline cleans the raw GSR signal, decomposes it into tonic skin conductance level (SCL) and phasic skin conductance response (SCR), applies robust z-score normalization, and detects phasic SCR peaks to compute nSCR/min. Using random forest on 25Hz We-Be GSR, nSCR/min achieved balanced accuracies of 0.823 and 0.871 for binary classification between TSST and the sitting and standing baselines, respectively. Moreover, the 25Hz We-Be GSR features achieved comparable balanced accuracy to the original 100Hz features across the evaluated tasks. These results suggest the feasibility of low-rate, unit-independent wrist GSR processing for wearable stress detection.",
+      "authors": [
+        "Zequan Liang",
+        "Sally Hang",
+        "Geneva M. Jost",
+        "Ning Miao",
+        "Wei Shao",
+        "Mahdi Pirayesh Shirazi Nejad",
+        "Hossein Sayadi",
+        "Ehsan Kourkchi",
+        "Setareh Rafatirad",
+        "Camelia E. Hostinar",
+        "Houman Homayoun"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP",
+        "cs.LG"
+      ],
+      "published": "2026-07-09T00:24:04+00:00",
+      "link": "https://arxiv.org/pdf/2607.08007v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "wrist GSR processing for stress detection, enabling ambulatory assessment in clinical research",
+      "llm_evidence_cn": "腕部GSR处理用于压力检测，支持临床研究中的动态评估",
+      "llm_evidence": "腕部GSR处理用于压力检测，支持临床研究中的动态评估",
+      "canonical_evidence": "腕部GSR处理用于压力检测，支持临床研究中的动态评估",
+      "llm_tldr_en": "Proposes a unit-independent low-rate wrist GSR pipeline to extract nSCR/min for stress detection, validated on paired wrist-palmar data during TSST.",
+      "llm_tldr_cn": "该论文针对腕部皮肤电反应（GSR）在压力检测中因绝对幅度差异大而难以使用的问题，提出了一种与单位无关的低采样率腕部GSR处理流程，提取每分钟皮肤电反应次数（nSCR/min）作为压力特征。通过31名参与者在不同任务（包括TSST社会压力测试）下的配对腕部和手掌GSR记录，验证了该流程的有效性。该方法可应用于动态评估（ambulatory assessment），为临床研究中的压力监测提供了可穿戴解决方案。",
+      "llm_tldr": "该论文针对腕部皮肤电反应（GSR）在压力检测中因绝对幅度差异大而难以使用的问题，提出了一种与单位无关的低采样率腕部GSR处理流程，提取每分钟皮肤电反应次数（nSCR/min）作为压力特征。通过31名参与者在不同任务（包括TSST社会压力测试）下的配对腕部和手掌GSR记录，验证了该流程的有效性。该方法可应用于动态评估（ambulatory assessment），为临床研究中的压力监测提供了可穿戴解决方案。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.06912v1",
+      "source": "arxiv",
+      "title": "Causal Inference for Case Studies in Behavioral Health",
+      "abstract": "We present a framework for causal inference in behavioral health case studies -- and observational N=1 settings more generally -- under unmeasured confounding. The framework rests on a class of causal estimands, termed $Ω$ estimands, defined as contrasts of functions of an outcome variable's support rather than its distribution. Because such estimands do not depend on how probability is distributed over supports, they are insensitive to the confounding that limits other methods. We prove that, in a structural causal model, the observational and interventional supports of an outcome coincide under a single assumption -- positivity -- without any requirement that confounders be known, measured, or adjusted for. Two optional conditions extend the framework: one licensing a client's recalled baseline as a stand-in for sparsely measured baseline periods, and one connecting support contrasts to conventional mean contrasts through an expected-average identity. We adopt a subjectivist (de Finetti) interpretation of probability and situate the framework within mandates for measurement-based care. A case study of cognitive behavioral therapy for anxiety illustrates an elementary approach a provider can use.",
+      "authors": [
+        "Shane Sparkes"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-07-08T02:04:36+00:00",
+      "link": "https://arxiv.org/pdf/2607.06912v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "causal inference framework for N=1 behavioral health studies applicable to EMA",
+      "llm_evidence_cn": "适用于EMA的行为健康个案因果推断框架",
+      "llm_evidence": "适用于EMA的行为健康个案因果推断框架",
+      "canonical_evidence": "适用于EMA的行为健康个案因果推断框架",
+      "llm_tldr_en": "Proposes Omega estimands for causal inference in N=1 behavioral health studies under unmeasured confounding, directly applicable to EMA research.",
+      "llm_tldr_cn": "在行为健康个案研究中，未测量混杂因子常限制了因果推断。该文提出Omega估计量，基于结果支撑集而非分布进行对比，仅需正性假设即可识别因果效应。该框架无需测量或调整混杂因子，适用于生态瞬时评估等N-of-1研究场景。实验证明该方法能有效处理混杂偏差，为EMA数据因果分析提供了新工具。",
+      "llm_tldr": "在行为健康个案研究中，未测量混杂因子常限制了因果推断。该文提出Omega估计量，基于结果支撑集而非分布进行对比，仅需正性假设即可识别因果效应。该框架无需测量或调整混杂因子，适用于生态瞬时评估等N-of-1研究场景。实验证明该方法能有效处理混杂偏差，为EMA数据因果分析提供了新工具。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "Ecological Momentary Assessment mental health research",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

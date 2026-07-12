@@ -6,38 +6,33 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-11
-- 运行时间：2026-07-11 21:30:18 UTC
+- 最新运行日期：2026-07-12
+- 运行时间：2026-07-12 21:17:04 UTC
 - 运行状态：成功
-- 本次总论文数：6
-- 精读区：2
-- 速读区：4
+- 本次总论文数：4
+- 精读区：1
+- 速读区：3
 
 ### 今日简报（AI）
-今日共推荐6篇论文，精读2篇、速读4篇，聚焦抑郁症检测与睡眠健康。最值得关注的两个方向：通过优势加权排序提升抑郁检测精度，以及儿童睡眠呼吸障碍与注意力及脑电波形态的关联。建议普通读者重点了解睡眠对儿童注意力发育的影响，以及AI在抑郁筛查中的应用进展。
-- 详情：[/202607/11/README](/202607/11/README)
+今日分析了4篇心理健康研究，精读1篇发现ChatGPT对话中的10种抑郁症状关系模式（8.0分），速读中推特用户ADHD/ASD抑郁症状的NLP分析（7.0分）和因果推断案例研究（7.0分）同样值得关注。  
+建议关注AI对话数据辅助心理筛查的潜力，以及可穿戴设备（如腕部GSR）在压力检测中的实用价值。
+- 详情：[/202607/12/README](/202607/12/README)
 
 ### 精读区论文标签
-1. [Uncovering Latent Depression Severity for Binary Depression Detection via Advantage-weighting Ranking](/202607/11/2607.05901v1-uncovering-latent-depression-severity-for-binary-depression-detection-via-advantage-weighting-ranking)  
-   标签：评分：8.0/10、query:sleep-mental
-   evidence：基于音视频的自动抑郁检测
-2. [Sleep-Related Respiratory Disruption is Associated with Altered Spindle Morphology and Poorer Attention in Children](/202607/11/biorxiv-10-64898-2026-07-06-736760-v1-sleep-related-respiratory-disruption-is-associated-with-altered-spindle-morphology-and-poorer-attention-in-children)  
-   标签：评分：8.0/10、query:sleep-mental
-   evidence：睡眠呼吸紊乱与纺锤波形态关联睡眠质量
+1. [Depression Symptoms and Relational Patterns in 187k ChatGPT Histories](/202607/12/2607.05685v1-depression-symptoms-and-relational-patterns-in-187k-chatgpt-histories)  
+   标签：评分：8.0/10、query:ema-mental
+   evidence：从大规模ChatGPT对话中分析抑郁症状，类似于数字表型分析
 
 ### 速读区论文标签
-1. [Omni-Sleep: A Sleep Foundation Model via Hierarchical Contrastive Learning of CNS--ANS Dynamic](/202607/11/2607.07720v1-omni-sleep-a-sleep-foundation-model-via-hierarchical-contrastive-learning-of-cns--ans-dynamic)  
+1. [Population-Level Profiling of DSM-5 Depressive Symptoms Among Self-Reported ADHD and ASD Users on Twitter: An Exploratory Study Using Advanced NLP and Statistical Analysis](/202607/12/2607.05626v1-population-level-profiling-of-dsm-5-depressive-symptoms-among-self-reported-adhd-and-asd-users-on-twitter-an-exploratory-study-using-advanced-nlp-and-statistical-analysis)  
    标签：评分：7.0/10、query:sleep-mental
-   evidence：利用中枢/自主神经信号的睡眠基础模型，用于睡眠质量评估
-2. [Individual differences in post-encoding sleep continuity predict context memory accuracy and supporting ERPs in younger and older adults](/202607/11/biorxiv-10-64898-2026-07-06-736892-v1-individual-differences-in-post-encoding-sleep-continuity-predict-context-memory-accuracy-and-supporting-erps-in-younger-and-older-adults)  
-   标签：评分：7.0/10、query:sleep-mental
-   evidence：使用体动记录仪评估睡眠质量，属于临床研究中的动态评估方法
-3. [SleepBand: Single-Source Domain Generalization for Sleep Staging via Physiologically Structured Spectral Modeling](/202607/11/2607.04851v1-sleepband-single-source-domain-generalization-for-sleep-staging-via-physiologically-structured-spectral-modeling)  
+   evidence：通过社交媒体进行抑郁症状评估
+2. [Causal Inference for Case Studies in Behavioral Health](/202607/12/2607.06912v1-causal-inference-for-case-studies-in-behavioral-health)  
+   标签：评分：7.0/10、query:ema-mental
+   evidence：适用于EMA的行为健康个案因果推断框架
+3. [Unit-Independent Low-Rate Wrist GSR Processing for Stress Detection Using Phasic nSCR Features](/202607/12/2607.08007v1-unit-independent-low-rate-wrist-gsr-processing-for-stress-detection-using-phasic-nscr-features)  
    标签：评分：6.0/10、query:sleep-mental
-   evidence：睡眠分期模型用于睡眠质量评估
-4. [Inertia-1: An Open Exploration of Wearable Motion Foundation Models](/202607/11/2607.06617v1-inertia-1-an-open-exploration-of-wearable-motion-foundation-models)  
-   标签：评分：6.0/10、query:sleep-mental
-   evidence：可穿戴运动基础模型用于移动评估
+   evidence：腕部GSR处理用于压力检测，支持临床研究中的动态评估
 
 
 <div class="dpr-home-promo-card">

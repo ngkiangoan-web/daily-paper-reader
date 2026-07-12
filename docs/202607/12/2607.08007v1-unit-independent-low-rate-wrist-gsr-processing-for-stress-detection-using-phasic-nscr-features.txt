@@ -1,0 +1,224 @@
+Title: Unit-Independent Low-Rate Wrist GSR Processing for Stress Detection Using Phasic nSCR Features
+
+URL Source: https://arxiv.org/pdf/2607.08007v1
+
+Published Time: Fri, 10 Jul 2026 00:18:14 GMT
+
+Number of Pages: 4
+
+Markdown Content:
+# Unit-Independent Low-Rate Wrist GSR Processing for Stress Detection Using Phasic nSCR Features 
+
+Zequan Liang 1, Sally Hang 2, Geneva Jost 2, Ning Miao 3, Wei Shao 1, Mahdi Pirayesh Shirazi Nejad 3,Hossein Sayadi 4, Ehsan Kourkchi 3, Setareh Rafatirad 1, Camelia E. Hostinar 2, Houman Homayoun 3
+
+> 1
+
+Department of Computer Science, University of California, Davis, Davis, CA, U.S.A. 
+
+> 2
+
+Department of Psychology, University of California, Davis, Davis, CA, U.S.A. 
+
+> 3
+
+Department of Electrical and Computer Engineering, University of California, Davis, Davis, CA, U.S.A. 
+
+> 4
+
+Department of Computer Engineering and Computer Science, California State University, Long Beach, Long Beach, CA, U.S.A. Email: {zqliang, salhang, gmjost, nmiao, wayshao, pirayesh }@ucdavis.edu, hossein.sayadi@csulb.edu, {ekay, srafatirad, cehostinar, hhomayoun }@ucdavis.edu 
+
+Abstract —Galvanic skin response (GSR) is widely used for stress detection, but wrist-based GSR remains challenging be-cause its absolute amplitude can differ substantially from laboratory-grade palmar measurements. In this paper, we pro-pose a unit-independent low-rate wrist GSR processing pipeline to extract the number of skin conductance responses per minute (nSCR/min) as a stress-related feature. We collect paired wrist and palmar GSR recordings from 31 participants during sitting baseline, standing baseline, neutral speaking, and the Trier Social Stress Test (TSST), a laboratory social stressor task. The proposed pipeline cleans the raw GSR signal, decomposes it into tonic skin conductance level (SCL) and phasic skin conductance response (SCR), applies robust z-score normalization, and detects phasic SCR peaks to compute nSCR/min. Using random forest on 25Hz We-Be GSR, nSCR/min achieved balanced accuracies of 0.823 and 0.871 for binary classification between TSST and the sitting and standing baselines, respectively. Moreover, the 25Hz We-Be GSR features achieved comparable balanced accuracy to the original 100Hz features across the evaluated tasks. These results suggest the feasibility of low-rate, unit-independent wrist GSR processing for wearable stress detection. 
+
+Index Terms —Galvanic skin response (GSR); electrodermal activity (EDA); wearable health monitoring; signal processing; stress detection 
+
+I. I NTRODUCTION 
+
+Galvanic skin response (GSR), also known as electrodermal activity (EDA), is a widely used physiological signal that reflects sweat gland activation through changes in skin conduc-tance [1]. Because GSR has been shown to reflect sympathetic nervous system activity, it has been widely used for stress detection. Wrist-based wearable devices provide a practical and mobile platform for continuous GSR monitoring. How-ever, wrist-based GSR remains challenging because traditional laboratory physiological monitoring systems, such as Mind-Ware, usually measure skin conductance from the palm or fingers, where sweat gland density and sympathetic responses are generally stronger. Since sweat gland distribution and local skin properties differ across body regions, wrist-based GSR can show a substantially different absolute conductance range from palmar or finger-based GSR [2]. MindWare    
+
+> palm electrodes
+> We-Be
+> wrist device
+> cvxEDA
+> decomposition
+> cleaning
+> low-pass
+> filter
+> median
+> smoothing
+> GSR
+> SCL
+> SCR
+> robust
+> z-score
+> peak
+> detection
+> nSCR/min
+> peaks
+> Classifier stress / non-stress
+> classification
+
+Fig. 1. Overview of the GSR processing pipeline for stress detection 
+
+To address this wrist-palmar amplitude mismatch, this study proposes a unit-independent processing pipeline for wrist-based wearable GSR stress detection, as shown in Fig. 1. The pipeline cleans the raw wrist GSR signal, decomposes it into tonic skin conductance level (SCL) and phasic skin con-ductance response (SCR) components, applies robust z-score normalization, and detects phasic SCR peaks to extract the number of skin conductance responses per minute (nSCR/min) [3]. By combining normalization with phasic peak detection, the proposed pipeline shifts the analysis from conductance am-plitude to phasic response rate, thereby capturing stress-related responses even under wrist-palmar measurement mismatch. The contributions of this study are threefold: (1) We collect paired wrist and palmar GSR recordings from 31 adults across stress-related tasks to construct a dataset. (2) We propose a unit-independent wrist GSR processing pipeline to extract phasic nSCR features for stress detection, reducing the impact of wrist-palmar amplitude mismatch. (3) We show that 25Hz wrist GSR preserves segment-level stress detection perfor-mance compared with the original 100Hz data. These results support low-rate, unit-independent wrist GSR processing for wearable stress detection. arXiv:2607.08007v1 [eess.SP] 9 Jul 2026 MindWare    
+
+> palm electrodes
+> We-Be
+> wrist device
+> Sitting
+> 3min
+> Standing
+> 3min
+> Neutral
+> 5min
+> TSST
+> 10min
+> Timeline
+> (Order counterbalanced) Fig. 2. Timeline of the GSR data collection protocol
+
+II. D ATASET OVERVIEW 
+
+We collected GSR recordings from 31 adult participants. During each recording session, the We-Be wrist-worn device [4] was placed on the participant’s nondominant wrist using two electrodes on the inner side of the wristband. Meanwhile, the MindWare electrodes [3] were attached to the nondominant palm on the same side. This setup allowed simultaneous GSR acquisition from the wrist and palm of the same hand. As shown in Fig. 2, each participant completed four task segments: a 3-minute sitting baseline, a 3-minute standing baseline, a neutral speaking task, and the Trier Social Stress Test (TSST). The last two speaking tasks were counterbal-anced across participants to reduce carryover effects. During the 5-minute neutral speaking task, participants spoke to a video camera with no judges present about neutral topics, such as describing the room or explaining how to make a sandwich. The TSST was a 10-minute social stressor task [5], in which participants performed a 5-minute job-candidacy speech followed by a 5-minute mental arithmetic task in front of two confederate judges. After the completion of data collection, timestamps from the two devices were aligned, and the continuous GSR recordings were converted to the same skin conductance units (μ S) and divided into task-specific segments for further analysis. III. D ATA PREPROCESSING AND STRESS DETECTION 
+
+As shown in the overview in Fig. 1, after raw GSR data acquisition, the signals were processed through a GSR pro-cessing pipeline for stress detection. First, the raw GSR signal was cleaned using a 2Hz low-pass filter, followed by rolling median smoothing with a 1-second window to reduce high-frequency noise and small local fluctuations. The cleaned GSR signal was decomposed using the Neu-roKit2 implementation of cvxEDA, a convex-optimization-based method that models skin conductance as the sum of tonic, phasic, and residual components [6]. The tonic compo-nent SCL captures slowly varying baseline activity, while the phasic component SCR captures rapid responses associated with discrete sympathetic arousal events [7]. This separation allows us to focus on phasic SCR activity for stress detection while reducing dependence on absolute GSR amplitude. Although the GSR, SCL, and SCR signals are measured in the same unit of skin conductance (μ S), their absolute amplitudes can differ substantially between palmar and wrist recordings due to the different measurement sites. This ampli-tude mismatch is particularly problematic for SCR peak detec-tion, because conventional SCR detection often relies on fixed amplitude criteria, such as a minimum response amplitude of 0.05μ S. A threshold that is appropriate for palmar recordings may be too strict or too sensitive for wrist recordings. To reduce the effect of amplitude differences, we applied robust z-score normalization before SCR peak detection, as shown in Eq. 1. 
+
+zi = xi − median( x)1.4826 × median( |xi − median( x)|) (1) where xi represents the ith sample of the signal series x,and zi represents the corresponding robust z-score normalized value. After robust z-score normalization, SCR peaks were de-tected from the normalized phasic SCR signal. To reduce false detections caused by small local fluctuations, we applied a peak-detection criterion based on a minimum peak prominence of 0.2, a minimum peak width of 1 second, and a minimum distance of 1 second between adjacent peaks. The number of detected SCR peaks (nSCR) was then normalized by the duration of each task segment to obtain the number of SCRs per minute (nSCR/min). For segment-level stress detection, we evaluated logistic regression, random forest, and a threshold-based classifier using nSCR/min as the input feature. Each model was used for binary classification between the TSST segment and non-stress segments. IV. E XPERIMENT RESULTS 
+
+A. Feature Statistics 
+
+To evaluate low-rate wrist-based GSR processing, the origi-nal 100Hz We-Be GSR recordings were downsampled to 25Hz using anti-aliasing filtering, while the MindWare recordings were kept at their original 500Hz sampling rate. Table I shows that raw GSR and SCL had substantially different absolute ranges between We-Be and MindWare, confirming the measurement-site mismatch between wrist and palmar GSR. In contrast, nSCR/min showed a more com-parable numerical range and a consistent increasing trend from baseline tasks to TSST in both devices. nSCR/min also achieved higher Pearson correlation coefficient (PCC) than raw GSR and SCL in most tasks, especially during neutral speaking and TSST. Fig. 3 shows a representative case from one participant’s task segment. The raw GSR and SCL signals also showed different absolute amplitude ranges between the two devices. After robust z-score normalization, both devices showed de-tectable phasic SCR peaks under the same normalized peak-detection criterion rather than a specific unit-based amplitude threshold. 
+
+B. Stress Detection 
+
+Before conducting stress detection, we first evaluated whether nSCR/min showed task-level separation between the TSST and the non-stress conditions. Paired comparisons were performed between the TSST and each non-stress task, includ-ing sitting baseline, standing baseline, and neutral speaking. TABLE I GSR F EATURE STATISTICS AND CORRELATIONS 
+
+Task Feature We-Be Mean MindWare Mean PCC 
+
+Sitting GSR (μ S) 0.031 4.868 0.012 SCL (μ S) 0.030 4.667 0.028 nSCR/min 3.557 5.482 0.193 
+
+Standing GSR (μ S) 0.033 6.096 -0.006 SCL (μ S) 0.032 5.704 0.027 
+
+nSCR/min 3.735 5.695 -0.048 Neutral GSR (μ S) 0.141 9.982 0.145 SCL (μ S) 0.137 9.458 0.148 nSCR/min 4.239 7.465 0.407 
+
+TSST GSR (μ S) 0.244 13.512 -0.439 SCL (μ S) 0.227 12.578 -0.396 nSCR/min 5.290 8.993 0.402 
+
+TABLE II PAIRED COMPARISON OF N SCR/ MIN BETWEEN TSST AND OTHER TASKS 
+
+Task (TSST vs.) Device Mean Diff. Wilcoxon p Cohen dz
+
+Sitting We-Be 1.733 4.14 × 10 −4 0.779 MindWare 3.512 9.31 × 10 −10 1.659 Standing We-Be 1.555 3.86 × 10 −3 0.629 MindWare 3.299 8.20 × 10 −8 1.299 Neutral We-Be 1.033 5.99 × 10 −2 0.429 MindWare 1.486 1.04 × 10 −3 0.712 All Non-stress We-Be 1.468 1.59 × 10 −3 0.667 MindWare 2.756 1.77 × 10 −8 1.334 
+
+We also grouped all non-stress tasks together as a combined condition and compared it against the TSST. Table II reports the paired statistical analysis of nSCR/min between the TSST and other tasks across subjects. The mean difference (Mean Diff.) was computed as the average paired difference between the TSST and the reference task across subjects. The Wilcoxon signed-rank test [8] was used to evaluate whether the paired differences between the TSST and each reference task were consistently nonzero across subjects, while Cohen’s dz [9] was used to quantify the magnitude of 0 50 100 150 200 250 300                               
+
+> Time (s)
+> 0.6
+> 0.7
+> 0.8
+> GSR
+> P001 Neutral WeBe GSR
+> WeBe GSR
+> 050 100 150 200 250 300
+> Time (s)
+> 7
+> 8
+> 9
+> GSR
+> P001 Neutral MindWare GSR
+> MindWare GSR
+> 050 100 150 200 250 300
+> Time (s)
+> 0.6
+> 0.7
+> SCL
+> P001 Neutral WeBe SCL
+> WeBe SCL
+> 050 100 150 200 250 300
+> Time (s)
+> 6.5
+> 7.0
+> 7.5
+> 8.0
+> 8.5
+> SCL
+> P001 Neutral MindWare SCL
+> MindWare SCL
+> 050 100 150 200 250 300
+> Time (s)
+> 0
+> 10
+> 20
+> 30
+> SCR
+> P001 Neutral WeBe z-scored SCR
+> WeBe z-scored SCR
+> WeBe z-scored SCR Peaks
+> 050 100 150 200 250 300
+> Time (s)
+> 0
+> 5
+> 10
+> SCR
+> P001 Neutral MindWare z-scored SCR
+> MindWare z-scored SCR
+> MindWare z-scored SCR Peaks
+
+Fig. 3. Representative GSR, SCL, and normalized SCR signals with detected SCR peaks 
+
+these within-subject differences. Overall, MindWare showed larger mean differences than We-Be, indicating stronger task separation from the palmar reference device than from the wrist-based device. However, the We-Be wrist device still showed statistically significant discrimination between TSST and sitting baseline, standing baseline, and the combined non-stress tasks, with Wilcoxon 
+
+p < 0.05 and Cohen’s dz > 0.5 in these comparisons. The weakest separation was observed for TSST versus neutral speaking, suggesting that the neutral speaking task may also elicit stress-related responses and is therefore more difficult to distinguish from the TSST. For segment-level stress detection, we followed the same task settings as the paired statistical analysis and performed binary classification between the TSST task and each non-stress condition. We also included a combined setting in which all non-stress segments were grouped as the negative class. To avoid data leakage, all classification settings were evaluated using leave-one-subject-out (LOSO) cross-validation. Logistic regression, random forest, and a threshold-based classifier were evaluated using nSCR/min as the input feature. Logistic regression used within-fold feature standardization and class-balanced training, random forest was trained by 300 class-balanced trees, and the threshold was selected from train-ing subjects by maximizing balanced accuracy. Performance was reported using balanced accuracy, AUC, and F1-score. Balanced accuracy was used as the primary metric to reduce the influence of class imbalance. AUC was not reported for the threshold-based classifier because it produced a fixed binary decision rather than a probabilistic output. Tables III and IV show the stress detection results using We-Be and MindWare nSCR/min, respectively. For We-Be, ran-dom forest achieved the highest balanced accuracy for TSST versus sitting and standing, reaching 0.823 and 0.871, respec-tively. MindWare generally achieved higher performance than We-Be, consistent with stronger palmar electrodermal activity. Nevertheless, We-Be nSCR/min still provided discriminative information for detecting TSST-related stress. Across both devices, TSST was more distinguishable from sitting and standing baselines than from neutral speaking, which was the more challenging non-stress condition. 
+
+C. Sampling Rate 
+
+We compared the stress detection performance on balanced accuracy between the original 100Hz GSR data and the downsampled 25Hz data from We-Be device, as shown in Table V. The 25Hz We-Be GSR features achieved comparable or better performance than the 100Hz features across all tasks, suggesting that the lower sampling rate preserves sufficient information for segment-level stress detection. Additionally, in our We-Be device, the GSR sensor is configured to use the same sampling rate as the PPG sensor. Since lower sampling rates can reduce sensing demands in wearable PPG systems [10], these results suggest that a 25Hz configuration can preserve stress detection performance while supporting a lower-power wearable sensing design. TABLE III STRESS DETECTION PERFORMANCE USING WE-B E NSCR/ MIN ACROSS 
+
+DIFFERENT MODELS 
+
+Task (TSST vs.) Model Balanced Accuracy AUC F1 
+
+Sitting Logistic Regression 0.758 0.688 0.706 Random Forest 0.823 0.824 0.825 
+
+Threshold 0.710 – 0.654 Standing Logistic Regression 0.726 0.670 0.679 Random Forest 0.871 0.893 0.862 
+
+Threshold 0.742 – 0.680 Neutral Logistic Regression 0.661 0.603 0.632 
+
+Random Forest 0.597 0.652 0.615 Threshold 0.661 – 0.618 All Non-stress Logistic Regression 0.715 0.655 0.571 Random Forest 0.710 0.774 0.556 Threshold 0.715 – 0.576 
+
+TABLE IV STRESS DETECTION PERFORMANCE USING MIND WARE NSCR/ MIN 
+
+ACROSS DIFFERENT MODELS 
+
+Task (TSST vs.) Model Balanced Accuracy AUC F1 
+
+Sitting Logistic Regression 0.855 0.900 0.852 Random Forest 0.758 0.825 0.762 Threshold 0.855 – 0.866 
+
+Standing Logistic Regression 0.839 0.889 0.839 
+
+Random Forest 0.742 0.780 0.733 Threshold 0.790 – 0.800 Neutral Logistic Regression 0.613 0.718 0.613 Random Forest 0.532 0.543 0.525 Threshold 0.694 – 0.732 
+
+All Non-stress Logistic Regression 0.801 0.838 0.658 
+
+Random Forest 0.629 0.698 0.451 Threshold 0.801 – 0.658 
+
+V. D ISCUSSION 
+
+The results show that the number of SCR peaks captures stress-related phasic responses and enables the We-Be wrist device to detect stress patterns from low-rate GSR signals. Despite the amplitude differences between wrist-based and palmar GSR measurements, they showed consistent task-level trends in nSCR features, with the strongest discrimination observed between the TSST task and the sitting and standing tasks. Low-rate GSR sensing can also reduce power consump-tion, thereby benefiting battery life and supporting long-term continuous monitoring. Although the We-Be device achieved promising perfor-mance for segment-level stress detection, its performance was generally lower than that of the laboratory-grade MindWare system. This suggests that there is still room to improve stress detection accuracy on the We-Be device through better signal quality, preprocessing, and feature extraction in the future. VI. C ONCLUSION AND FUTURE WORK 
+
+This study addressed the challenge of wrist-based wearable stress detection, where absolute GSR and SCL amplitudes are sensitive to wrist-palmar measurement differences. To reduce this effect, we presented a unit-independent low-rate wrist GSR processing pipeline that combines robust normalization 
+
+TABLE V 
+
+BALANCED ACCURACY COMPARISON BETWEEN 25H Z AND 100H Z
+
+WE-B E NSCR/ MIN FOR STRESS DETECTION 
+
+Task (TSST vs.) Model 25Hz 100Hz 
+
+Sitting Logistic Regression 0.758 0.726 Random Forest 0.823 0.645 Threshold 0.710 0.742 Standing Logistic Regression 0.726 0.661 Random Forest 0.871 0.823 Threshold 0.742 0.758 Neutral Logistic Regression 0.661 0.645 Random Forest 0.597 0.548 Threshold 0.661 0.565 All Non-stress Logistic Regression 0.715 0.683 Random Forest 0.710 0.575 Threshold 0.715 0.710 
+
+and phasic peak detection to extract nSCR/min as a response-rate feature rather than relying on absolute amplitude. Exper-imental results showed that low-rate We-Be GSR preserved discriminative information for binary classification between TSST-related stress and non-stress conditions. In future work, we will focus on improving We-Be signal quality, feature extraction, and motion-based noise removal using We-Be motion signals, to narrow the performance gap between wrist-based We-Be sensing and palmar laboratory-grade MindWare measurements. REFERENCES [1] J. Bakker, M. Pechenizkiy, and N. Sidorova, “What’s your current stress level? detection of stress patterns from gsr sensor data,” in 2011 IEEE 11th international conference on data mining workshops , pp. 573–580, IEEE, 2011. [2] M. van Dooren, J. H. Janssen, et al. , “Emotional sweating across the body: Comparing 16 different skin conductance measurement locations,” 
+
+Physiology & behavior , vol. 106, no. 2, pp. 298–304, 2012. [3] X. Hu, T. R. Sgherza, J. B. Nothrup, D. M. Fresco, K. Naragon-Gainey, and L. M. Bylsma, “From lab to life: Evaluating the reliability and validity of psychophysiological data from wearable devices in laboratory and ambulatory settings,” Behavior Research Methods , vol. 56, no. 7, pp. 1–20, 2024. [4] Z. Liang, R. Zhang, W. Shao, E. Kourkchi, S. Rafatirad, H. Homayoun, 
+
+et al. , “Rapid adaptation of spo2 estimation to wearable devices via transfer learning on low-sampling-rate ppg,” in IEEE-EMBS Interna-tional Conference on Body Sensor Networks 2025 .[5] M. A. Birkett, “The trier social stress test protocol for inducing psycho-logical stress,” Journal of visualized experiments: JoVE , no. 56, p. 3238, 2011. [6] A. Greco, G. Valenza, A. Lanata, E. P. Scilingo, and L. Citi, “cvxeda: A convex optimization approach to electrodermal activity processing,” 
+
+IEEE transactions on biomedical engineering , vol. 63, no. 4, pp. 797– 804, 2015. [7] J. J. Braithwaite, D. G. Watson, R. Jones, and M. Rowe, “A guide for analysing electrodermal activity (eda) & skin conductance responses (scrs) for psychological experiments,” Psychophysiology , vol. 49, no. 1, pp. 1017–1034, 2013. [8] F. Wilcoxon, “Individual comparisons by ranking methods,” Biometrics bulletin , vol. 1, no. 6, pp. 80–83, 1945. [9] J. Cohen, “Statistical power analysis for the behavioral sciences new york,” NY: Academic , vol. 54, pp. 77–155, 1988. [10] W. Shao, Z. Liang, R. Zhang, R. Fang, N. Miao, E. Kourkchi, S. Rafati-rad, H. Homayoun, and C. Fang, “Know me by my pulse: Toward practi-cal continuous authentication on wearable devices via wrist-worn PPG,” in 33rd Annual Network and Distributed System Security Symposium, NDSS 2026, San Diego, California, USA, February 23-27, 2026 , The Internet Society, 2026.

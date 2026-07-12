@@ -1,0 +1,69 @@
+{
+  "label": "2026-07-12",
+  "date": "2026-07-12",
+  "generated_at": "2026-07-12T21:17:14",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202607/12/2607.05685v1-depression-symptoms-and-relational-patterns-in-187k-chatgpt-histories",
+      "section": "deep",
+      "title_en": "Depression Symptoms and Relational Patterns in 187k ChatGPT Histories",
+      "authors": "Neil K. R. Sehgal, Dunigan Folk, Lyle Ungar, Sharath Chandra Guntuku",
+      "date": "2026-07-06",
+      "pdf": "https://arxiv.org/pdf/2607.05685v1",
+      "score": "8.0",
+      "evidence": "从大规模ChatGPT对话中分析抑郁症状，类似于数字表型分析",
+      "tldr": "抑郁症患者的ChatGPT使用模式与常人不同。研究分析了187k条对话，发现高抑郁症状者更频繁在深夜进行心理健康、自我关注等话题的交流，语言中使用更多第一人称和绝对化词语，但模型预测能力有限（AUROC 0.591）。这表明ChatGPT正成为非正式心理支持基础设施，而非临床筛查工具。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Large language models are increasingly used as private, always-available conversational systems, but little is known about how people with depressive symptoms use them. Building on CSCW work on disclosure and peer support, we examine ChatGPT as an emerging informal support infrastructure: private, persistent, responsive, and available outside ordinary hours. We analyze 187,093 ChatGPT conversations from 766 participants who completed the PHQ-8, comparing those below the moderate-symptom threshold (score of 10) with those at or above it. Higher-PHQ participants used ChatGPT more for mental-health, interpersonal, loneliness, self-focused, and support-seeking conversations, with pronounced late-night and recurring month-level patterns. Their language contained more first-person singular pronouns and absolutist terms. They more often engaged ChatGPT in high-disclosure contexts, but professional redirection was not higher. Language-based prediction was modest and insufficient for screening (AUROC 0.591). We argue these histories should not be treated as clinical screening data but as evidence LLMs are increasingly used as informal support infrastructure.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/12/2607.05626v1-population-level-profiling-of-dsm-5-depressive-symptoms-among-self-reported-adhd-and-asd-users-on-twitter-an-exploratory-study-using-advanced-nlp-and-statistical-analysis",
+      "section": "quick",
+      "title_en": "Population-Level Profiling of DSM-5 Depressive Symptoms Among Self-Reported ADHD and ASD Users on Twitter: An Exploratory Study Using Advanced NLP and Statistical Analysis",
+      "authors": "Muhammad Rizwan, David Nabergoj, Jure Demšar",
+      "date": "2026-07-06",
+      "pdf": "https://arxiv.org/pdf/2607.05626v1",
+      "score": "7.0",
+      "evidence": "通过社交媒体进行抑郁症状评估",
+      "tldr": "抑郁症状在ADHD和ASD群体中常见，但社交媒体上的表达差异未知。本研究分析Twitter用户推文，使用零样本NLI预过滤和MentalRoBERTa分类DSM-5症状，通过L1逻辑回归区分两组用户。结果显示分类AUC约0.65，认知问题、疲劳等偏向ADHD，自杀意念、快感缺失偏向ASD，但症状共现结构高度相似。研究揭示群体层面语言差异可重复，但不支持临床表型差异。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "Background: Depression frequently co-occurs with ADHD and autism spectrum disorder (ASD), but population-level differences in symptom expression between these groups remain underexplored. Objective: We examined whether social media users with ADHD and ASD differ in how they express DSM-5 depressive symptoms in their tweets, and whether differences persist across varying levels of depressive-content filtering. Methods: We analysed 1,282,437 tweets from 792 users (622 ADHD; 170 ASD) with self-reported diagnoses on Twitter. Tweets were pre-filtered for depressive relevance using zero-shot NLI, then classified into nine DSM-5 symptoms using MentalRoBERTa fine-tuned on ReDSM5. Profiles were mean-centered per user. We applied L1-penalised logistic regression with cross-validation to distinguish ADHD from ASD users, complemented by Pearson correlations for symptom co-occurrence, and tested robustness across five filtering thresholds using bootstrapping. Results: MentalRoBERTa achieved macro-F1 of 0.901 on a held-out set, outperforming the original ReDSM5 benchmark. ADHD vs ASD classification yielded stable but modest performance (cross-validated ROC-AUC 0.645-0.653). Cognitive issues, sleep issues, appetite change, and fatigue leaned toward ADHD, while suicidal ideation and anhedonia leaned toward ASD. A largely shared symptom co-occurrence structure emerged between groups; no pair met our criterion for a robust disorder-specific difference. Conclusions: Population-level differences in depression-related language between ADHD and ASD social media users were consistently observed across thresholds, reflecting reproducibility rather than clinical validity. Findings are exploratory and do not establish differing phenomenology at the individual level.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/12/2607.06912v1-causal-inference-for-case-studies-in-behavioral-health",
+      "section": "quick",
+      "title_en": "Causal Inference for Case Studies in Behavioral Health",
+      "authors": "Shane Sparkes",
+      "date": "2026-07-08",
+      "pdf": "https://arxiv.org/pdf/2607.06912v1",
+      "score": "7.0",
+      "evidence": "适用于EMA的行为健康个案因果推断框架",
+      "tldr": "行为健康案例研究面临未测量混杂的挑战，限制传统因果推断。本文提出Ω估计量，基于结果变量支持函数的对比而非分布，避免混杂影响。证明在正性假设下，观察性数据可识别因果效应，无需调整混杂。结合主观概率和临床实践，为N=1研究提供可行框架，案例展示其应用。",
+      "tags": "query:ema-mental",
+      "abstract_en": "We present a framework for causal inference in behavioral health case studies -- and observational N=1 settings more generally -- under unmeasured confounding. The framework rests on a class of causal estimands, termed $Ω$ estimands, defined as contrasts of functions of an outcome variable's support rather than its distribution. Because such estimands do not depend on how probability is distributed over supports, they are insensitive to the confounding that limits other methods. We prove that, in a structural causal model, the observational and interventional supports of an outcome coincide under a single assumption -- positivity -- without any requirement that confounders be known, measured, or adjusted for. Two optional conditions extend the framework: one licensing a client's recalled baseline as a stand-in for sparsely measured baseline periods, and one connecting support contrasts to conventional mean contrasts through an expected-average identity. We adopt a subjectivist (de Finetti) interpretation of probability and situate the framework within mandates for measurement-based care. A case study of cognitive behavioral therapy for anxiety illustrates an elementary approach a provider can use.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/12/2607.08007v1-unit-independent-low-rate-wrist-gsr-processing-for-stress-detection-using-phasic-nscr-features",
+      "section": "quick",
+      "title_en": "Unit-Independent Low-Rate Wrist GSR Processing for Stress Detection Using Phasic nSCR Features",
+      "authors": "Zequan Liang, Sally Hang, Geneva M. Jost, Ning Miao, Wei Shao, Mahdi Pirayesh Shirazi Nejad, Hossein Sayadi, Ehsan Kourkchi, Setareh Rafatirad, Camelia E. Hostinar, Houman Homayoun",
+      "date": "2026-07-09",
+      "pdf": "https://arxiv.org/pdf/2607.08007v1",
+      "score": "6.0",
+      "evidence": "腕部GSR处理用于压力检测，支持临床研究中的动态评估",
+      "tldr": "腕部GSR信号因个体差异和测量位置不同，绝对幅度难以标准化，影响压力检测性能。本文提出单位无关的低速率处理管道，对原始信号进行清洗、分解为SCL和SCR，经鲁棒z-score归一化后检测SCR峰值计算nSCR/min。基于31名受试者的配对腕部和手掌数据，使用随机森林在25Hz采样率下对TSST与坐/站基线进行分类，平衡准确率达0.823和0.871，且与原始100Hz特征性能相当。该管道无需绝对单位，适用于低功耗可穿戴设备，为实际压力监测提供有效方案。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "Galvanic skin response (GSR) is widely used for stress detection, but wrist-based GSR remains challenging because its absolute amplitude can differ substantially from laboratory-grade palmar measurements. In this paper, we propose a unit-independent low-rate wrist GSR processing pipeline to extract the number of skin conductance responses per minute (nSCR/min) as a stress-related feature. We collect paired wrist and palmar GSR recordings from 31 participants during sitting baseline, standing baseline, neutral speaking, and the Trier Social Stress Test (TSST), a laboratory social stressor task. The proposed pipeline cleans the raw GSR signal, decomposes it into tonic skin conductance level (SCL) and phasic skin conductance response (SCR), applies robust z-score normalization, and detects phasic SCR peaks to compute nSCR/min. Using random forest on 25Hz We-Be GSR, nSCR/min achieved balanced accuracies of 0.823 and 0.871 for binary classification between TSST and the sitting and standing baselines, respectively. Moreover, the 25Hz We-Be GSR features achieved comparable balanced accuracy to the original 100Hz features across the evaluated tasks. These results suggest the feasibility of low-rate, unit-independent wrist GSR processing for wearable stress detection.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
