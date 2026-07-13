@@ -1,0 +1,56 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-13T20:30:41.324250+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 0,
+    "deep_cap": 7,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 12,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.06954v1",
+      "source": "arxiv",
+      "title": "Physical activities enable scalable foundation modelling for broad-spectrum health prediction",
+      "abstract": "Wearable and mobile sensing technologies have demonstrated strong potential for health inference; however, most sensor models are designed for specific disease types, limiting their transferability across different health risks. Wearable foundation models offer a more generalizable approach in diverse health risk types. Nevertheless, most existing methods rely on high-frequency raw sensor data, raising concerns about privacy, computational overhead, and scalability across devices and populations. In this paper, we propose StepFM, a foundation model built solely on step counter data for broad-spectrum health prediction. Leveraging the ubiquity and low-dimensional nature of step data, StepFM provides a practical, privacy-preserving, and computation-efficient alternative to traditional sensor-based models. We design a scalable pre-training framework that captures temporal dynamics and behavioral patterns from large-scale step sequences, enabling transfer across more than 20 health risk prediction tasks spanning diverse devices, new regions, and novel disease types. Extensive experiments demonstrate that StepFM achieves strong performance compared to existing methods while maintaining robustness across heterogeneous settings. Furthermore, our analysis reveals interpretable and generalizable relationships between physical activity patterns and various health risks, offering new insights into activity-based health modeling. Our work establishes step-based sensing as a viable foundation for scalable and real-world health monitoring.",
+      "authors": [
+        "Zhenghuang Wu",
+        "Yuyao Zhu",
+        "Songlin Xu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-08T03:28:11+00:00",
+      "link": "https://arxiv.org/pdf/2607.06954v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "step-count foundation model for broad-spectrum health prediction using wearable data",
+      "llm_evidence_cn": "基于步数数据的基础模型用于广谱健康预测，属于动态评估方法",
+      "llm_evidence": "基于步数数据的基础模型用于广谱健康预测，属于动态评估方法",
+      "canonical_evidence": "基于步数数据的基础模型用于广谱健康预测，属于动态评估方法",
+      "llm_tldr_en": "Proposes StepFM, a foundation model built solely on step counter data for scalable, privacy-preserving health prediction across multiple conditions, demonstrating ambulatory assessment potential.",
+      "llm_tldr_cn": "针对现有可穿戴健康模型依赖高频传感器数据带来的隐私和计算开销问题，提出了仅基于步数数据的广谱健康预测基础模型StepFM。该模型利用步数的普遍性和低维性质，在多种健康风险预测上表现出色，为大规模生态动态评估提供了一种实用且保护隐私的替代方案。",
+      "llm_tldr": "针对现有可穿戴健康模型依赖高频传感器数据带来的隐私和计算开销问题，提出了仅基于步数数据的广谱健康预测基础模型StepFM。该模型利用步数的普遍性和低维性质，在多种健康风险预测上表现出色，为大规模生态动态评估提供了一种实用且保护隐私的替代方案。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -6,33 +6,24 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-12
-- 运行时间：2026-07-12 21:17:04 UTC
+- 最新运行日期：2026-07-13
+- 运行时间：2026-07-13 20:31:37 UTC
 - 运行状态：成功
-- 本次总论文数：4
-- 精读区：1
-- 速读区：3
+- 本次总论文数：1
+- 精读区：0
+- 速读区：1
 
 ### 今日简报（AI）
-今日分析了4篇心理健康研究，精读1篇发现ChatGPT对话中的10种抑郁症状关系模式（8.0分），速读中推特用户ADHD/ASD抑郁症状的NLP分析（7.0分）和因果推断案例研究（7.0分）同样值得关注。  
-建议关注AI对话数据辅助心理筛查的潜力，以及可穿戴设备（如腕部GSR）在压力检测中的实用价值。
-- 详情：[/202607/12/README](/202607/12/README)
+今日仅速读1篇论文，聚焦身体活动数据驱动的健康预测基础模型。该研究利用身体活动数据构建可扩展基础模型，实现广谱健康指标预测。建议关注其应用于个人健康管理的潜力。
+- 详情：[/202607/13/README](/202607/13/README)
 
 ### 精读区论文标签
-1. [Depression Symptoms and Relational Patterns in 187k ChatGPT Histories](/202607/12/2607.05685v1-depression-symptoms-and-relational-patterns-in-187k-chatgpt-histories)  
-   标签：评分：8.0/10、query:ema-mental
-   evidence：从大规模ChatGPT对话中分析抑郁症状，类似于数字表型分析
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Population-Level Profiling of DSM-5 Depressive Symptoms Among Self-Reported ADHD and ASD Users on Twitter: An Exploratory Study Using Advanced NLP and Statistical Analysis](/202607/12/2607.05626v1-population-level-profiling-of-dsm-5-depressive-symptoms-among-self-reported-adhd-and-asd-users-on-twitter-an-exploratory-study-using-advanced-nlp-and-statistical-analysis)  
-   标签：评分：7.0/10、query:sleep-mental
-   evidence：通过社交媒体进行抑郁症状评估
-2. [Causal Inference for Case Studies in Behavioral Health](/202607/12/2607.06912v1-causal-inference-for-case-studies-in-behavioral-health)  
-   标签：评分：7.0/10、query:ema-mental
-   evidence：适用于EMA的行为健康个案因果推断框架
-3. [Unit-Independent Low-Rate Wrist GSR Processing for Stress Detection Using Phasic nSCR Features](/202607/12/2607.08007v1-unit-independent-low-rate-wrist-gsr-processing-for-stress-detection-using-phasic-nscr-features)  
+1. [Physical activities enable scalable foundation modelling for broad-spectrum health prediction](/202607/13/2607.06954v1-physical-activities-enable-scalable-foundation-modelling-for-broad-spectrum-health-prediction)  
    标签：评分：6.0/10、query:sleep-mental
-   evidence：腕部GSR处理用于压力检测，支持临床研究中的动态评估
+   evidence：基于步数数据的基础模型用于广谱健康预测，属于动态评估方法
 
 
 <div class="dpr-home-promo-card">

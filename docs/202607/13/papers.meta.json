@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-13",
+  "date": "2026-07-13",
+  "generated_at": "2026-07-13T20:31:44",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/13/2607.06954v1-physical-activities-enable-scalable-foundation-modelling-for-broad-spectrum-health-prediction",
+      "section": "quick",
+      "title_en": "Physical activities enable scalable foundation modelling for broad-spectrum health prediction",
+      "authors": "Zhenghuang Wu, Yuyao Zhu, Songlin Xu",
+      "date": "2026-07-08",
+      "pdf": "https://arxiv.org/pdf/2607.06954v1",
+      "score": "6.0",
+      "evidence": "基于步数数据的基础模型用于广谱健康预测，属于动态评估方法",
+      "tldr": "针对现有可穿戴模型依赖高频原始数据导致隐私和计算开销大、泛化性差的问题，提出仅基于步数数据的Foundation模型StepFM。通过可扩展预训练框架捕捉时间动态和行为模式，在20余种健康风险预测任务上实现跨设备、区域和疾病的优异性能。该方法兼具隐私保护、计算高效和可解释性，为大规模现实健康监控奠定基础。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "Wearable and mobile sensing technologies have demonstrated strong potential for health inference; however, most sensor models are designed for specific disease types, limiting their transferability across different health risks. Wearable foundation models offer a more generalizable approach in diverse health risk types. Nevertheless, most existing methods rely on high-frequency raw sensor data, raising concerns about privacy, computational overhead, and scalability across devices and populations. In this paper, we propose StepFM, a foundation model built solely on step counter data for broad-spectrum health prediction. Leveraging the ubiquity and low-dimensional nature of step data, StepFM provides a practical, privacy-preserving, and computation-efficient alternative to traditional sensor-based models. We design a scalable pre-training framework that captures temporal dynamics and behavioral patterns from large-scale step sequences, enabling transfer across more than 20 health risk prediction tasks spanning diverse devices, new regions, and novel disease types. Extensive experiments demonstrate that StepFM achieves strong performance compared to existing methods while maintaining robustness across heterogeneous settings. Furthermore, our analysis reveals interpretable and generalizable relationships between physical activity patterns and various health risks, offering new insights into activity-based health modeling. Our work establishes step-based sensing as a viable foundation for scalable and real-world health monitoring.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

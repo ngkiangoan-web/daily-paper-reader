@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-13 <!--dpr-date:20260713-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/13/2607.06954v1-physical-activities-enable-scalable-foundation-modelling-for-broad-spectrum-health-prediction" data-sidebar-item="{&quot;title&quot;: &quot;Physical activities enable scalable foundation modelling for broad-spectrum health prediction&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.06954v1-physical-activities-enable-scalable-foundation-modelling-for-broad-spectrum-health-prediction&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;sleep-mental&quot;}], &quot;evidence&quot;: &quot;基于步数数据的基础模型用于广谱健康预测，属于动态评估方法&quot;}">Physical activities enable scalable foundation modelling for broad-spectrum health prediction</a>
   * 2026-07-12 <!--dpr-date:20260712-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/12/2607.05685v1-depression-symptoms-and-relational-patterns-in-187k-chatgpt-histories" data-sidebar-item="{&quot;title&quot;: &quot;Depression Symptoms and Relational Patterns in 187k ChatGPT Histories&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.05685v1-depression-symptoms-and-relational-patterns-in-187k-chatgpt-histories&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;ema-mental&quot;}], &quot;evidence&quot;: &quot;从大规模ChatGPT对话中分析抑郁症状，类似于数字表型分析&quot;}">Depression Symptoms and Relational Patterns in 187k ChatGPT Histories</a>
