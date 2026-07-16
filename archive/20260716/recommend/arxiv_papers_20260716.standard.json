@@ -1,0 +1,62 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-16T21:21:55.776334+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 1,
+    "deep_cap": 7,
+    "deep_selected": 1,
+    "quick_candidates": 0,
+    "quick_skim_target": 12,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2607.13076v1",
+      "source": "arxiv",
+      "title": "momenTUM: A schema-driven platform for designing, peploying, and exploring ecological momentary assessment studies",
+      "abstract": "Ecological momentary assessment (EMA) is widely used to collect repeated self-report data in participants' everyday lives using mobile devices. EMA studies often involve multiple questionnaires, flexible schedules, and longitudinal data collection, requiring reliable systems for study setup, deployment, monitoring, and data management. Existing workflows are often fragmented across tools, making studies difficult to reproduce and maintain.   We present momenTUM, an open-source platform for designing, deploying, and managing mobile EMA studies. Its central principle is that a structured study specification serves as the shared representation across the full workflow. The same specification supports authoring in the Study Designer, execution in the participant-facing mobile application, backend synchronization and storage, REDCap-linked data handling, and researcher monitoring. This makes protocols reusable, inspectable, and consistent across system components without requiring study-specific app implementations.   momenTUM integrates with REDCap to automate project setup and synchronize responses. Its authenticated dashboard provides tabular and calendar-based views, filtering by study components, and visual summaries. The platform has been deployed in real-world studies, including AMBIENT-BD, which examines mood, sleep, and circadian rhythms in bipolar disorder, and the EcoSleep cohort study. We also describe an exploratory LLM-assisted extension that generates draft structured study specifications for researcher review.   These deployments show that momenTUM can support complex ambulatory assessment protocols while reducing technical overhead and enabling reproducible, reusable, and extensible EMA workflows.",
+      "authors": [
+        "Nataliia Petliak",
+        "Blen Assefa",
+        "Constantin Goeldel",
+        "Marco Ma",
+        "Anna Biller",
+        "Lorna Caddick",
+        "Raahat Manrai",
+        "Daniel Smith",
+        "Duncan Swiffen",
+        "Manuel Spitschan"
+      ],
+      "primary_category": "q-bio.OT",
+      "categories": [
+        "q-bio.OT"
+      ],
+      "published": "2026-07-12T20:42:07+00:00",
+      "link": "https://arxiv.org/pdf/2607.13076v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "platform for designing and deploying EMA studies",
+      "llm_evidence_cn": "用于设计和部署EMA研究的平台",
+      "llm_evidence": "用于设计和部署EMA研究的平台",
+      "canonical_evidence": "用于设计和部署EMA研究的平台",
+      "llm_tldr_en": "momenTUM is an open-source platform that uses a structured study specification to unify the design, deployment, and management of mobile EMA studies, addressing fragmentation in existing workflows.",
+      "llm_tldr_cn": "现有的EMA研究工作流分散在不同工具中，导致研究难以复现和维护。momenTUM平台提出以结构化研究规格作为统一表示，贯穿研究设计、部署、监控和数据管理的全过程。该平台开源，支持多种问卷和灵活调度，为心理与精神健康领域的EMA研究提供了一个可靠、可复现的基础设施。",
+      "llm_tldr": "现有的EMA研究工作流分散在不同工具中，导致研究难以复现和维护。momenTUM平台提出以结构化研究规格作为统一表示，贯穿研究设计、部署、监控和数据管理的全过程。该平台开源，支持多种问卷和灵活调度，为心理与精神健康领域的EMA研究提供了一个可靠、可复现的基础设施。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}
