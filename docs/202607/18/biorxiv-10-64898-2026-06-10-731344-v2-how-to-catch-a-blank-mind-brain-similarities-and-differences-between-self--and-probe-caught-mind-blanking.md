@@ -1,0 +1,24 @@
+---
+title: How to Catch a Blank Mind? Brain Similarities and Differences between Self- and Probe-Caught Mind Blanking
+title_zh: 如何捕捉空白心灵？自我捕捉与探针捕捉的思维空白的大脑异同
+authors: "Aragon-Daud, A., Boulakis, P. A., Mortaheb, S., Vandewalle, G., Collette, F., Patil, K. R., Demertzi, A., Raimondo, F."
+date: 2026-07-16
+pdf: "https://www.biorxiv.org/content/10.64898/2026.06.10.731344v2.full.pdf"
+tags: ["query:ema-mental"]
+score: 7.0
+evidence: 用于思维空白研究的生活取样法
+tldr: 思维空白是一种意识流中断、看似空白的心理状态，传统采用外部探针随机采样法可能漏检。本研究通过3T fMRI对比探针捕捉与自我捕捉两种范式，发现22名被试的两种报告频率显著相关且时间均匀分布，行为上收敛；但自我捕捉时背侧前扣带回更强激活，反映元意识参与；两种状态的时变功能连接均呈现与其他内容状态不同的超连接模式。结果证实自我捕捉可作为无外部干扰的补充方法，并凸显元意识在自我报告中的作用。
+source: biorxiv
+selection_source: fresh_fetch
+figures_json: "[{\"url\": \"assets/figures/biorxiv/biorxiv-10-64898-2026-06-10-731344-v2/fig-001.webp\", \"caption\": \"\", \"page\": 0, \"index\": 1, \"width\": 1281, \"height\": 1493, \"label\": \"Figure\"}, {\"url\": \"assets/figures/biorxiv/biorxiv-10-64898-2026-06-10-731344-v2/fig-002.webp\", \"caption\": \"\", \"page\": 0, \"index\": 2, \"width\": 1637, \"height\": 432, \"label\": \"Figure\"}, {\"url\": \"assets/figures/biorxiv/biorxiv-10-64898-2026-06-10-731344-v2/fig-003.webp\", \"caption\": \"\", \"page\": 0, \"index\": 3, \"width\": 1588, \"height\": 657, \"label\": \"Figure\"}, {\"url\": \"assets/figures/biorxiv/biorxiv-10-64898-2026-06-10-731344-v2/fig-004.webp\", \"caption\": \"\", \"page\": 0, \"index\": 4, \"width\": 1785, \"height\": 877, \"label\": \"Figure\"}, {\"url\": \"assets/figures/biorxiv/biorxiv-10-64898-2026-06-10-731344-v2/fig-005.webp\", \"caption\": \"\", \"page\": 0, \"index\": 5, \"width\": 1564, \"height\": 825, \"label\": \"Figure\"}]"
+motivation: 传统探针捕捉可能遗漏思维空白事件，自我捕捉依赖元意识，但两者脑机制是否一致未知。
+method: 22名被试进行fMRI扫描，同时采用探针捕捉与自我捕捉任务，分析行为及脑激活与功能连接。
+result: 两种报告行为收敛，但自我捕捉时背侧前扣带回激活更强；时变功能连接均呈低觉醒超连接模式。
+conclusion: 自我捕捉可作为无中断的有效补充工具，元意识在自我检测中起关键作用。
+---
+
+## 摘要
+思维空白是一种以看似空洞的心灵体验为特征的心理状态。这种明显的空洞挑战了连续性、充满内容的思维流的理论观点，引出了一个问题：如何可能首先捕捉到思维空白事件。思维空白研究主要依赖探针捕捉的经验取样法，即在随机时间打断参与者，要求他们报告自己的心理状态。这种方法可能会遗漏一些发生在探针之间的思维空白事件。另一方面，自我捕捉范式允许参与者在自发意识到思维空白时报告，依赖于元意识。迄今为止，尚不清楚这两种方法在神经元层面是否捕捉到同一现象。本研究探讨了探针捕捉思维空白和自我捕捉思维空白在行为特征和大脑相关性上是否一致。22名参与者进行了3T fMRI扫描，同时完成了探针捕捉和自我捕捉的经验取样任务。我们比较了两种方法的行为特征、BOLD激活和时变功能连接。结果发现，个体间探针捕捉和自我捕捉的报告频率显著相关，且两种思维空白报告在时间上均匀分布，表明行为层面的一致性。然而，BOLD激活存在差异：与探针捕捉相比，自我捕捉在背侧前扣带回皮层的激活显著更大，这可能反映了自我检测思维空白所需的元意识和元认知监测。最后，时变功能连接分析显示一致性：与其他充满内容的心理状态相比，探针捕捉和自我捕捉的功能连接都呈现出类似超连接的模式，指向低唤醒的功能连接。总之，我们的结果表明，自我捕捉和探针捕捉思维空白在神经行为相关性上重叠。这使自我捕捉方法成为无需外部中断研究思维空白的补充工具，同时突显了元意识在自我报告检测中的作用。
+
+## Abstract
+Mind Blanking (MB) is a mental state characterized by the experience of a seemingly empty mind. This apparent emptiness challenges the theoretical view of a continuous and content-full stream of thought, leading to the question of how it is possible to capture MB events in the first place. MB research has relied largely on probe-caught experience-sampling, during which participants are interrupted at random times to report their mental state. This approach risks missing some MB events as they may occur between probes. Self-caught paradigms, on the other hand, allow participants to report MB upon spontaneously realizing it, relying on meta-awareness. To date, it is not clear whether these two methods capture the same phenomenon neuronally. Here, we investigated whether probe-caught MB (pMB) and self-caught MB (sMB) converge on their behavioral properties and brain correlates. Twenty-two participants underwent 3T fMRI scanning while performing both a pMB and a sMB experience-sampling task. We compared the behavioral properties, BOLD activations and time-varying functional connectivity (FC) across the two approaches. We found that reporting frequencies of pMB and sMB were significantly correlated across individuals, and both MB reports were uniformly distributed over time, pointing towards a behavioral convergence across approaches. However, we observed a divergence in BOLD activations, as sMB recruited significantly greater activation in the dorsal anterior cingulate cortex (dACC) compared to pMB, likely reflecting the meta-awareness and metacognitive monitoring required for self-detecting a MB. Lastly, time-varying FC analysis revealed a convergence, with both pMB and sMB FC resembling a hyperconnectivity pattern compared to other content-full mental states, pointing towards low arousal FC. Together, our results show that sMB and pMB converge on overlapping neurobehavioral correlates. This positions the self-caught method as a complementary tool for studying MB without external interruption, while highlighting the role of meta-awareness in self-report detection.

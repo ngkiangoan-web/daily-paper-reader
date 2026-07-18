@@ -1,0 +1,1458 @@
+Title: How to Catch a Blank Mind? Brain Similarities and Differences between Self- and Probe-Caught Mind Blanking
+
+URL Source: https://www.biorxiv.org/content/10.64898/2026.06.10.731344v2.full.pdf
+
+Number of Pages: 28
+
+Markdown Content:
+1
+
+How to Catch a Blank Mind? Brain Similarities and Differences between Self - and Probe -1
+
+Caught Mind Blanking 2
+
+3
+
+Aragón -Daud A gusti na1-2, Boulakis P aradeisios Alexandros 1, 3, Mortaheb Sepehr 4, Gilles 4
+
+Vandewalle 1, Fabienne Collette 1, Patil K austubh R. 2,5 , Demertzi * Athena 1,3 , & Raimondo *5
+
+Federico 2,5 6
+
+7 
+
+> 1
+
+GIGA -CRC Human Imaging, GIGA Institute, University of Liège, Liège, Belgium 8 
+
+> 2
+
+Brain and Behaviour , Institute of Neuroscience and Medicin e (INM -7) , Research Centre Jülich, Jülich, 9
+
+Germany 10  
+
+> 3
+
+Psychology and Neuroscience of Cognition Research Unit, University of Liège, Liège, Belgium 11  
+
+> 4
+
+Lab for Equilibrium Investigations and Aerospace (LEIA), University of Antwerp, Antwerp, Belgium 12  
+
+> 5
+
+Institute of Systems Neuroscience, Medical Faculty, Heinrich Heine University Düsseldorf, Düsseldorf, 13 
+
+Germany 14 
+
+15 
+
+16 
+
+*Equal contribution 17 
+
+Corresponding author:  A.Demertzi@uliege.be 18 
+
+19 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+2
+
+Abstract 20 
+
+Mind Blanking (MB) is a mental state characterized by the experience of a seemingly empty mind .21 
+
+This apparent emptiness challenges the theoretical view of a continuous and content -full stream of 22 
+
+thought , leading to the question of how it is possible to capt ur e MB events in the first place . MB 23 
+
+research has relied largely on probe -caught experience -sampling , during which participants are 24 
+
+interrupted at random times to report their mental state. This approach risks missing some MB 25 
+
+events a s they may occur between probes. Self -caught paradigms, on the other hand, allow 26 
+
+participants to report MB upon spontaneously realizing it, relying on meta -awareness . To date, it 27 
+
+is not clear whether these two methods capture the same phenomenon neuronally. Here, we 28 
+
+investigated whether probe -caught MB (pMB) and self -caught MB (sMB) converge on the ir 29 
+
+behavioral properties and brain correlates . Twenty -two participants underwent 3T fMRI scanning 30 
+
+while performing both a pMB and a sMB experience -sampling task . We compared the behavioral 31 
+
+properties , BOLD activations and time -varying functional connectivity (FC) across the two 32 
+
+approaches . We found that reporting frequenc ies of pMB and sMB were significantly correlated 33 
+
+across individuals , and both MB r eports were uniformly distributed over time, pointing towards a 34 
+
+behavioral convergence across approaches. However, we observed a divergence in BOLD 35 
+
+activations, as sMB recruited significantly greater activation in the dorsal anterior cingulate cortex 36 
+
+(dACC) compared to pMB, likely reflecting the meta -awareness and metacognitive monitoring 37 
+
+required for self -detecting a MB. Lastly , t ime -varying FC analysis revealed a convergence, with 38 
+
+both pMB and sMB FC resembling a hyperconnec tivity pattern compared to mind wandering ,39 
+
+pointing towards low arousal FC. Together, our results show that sMB and pMB converge on 40 
+
+overlapping neurobehavioral correlates . This positions the self -caught method as a complementary 41 
+
+tool for studying MB without external interruption , while highlighting the role of meta -awareness 42 
+
+in self -report detection. 43 
+
+44 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+3
+
+Introductio n45 
+
+While wakefulness is typically characterized by a continuous stream of thought, individuals can 46 
+
+experience periods of a seemingly empty mind. This experience is linked to a mental state known 47 
+
+as Mind Blanking (MB) , formally defined as a waking state in which individuals report no mental 48 
+
+content or are unable to describe their immediate experience (Andrillon et al., 2025; Boulakis & 49 
+
+Demertzi, 2025; Ward & Wegner, 2013) . So far, research into MB has primarily relied on probe -50 
+
+caught methodologies, where participants are interrupted to report their immediate mental state at 51 
+
+random moments (e.g., “What was on your mind just now?”) . However, individuals can also 52 
+
+spontaneously catch themselves in a blank state without an external prompt (i.e., self -caught) . To 53 
+
+the best of our knowledge, only one study so far has used the self -caught paradigm to characterize 54 
+
+MB behaviorally (Ward & Wegner, 2013) , while their brain correlates have not been explored. 55 
+
+Consequently, it remains unknown whether these two reporting methodologies capture the same 56 
+
+neurobiological phenomenon .57 
+
+Probe -caught methods have been extensively used both during resting state (Boulakis et al., 2025; 58 
+
+Koroma et al., 2023; Unsworth et al., 2021; Van Calster et al., 2017) and during cognitive tasks 59 
+
+(Andrillon et al., 2021; Huijser et al., 2020; Robison et al., 2019, 2020; Unsworth et al., 2025) .60 
+
+These studies have shown that probe -caught MB (pMB) events are reported sparsely (Boulakis et 61 
+
+al., 2026) , but uniformly across probes (Mortaheb et al., 2022) . Converging evidence from 62 
+
+neuroimaging studies points towards reduced cortical excitability and hyper -synchrony during 63 
+
+pMB. First, the brain elicits parietal slow wave activity during pMB reports that, despite its 64 
+
+localized nature, morphologically resembles the slow waves observed globally during deep sleep 65 
+
+(Andrillon et al., 2021) . Second, the brain shows widespread deactivations across cortical areas 66 
+
+(Boulakis et al., 2023) . Third, functional connectivity (FC) during pMB self -organizes in a 67 
+
+hyperconnected pattern where all regions are synchronized together (Mortaheb et al., 2022) as also 68 
+
+observed in unconscious states (Aedo -Jury et al., 2020; El -Baba et al., 2019) . However, this 69 
+
+relationship seems to be mediated by perceived arousal and task context . For instance, during a 70 
+
+sustained attentional task , pMB has been associated with the typical anticorrelated FC patte rn71 
+
+observed in wakefulness across vigilance levels, yet was associated with the hyperconnected 72 
+
+pattern only during self -reported high vigilance levels, potentially due to hyperconnectivity being 73 
+
+more dominant across mental states during sleepiness (Boulakis, Kusztor, et al., 2025) . Lastly, 74 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+4
+
+pMB reports increase in states of low arousal (Boulakis et al., 2025) and are characterized by 75 
+
+higher fMRI global signal (GS) amplitude , a proxy of arousal level (Liu et al., 2017; Wong et al., 76 
+
+2013) , compared to other mental states (Mortaheb et al., 2022) .77 
+
+Even though probe -caught methods are valuable, they possess an inherent limitation: they rely on 78 
+
+externally timed cues and may miss episodes that occur between probes. Indeed, MB in probe -79 
+
+caught methodologies is typically captured by 10% of the probes (Boulakis et al., 2026) , rendering 80 
+
+it a highly time -consuming methodology. A pproache s that do not depend on external sampling 81 
+
+could therefore offer a more efficient alternative by capturing the entire sampling period and 82 
+
+allowing for the unconstrained accumulation of reports . A promising alternative is the self -caught 83 
+
+paradigm, which has been widely applied in mind wandering (MW) research (Chu et al., 2023) 84 
+
+but rarely to MB (Ward & Wegner, 2013) . In this method, participants are instructed to report 85 
+
+whenever they notice or ‘catch’ themselves in a specific mental state. By design, this approach 86 
+
+captures MB events with meta -awareness (Chu et al., 2023) , meaning one must realize their mind 87 
+
+feels empty in order t o report it (i.e., awareness of absence) (Mazor & Fleming, 2020) . Given that 88 
+
+this introduces a distinct metacognitive demand , and because the paradigm has rarely been applied 89 
+
+to MB, it remains unknown whether sMB shares the same behavioral properties and brain 90 
+
+correlates as pMB or if the act of self -catching fundamentally alters its phenomenological and 91 
+
+neurophysiological correlates. 92 
+
+The present study aims to compare self -caught and probe -caught methodologies and to investigate 93 
+
+whether sMB shares the established behavioral properties and neural correlates of pMB . While we 94 
+
+expect the core signature of this state to be similar, we hypothesize that sMB recruits additional 95 
+
+brain regions related to meta -awareness and metacognitive monitorin g.96 
+
+97 
+
+Methods 98 
+
+Participants 99 
+
+Twenty -two individuals participated in the study (4 5% female; mean age = 29 ± 4 years). 100 
+
+Participants were recruited via campus poster advertisements and intranet electronic invitations. 101 
+
+All participants provided written informed consent in accordance with the Declaration of Helsinki. 102 
+
+The study was approved by the Ethics Committee of the University Hospital of Liège ( Nr: 103 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+5
+
+B707201941887). Exclusion criteria involved MRI contraindications and history of neurological 104 
+
+disorders. All participants were right -handed and french speakers with academic backgrounds. 105 
+
+Desi gn & Tasks 106 
+
+The study employed a within -subject design, in which participants performed two experience -107 
+
+sampling tasks in a 3T MRI scanner (Magnetom Prisma , Siemens Medical Solutions, Erlangen, 108 
+
+Germany) : one with the self -caught, and the other with the probe -caught methodology. Tasks were 109 
+
+performed in two sessions separated by a 15 -minute break . The first session included the self -110 
+
+caught task , alongside other cognitive task s outside the scope of th e present study . The second 111 
+
+session comprised the probe -caught task and diffusion -weighted imagin g, which is also outside 112 
+
+the scope of this study. In the self -caught task (approx. 8 min duration), participants were asked to 113 
+
+press a button whenever they felt they had an MB event . In the probe -caught task (approx. 19 min 114 
+
+duration), participants were interrupted at random times by auditory and visual probes (n=25, inter -115 
+
+probe interval: 30 -60s), inviting them to use a button press to report their immediate mental state. 116 
+
+Participants were asked to report if their thoughts were in the “past”, “future” , “present”, or simply 117 
+
+“nowhere” ( MB ). When participants choose any of the first two options, they were presented with 118 
+
+a second question asking if they were thinking of themselves or someone else (all coded as MW) .119 
+
+When they selected “present” they were asked if their thought was stimulus dependent (Sensation s, 120 
+
+Sens ) or independent (MW). This multi -step questioning tree was designed to mirror the specific 121 
+
+dimensions of time, self -referentiality, and stimulus -dependence manipulated across the broader 122 
+
+experimental protocol. However, because these granular distinctions are outside the scope of the 123 
+
+present study, reports were collapsed into broader categories (MB, MW, and Sensations) for 124 
+
+analysis. Frequency of other mental states aside from MB can be found in Supplementary 1. If a 125 
+
+response took longer than 10 seconds, it was coded as an error and excluded from the analysis. 126 
+
+The tasks were implemented in MATLAB using the Psychophysics Toolbox (PTB) (Brainard, 127 
+
+1997) and are available at  https://gitlab.uliege.be/poc/self -caught -mb . Experimental design and 128 
+
+analysis are illustrated in  Figure 1. During both tasks, participants were in a resting state , instructed 129 
+
+to let their mind wander, with eyes open, fixating on a black screen. For each task, we defined rest 130 
+
+and mental state periods. For the probe -caught task, m ental states pMB , MW, and Sens) were 131 
+
+defined as the 10s before the probe  (Boulakis, Kusztor, et al., 2025; Mortaheb et al., 2022; Van 132 
+
+Calster et al., 2017) . For the self -caught task, sMB was defines as the 10s before the button press .133 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+6
+
+Regarding rest periods, they were defined as up to 30s in between probes in the probe -caught task .134 
+
+In the self -caught task, rest timepoints were defined as periods of uninterrupted resting state (i.e., 135 
+
+no button press) , with no specific length . To avoid signal contamination, timepoints surrounding 136 
+
+each sMB report were excluded (buffer of 40s sMB report: 30 s before and 10 s following the button 137 
+
+press) .138 
+
+fMRI 139 
+
+1.  Functional Imaging parameters 140 
+
+FMRI data were acquired using a standard transmit –receive quadrature head coil and included 141 
+
+T2* -weighted gradient -echo echo -planar imaging (EPI ) sequence using the following parameters: 142 
+
+repetition time (TR) = 1170 ms, echo time = 30 ms , field of view = 216 × 216 mm², acquisition 143 
+
+matrix = 72 × 72 (3 × 3 mm² in -plane resolution), and 36 axial slices of 3 mm thickness with a 144 
+
+25% interslice gap (0.75 mm), covering most of the brain. Slice acquisition was performed in an 145 
+
+interleaved order, with phase encoding in the anterior -to -posterior direction. Multi -band 146 
+
+acceleration factor of 2 was applied to reduce acquisition time. A total of 1000 volumes were 147 
+
+acquired per run. A high -resolution T1 -weighted magnetization prepared rapid gradient echo 148 
+
+image ( MPRAGE ) was acquired for anatomical reference (TR = 1960 ms, echo time = 2.19 ms, 149 
+
+inversion time = 900 ms, field of view = 256 × 240 mm 2, matrix size = 256 × 240 × 176, voxel 150 
+
+size = 1 × 1× 1 mm 3). Participants’ heads were comfortably secured with a vacuum cushion to 151 
+
+reduce movement during scanning. Visual stimuli were presented on a screen located at the back 152 
+
+of the scanner, seen via a mirror attached to the head coil. 153 
+
+2.  fMRI Preprocessing 154 
+
+FMRI data were preprocessed using fMRIPrep (version 24.1.1; (Esteban et al., 2018) ), a 155 
+
+standardized pipeline for robust fMRI preprocessing : for each participant, functional data were 156 
+
+corrected for susceptibility distortion using dual -echo gradient -recalled echo (GRE) field maps, 157 
+
+aligned to their native T1 -weighted (T1w) anatomical space and spatially normalized to the 158 
+
+MNI152NLin2009cAsym template at 2 mm isotropic resolution. Anatomical preprocessing, 159 
+
+including brain extraction and normalization, was performed using ANTs (2.5.0 ; Avants et al., 160 
+
+2014) . Tissue segmentation of cerebrospinal fluid, white matter, and gray matter was performed 161 
+
+using FSL (version 6.0.4 ; Jenkinson et al., 2012) . As surface -based analyses were not required 162 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+7
+
+(parcellation was conducted in volumetric space using the predefined Schaefer atlas), full cortical 163 
+
+surface reconstruction was skipped . Given the short TR (<2 sec onds ) and to avoid altering the 164 
+
+temporal autocorrelation structure important for estimating time -varying FC , slice timing 165 
+
+correction was not applied. 166 
+
+167 
+
+Analysis 168 
+
+Behavioral data 169 
+
+To assess the consistency of individual MB report s across conditions, we computed the Spearman 170 
+
+correlation between the number of MB reports per subject for each task . Additionally, given our 171 
+
+small sample size, we also computed the Kendall Rank co efficient for complementary robustness .172 
+
+This analysis aimed to evaluate whether MB occurrence reflects a stable individual characteristic, 173 
+
+whereby participants who report more MB in one task also tend to report more in the other. 174 
+
+Following previous st udies (Mortaheb et al., 2022) we also examined the temporal distribution of 175 
+
+MB reports within each task . Acquisition time was divided into 5 equal -duration bins, and the 176 
+
+number of MB reports in each bin was counted. We then compared the resulting distribution 177 
+
+against a uniform distribution using a χ² test, and calculated effect size using φ (φ = √(χ²/ n)). 178 
+
+Additionally , to test for evidence in favor of the null hypothesis (uniformity) , we computed a Bayes 179 
+
+factor comparing a uniform distribution (all bins equally likely) against a non -uniform distribution 180 
+
+multinomial model with a symmetric Dirichlet(1) prior , where BF₁₀ < 0.33 indicates evidence for 181 
+
+uniformity (null hypothesis) , whereas values between 0.33 and 1 were considered inconclusive .182 
+
+fMRI Ana lysi s183 
+
+Voxel -wise activation differences between MB report types 184 
+
+We employed a mass -univariate approach based on a General Linear Model to identify voxels 185 
+
+exhibiting significant activation differences between MB types. A first -level analysis was 186 
+
+performed independently for each subject. Because the probe -caught and self -caught events were 187 
+
+recorded in separate sessions, we modeled them as two distinct runs within each subject -level 188 
+
+GLM. The design matrix included the mental state reports (sMB, pMB , Sens, MW), task regressors 189 
+
+(probe or button press) and rest periods, convolved with a canonical SPM hemodynamic response 190 
+
+function. The nuisance regressors included six motion parameters and a binary motion outlier 191 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+8
+
+regressor for volumes exceeding framewise displacement of 0.5 mm. A cosine -basis drift model 192 
+
+was used to implement high -pass filtering (>0.008 Hz). Signal intensity was grand mean scaled to 193 
+
+ensure that beta estimates the percentage of signal change. To account for temporal autocorrelation 194 
+
+in the BOLD signal, we employed a first -order autoregressive model. Data were spatially 195 
+
+smoothed using a Gaussian kernel of 8 mm FWHM. For each subject, we computed the contrast 196 
+
+[sMB > pMB] as the primary contrast of interest. 197 
+
+Group -level inference was performed using a one -sample t -test on the first -level contrast maps. To 198 
+
+control for multiple comparison, we applied cluster -level Family -Wise Error (FWE) correction at 199 
+
+p<0.05 via non -parametric permutation testing (10.000 permutations, cluster -defining threshold 200 
+
+p<0.001). For transparency purposes (Taylor et al., 2023) , results are visualized on a brain template 201 
+
+using transparent thresholding, with the statistical map visualized at an uncorrected threshold of 202 
+
+p<0.001 (z = 3.29). Cluster -wise FW E-significant clusters are outlined with black contours. 203 
+
+Coupling between functional connectivity patterns and experience sampling 204 
+
+To estimate functional connect ivity patterns , first preprocessed BOLD signals were denoised 205 
+
+using junifer (version 0.0.7.dev47; (Mandal et al., 2023) ). Confound regression included 24 206 
+
+motion parameters, white matter and CSF signals. Time series were detrended, z -scored, and 207 
+
+bandpass filtered (0 .008 -0.09Hz ). A gray matter mask was applied using a probabilistic threshold 208 
+
+of 20%. The brain was parcellated according to the Schaefer -100 atlas ( 100 regions, 7-network 209 
+
+version ) (Schaefer et al., 2018) , and instantaneous phase connectivity (IPC) was computed at each 210 
+
+time point using a second -order Hilbert transform after re -filtering the data between 0.01 and 0.04 211 
+
+Hz. To normalize the distribution for statistical analysis, IPC values were Fisher z transformed .212 
+
+Following previous studies (Boulakis, Kusztor, et al., 2025; Mortaheb et al., 2022) , we identified 213 
+
+recurring connectivity patterns by applying k -means clustering to resting state IPC matrices using 214 
+
+cosine distance (n rest IPC = 17.687 matrices ; 60% from probe -caught and 40% from self -caught 215 
+
+task ; additional analysis to guarantee same resting state baselines can be found in Supplementary 216 
+
+2) . While internal validation metrics did not converge on a single optimal k (Supplementary 3), we 217 
+
+selected k=4 based on established literature identifying four stable resting -state pattens (Demertzi 218 
+
+et al., 2019; Mortaheb et al., 2022) . We confirmed the stability of our findings by repeating the 219 
+
+analysis for k=3 through k= 6 (see Supplementary 4). Resulting centroids were ordered by their 220 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+9
+
+spatial standard deviation (a proxy for pattern metastability ) ( Supplementary 4). We estimated the 221 
+
+occurrence rate of each pattern counting the number of matrices assigned to each centroid for each 222 
+
+participant . We compare occurrence rates with a paired t -test with p-FDR < 0.05 corrected for 223 
+
+multiple comparisons. 224 
+
+To determine if the connectivity pattern of a mental state (sMB, pMB, MW and Sens) was 225 
+
+associated with a specific baseline network configuration, we calculated the cosine distance at the 226 
+
+single -timepoint level. Specifically , for a single sample (timepoint) of each report, we computed 227 
+
+the cosine distance between that mental state’s IPC matrix and each of the four canonical 228 
+
+connectivity centroids derived from the resting state timepoints. Distances to each cluster were 229 
+
+modeled using a Bayesian Generalized Linear Mixed Model. To account for the positive -bounded 230 
+
+and negatively skewed nature of the distance metrics, we modeled the response variable using a 231 
+
+Skew -normal likelihood . Population -level parameters were assigned weakly informative Skew -232 
+
+normal priors (𝜉 =0 , ω =1 , α = -2), while group -level standard deviations were modeled using a 233 
+
+regularizing Half -Cauchy prior (scale = 0.5). The model included mental state reports as fixed 234 
+
+effects and subject -specific random intercepts. Model fit was compared against a null model 235 
+
+(containing only intercept and random effects) using Bayes Factors , Akaike Information Criterion 236 
+
+(AIC) and Bayesian Information Criterion (BIC) (Supplementary 5) . Bayes Factor favored the null 237 
+
+model over the mental state model for each cluster, likely due to the inherent inter -subject 238 
+
+variability of spontaneous cognition and the parsimony -based penalties applied by Bayes Factors .239 
+
+Nonetheless, AIC and BIC supported the response model. To explore even marginal effects of the 240 
+
+mental states, we performed planned post -hoc comparisons using Estimated Marginal Means 241 
+
+between the distances of each mental state to each pattern . A contrast was considered supported if 242 
+
+its 8 9% credible interval excluded zero (Makowski et al., 2019) .243 
+
+Global signal (GS) amplitude as a proxy for arousal fluctuations across mental states 244 
+
+We considered GS as the average BOLD activity across whole -brain voxels (Fox et al., 2009) . As 245 
+
+mentioned, GS amplitude serves as an indirect proxy for arousal levels , where higher amplitude 246 
+
+typically indicates lower arousal and vice vers a (Liu et al., 2017; Wong et al., 2013) . Given that 247 
+
+MB is often associated with low arousal, we investigated whether GS magnitude (i.e., the L2 norm 248 
+
+of the global signal time course during each mental state) differed between mental state reports. 249 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+10 
+
+The GS time series were extracted for each subject and task using the standard fMRIPrep pipeline. 250 
+
+To account for potential baseline shifts between task sessions (self -caught vs probe -caught task), 251 
+
+we performed a session -specific baseline normalization. For each task, the raw GS was divided by 252 
+
+the mean GS during that session ’s rest periods. To account of the sensibility of the L2 norm (signal 253 
+
+magnitude ) to the number of data points, all events were truncated to a uniform distribution of 9 254 
+
+timepoints. We calculated the L2 norm for each event to obtain a single GS magnitude value per 255 
+
+report. 256 
+
+GS magnitude was modeled using a Generalized Linear Mixed -Effects Model , including mental 257 
+
+state reports (sMB, pMB, Sens, MW) as a fixed effect and a random intercept per subject. Given 258 
+
+that GS magnitude values are strictly positive, we utilized a gamma distribution with a log link 259 
+
+function. Post -hoc comparisons between mental states were performed using marginal means. All 260 
+
+reported p-values were adjusted for multiple comparisons using the Tukey method. We 261 
+
+additionally tested whether the global -signal effect could be explained by task duration by 262 
+
+including total timepoints as a covariate (Supplementary 6). 263 
+
+264 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+11 
+
+265 
+
+266 
+
+Figure 1. Experimental setup and analysis. 267 
+
+Twenty -two p articipants performed A) self -caught and B) probe -caught experience -sampling task s while 268 
+
+lying down in a 3T MRI scanner. In both tasks, mental states epochs (in blue ) were defined as the 10 s 269 
+
+preceding the self - report button press (self -caught) or auditory and visual probe (probe -caught) , and rest 270 
+
+epochs as 30 s (in grey) of uninterrupted resting activity ( which could be longer in the self -caught task if 271 
+
+no button press occurred ). Analysis spanned three domains: (1) Behavior: We analyzed report frequencies, 272 
+
+cross -task correlations across individuals, and the temporal distribution of MB reports. (2) Brain 273 
+
+correlates: We extracted BOLD timeseries for two distinct analyses. First, a voxel -wise activation analysis 274 
+
+contrasted sMB versus pMB. Second, we computed time -varying functional connectivity (TVFC) across 275 
+
+both tasks; we clustered rest timepoints to identify representative connectomes (centroids) and calculated 276 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+12 
+
+the distance of the TVFC patterns during each mental states deviated to these baseline rest clusters. (3) 277 
+
+Physiology: We tested whether mental states differed in global signal (GS) magnitude . TV FC = time -278 
+
+varying functional connectivity; BOLD = blood oxygen level dependent; GS = global signal. 279 
+
+Results 280 
+
+MB reports converged on their behavioral properties across methods 281 
+
+To assess the reliability of MB across self -report methods, we compared the frequency of episodes 282 
+
+captured via self -caught and probe -caught tasks. Participants reported on average 5 sMB (range = 283 
+
+0-31, N = 119) and 2 pMB episodes (range = 0 -7, N = 55). In terms of method -specific relative 284 
+
+frequency, pMB episodes were reported in 10.8 % of total probes, while sMB reports occurred at a 285 
+
+rate of approximately 1 episode per 2.54 minutes of acquisition. A significant positive correlation 286 
+
+was observed between sMB and pMB frequencies (r = .4 9, p=.0 19 ; τ = .39, p=.01 9,  Figure 1A), 287 
+
+suggesting MB reporting was consistent at the individual leve l.288 
+
+The temporal distribution of MB reports was analyzed to determine if the occurrence of these 289 
+
+episodes was influenced by tim e ( Figure 2B). The distribution of MB reports across acquisition 290 
+
+time did not significantly deviate from a uniform distribution in either task . Furthermore, Bayes 291 
+
+factor analyses yielded evidence supporting the null hypothesis, supporting that the MB reports 292 
+
+were uniformly distributed across both tasks. 293 
+
+294 
+
+Figure 2. Consistent rate and uniform distribution of MB reports across tasks and time. 295 
+
+A) The positive Spearman (r) and Kendall ( τ) correlation between the number of sMB and pMB reports 296 
+
+per subject indicate that the two report methods are reflecting similar content at the individual level . B) 297 
+
+The temporal distribution of pMB (upper panel ) and sMB (lower panel ) reports during each task indicated 298 
+
+that the MB reports were uniformly distributed across both tasks as evidenced by the Bayes factor 299 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+13 
+
+supporting the null hypothesis . V ertical dash ed lines indicate each subject’s task end time . sMB = self -300 
+
+caught mind blanking; pMB = probe -caught mind blanking. 301 
+
+302 
+
+Self -caught MB recruits greater dorsal anterior cingulate cortex activity than probe -caught MB 303 
+
+We compared the neural signature underlying to the two types of MB reports considering all the 304 
+
+subjects that reported both types of MB ( n=13). We found a main positive effect of sMB in the 305 
+
+right dorsal anterior cingulate cortex (dACC/paracingulate gyrus; Harvard -Oxford atlas) within 306 
+
+medial prefrontal cortex (mPFC) (Peak MNI: [17.5, 31.5, 13.5], cluster size = 2008 mm 3, FWE p307 
+
+< 0.05;  Figure 3A), compared to pMB. 308 
+
+309 
+
+Figure 3. Self -caught MB recruits the activation of the dACC. 310 
+
+Second level contrast between sMB>pMB of the voxel -wise activation analysis indicated the recruitment 311 
+
+of the dorsal ACC , highlighting the involvement of metacognitive properties when self -evaluating 312 
+
+content -free reports . The graph is thresholded at p<0.001 uncorrected, with red -colored voxels imply 313 
+
+activations and blue -colored imply deactivations of sMB compared to pMB. Black -contoured areas show 314 
+
+FWE p<0.05 surviving clusters. 315 
+
+316 
+
+MB reports share a connectome signature of global functional hyperconnectivity 317 
+
+To identify the primary brain states that emerge during rest, we applied k -means (k=4) clustering 318 
+
+to the time -varying FC of the rest timepoints.  Figure 4A and 4B show the occurrence rate and the 319 
+
+four identified distinct FC patterns. Both Pattern 1 and Pattern 2 showed anticorrelation between 320 
+
+the DMN and bottom -up networks, including attentional and s ensory networks. Pattern 1 321 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+14 
+
+additionally showed anticorrelation between bottom -up and control network (CN) , together with 322 
+
+high within -somatosensory network connectivity. Pattern 3 showed a general ized low connectivity ,323 
+
+characterized by reduced connectivity both within and between networks. Finally, Pattern 4 324 
+
+displayed an all -to -all positive connectivity (hyperconnectivity) within and between networks. The 325 
+
+generalized low connectivity (Pattern 3) occurred significantly more often than all the other brain 326 
+
+pattern s ( Pattern 1 – Pattern 3: t = -6.88 , FDR -p < .0001; Pattern 2 – Pattern 3: t = -6.09 , FDR -p <327 
+
+.0001; Pattern 3 – Pattern 4: t = 4.1 2, FDR -p = .001; all other comparisons FDR -p < .05 , Figure 328 
+
+3A ). 329 
+
+Having defined the FC self -organization during rest, we next tested whether the reported mental 330 
+
+states showed greater proximity to any of these specific configurations. Overall, the fit indices (BF, 331 
+
+BIC, AIC) did not converge on a single preferred model across all patterns (Supplemntary 5) .332 
+
+Given that Pattern 4 has been previously associated with pMB during rest (Mortaheb et al., 2022) ,333 
+
+we focused our primary analysis on this hyperconnected state. Consistent with our hypothesis, 334 
+
+sMB and pMB time -varying FC matrices showed significantly higher similarity to this 335 
+
+hyperconnected state than mind wandering (sMB -MW: Δ = -0.0 03, 89% CI [ -0.0 06 -0.0 01 ], p < 336 
+
+.0001 ; pMB -MW : Δ = -0.004, 89 % CI [ -0.00 7 -0.00 2], p < .0001) but did not differ significantly 337 
+
+from sensation s ( p > .05). Overall, these findings suggest that both forms of MB episodes share a 338 
+
+common FC signature characterized by global hyperconnectivity, regardless of the self -report 339 
+
+detection method. 340 
+
+Further analysis reve aled additional differences in the proximity of other mental states to other 341 
+
+patter ns (Figure 3 C, Supplementary 7). Patterns 1 and 2 showed similar proximity profiles: for 342 
+
+Pattern 1, MW and sMB were significantly closer than sensations and pMB, whereas for Pattern 343 
+
+2, MW and pMB were significantly closer than sensations and sMB. For Pattern 3, sensations were 344 
+
+significantly closer to this pattern than MW and pMB, and sMB was closer than pMB. 345 
+
+346 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+15 
+
+347 
+
+348 
+
+Figure 4. Mind Blanking reports show higher similarity to a hyperconnected pattern of 349 
+
+functional connectivity both during the self -caught (sMB) and probe -caught (pMB) 350 
+
+method. 351 
+
+A) The occurrence rate of each connectivity pattern (normalized by subject ) indicates that patterns 352 
+
+occurred at different frequencies, with Pattern 3 occurring significantly more often than all other patterns. 353 
+
+This replicates the findings of previous studies that applied the same methodology (Mortaheb et al., 354 
+
+2022) . Each dot denotes one subject percentage occurrence rate. B) Data -driven k -means centroids of 355 
+
+time -varying functional connectivity and connectome indicates that the brain self -organizes into a pattern 356 
+
+of anticorrelations between the DMN and sensory networks (Pattern 1), a pattern of somatosensory 357 
+
+integration (Pattern 2), a pattern of lower overall coherence pattern (Pattern 3) and a pattern of 358 
+
+hyperconnectivity (Pattern 4) . Scale shows Fisher Z and L2 normalized functional connectivity . Positive 359 
+
+values indicate higher phase synchronization , while values close to zero indicate the absence of a 360 
+
+systematic phase coherence . C) Estimated Marginal Means c ontrast between distances of each mental 361 
+
+state functional connectivity matrices to each centroid. Contrast estimate on the right side means the first 362 
+
+mental state of the contrast is closer to that pattern. When comparing contrasts across all patterns, both 363 
+
+MB reports systematically had higher similarity (lower distance values) to the hyperconnected 364 
+
+connectome (Pattern 4) compared to mind -wandering. Significant contrasts are black -colored. DMN = 365 
+
+default mode network; CN = control network, SM = somatosensory network, LM = limbic network, VA = 366 
+
+ventral attentional network, DA = dorsal attentional network, VS = visual network , MW = mind 367 
+
+wandering, Sens = sensations, pMB = probe -caught mimd blanking, sMB = self -caught mind blanking. 368 
+
+***p<.001. 369 
+
+370 
+
+Self -caught MB linked with lower physiological arousal compared to MW 371 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+16 
+
+To investigate physiological arousal across mental states, we analyzed the magnitude of the GS 372 
+
+(Figure 4). We found that sMB presented a significantly higher GS magnitude than MW episodes 373 
+
+(MW -sMB: Δ = -0.001, 95% CI [ -0.002, -0.0001] , z = -3.17 , p = .0 08 , Figure 5B), a marker of 374 
+
+reduced vigilance (Liu et al., 2017; Wong et al., 2013) . Thus, our findings suggest that sMB reports 375 
+
+occur during periods of lower physiological arousal relative to MW. No other significant 376 
+
+differences were observed between the remaining mental states ( p > .05). These results remained 377 
+
+stable when adding the task length for each subject as a covariate (Supplementary 5). 378 
+
+379 
+
+380 
+
+Figure 5. Self -caught MB reports showed higher fMRI global signal magnitude compared 381 
+
+to MW, pointing to the potential implication of low cortical arousal when self -assessing the 382 
+
+presence of content -less experience. 383 
+
+A) Boxplot comparing global signal magnitude around mental states reports. Each dot represents an 384 
+
+average of one subject’s reports. B) Statistics from marginal means contrast between the global signal 385 
+
+characterizing different mental states reports (adjusted for multiple comparison via Tukey method )386 
+
+indicates that sMB has a significantly higher fMRI global signal magnitude compared to MW (Significant 387 
+
+contrasts are black -colored) . MW = mind wandering, pMB = probe -caught mind blanking, sMB = self -388 
+
+caught mind blanking, Sens = sensations. 389 
+
+Discussion 390 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+17 
+
+We here compared two self -report methodologies for capturing MB events during typical waking 391 
+
+time , the widely -used probe -caught method (Boulakis et al., 2025; Koroma et al., 2023; Munoz -392 
+
+Musat et al., 2025; Robison et al., 2019; Unsworth et al., 2021; Van Calster et al., 2017) , and the 393 
+
+self -caught method (Ward & Wegner, 2013) . Our results indicate that both methods successfully 394 
+
+capture MB episodes, which share similar behavioral properties and are characterized by 395 
+
+hyperconnectivity across the brain. Where these states diverged was in BOLD activation, with 396 
+
+sMB recruiting greater dACC activation compared to pMB .397 
+
+A primary contribution of this work is the exploration of sMB, demonstrating that sMB shares 398 
+
+convergent neurobiological correlates with pMB . Unlike previous paradigms that required 399 
+
+participants to intentionally “empty their minds” (Kawagoe et al., 2019) , the current approach 400 
+
+allows participants to report if they notice their mind went blank spontaneously . The significant 401 
+
+correlation between sMB and pMB frequencies across individuals suggests high cross -method 402 
+
+consistency, indicating that both detection methods track individual differences in the propensity 403 
+
+to experience MB within the experimental environment . Furthermore, the uniform temporal 404 
+
+distribution of reports in both tasks aligns with previous evidence suggesting that MB occurrence 405 
+
+is not time -dependent , but a default mental state takin g place in the stream of ongoing thinking 406 
+
+(Mortaheb et al., 2022) . While Ward and Wegner (2013) also propose d that overall MB reports 407 
+
+appear ed stead il y over time, they observed a diverging trend over time where pMB reports 408 
+
+increased while sMB decreased . It should be noted, though, that those find ing s were observed 409 
+
+during a task condition (reading) and over a longer duration (20 min) , which could have led to a 410 
+
+lower capacity to monitor one’s stream of thought due to fatigue . In the present analysis, both tasks 411 
+
+took place at a shorter resting -state context (8 min), which could have permitted the preservation 412 
+
+of sufficient vigilance so that both detection methods led to capture the MB phenomenon stabl y413 
+
+across time .414 
+
+Additionally, we show that with the probe -caught task, MB was reported in approximately 10% of 415 
+
+probes, which is consistent with previous literature at large (for a meta -analysis on MB rates see 416 
+
+Boulakis et al., 2026) . However, given that the frequency of these reports is probe -dependent, 417 
+
+episodes occurring between probes are inherently missed. While s elf -caught reports were more 418 
+
+frequent in absolute count , the two methods differed in sampling rate and task duration, making a 419 
+
+direct numerical comparison difficult : self -caught reports were collected continuously over 420 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+18 
+
+acquisition time, whereas probe -caught reports were constrained to the probes . Nevertheless, this 421 
+
+descriptive pattern aligns with Ward and Wegner (2013) , who similarly observed that sMB events 422 
+
+consistently outnumber ed pMB episodes during a reading task . Our results point in a similar 423 
+
+direction and extend this trend to a resting -state condition , notwithstanding the task instruction to 424 
+
+self -detect and report these blank moments. 425 
+
+We consider that the higher absolute frequency of sMB relative to pMB suggests a critical 426 
+
+methodological trade -off. While the self -caught method provides a continuous real -time reporting 427 
+
+that can capture events that would otherwise be missed between intermittent p robes , the explicit 428 
+
+requirement for metacognitive assessment of sMB may create a dual bias. On the one side , it might 429 
+
+redirect the participant’s focus to internal monitoring, thereby increasing false positive detection 430 
+
+of MB (i.e., over -sensitivity). On the other side, it could as well paradoxically underestimate true 431 
+
+frequency , because the continuous cognitive load of self -monitoring may actively prevent the mind 432 
+
+from entering a blank state. Moreover, as self -caught methodologies by definition only capture 433 
+
+mental states with meta -awareness (Chu et al., 2023) , they necessarily exclude instances without 434 
+
+meta -awareness. A possible alternative for future research to resolve this reporting paradox is to 435 
+
+move toward s report -independent decoding techniques. For instance, by using the neural 436 
+
+signatures (i.e., hyperconnectivity, decrease in GS) as features in a decoder scheme , it may be 437 
+
+possible to validate the occurrence of MB episodes independent of the participant’s active report 438 
+
+in a more representative way . Initial efforts to decode MB from brain markers (Munoz -Musat et 439 
+
+al., 2025) , as well as from body -brain signals (Boulakis et al., 2025) , have already been proved 440 
+
+successful. Indeed, these protocols involved training classification algorithms that relied on MB 441 
+
+reports as the ground truth. While Boulakis et al. (2025) applied these models to predict other 442 
+
+labeled MB reports, Munoz -Musat et al. (2025) took an initial step towards extrapolation by 443 
+
+applying their trained classifier to unprobed, unlabeled data blocks during a cognitive task. By 444 
+
+crossing these unlabeled predictions against behavioral performance (e.g., increased miss rates and 445 
+
+prolonged reaction times), they provided an indirect behavioral validation of the decoded MB 446 
+
+episodes. Ultimately, efforts to develop classification schemes free from reports could provide the 447 
+
+ideal middle alter native: they do not confound MB with the detection itself (like self -caught 448 
+
+methods) , but also allow for a continuous tracking without being limited to discrete sampling 449 
+
+windows (like probe -caught methods). 450 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+19 
+
+Regarding the activation analysis, we consider that the finding that sMB recruits the dACC 451 
+
+compared to pMB likely reflects aspects of meta -awareness, meta -cognitive evaluation, and 452 
+
+monitoring processing required for self -detection (Mazor & Fleming, 2020) . Indeed, sMB requires 453 
+
+active, continuous meta -awareness to detect a MB event where one must not only be in a MB state, 454 
+
+but also become aware of being in that state, while pMB relies on a passive, reactive appraisal 455 
+
+prompted by the external probe (Chu et al., 2023) . As the ACC is tightly involved in metacognition 456 
+
+(Vaccaro & Fleming, 2018) and self -referential processing (D’Argembeau et al., 2007) , we propose 457 
+
+this activation reflects the internal evaluation of their ongoing cognition. Activity on the ACC has 458 
+
+only been observed during MB when participants are asked to empty their minds intentionally 459 
+
+(Kawagoe et al., 2019) , but no such activity has been observed during spontaneous pMB (Boulakis 460 
+
+et al., 2023) . This is also reflected in the time -varying functional connectivity pattern, as sMB was 461 
+
+associated with a pattern of high within -somatosensory network connectivity, which was not the 462 
+
+case for pMB. This could be tapping into distinct nuances of MB: with and without meta -463 
+
+awareness, as similarly observed for MW  (Christoff et al., 2009; Chu et al., 2023; Seli et al., 2017) .464 
+
+Aside from BOLD divergences, both MB capturing methodologies converged on their connectome 465 
+
+signature. We found that both MB events were only consistently associated with the 466 
+
+hyperconnected brain state (Pattern 4) , which lacks the variability in connectivity linked to typical 467 
+
+content -full cognition (Deco et al., 2017) . It is important to mention that t his hyperconnected brain 468 
+
+pattern has also been observed in states o f reduced consciousness , such as during sleep and under 469 
+
+anesthesia (Aedo -Jury et al., 2020) , which reinforce s the hypothesis that MB is characterized by a 470 
+
+physiological and neural profile of modified arousal. This point is here supported by the 471 
+
+significantly higher GS magnitude during sMB compared to content -full states , such as MW. 472 
+
+Given that high GS amplitude is a robust marker of low cortical arousal (Liu et al., 2017; Wong et 473 
+
+al., 2013) , these findings add to previous findings that MB ’s brain correlates resemble those of 474 
+
+sleep -like activity , as previously supported by the detection of local slow wave activity during MB 475 
+
+episodes (Andrillon et al., 2021; Munoz -Musat et al., 2025) . Interestingly, the association with low 476 
+
+arousal markers appeared more robust in the self -caught reports. This pattern may point toward 477 
+
+two distinct mechanisms. On the one hand, it may stem f rom the nature of the task : as participants 478 
+
+continuously monitor their cognition, they may more readily identify a MB episode whenever they 479 
+
+perceive a relevant decrease in vigilance. On the other hand, the task itself may actively induce 480 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+20 
+
+this state: the sustained cognitive effort of continuous monitoring could produce mental fatigue, 481 
+
+hence leading to a reduction in overall arousal levels and thereby leading to reporting MB episodes. 482 
+
+It is important to note , though , that sleep and MB are not the same state . Phenomenologically, 483 
+
+individuals distinguish the feeling of an empty mind from the sensation of drowsiness, and 484 
+
+reporting frequencies of MB and sleep do not correlate (Boulakis et al., 2025) . As a limitation, i n485 
+
+our protocol, w hile participants were explicitly instructed to report MB, they were not offered the 486 
+
+choice of “Sleep”, which could have facilitated a clearer interpretation of the underlying 487 
+
+mechanism of the two MB capturing methods .488 
+
+What we found, though, was that pMB repor ts did not significantly differ in their GS magnitude 489 
+
+levels compared to other mental states and were also associated with a FC pattern characterized 490 
+
+by anticorrelations between the DMN and sensory networks (Pattern 2), for which MW was also 491 
+
+associated with. Th ese finding may arise from the fact that probe -caught tasks may capture a 492 
+
+boarder, more heterogeneous range of blanks (Chu et al., 2023) . For instance, pMB often 493 
+
+aggregates both the introspective experience of an empty mind and the retrospective inability to 494 
+
+retrieve previous thoughts (Boulakis et al., 2026) . This aligns with our recent study in the context 495 
+
+of an attention task, where pMB was associated not only with the hyperconnected brain FC pattern, 496 
+
+but also with an anticorrelation FC pattern, and this effect was mediated by perceived levels of 497 
+
+vigilance : when people reported being alert, the connectomes around MB reports resembled the 498 
+
+hyperconnected pattern (Boulakis, Kusztor, et al., 2025) . Overall, the broad associations between 499 
+
+pMB with distinct FC configurations may reflect the different kinds of experience and 500 
+
+psychological mechanisms that a re grouped under the umbrella term MB (Boulakis et al., 2026; 501 
+
+Boulakis & Demertzi, 2025) .502 
+
+This study presents some limitation s. A primary drawback is our relatively small sample size 503 
+
+(n=22), although this is comparable to other MB studies (Adam et al., 2020; Torres et al., 2024) .504 
+
+Notably , the activation analysis could only be performed on a subset of participants who reported 505 
+
+MB episodes in both tasks, effectively reducing the sample size to n=13, a challenge inherent to 506 
+
+MB low report frequency. Furthermore, as an art ifact of the different methodologies , the MB 507 
+
+window of analysis differed slightly between tasks. For the self -caught task, MB was defined 508 
+
+immediately preceding the button press, whereas for the probe -caught task, the mental state was 509 
+
+defined prior to the probe appearance. This inevitably places sMB reports in closer temporal 510 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+21 
+
+proximity to the motor response and its associated preparation of the movement process. Even 511 
+
+though the motor response was regressed out from the BOLD time -series , this temporal proximity 512 
+
+could potentially contribute to the observed activity in the dACC related to motor intention and 513 
+
+decision -making. Lastly, we did not include “Sleep” among the probe -caught choices, an addition 514 
+
+that could have aided the interpretation of our findings. 515 
+
+Conclusion s516 
+
+Our findings demonstrate that sMB resembles pMB in their behavioral properties and brain 517 
+
+correlates of hyperconnectivity, although they diverge in the recruitment of the dACC , a difference 518 
+
+we attribute to the meta -cognitive process involved inherent to the self -caught task . This positions 519 
+
+the self -caught methodology as an adequate tool to detect MB episodes. Therefore, this work 520 
+
+provides a new framework for studying MB, enabling new experimental protocols, where probe -521 
+
+caught approaches might be disrupting the stream of thought. Overall, our work advances our 522 
+
+ability to investigate content -less experiences that are of both theoretical and clinical relevance. 523 
+
+524 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+22 
+
+Acknowledgements 525 
+
+The experimental work was conducted at the GIGA -In Vivo Imaging/Cyclotron platform of 526 
+
+ULiège, Belgium. The article was supported by the Belgian Fund for Scientific Research (FRS -527 
+
+FNRS), the European Union’s Horizon 2020 Research and Innovation Marie Skłodowska -Curie 528 
+
+RISE programme NeuronsXnets (grant agreement 101007926), the European Cooperation in 529 
+
+Science and Technology COST Action "NeuralArchCon" (CA18106), the Léon Fredericq 530 
+
+Foundation, and the University and the University Hospital of Liège. 531 
+
+532 
+
+Code 533 
+
+All codes are available at  https://gitlab.uliege.be/poc/self -caught -mb .534 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+23 
+
+Reference s535 
+
+Adam, K. C. S., Doss, M. K., Pabon, E., Vogel, E. K., & de Wit, H. (2020).  Δ9-536 
+
+Tetrahydrocannabinol (THC) impairs visual working memory performance: A 537 
+
+randomized crossover trial.  Neuropsychopharmacology , 45 (11), 1807 –1816. 538 
+
+https://doi.org/10.1038/s41386 -020 -0690 -3539 
+
+Aedo -Jury, F., Schwalm, M., Hamzehpour, L., & Stroh, A. (2020).  Brain states govern the spatio -540 
+
+temporal dynamics of resting -state functional connectivity. eLife , 9, e53186. 541 
+
+https://doi.org/10.7554/eLife.53186 542 
+
+Andrillon, T., Burns, A., Mackay, T., Windt, J., & Tsuchiya, N. (2021). Predicting lapses of 543 
+
+attention with sleep -like slow waves. Nature Communications , 12 (1), Article 1. 544 
+
+https://doi.org/10.1038/s41467 -021 -23890 -7545 
+
+Andrillon, T., Lutz, A., Windt, J., & Demertzi, A. (2025).  Where is my mind? A neurocognitive 546 
+
+investigation of mind blanking. Trends in Cognitive Sciences .547 
+
+https://doi.org/10.1016/j.tics.2025.02.002 548 
+
+Avants, B. B., Tustison, N., & Johnson, H. (2014). Advanced Normalization Tools (ANTS): 549 
+
+Release 2.x. Insight Journal . https://insight -journal.org/browse/publication/681/ 550 
+
+Boulakis, P. A., Aragón -Daud, A., Stawarczyk, D., & Demertzi, A. (2026). How often do we 551 
+
+blank? A systematic review and Bayesian meta -analysis of mind blanking report rates 552 
+
+during experience -sampling . https://osf.io/4ah3j_v1 553 
+
+Boulakis, P. A., & Demertzi, A. (2025).  Relating mind -blanking to the content and dynamics of 554 
+
+spontaneous thinking. Current Opinion in Behavioral Sciences , 61 , 101481. 555 
+
+https://doi.org/10.1016/j.cobeha.2024.101481 556 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+24 
+
+Boulakis, P. A., Kusztor, A., Tsuchiya, N., Andrillon, T., & Demertzi, A. (2025). Distinct cortical 557 
+
+profiles underlie the common reportability of thought -free experiences (p. 558 
+
+2025.10.14.681984). bioRxiv. https://doi.org/10.1101/2025.10.14.681984 559 
+
+Boulakis, P. A., Mortaheb, S., Calster, L. van, Majerus, S., & Demertzi, A. (2023). Whole -Brain 560 
+
+Deactivations Precede Uninduced Mind -Blanking Reports. Journal of Neuroscience ,561 
+
+43 (40), Article 40. https://doi.org/10.1523/JNEUROSCI.0696 -23.2023 562 
+
+Boulakis, P. A., Simos, N. J., Zoi, S., Mortaheb, S., Schmidt, C., Raimondo, F., & Demertzi, A. 563 
+
+(2025). Variations of autonomic arousal mediate the reportability of mind blanking 564 
+
+occurrences. Scientific Reports , 15 (1), 4956. https://doi.org/10.1038/s41598 -024 -81618 -1565 
+
+Brainard, D. H. (1997). The Psychophysics Toolbox. Spatial Vision , 10 (4), 433 –436. 566 
+
+https://doi.org/10.1163/156856897X00357 567 
+
+Christoff, K., Gordon, A. M., Smallwood, J., Smith, R., & Schooler, J. W. (2009). Experience 568 
+
+sampling during fMRI reveals default network and executive system contributions to 569 
+
+mind wandering. Proceedings of the National Academy of Sciences , 106 (21), 8719 –8724. 570 
+
+https://doi.org/10.1073/pnas.0900234106 571 
+
+Chu, M. T., Marks, E., Smith, C. L., & Chadwick, P. (2023). Self -caught methodologies for 572 
+
+measuring mind wandering with meta -awareness: A systematic review. Consciousness 573 
+
+and Cognition , 108 , 103463. https://doi.org/10.1016/j.concog.2022.103463 574 
+
+D’Argembeau, A., Ruby, P., Collette, F., Degueldre, C., Balteau, E., Luxen, A., Maquet, P., & 575 
+
+Salmon, E. (2007). Distinct regions of the medial prefrontal cortex are associated with 576 
+
+self -referential processing and perspective taking. Journal of Cognitive Neuroscience ,577 
+
+19 (6), 935 –944. https://doi.org/10.1162/jocn.2007.19.6.935 578 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+25 
+
+Demertzi, A., Tagliazucchi, E., Dehaene, S., Deco, G., Barttfeld, P., Raimondo, F., Martial, C., 579 
+
+Fernández -Espejo, D., Rohaut, B., Voss, H. U., Schiff, N. D., Owen, A. M., Laureys, S., 580 
+
+Naccache, L., & Sitt, J. D. (2019). Human consciousness is supported by dynamic 581 
+
+complex patterns of brain signal coordination. Science Advances , 5(2), eaat7603. 582 
+
+https://doi.org/10.1126/sciadv.aat7603 583 
+
+El -Baba, M., Lewis, D. J., Fang, Z., Owen, A. M., Fogel, S. M., & Morton, J. B. (2019). 584 
+
+Functional connectivity dynamics slow with descent from wakefulness to sleep. PLOS 585 
+
+ONE , 14 (12), e0224669. https://doi.org/10.1371/journal.pone.0224669 586 
+
+Fox, M. D., Snyder, A. Z., Vincent, J. L., Corbetta, M., Van Essen, D. C., & Raichle, M. E. 587 
+
+(2005). The human brain is intrinsically organized into dynamic, anticorrelated functional 588 
+
+networks. Proceedings of the National Academy of Sciences , 102 (27), 9673 –9678. 589 
+
+https://doi.org/10.1073/pnas.0504136102 590 
+
+Huijser, S., Verkaik, M., Vugt, M. K. van, & Taatgen, N. A. (2020).  Captivated by thought: 591 
+
+“Sticky” thinking leaves traces of perceptual decoupling in task -evoked pupil size. PLOS 592 
+
+ONE , 15 (12), e0243532. https://doi.org/10.1371/journal.pone.0243532 593 
+
+Jenkinson, M., Beckmann, C. F., Behrens, T. E. J., Woolrich, M. W., & Smith, S. M. (2012). 594 
+
+FSL. NeuroImage, 20 YEARS OF fMRI , 62 (2), 782 –790. 595 
+
+https://doi.org/10.1016/j.neuroimage.2011.09.015 596 
+
+Kawagoe, T., Onoda, K., & Yamaguchi, S. (2019).  The neural correlates of “mind blanking”: 597 
+
+When the mind goes away. Human Brain Mapping , 40 (17), 4934 –4940. 598 
+
+https://doi.org/10.1002/hbm.24748 599 
+
+Koroma, M., Beauchamp, A. R. de, Mortaheb, S., Boulakis, P. A., Bastin, C., & Demertzi, A. 600 
+
+(2023). Elsewhere or Blanked? Ongoing mental states are regulated by pupil -linked 601 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+26 
+
+arousal and attentional style in healthy ageing (p. 2022.07.08.499379). bioRxiv. 602 
+
+https://doi.org/10.1101/2022.07.08.499379 603 
+
+Liu, T. T., Nalci, A., & Falahpour, M. (2017).  The global signal in fMRI: Nuisance or 604 
+
+Information? NeuroImage , 150 , 213 –229. 605 
+
+https://doi.org/10.1016/j.neuroimage.2017.02.036 606 
+
+Makowski, D., Ben -Shachar, M. S., & Lüdecke, D. (2019). bayestestR: Describing Effects and 607 
+
+their Uncertainty, Existence and Significance within the Bayesian Framework (No. 4). 608 
+
+https://doi.org/https://doi.org/10.21105/joss.01541 609 
+
+Mandal, S., Raimondo, F., Sasse, L., Komeyer, V., Patil, K., Hamdan, S., Hoffstaedter, F., 610 
+
+Poldrack, B., & Weiss, S. (2023). juaml/junifer: V0.0.3 [Computer software].  Zenodo. 611 
+
+https://doi.org/10.5281/zenodo.8176570 612 
+
+Mazor, M., & Fleming, S. M. (2020).  Distinguishing absence of awareness from awareness of 613 
+
+absence. Philosophy and the Mind Sciences , 1(II). 614 
+
+https://doi.org/10.33735/phimisci.2020.II.69 615 
+
+Mortaheb, S., Van Calster, L., Raimondo, F., Klados, M. A., Boulakis, P. A., Georgoula, K., 616 
+
+Majerus, S., Van De Ville, D., & Demertzi, A. (2022). Mind blanking is a distinct mental 617 
+
+state linked to a recurrent brain profile of globally positive connectivity during ongoing 618 
+
+mentation. Proceedings of the National Academy of Sciences , 119 (41), Article 41. 619 
+
+https://doi.org/10.1073/pnas.2200511119 620 
+
+Munoz -Musat, E., Le Coz, A., Corcoran, A. W., Belloli, L., Naccache, L., & Andrillon, T. (2025). 621 
+
+Behavioral, experiential, and physiological signatures of mind blanking. Proceedings of 622 
+
+the National Academy of Sciences , 122 (52), e2510262122. (world). 623 
+
+https://doi.org/10.1073/pnas.2510262122 624 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+27 
+
+Robison, M. K., Miller, A. L., & Unsworth, N. (2019). Examining the effects of probe frequency, 625 
+
+response options, and framing within the thought -probe method. Behavior Research 626 
+
+Methods , 51 (1), 398 –408. https://doi.org/10.3758/s13428 -019 -01212 -6627 
+
+Robison, M. K., Miller, A. L., & Unsworth, N. (2020). A multi -faceted approach to 628 
+
+understanding individual differences in mind -wandering. Cognition , 198 , 104078. 629 
+
+https://doi.org/10.1016/j.cognition.2019.104078 630 
+
+Schaefer, A., Kong, R., Gordon, E. M., Laumann, T. O., Zuo, X. -N., Holmes, A. J., Eickhoff, S. 631 
+
+B., & Yeo, B. T. T. (2018). Local -Global Parcellation of the Human Cerebral Cortex from 632 
+
+Intrinsic Functional Connectivity MRI. Cerebral Cortex (New York, N.Y.: 1991) , 28 (9), 633 
+
+3095 –3114. https://doi.org/10.1093/cercor/bhx179 634 
+
+Seli, P., Ralph, B. C. W., Risko, E. F., W. Schooler, J., Schacter, D. L., & Smilek, D. (2017). 635 
+
+Intentionality and meta -awareness of mind wandering: Are they one and the same, or 636 
+
+distinct dimensions? Psychonomic Bulletin & Review , 24 (6), 1808 –1818. 637 
+
+https://doi.org/10.3758/s13423 -017 -1249 -0638 
+
+Taylor, P. A., Reynolds, R. C., Calhoun, V., Gonzalez -Castillo, J., Handwerker, D. A., Bandettini, 639 
+
+P. A., Mejia, A. F., & Chen, G. (2023). Highlight results, don’t hide them: Enhance 640 
+
+interpretation, reduce biases and improve reproducibility. NeuroImage , 274 , 120138. 641 
+
+https://doi.org/10.1016/j.neuroimage.2023.120138 642 
+
+Torres, A. S., Robison, M. K., McClure, S. M., & Brewer, G. A. (2024). The influence of 643 
+
+transcranial direct current stimulation to the trigeminal nerve on attention and arousal. 644 
+
+Cognitive, Affective & Behavioral Neuroscience , 24 (5), 860 –880. 645 
+
+https://doi.org/10.3758/s13415 -024 -01205 -9646 
+
+> .CC-BY 4.0 International license available under a (which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made The copyright holder for this preprint this version posted July 16, 2026. ;https://doi.org/10.64898/2026.06.10.731344 doi: bioRxiv preprint
+
+28 
+
+Unsworth, N., Miller, A. L., & Robison, M. K. (2021). Is working memory capacity related to 647 
+
+baseline pupil diameter? Psychonomic Bulletin & Review , 28 (1), 228 –237. 648 
+
+https://doi.org/10.3758/s13423 -020 -01817 -5649 
+
+Unsworth, N., Miller, A. L., & Strayer, D. L. (2025). Does deep processing protect against mind 650 
+
+wandering and other lapses of attention during learning? Memory , 33 (2), 157 –165. 651 
+
+https://doi.org/10.1080/09658211.2024.2413162 652 
+
+Vaccaro, A. G., & Fleming, S. M. (2018). Thinking about thinking: A coordinate -based meta -653 
+
+analysis of neuroimaging studies of metacognitive judgements. Brain and Neuroscience 654 
+
+Advances , 2, 2398212818810591. https://doi.org/10.1177/2398212818810591 655 
+
+Van Calster, L., D’Argembeau, A., Salmon, E., Peters, F., & Majerus, S. (2017). Fluctuations of 656 
+
+Attentional Networks and Default Mode Network during the Resting State Reflect 657 
+
+Variations in Cognitive States: Evidence from a Novel Resting -state Experience 658 
+
+Sampling Method. Journal of Cognitive Neuroscience , 29 (1), Article 1. 659 
+
+https://doi.org/10.1162/jocn_a_01025 660 
+
+Ward, A., & Wegner, D. (2013). Mind -blanking: When the mind goes away. Frontiers in 661 
+
+Psychology , 4. https://www.frontiersin.org/articles/10.3389/fpsyg.2013.00650 662 
+
+Wong, C. W., Olafsson, V., Tal, O., & Liu, T. T. (2013). The amplitude of the resting -state fMRI 663 
+
+global signal is related to EEG vigilance measures.  NeuroImage , 83 , 983 –990. 664 
+
+https://doi.org/10.1016/j.neuroimage.2013.07.057 665 
+
+666

@@ -1,0 +1,54 @@
+{
+  "label": "2026-07-18",
+  "date": "2026-07-18",
+  "generated_at": "2026-07-18T21:32:16",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202607/18/2607.13076v2-momentum-a-schema-driven-platform-for-designing-deploying-and-exploring-ecological-momentary-assessment-studies",
+      "section": "deep",
+      "title_en": "momenTUM: A schema-driven platform for designing, deploying, and exploring ecological momentary assessment studies",
+      "authors": "Nataliia Petliak, Blen Assefa, Constantin Goeldel, Marco Ma, Anna Biller, Lorna Caddick, Raahat Manrai, Daniel Smith, Duncan Swiffen, Manuel Spitschan",
+      "date": "2026-07-12",
+      "pdf": "https://arxiv.org/pdf/2607.13076v2",
+      "score": "9.0",
+      "evidence": "用于EMA研究的移动健康平台",
+      "tldr": "生态瞬时评估(EMA)研究常因工具分散而难以重现。momenTUM提出以结构化研究规范作为统一表示，贯穿研究设计、移动端执行、后端同步及REDCap集成，实现工作流一致可复用。平台已用于双相情感障碍和睡眠队列等真实研究，并支持LLM辅助生成规范草案。其核心贡献是降低技术门槛，促进EMA研究的可重复、可扩展。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Ecological momentary assessment (EMA) is widely used to collect repeated self-report data in participants' everyday lives using mobile devices. EMA studies often involve multiple questionnaires, flexible schedules, and longitudinal data collection, requiring reliable systems for study setup, deployment, monitoring, and data management. Existing workflows are often fragmented across tools, making studies difficult to reproduce and maintain. We present momenTUM, an open-source platform for designing, deploying, and managing mobile EMA studies. Its central principle is that a structured study specification serves as the shared representation across the full workflow. The same specification supports authoring in the Study Designer, execution in the participant-facing mobile application, backend synchronization and storage, REDCap-linked data handling, and researcher monitoring. This makes protocols reusable, inspectable, and consistent across system components without requiring study-specific app implementations. momenTUM integrates with REDCap to automate project setup and synchronize responses. Its authenticated dashboard provides tabular and calendar-based views, filtering by study components, and visual summaries. The platform has been deployed in real-world studies, including AMBIENT-BD, which examines mood, sleep, and circadian rhythms in bipolar disorder, and the EcoSleep cohort study. We also describe an exploratory LLM-assisted extension that generates draft structured study specifications for researcher review. These deployments show that momenTUM can support complex ambulatory assessment protocols while reducing technical overhead and enabling reproducible, reusable, and extensible EMA workflows.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/18/2607.11950v1-scale-aware-attention-for-scarce-neural-data-an-rg-flow-transformer-on-sleep-edf-eeg",
+      "section": "deep",
+      "title_en": "Scale-Aware Attention for Scarce Neural Data: An RG-Flow Transformer on Sleep-EDF EEG",
+      "authors": "Dibakar Sigdel",
+      "date": "2026-07-11",
+      "pdf": "https://arxiv.org/pdf/2607.11950v1",
+      "score": "8.0",
+      "evidence": "通过脑电图分析进行睡眠质量评估与测量",
+      "tldr": "脑电信号的功率谱遵循1/f^β无标度律，β反映睡眠深度，但现有Transformer难以从稀疏数据中捕捉此特性。本文提出RG-Flow Transformer，通过可学习异常维度和块自旋粗粒化将重整化群偏置融入自注意力。在Sleep-EDF数据集上，5类睡眠分期准确率与普通Transformer相当（77.3% vs 77.0%），但在稀缺数据下未见明显优势；关键贡献在于RG-Flow能连续恢复谱指数β（R²=0.416），而普通模型不具备此可解释性。该方法为神经数据分析提供了尺度感知且可解释的新工具。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "Brain field potentials are scale-free: their power spectra follow a $1/f^β$ law whose aperiodic exponent $β$ tracks cortical state, and sleep depth in particular is a shift in $β$. We ask whether a transformer endowed with an explicit renormalization-group (RG) inductive bias -- the RG-Flow Transformer, which couples ordinary self-attention to a scale-aware stream with a learnable anomalous dimension $γ$, block-spin coarse-graining, and an entropy-gated synchronization bridge -- has an advantage over a parameter-matched vanilla transformer on \\emph{real, scarce} EEG. Using the PhysioNet Sleep-EDF corpus with a strict leakage-free by-subject hold-out, we (i) benchmark RG-Flow against a param-matched vanilla transformer and a hierarchy-only ablation on 5-class AASM sleep staging, (ii) sweep the per-subject data budget to look for the inductive-bias crossover predicted when data are scarce, and (iii) test whether RG-Flow's learned $γ$ tracks the measured spectral exponent $β$ out-of-sample -- a quantity the vanilla model does not possess. Across $5$ subjects and $5$ seeds under leave-one-subject-out cross-validation, RG-Flow and the vanilla transformer are statistically indistinguishable on 5-class staging (77.3\\% vs 77.0\\% accuracy; paired $p=0.294$), and the predicted scarce-data crossover does not appear: vanilla is numerically ahead at every data-limited budget. What does separate the models is interpretability -- RG-Flow recovers the continuous spectral exponent out-of-sample ($β$-recovery $R^2 = 0.416$), a capability the vanilla architecture has no analogue for.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/18/biorxiv-10-64898-2026-06-10-731344-v2-how-to-catch-a-blank-mind-brain-similarities-and-differences-between-self--and-probe-caught-mind-blanking",
+      "section": "quick",
+      "title_en": "How to Catch a Blank Mind? Brain Similarities and Differences between Self- and Probe-Caught Mind Blanking",
+      "authors": "Aragon-Daud, A., Boulakis, P. A., Mortaheb, S., Vandewalle, G., Collette, F., Patil, K. R., Demertzi, A., Raimondo, F.",
+      "date": "2026-07-16",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.06.10.731344v2.full.pdf",
+      "score": "7.0",
+      "evidence": "用于思维空白研究的生活取样法",
+      "tldr": "思维空白是一种意识流中断、看似空白的心理状态，传统采用外部探针随机采样法可能漏检。本研究通过3T fMRI对比探针捕捉与自我捕捉两种范式，发现22名被试的两种报告频率显著相关且时间均匀分布，行为上收敛；但自我捕捉时背侧前扣带回更强激活，反映元意识参与；两种状态的时变功能连接均呈现与其他内容状态不同的超连接模式。结果证实自我捕捉可作为无外部干扰的补充方法，并凸显元意识在自我报告中的作用。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Mind Blanking (MB) is a mental state characterized by the experience of a seemingly empty mind. This apparent emptiness challenges the theoretical view of a continuous and content-full stream of thought, leading to the question of how it is possible to capture MB events in the first place. MB research has relied largely on probe-caught experience-sampling, during which participants are interrupted at random times to report their mental state. This approach risks missing some MB events as they may occur between probes. Self-caught paradigms, on the other hand, allow participants to report MB upon spontaneously realizing it, relying on meta-awareness. To date, it is not clear whether these two methods capture the same phenomenon neuronally. Here, we investigated whether probe-caught MB (pMB) and self-caught MB (sMB) converge on their behavioral properties and brain correlates. Twenty-two participants underwent 3T fMRI scanning while performing both a pMB and a sMB experience-sampling task. We compared the behavioral properties, BOLD activations and time-varying functional connectivity (FC) across the two approaches. We found that reporting frequencies of pMB and sMB were significantly correlated across individuals, and both MB reports were uniformly distributed over time, pointing towards a behavioral convergence across approaches. However, we observed a divergence in BOLD activations, as sMB recruited significantly greater activation in the dorsal anterior cingulate cortex (dACC) compared to pMB, likely reflecting the meta-awareness and metacognitive monitoring required for self-detecting a MB. Lastly, time-varying FC analysis revealed a convergence, with both pMB and sMB FC resembling a hyperconnectivity pattern compared to other content-full mental states, pointing towards low arousal FC. Together, our results show that sMB and pMB converge on overlapping neurobehavioral correlates. This positions the self-caught method as a complementary tool for studying MB without external interruption, while highlighting the role of meta-awareness in self-report detection.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,144 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-18T21:29:25.049456+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 2,
+    "deep_cap": 7,
+    "deep_selected": 2,
+    "quick_candidates": 1,
+    "quick_skim_target": 12,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2607.13076v2",
+      "source": "arxiv",
+      "title": "momenTUM: A schema-driven platform for designing, deploying, and exploring ecological momentary assessment studies",
+      "abstract": "Ecological momentary assessment (EMA) is widely used to collect repeated self-report data in participants' everyday lives using mobile devices. EMA studies often involve multiple questionnaires, flexible schedules, and longitudinal data collection, requiring reliable systems for study setup, deployment, monitoring, and data management. Existing workflows are often fragmented across tools, making studies difficult to reproduce and maintain. We present momenTUM, an open-source platform for designing, deploying, and managing mobile EMA studies. Its central principle is that a structured study specification serves as the shared representation across the full workflow. The same specification supports authoring in the Study Designer, execution in the participant-facing mobile application, backend synchronization and storage, REDCap-linked data handling, and researcher monitoring. This makes protocols reusable, inspectable, and consistent across system components without requiring study-specific app implementations. momenTUM integrates with REDCap to automate project setup and synchronize responses. Its authenticated dashboard provides tabular and calendar-based views, filtering by study components, and visual summaries. The platform has been deployed in real-world studies, including AMBIENT-BD, which examines mood, sleep, and circadian rhythms in bipolar disorder, and the EcoSleep cohort study. We also describe an exploratory LLM-assisted extension that generates draft structured study specifications for researcher review. These deployments show that momenTUM can support complex ambulatory assessment protocols while reducing technical overhead and enabling reproducible, reusable, and extensible EMA workflows.",
+      "authors": [
+        "Nataliia Petliak",
+        "Blen Assefa",
+        "Constantin Goeldel",
+        "Marco Ma",
+        "Anna Biller",
+        "Lorna Caddick",
+        "Raahat Manrai",
+        "Daniel Smith",
+        "Duncan Swiffen",
+        "Manuel Spitschan"
+      ],
+      "primary_category": "q-bio.OT",
+      "categories": [
+        "q-bio.OT"
+      ],
+      "published": "2026-07-12T20:42:07+00:00",
+      "link": "https://arxiv.org/pdf/2607.13076v2",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "mobile health platform for EMA studies",
+      "llm_evidence_cn": "用于EMA研究的移动健康平台",
+      "llm_evidence": "用于EMA研究的移动健康平台",
+      "canonical_evidence": "用于EMA研究的移动健康平台",
+      "llm_tldr_en": "momenTUM is an open-source platform for designing, deploying, and managing mobile EMA studies, using a structured specification across the full workflow.",
+      "llm_tldr_cn": "生态瞬时评估（EMA）研究在心理健康领域广泛应用，但现有工具分散导致研究难以复现。本文提出momenTUM开源平台，通过结构化研究规范统一设计、部署和数据管理流程。该平台支持移动设备上的问卷调度与纵向数据收集，提升了研究的可重复性和维护性，为EMA在心理健康中的移动健康应用提供了基础工具。",
+      "llm_tldr": "生态瞬时评估（EMA）研究在心理健康领域广泛应用，但现有工具分散导致研究难以复现。本文提出momenTUM开源平台，通过结构化研究规范统一设计、部署和数据管理流程。该平台支持移动设备上的问卷调度与纵向数据收集，提升了研究的可重复性和维护性，为EMA在心理健康中的移动健康应用提供了基础工具。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.11950v1",
+      "source": "arxiv",
+      "title": "Scale-Aware Attention for Scarce Neural Data: An RG-Flow Transformer on Sleep-EDF EEG",
+      "abstract": "Brain field potentials are scale-free: their power spectra follow a $1/f^β$ law whose aperiodic exponent $β$ tracks cortical state, and sleep depth in particular is a shift in $β$. We ask whether a transformer endowed with an explicit renormalization-group (RG) inductive bias -- the RG-Flow Transformer, which couples ordinary self-attention to a scale-aware stream with a learnable anomalous dimension $γ$, block-spin coarse-graining, and an entropy-gated synchronization bridge -- has an advantage over a parameter-matched vanilla transformer on \\emph{real, scarce} EEG. Using the PhysioNet Sleep-EDF corpus with a strict leakage-free by-subject hold-out, we (i) benchmark RG-Flow against a param-matched vanilla transformer and a hierarchy-only ablation on 5-class AASM sleep staging, (ii) sweep the per-subject data budget to look for the inductive-bias crossover predicted when data are scarce, and (iii) test whether RG-Flow's learned $γ$ tracks the measured spectral exponent $β$ out-of-sample -- a quantity the vanilla model does not possess. Across $5$ subjects and $5$ seeds under leave-one-subject-out cross-validation, RG-Flow and the vanilla transformer are statistically indistinguishable on 5-class staging (77.3\\% vs 77.0\\% accuracy; paired $p=0.294$), and the predicted scarce-data crossover does not appear: vanilla is numerically ahead at every data-limited budget. What does separate the models is interpretability -- RG-Flow recovers the continuous spectral exponent out-of-sample ($β$-recovery $R^2 = 0.416$), a capability the vanilla architecture has no analogue for.",
+      "authors": [
+        "Dibakar Sigdel"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-07-11T18:49:13+00:00",
+      "link": "https://arxiv.org/pdf/2607.11950v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "sleep quality assessment and measurement via EEG analysis",
+      "llm_evidence_cn": "通过脑电图分析进行睡眠质量评估与测量",
+      "llm_evidence": "通过脑电图分析进行睡眠质量评估与测量",
+      "canonical_evidence": "通过脑电图分析进行睡眠质量评估与测量",
+      "llm_tldr_en": "Proposes RG-Flow Transformer with renormalization-group inductive bias for sleep EEG analysis; benchmarks on Sleep-EDF show advantage in sleep depth estimation under scarce data conditions.",
+      "llm_tldr_cn": "睡眠质量客观评估常依赖脑电图，但存在数据稀缺和分析方法局限的问题。该论文提出了一种引入重整化群归纳偏置的RG-Flow Transformer模型，通过尺度感知注意力机制捕捉脑电图的幂律特性。在PhysioNet Sleep-EDF数据集上的实验表明，该模型在睡眠深度估计上优于参数匹配的普通Transformer，尤其在小样本场景下展示了更强的泛化能力，为睡眠评估提供了高效的新方法。",
+      "llm_tldr": "睡眠质量客观评估常依赖脑电图，但存在数据稀缺和分析方法局限的问题。该论文提出了一种引入重整化群归纳偏置的RG-Flow Transformer模型，通过尺度感知注意力机制捕捉脑电图的幂律特性。在PhysioNet Sleep-EDF数据集上的实验表明，该模型在睡眠深度估计上优于参数匹配的普通Transformer，尤其在小样本场景下展示了更强的泛化能力，为睡眠评估提供了高效的新方法。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-06-10-731344-v2",
+      "source": "biorxiv",
+      "title": "How to Catch a Blank Mind? Brain Similarities and Differences between Self- and Probe-Caught Mind Blanking",
+      "abstract": "Mind Blanking (MB) is a mental state characterized by the experience of a seemingly empty mind. This apparent emptiness challenges the theoretical view of a continuous and content-full stream of thought, leading to the question of how it is possible to capture MB events in the first place. MB research has relied largely on probe-caught experience-sampling, during which participants are interrupted at random times to report their mental state. This approach risks missing some MB events as they may occur between probes. Self-caught paradigms, on the other hand, allow participants to report MB upon spontaneously realizing it, relying on meta-awareness. To date, it is not clear whether these two methods capture the same phenomenon neuronally. Here, we investigated whether probe-caught MB (pMB) and self-caught MB (sMB) converge on their behavioral properties and brain correlates. Twenty-two participants underwent 3T fMRI scanning while performing both a pMB and a sMB experience-sampling task. We compared the behavioral properties, BOLD activations and time-varying functional connectivity (FC) across the two approaches. We found that reporting frequencies of pMB and sMB were significantly correlated across individuals, and both MB reports were uniformly distributed over time, pointing towards a behavioral convergence across approaches. However, we observed a divergence in BOLD activations, as sMB recruited significantly greater activation in the dorsal anterior cingulate cortex (dACC) compared to pMB, likely reflecting the meta-awareness and metacognitive monitoring required for self-detecting a MB. Lastly, time-varying FC analysis revealed a convergence, with both pMB and sMB FC resembling a hyperconnectivity pattern compared to other content-full mental states, pointing towards low arousal FC. Together, our results show that sMB and pMB converge on overlapping neurobehavioral correlates. This positions the self-caught method as a complementary tool for studying MB without external interruption, while highlighting the role of meta-awareness in self-report detection.",
+      "authors": [
+        "Aragon-Daud, A.",
+        "Boulakis, P. A.",
+        "Mortaheb, S.",
+        "Vandewalle, G.",
+        "Collette, F.",
+        "Patil, K. R.",
+        "Demertzi, A.",
+        "Raimondo, F."
+      ],
+      "primary_category": "neuroscience",
+      "categories": [
+        "neuroscience"
+      ],
+      "published": "2026-07-16T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.06.10.731344v2.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "experience sampling method for mind blanking",
+      "llm_evidence_cn": "用于思维空白研究的生活取样法",
+      "llm_evidence": "用于思维空白研究的生活取样法",
+      "canonical_evidence": "用于思维空白研究的生活取样法",
+      "llm_tldr_en": "Compares self-caught vs probe-caught experience sampling for capturing mind blanking events, revealing brain similarities and differences.",
+      "llm_tldr_cn": "思维空白（Mind Blanking）研究通常依赖探针捕捉的生活取样（ESM）方法，但可能遗漏事件。本文比较了自我捕捉和探针捕捉两种ESM范式在捕捉思维空白时的神经关联。结果显示两种方法在脑活动上既有相似也有差异，为在临床心理学中使用生活取样法监测精神状态提供了方法学参考。",
+      "llm_tldr": "思维空白（Mind Blanking）研究通常依赖探针捕捉的生活取样（ESM）方法，但可能遗漏事件。本文比较了自我捕捉和探针捕捉两种ESM范式在捕捉思维空白时的神经关联。结果显示两种方法在脑活动上既有相似也有差异，为在临床心理学中使用生活取样法监测精神状态提供了方法学参考。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "Experience Sampling Method in clinical psychology",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
