@@ -1,0 +1,192 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-19T21:21:01.383486+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 2,
+    "deep_cap": 7,
+    "deep_selected": 2,
+    "quick_candidates": 2,
+    "quick_skim_target": 12,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "biorxiv-10-64898-2026-05-07-721507-v2",
+      "source": "biorxiv",
+      "title": "A Beta-Binomial Model for Estimating Zero- or One-inflated Pain Trajectories",
+      "abstract": "Chronic pain is a widespread public health issue that imposes substantial health, emotional, and economic burdens on individuals and communities. Because pain is subjective and lacks objective biomarkers, it is typically measured using patient-reported scores, often on a numerical scale from zero to ten. Increasingly, pain studies use ecological momentary assessment, with multiple daily assessments over days and across study phases (e.g., a series of baseline and post-intervention assessments). These data frequently show many ratings at the extremes (i.e., at minimum or maximum pain scores), commonly referred to as zero- and one-inflation in the statistical literature, along with considerable within-person variability both within and across days. These phenomena present challenges for statistical analyses, as they violate assumptions of most commonly used statistical techniques (e.g., the normality assumption of linear mixed models). We propose a Bayesian beta-binomial mixed-effects model for modeling potential zero- or one-inflated pain scores while accounting for variability using random effects on the mean and variance parameters across subjects. A simulation study demonstrates that the method accurately estimates model parameters across realistic sample sizes, time points, and zero- and one-inflation levels. An application to data from two longitudinal pain studies demonstrates that the model fits the data better and, when correctly specified, yields accurate uncertainty intervals for longitudinal changes in pain compared to existing models, especially for zero- and one-inflated outcomes. Additionally, the model directly estimates the probability of clinically meaningful pain events. The proposed method provides a powerful statistical framework for studying the patient-reported pain trajectories.",
+      "authors": [
+        "Liu, Y.",
+        "Harris, R. E.",
+        "Clauw, D.",
+        "Bayman, E.",
+        "Leroux, A.",
+        "Lindquist, M. A."
+      ],
+      "primary_category": "bioinformatics",
+      "categories": [
+        "bioinformatics"
+      ],
+      "published": "2026-07-18T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.05.07.721507v2.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "uses ecological momentary assessment for pain trajectories, relevant to mental health",
+      "llm_evidence_cn": "使用生态瞬时评估分析疼痛轨迹，与心理健康相关",
+      "llm_evidence": "使用生态瞬时评估分析疼痛轨迹，与心理健康相关",
+      "canonical_evidence": "使用生态瞬时评估分析疼痛轨迹，与心理健康相关",
+      "llm_tldr_en": "This paper proposes a Beta-Binomial model to handle zero- or one-inflation in pain trajectories collected via ecological momentary assessment (EMA), commonly used in mental health research.",
+      "llm_tldr_cn": "慢性疼痛研究中生态瞬时评估（EMA）数据常出现极端评分（零或一膨胀）和大量个体内变异。本文提出一个贝塔-二项模型，能够有效处理这类数据特征，从而更准确地估计疼痛轨迹。该模型适用于EMA数据，为心理健康领域的抑郁、焦虑等纵向评估提供了统计方法支持。",
+      "llm_tldr": "慢性疼痛研究中生态瞬时评估（EMA）数据常出现极端评分（零或一膨胀）和大量个体内变异。本文提出一个贝塔-二项模型，能够有效处理这类数据特征，从而更准确地估计疼痛轨迹。该模型适用于EMA数据，为心理健康领域的抑郁、焦虑等纵向评估提供了统计方法支持。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "Ecological Momentary Assessment mental health research",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.14593v1",
+      "source": "arxiv",
+      "title": "Memory-Driven Self-Disclosure and Relational Turning Points: A Longitudinal Multimodal Study of Human-AI Interaction",
+      "abstract": "As conversational AI systems are designed for repeated use, a central question is how a series of interactions becomes a relationship. We present a longitudinal multimodal study of a memory-augmented conversational agent (24 participants x 10 sessions), in which participants rated five relational constructs -- familiarity, self-disclosure, perceived memory, conversational quality, and enjoyment -- after each session. Two complementary dynamics emerge. First, conversational quality strongly shapes how enjoyable a session feels in the moment but does not carry forward across sessions, whereas perceived memory is relationally conditioned -- predicted by prior relational state rather than reflecting system capability alone -- and it shapes later enjoyment indirectly, via subsequent self-disclosure. Second, relationships are punctuated by discrete turning points -- crashes and surges -- that are partially traceable in multimodal behavior and open different intervention windows: surges are more behaviorally detectable in the moment, enjoyment surges persist more reliably than enjoyment crashes recover, and some crashes are better forecast from person-specific behavioral drift than detected after they have already occurred. Together, the findings suggest that longitudinal human-AI relationships are built through both slow accumulation and abrupt turning points.",
+      "authors": [
+        "Ryuichi Sumida",
+        "Mao Saeki",
+        "Masaki Eguchi",
+        "Sadahiro Yoshikawa",
+        "Koji Inoue",
+        "Tatsuya Kawahara",
+        "Yoichi Matsuyama"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-07-16T05:43:06+00:00",
+      "link": "https://arxiv.org/pdf/2607.14593v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "longitudinal repeated self-report study resembling EMA",
+      "llm_evidence_cn": "纵向重复自我报告研究，类似EMA方法",
+      "llm_evidence": "纵向重复自我报告研究，类似EMA方法",
+      "canonical_evidence": "纵向重复自我报告研究，类似EMA方法",
+      "llm_tldr_en": "A longitudinal multimodal study using repeated session ratings (24 participants x 10 sessions) to examine human-AI relational dynamics, demonstrating EMA-like methodology for psychological research.",
+      "llm_tldr_cn": "该研究利用记忆增强的对话代理进行了10次会话，收集参与者在每次会话后对熟悉度、自我披露等维度的评分，揭示了会话质量和感知记忆如何塑造人机关系。这种重复测量自我报告的方法与生态瞬时评估（EMA）高度相似，适用于心理和行为研究中的纵向数据采集。",
+      "llm_tldr": "该研究利用记忆增强的对话代理进行了10次会话，收集参与者在每次会话后对熟悉度、自我披露等维度的评分，揭示了会话质量和感知记忆如何塑造人机关系。这种重复测量自我报告的方法与生态瞬时评估（EMA）高度相似，适用于心理和行为研究中的纵向数据采集。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "EMA use in psychological studies",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-64898-2026-07-14-738397-v1",
+      "source": "biorxiv",
+      "title": "Detecting Sleep Deprivation from Running Biomechanics Using Machine Learning Classification: A Comparison Between Wearable and Laboratory Motion Capture",
+      "abstract": "Sleep deprivation is associated with impaired endurance performance and an increased risk of running-related injury. Previous research has identified alterations in running biomechanics following a single night of sleep deprivation under laboratory conditions. However, whether these biomechanical changes can be detected using wearable technology remains unknown. Twenty-one recreationally active runners completed submaximal treadmill running under both normal sleep and total sleep deprivation conditions in a randomized crossover design. Biomechanical features were extracted simultaneously using a full-body motion capture system and a trunk-mounted wearable sensor. Five machine learning classifiers were evaluated in two classification tasks: a within-subject task using paired recordings from the same individual, and a between-subject task performed without individual baseline data. Within-subject classification consistently exceeded chance level for both measurement systems, with best accuracies of 85% for the wearable sensor (Logistic Regression) and 83% for the motion capture system (Random Forest). These findings indicate that sleep deprivation produces a systematic and individually consistent biomechanical signature during running. In contrast, between-subject classification failed across nearly all models and systems, with accuracies remaining close to chance level ([~]50%), demonstrating that inter-individual variability obscures the sleep-deprivation signal in the absence of personalized baseline data. Both systems converged on temporal organization, loading-related variables, and stride-to-stride variability as the most discriminative feature domains. Contrary to expectations, the laboratory motion capture system did not outperform the wearable sensor. Together, these findings demonstrate that individualized, baseline-referenced monitoring is essential for detecting sleep-deprivation-related changes in running gait, and suggest that a single trunk-mounted wearable sensor may provide a practical solution for real-world monitoring when paired recordings are available.",
+      "authors": [
+        "Seynaeve, M.",
+        "Hendrickx, K.",
+        "Vanwanseele, B.",
+        "de Beukelaar, T."
+      ],
+      "primary_category": "bioengineering",
+      "categories": [
+        "bioengineering"
+      ],
+      "published": "2026-07-15T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.64898/2026.07.14.738397v1.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Sleep deprivation detection using wearable sensors",
+      "llm_evidence_cn": "利用可穿戴传感器检测睡眠剥夺",
+      "llm_evidence": "利用可穿戴传感器检测睡眠剥夺",
+      "canonical_evidence": "利用可穿戴传感器检测睡眠剥夺",
+      "llm_tldr_en": "This study uses machine learning on wearable sensor data and motion capture to classify sleep deprivation vs normal sleep, showing that biomechanical changes from sleep deprivation can be detected with wearables for ambulatory sleep assessment.",
+      "llm_tldr_cn": "该研究通过比较可穿戴传感器与实验室运动捕捉系统，利用机器学习分类跑步生物力学特征来检测睡眠剥夺。结果表明可穿戴设备能够有效识别睡眠不足状态，为睡眠质量的生态瞬时评估提供了可行方法，有望推动日常情境中的睡眠监测技术发展。",
+      "llm_tldr": "该研究通过比较可穿戴传感器与实验室运动捕捉系统，利用机器学习分类跑步生物力学特征来检测睡眠剥夺。结果表明可穿戴设备能够有效识别睡眠不足状态，为睡眠质量的生态瞬时评估提供了可行方法，有望推动日常情境中的睡眠监测技术发展。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.13940v1",
+      "source": "arxiv",
+      "title": "A Self-Evolving Agent for Longitudinal Personal Health Management",
+      "abstract": "Personal health management unfolds over repeated encounters, yet most health AI systems treat each request in isolation. We developed HealthClaw, an open-source agent architecture that updates support as a person's routines, preferences, measurements and risks change. It separates shared safety rules and medical knowledge from private longitudinal memory containing profile facts, reusable procedures and episodic traces. After each episode, induction determines what should update the profile, revise a procedure, remain episodic or be excluded. We evaluated HealthClaw with a synthetic year-long benchmark and nine 200-case biomedical tasks. Across 900 longitudinal support probes, answer accuracy increased from 0.2% with current-query prompting to 45.7% with HealthClaw, while prompt-side context exposure was 71.7% lower than with full-history prompting. In 100 privacy probes, HealthClaw produced higher privacy-aware answer quality and fewer unsafe disclosures than both baselines. Across the biomedical tasks, the mean absolute gain in the task-specific primary metric was 27.0 percentage points, and seven gains remained significant after false-discovery-rate correction. These offline benchmarks support governed, self-evolving memory for longitudinal personal health agents, although clinical effectiveness requires prospective evaluation. HealthClaw is publicly available at https://github.com/HC-Guo/HealthClaw.",
+      "authors": [
+        "Haoran Li",
+        "Jiebi Deng",
+        "Tong Jin",
+        "Jinghong Han",
+        "Yuxin Wang",
+        "Zexin Wang",
+        "Qingyi Si",
+        "Weikang Gong",
+        "Xiahai Zhuang",
+        "Jia You",
+        "Wei Cheng",
+        "Jianfeng Feng",
+        "Hongcheng Guo"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-15T15:22:11+00:00",
+      "link": "https://arxiv.org/pdf/2607.13940v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "self-evolving agent for longitudinal health management enabling EMA integration",
+      "llm_evidence_cn": "自我演化的健康管理agent，可支持EMA数据整合",
+      "llm_evidence": "自我演化的健康管理agent，可支持EMA数据整合",
+      "canonical_evidence": "自我演化的健康管理agent，可支持EMA数据整合",
+      "llm_tldr_en": "HealthClaw: an open-source agent architecture that updates support based on longitudinal health data, enabling personalized and continuous health management relevant for EMA applications.",
+      "llm_tldr_cn": "针对健康AI系统孤立处理请求的问题，该研究提出了HealthClaw，一个开源agent架构，通过分离共享规则和私人纵向记忆，实现基于用户习惯和测量数据的持续支持。在900个纵向探针任务中，问答准确率从0.2%提升至45.7%，展示了在个人健康管理中集成EMA等纵向数据的潜力。",
+      "llm_tldr": "针对健康AI系统孤立处理请求的问题，该研究提出了HealthClaw，一个开源agent架构，通过分离共享规则和私人纵向记忆，实现基于用户习惯和测量数据的持续支持。在900个纵向探针任务中，问答准确率从0.2%提升至45.7%，展示了在个人健康管理中集成EMA等纵向数据的潜力。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "label": "2026-07-19",
+  "date": "2026-07-19",
+  "generated_at": "2026-07-19T21:24:31",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202607/19/biorxiv-10-64898-2026-05-07-721507-v2-a-beta-binomial-model-for-estimating-zero--or-one-inflated-pain-trajectories",
+      "section": "deep",
+      "title_en": "A Beta-Binomial Model for Estimating Zero- or One-inflated Pain Trajectories",
+      "authors": "Liu, Y., Harris, R. E., Clauw, D., Bayman, E., Leroux, A., Lindquist, M. A.",
+      "date": "2026-07-18",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.05.07.721507v2.full.pdf",
+      "score": "9.0",
+      "evidence": "使用生态瞬时评估分析疼痛轨迹，与心理健康相关",
+      "tldr": "慢性疼痛评分数据常出现0或10的极端值（零/一膨胀），且个体内变异大，违反常规统计模型假设。本文提出贝叶斯beta-binomial混合效应模型，通过随机效应刻画均值和方差变异，直接建模零/一膨胀。模拟表明该方法在不同样本量和膨胀水平下参数估计准确；应用于两项纵向研究，相比现有模型拟合更好，能给出更准确的纵向变化置信区间，并直接估计临床有意义疼痛事件的概率。该框架为分析患者报告疼痛轨迹提供了有力工具。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Chronic pain is a widespread public health issue that imposes substantial health, emotional, and economic burdens on individuals and communities. Because pain is subjective and lacks objective biomarkers, it is typically measured using patient-reported scores, often on a numerical scale from zero to ten. Increasingly, pain studies use ecological momentary assessment, with multiple daily assessments over days and across study phases (e.g., a series of baseline and post-intervention assessments). These data frequently show many ratings at the extremes (i.e., at minimum or maximum pain scores), commonly referred to as zero- and one-inflation in the statistical literature, along with considerable within-person variability both within and across days. These phenomena present challenges for statistical analyses, as they violate assumptions of most commonly used statistical techniques (e.g., the normality assumption of linear mixed models). We propose a Bayesian beta-binomial mixed-effects model for modeling potential zero- or one-inflated pain scores while accounting for variability using random effects on the mean and variance parameters across subjects. A simulation study demonstrates that the method accurately estimates model parameters across realistic sample sizes, time points, and zero- and one-inflation levels. An application to data from two longitudinal pain studies demonstrates that the model fits the data better and, when correctly specified, yields accurate uncertainty intervals for longitudinal changes in pain compared to existing models, especially for zero- and one-inflated outcomes. Additionally, the model directly estimates the probability of clinically meaningful pain events. The proposed method provides a powerful statistical framework for studying the patient-reported pain trajectories.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/19/2607.14593v1-memory-driven-self-disclosure-and-relational-turning-points-a-longitudinal-multimodal-study-of-human-ai-interaction",
+      "section": "deep",
+      "title_en": "Memory-Driven Self-Disclosure and Relational Turning Points: A Longitudinal Multimodal Study of Human-AI Interaction",
+      "authors": "Ryuichi Sumida, Mao Saeki, Masaki Eguchi, Sadahiro Yoshikawa, Koji Inoue, Tatsuya Kawahara, Yoichi Matsuyama",
+      "date": "2026-07-16",
+      "pdf": "https://arxiv.org/pdf/2607.14593v1",
+      "score": "8.0",
+      "evidence": "纵向重复自我报告研究，类似EMA方法",
+      "tldr": "本研究通过24名参与者与记忆增强AI系统进行10次交互的纵向多模态实验，探讨多次交互如何演变为关系。发现两个关键动态：1）会话质量仅即时影响享受，不跨会话传递；而感知记忆受先前关系状态影响，通过后续自我披露间接塑造享受。2）关系存在崩溃和激增两类转折点，可通过多模态行为部分检测，其中享受激增比崩溃后恢复更持久，部分崩溃可从个体行为漂移中提前预测。结论表明人机关系由缓慢累积和突变转折共同构建。",
+      "tags": "query:ema-mental",
+      "abstract_en": "As conversational AI systems are designed for repeated use, a central question is how a series of interactions becomes a relationship. We present a longitudinal multimodal study of a memory-augmented conversational agent (24 participants x 10 sessions), in which participants rated five relational constructs -- familiarity, self-disclosure, perceived memory, conversational quality, and enjoyment -- after each session. Two complementary dynamics emerge. First, conversational quality strongly shapes how enjoyable a session feels in the moment but does not carry forward across sessions, whereas perceived memory is relationally conditioned -- predicted by prior relational state rather than reflecting system capability alone -- and it shapes later enjoyment indirectly, via subsequent self-disclosure. Second, relationships are punctuated by discrete turning points -- crashes and surges -- that are partially traceable in multimodal behavior and open different intervention windows: surges are more behaviorally detectable in the moment, enjoyment surges persist more reliably than enjoyment crashes recover, and some crashes are better forecast from person-specific behavioral drift than detected after they have already occurred. Together, the findings suggest that longitudinal human-AI relationships are built through both slow accumulation and abrupt turning points.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/19/biorxiv-10-64898-2026-07-14-738397-v1-detecting-sleep-deprivation-from-running-biomechanics-using-machine-learning-classification-a-comparison-between-wearable-and-laboratory-motion-capture",
+      "section": "quick",
+      "title_en": "Detecting Sleep Deprivation from Running Biomechanics Using Machine Learning Classification: A Comparison Between Wearable and Laboratory Motion Capture",
+      "authors": "Seynaeve, M., Hendrickx, K., Vanwanseele, B., de Beukelaar, T.",
+      "date": "2026-07-15",
+      "pdf": "https://www.biorxiv.org/content/10.64898/2026.07.14.738397v1.full.pdf",
+      "score": "7.0",
+      "evidence": "利用可穿戴传感器检测睡眠剥夺",
+      "tldr": "睡眠剥夺会损害跑步表现并增加损伤风险，但能否通过可穿戴技术检测其生物力学变化尚不清楚。本研究让21名跑者在正常睡眠和完全睡眠剥夺后跑步，同时使用全身运动捕捉和躯干可穿戴传感器提取特征，并用五种机器学习分类器进行分类。个体内分类中，可穿戴传感器和运动捕捉系统的最佳准确率分别达到85%和83%，表明存在个体一致的生物力学特征。而个体间分类准确率接近随机（约50%），凸显了个体基线数据的重要性。该研究证明个体化、基于基线的监测对检测睡眠剥夺相关步态变化至关重要，并指出单个躯干可穿戴传感器在配对记录下具有实际应用潜力。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "Sleep deprivation is associated with impaired endurance performance and an increased risk of running-related injury. Previous research has identified alterations in running biomechanics following a single night of sleep deprivation under laboratory conditions. However, whether these biomechanical changes can be detected using wearable technology remains unknown. Twenty-one recreationally active runners completed submaximal treadmill running under both normal sleep and total sleep deprivation conditions in a randomized crossover design. Biomechanical features were extracted simultaneously using a full-body motion capture system and a trunk-mounted wearable sensor. Five machine learning classifiers were evaluated in two classification tasks: a within-subject task using paired recordings from the same individual, and a between-subject task performed without individual baseline data. Within-subject classification consistently exceeded chance level for both measurement systems, with best accuracies of 85% for the wearable sensor (Logistic Regression) and 83% for the motion capture system (Random Forest). These findings indicate that sleep deprivation produces a systematic and individually consistent biomechanical signature during running. In contrast, between-subject classification failed across nearly all models and systems, with accuracies remaining close to chance level ([~]50%), demonstrating that inter-individual variability obscures the sleep-deprivation signal in the absence of personalized baseline data. Both systems converged on temporal organization, loading-related variables, and stride-to-stride variability as the most discriminative feature domains. Contrary to expectations, the laboratory motion capture system did not outperform the wearable sensor. Together, these findings demonstrate that individualized, baseline-referenced monitoring is essential for detecting sleep-deprivation-related changes in running gait, and suggest that a single trunk-mounted wearable sensor may provide a practical solution for real-world monitoring when paired recordings are available.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/19/2607.13940v1-a-self-evolving-agent-for-longitudinal-personal-health-management",
+      "section": "quick",
+      "title_en": "A Self-Evolving Agent for Longitudinal Personal Health Management",
+      "authors": "Haoran Li, Jiebi Deng, Tong Jin, Jinghong Han, Yuxin Wang, Zexin Wang, Qingyi Si, Weikang Gong, Xiahai Zhuang, Jia You, Wei Cheng, Jianfeng Feng, Hongcheng Guo",
+      "date": "2026-07-15",
+      "pdf": "https://arxiv.org/pdf/2607.13940v1",
+      "score": "6.0",
+      "evidence": "自我演化的健康管理agent，可支持EMA数据整合",
+      "tldr": "个人健康管理需要长期连续支持，但现有AI系统孤立处理每次请求。提出HealthClaw自进化agent架构，分离共享知识库与私有记忆，通过每轮交互后的归纳机制动态更新用户画像、程序和情景记忆。在900次纵向支持探针中，回答准确率从基线0.2%提升至45.7%，上下文暴露降低71.7%；100次隐私探针中隐私感知质量和安全性均优于基线。为个人健康智能体提供了受控自进化记忆的可行方案，但临床有效性需进一步验证。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Personal health management unfolds over repeated encounters, yet most health AI systems treat each request in isolation. We developed HealthClaw, an open-source agent architecture that updates support as a person's routines, preferences, measurements and risks change. It separates shared safety rules and medical knowledge from private longitudinal memory containing profile facts, reusable procedures and episodic traces. After each episode, induction determines what should update the profile, revise a procedure, remain episodic or be excluded. We evaluated HealthClaw with a synthetic year-long benchmark and nine 200-case biomedical tasks. Across 900 longitudinal support probes, answer accuracy increased from 0.2% with current-query prompting to 45.7% with HealthClaw, while prompt-side context exposure was 71.7% lower than with full-history prompting. In 100 privacy probes, HealthClaw produced higher privacy-aware answer quality and fewer unsafe disclosures than both baselines. Across the biomedical tasks, the mean absolute gain in the task-specific primary metric was 27.0 percentage points, and seven gains remained significant after false-discovery-rate correction. These offline benchmarks support governed, self-evolving memory for longitudinal personal health agents, although clinical effectiveness requires prospective evaluation. HealthClaw is publicly available at https://github.com/HC-Guo/HealthClaw.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
