@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-20",
+  "date": "2026-07-20",
+  "generated_at": "2026-07-20T21:47:12",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/20/biorxiv-10-1101-2020-08-27-269746-v2-quantifying-physiological-synchrony-through-windowed-cross-correlation-analysis-statistical-and-theoretical-considerations",
+      "section": "quick",
+      "title_en": "Quantifying Physiological Synchrony through Windowed Cross-Correlation Analysis: Statistical and Theoretical Considerations",
+      "authors": "Behrens, F., Diana, F., Moulder, R. G., Boker, S. M., Kret, M.",
+      "date": "2026-07-17",
+      "pdf": "https://www.biorxiv.org/content/10.1101/2020.08.27.269746v2.full.pdf",
+      "score": "6.0",
+      "evidence": "窗口互相关分析方法适用于临床研究中的动态评估时间序列数据",
+      "tldr": "人际同步研究常用滑动窗口互相关分析，但参数选择缺乏依据。本研究以心率、皮肤电等生理信号为对象，系统评估窗口大小和最大延迟对区分真实同步与伪同步、以及敏感检测条件差异的影响。结果发现小窗口能更好区分同步，延迟影响较小。结合生理边界提供参数优化建议，为后续研究提供参考。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "Interpersonal synchrony is a widely studied phenomenon. A great challenge is to statistically capture the dynamics of social interactions with fluctuating levels of synchrony and varying delays between responses of individuals. Windowed Cross-Correlation analysis accounts for both characteristics by segmenting the time series into smaller windows and shifting the segments of two interacting individuals away from each other up to a maximum lag. Despite evidence showing that these parameters affect the estimated synchrony level, there is a lack of guidelines on which parameter configurations to use. The current study aimed to close this knowledge gap by comparing the effect of different parameter configurations on two outcome criteria: (1) the ability to distinguish synchrony from pseudosynchrony by means of surrogate data analyses, and (2) the sensitivity to detect change in synchrony as measured by the difference between two within-subject conditions. Focusing on physiological synchrony, we performed these analyses on heartrate, skin conductance level, pupil size, and facial expressions data. Results revealed that a range of parameters was able to discriminate synchrony from pseudosynchrony. Window size was more influential than the maximum lag with smaller window sizes showing better discrimination. No clear patterns emerged for the second criterion. Integrating the statistical findings and theoretical considerations regarding the physiological characteristics and biological boundaries of the signals, we provide recommendations for optimizing the parameter settings to the signal of interest.",
+      "source": "biorxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

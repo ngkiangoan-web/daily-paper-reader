@@ -1,0 +1,58 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-20T21:45:56.855804+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 0,
+    "deep_cap": 7,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 12,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "biorxiv-10-1101-2020-08-27-269746-v2",
+      "source": "biorxiv",
+      "title": "Quantifying Physiological Synchrony through Windowed Cross-Correlation Analysis: Statistical and Theoretical Considerations",
+      "abstract": "Interpersonal synchrony is a widely studied phenomenon. A great challenge is to statistically capture the dynamics of social interactions with fluctuating levels of synchrony and varying delays between responses of individuals. Windowed Cross-Correlation analysis accounts for both characteristics by segmenting the time series into smaller windows and shifting the segments of two interacting individuals away from each other up to a maximum lag. Despite evidence showing that these parameters affect the estimated synchrony level, there is a lack of guidelines on which parameter configurations to use. The current study aimed to close this knowledge gap by comparing the effect of different parameter configurations on two outcome criteria: (1) the ability to distinguish synchrony from pseudosynchrony by means of surrogate data analyses, and (2) the sensitivity to detect change in synchrony as measured by the difference between two within-subject conditions. Focusing on physiological synchrony, we performed these analyses on heartrate, skin conductance level, pupil size, and facial expressions data. Results revealed that a range of parameters was able to discriminate synchrony from pseudosynchrony. Window size was more influential than the maximum lag with smaller window sizes showing better discrimination. No clear patterns emerged for the second criterion. Integrating the statistical findings and theoretical considerations regarding the physiological characteristics and biological boundaries of the signals, we provide recommendations for optimizing the parameter settings to the signal of interest.",
+      "authors": [
+        "Behrens, F.",
+        "Diana, F.",
+        "Moulder, R. G.",
+        "Boker, S. M.",
+        "Kret, M."
+      ],
+      "primary_category": "physiology",
+      "categories": [
+        "physiology"
+      ],
+      "published": "2026-07-17T00:00:00+00:00",
+      "link": "https://www.biorxiv.org/content/10.1101/2020.08.27.269746v2.full.pdf",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "windowed cross-correlation method for time-series synchrony applicable to ambulatory assessment data",
+      "llm_evidence_cn": "窗口互相关分析方法适用于临床研究中的动态评估时间序列数据",
+      "llm_evidence": "窗口互相关分析方法适用于临床研究中的动态评估时间序列数据",
+      "canonical_evidence": "窗口互相关分析方法适用于临床研究中的动态评估时间序列数据",
+      "llm_tldr_en": "This paper provides statistical guidelines for windowed cross-correlation analysis of physiological synchrony, a method directly transferable to analyzing EMA time-series in ambulatory assessment studies.",
+      "llm_tldr_cn": "针对动态评估中时间序列数据分析的统计方法需求，本文系统比较了窗口互相关分析的不同参数配置对估计同步水平的影响。研究发现参数选择会显著影响结果，为临床研究中的动态评估数据（如EMA）提供了实用的分析指南。该方法可推广至睡眠与心理健康研究中的多模态时间序列分析，具有重要的方法论价值。",
+      "llm_tldr": "针对动态评估中时间序列数据分析的统计方法需求，本文系统比较了窗口互相关分析的不同参数配置对估计同步水平的影响。研究发现参数选择会显著影响结果，为临床研究中的动态评估数据（如EMA）提供了实用的分析指南。该方法可推广至睡眠与心理健康研究中的多模态时间序列分析，具有重要的方法论价值。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
