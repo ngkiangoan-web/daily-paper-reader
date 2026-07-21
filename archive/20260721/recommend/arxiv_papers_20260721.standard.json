@@ -1,0 +1,100 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-21T21:50:09.202334+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 1,
+    "deep_cap": 7,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 12,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2607.15423v1",
+      "source": "arxiv",
+      "title": "Sequential Control of False Positives in Online Change Point Detection",
+      "abstract": "Online change point detection is the process of identifying distributional changes in time-ordered data in real time. In applications such as mobile health (mHealth), repeated testing is often performed as new data arrive, creating a multiple testing problem. Traditional approaches for controlling the family-wise error rate (FWER) are not well suited to this setting because the tests are highly dependent and the number of tests is not fixed in advance. In this work, we introduce a sequential family-wise error rate (sFWER), defined as the probability of at least one false positive within a moving monitoring window. We propose a simulation-based calibration procedure to estimate monitoring thresholds that control the sFWER at a desired level. Through simulation studies, we demonstrate that the proposed procedure achieves the desired error control, while commonly used alternatives are either overly conservative or fail to adequately control false alarms. Finally, we illustrate the proposed approach using passively collected smartphone data from a cohort of adolescents and young adults with affective instability.",
+      "authors": [
+        "Melissa Lynne Martin",
+        "Theodore D. Satterthwaite",
+        "Ian J. Barnett"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-07-16T19:53:44+00:00",
+      "link": "https://arxiv.org/pdf/2607.15423v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "method for sequential FWER control in mHealth, applicable to EMA data streams",
+      "llm_evidence_cn": "移动健康中控制假阳性的方法，适用于EMA数据流",
+      "llm_evidence": "移动健康中控制假阳性的方法，适用于EMA数据流",
+      "canonical_evidence": "移动健康中控制假阳性的方法，适用于EMA数据流",
+      "llm_tldr_en": "Proposes a sequential family-wise error rate (sFWER) and simulation-based calibration for online change point detection, addressing multiple testing in mHealth, directly applicable to EMA data analysis.",
+      "llm_tldr_cn": "移动健康应用中的在线变点检测常因重复检验导致假阳性率失控。本文提出时序族错误率(sFWER)概念并设计基于模拟的校准程序以控制监测阈值。在模拟和真实数据中展示了有效控制假阳性。该方法为EMA等纵向数据流的实时分析提供了可靠的统计工具，解决在移动健康监测中频繁检验的统计挑战。",
+      "llm_tldr": "移动健康应用中的在线变点检测常因重复检验导致假阳性率失控。本文提出时序族错误率(sFWER)概念并设计基于模拟的校准程序以控制监测阈值。在模拟和真实数据中展示了有效控制假阳性。该方法为EMA等纵向数据流的实时分析提供了可靠的统计工具，解决在移动健康监测中频繁检验的统计挑战。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.17185v1",
+      "source": "arxiv",
+      "title": "PocketPPD: Screening for Postpartum Depression Risk Using Passive Smartphone Sensing",
+      "abstract": "Postpartum depression (PPD) is a serious perinatal mental health condition affecting approximately 20% of new mothers worldwide. Common screening approaches for PPD, such as self-report questionnaires and active digital logs, rely heavily on user input and thus impose a substantial burden on participants, limiting their feasibility for long-term use. Recent passive mobile sensing (PMS) approaches have enabled low-burden detection of depressive symptoms using machine learning methods with multi-modal sensor data from off-the-shelf mobile devices including smartphones. However, the postpartum period entails distinct behavioral patterns, raising uncertainty about whether sensing-based indicators for general depression and mental disorders generalize to PPD. To address this gap, we propose PocketPPD, a PMS-based PPD screening method that detects PPD risk using maternal contextual features, such as disruptions in behavioral rhythms and shifts in stability, collected through a smartphone. In our exploratory four-week feasibility study with 61 postpartum women, the PMS-only model achieved an AUC of 0.75, while the best-performing model, integrating PMS-oriented data and self-report features, achieved an AUC of 0.83. Moreover, we find that morning and late-night routine volatility ranks among the top digital biomarkers, dynamically moderated by maternal contexts such as infant developmental stage and employment status. This work provides empirical evidence for low-burden PPD risk screening and our findings lay the groundwork for continuous perinatal mental health monitoring.",
+      "authors": [
+        "Jia Tang",
+        "Helinyi Peng",
+        "Akihito Taya",
+        "Kaoru Sezaki",
+        "Daisuke Nishi",
+        "Anind K Dey",
+        "Yuuki Nishiyama"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC",
+        "cs.CY"
+      ],
+      "published": "2026-07-19T10:49:06+00:00",
+      "link": "https://arxiv.org/pdf/2607.17185v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "passive smartphone sensing for postpartum depression screening, related to digital phenotyping and mobile mental health monitoring",
+      "llm_evidence_cn": "使用被动智能手机感测进行产后抑郁筛查，关联数字表型与移动心理健康监测",
+      "llm_evidence": "使用被动智能手机感测进行产后抑郁筛查，关联数字表型与移动心理健康监测",
+      "canonical_evidence": "使用被动智能手机感测进行产后抑郁筛查，关联数字表型与移动心理健康监测",
+      "llm_tldr_en": "PocketPPD uses passive smartphone sensing to screen for postpartum depression risk, demonstrating low-burden digital phenotyping that aligns with EMA-based mental health monitoring approaches.",
+      "llm_tldr_cn": "产后抑郁是严重的围产期心理健康问题，传统筛查依赖用户主动输入，长期可行性受限。本文提出PocketPPD，利用被动智能手机感测（PMS）收集多模态传感器数据，通过机器学习方法检测产后抑郁风险。结果显示该方法在低负担条件下有效识别抑郁症状，为数字表型技术在心理健康监测中的应用提供了新途径，与生态瞬时评估（EMA）方法互补但方向一致。",
+      "llm_tldr": "产后抑郁是严重的围产期心理健康问题，传统筛查依赖用户主动输入，长期可行性受限。本文提出PocketPPD，利用被动智能手机感测（PMS）收集多模态传感器数据，通过机器学习方法检测产后抑郁风险。结果显示该方法在低负担条件下有效识别抑郁症状，为数字表型技术在心理健康监测中的应用提供了新途径，与生态瞬时评估（EMA）方法互补但方向一致。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "digital phenotyping using EMA in mental health",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

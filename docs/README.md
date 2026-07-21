@@ -6,24 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-20
-- 运行时间：2026-07-20 21:47:08 UTC
+- 最新运行日期：2026-07-21
+- 运行时间：2026-07-21 21:52:30 UTC
 - 运行状态：成功
-- 本次总论文数：1
-- 精读区：0
+- 本次总论文数：2
+- 精读区：1
 - 速读区：1
 
 ### 今日简报（AI）
-今日速读1篇生理同步量化方法论文。值得关注的是窗口互相关分析在统计与理论上的关键考量。建议对生理信号同步计算感兴趣的读者重点关注其方法学细节。
-- 详情：[/202607/20/README](/202607/20/README)
+今天精读了一篇在线变点检测中序贯控制假阳性的方法（8.0分），并速读了一篇用智能手机被动传感筛查产后抑郁风险的研究（7.0分）。最值得关注的是变点检测的假阳性控制技术，以及手机传感在心理健康筛查中的应用。建议进一步了解变点检测在实时监控中的落地，同时探索智能设备在早期心理风险识别中的潜力。
+- 详情：[/202607/21/README](/202607/21/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Sequential Control of False Positives in Online Change Point Detection](/202607/21/2607.15423v1-sequential-control-of-false-positives-in-online-change-point-detection)  
+   标签：评分：8.0/10、query:ema-mental
+   evidence：移动健康中控制假阳性的方法，适用于EMA数据流
 
 ### 速读区论文标签
-1. [Quantifying Physiological Synchrony through Windowed Cross-Correlation Analysis: Statistical and Theoretical Considerations](/202607/20/biorxiv-10-1101-2020-08-27-269746-v2-quantifying-physiological-synchrony-through-windowed-cross-correlation-analysis-statistical-and-theoretical-considerations)  
-   标签：评分：6.0/10、query:sleep-mental
-   evidence：窗口互相关分析方法适用于临床研究中的动态评估时间序列数据
+1. [PocketPPD: Screening for Postpartum Depression Risk Using Passive Smartphone Sensing](/202607/21/2607.17185v1-pocketppd-screening-for-postpartum-depression-risk-using-passive-smartphone-sensing)  
+   标签：评分：7.0/10、query:ema-mental
+   evidence：使用被动智能手机感测进行产后抑郁筛查，关联数字表型与移动心理健康监测
 
 
 <div class="dpr-home-promo-card">

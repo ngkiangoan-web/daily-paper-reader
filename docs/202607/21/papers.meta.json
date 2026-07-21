@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-21",
+  "date": "2026-07-21",
+  "generated_at": "2026-07-21T21:52:36",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/21/2607.15423v1-sequential-control-of-false-positives-in-online-change-point-detection",
+      "section": "deep",
+      "title_en": "Sequential Control of False Positives in Online Change Point Detection",
+      "authors": "Melissa Lynne Martin, Theodore D. Satterthwaite, Ian J. Barnett",
+      "date": "2026-07-16",
+      "pdf": "https://arxiv.org/pdf/2607.15423v1",
+      "score": "8.0",
+      "evidence": "移动健康中控制假阳性的方法，适用于EMA数据流",
+      "tldr": "在线变点检测中，重复检验导致多重检验问题，传统FWER方法因检验依赖性和数量不固定而失效。本文定义序列族系错误率（sFWER）为移动窗口内至少一次假阳性的概率，并提出基于模拟的阈值校准程序。实验表明该方法在仿真中实现期望错误控制，优于保守或失控的常见替代方案。在情感不稳定青少年的智能手机数据中验证了实用性，为实时监控提供有效假阳性控制。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Online change point detection is the process of identifying distributional changes in time-ordered data in real time. In applications such as mobile health (mHealth), repeated testing is often performed as new data arrive, creating a multiple testing problem. Traditional approaches for controlling the family-wise error rate (FWER) are not well suited to this setting because the tests are highly dependent and the number of tests is not fixed in advance. In this work, we introduce a sequential family-wise error rate (sFWER), defined as the probability of at least one false positive within a moving monitoring window. We propose a simulation-based calibration procedure to estimate monitoring thresholds that control the sFWER at a desired level. Through simulation studies, we demonstrate that the proposed procedure achieves the desired error control, while commonly used alternatives are either overly conservative or fail to adequately control false alarms. Finally, we illustrate the proposed approach using passively collected smartphone data from a cohort of adolescents and young adults with affective instability.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/21/2607.17185v1-pocketppd-screening-for-postpartum-depression-risk-using-passive-smartphone-sensing",
+      "section": "quick",
+      "title_en": "PocketPPD: Screening for Postpartum Depression Risk Using Passive Smartphone Sensing",
+      "authors": "Jia Tang, Helinyi Peng, Akihito Taya, Kaoru Sezaki, Daisuke Nishi, Anind K Dey, Yuuki Nishiyama",
+      "date": "2026-07-19",
+      "pdf": "https://arxiv.org/pdf/2607.17185v1",
+      "score": "7.0",
+      "evidence": "使用被动智能手机感测进行产后抑郁筛查，关联数字表型与移动心理健康监测",
+      "tldr": "产后抑郁症（PPD）影响着约20%的新妈妈，现有筛查方式依赖自我报告，负担重。本文提出PocketPPD，利用智能手机被动感知（PMS）技术，从产妇行为节律紊乱和稳定性变化等特征中检测PPD风险。在61名产后妇女的4周可行性研究中，仅用PMS特征的模型AUC达0.75，融合自报告特征后AUC提升至0.83。研究表明，早晨和深夜的日常波动是关键数字生物标志物，且受婴儿发育阶段和就业状态调节。该工作为低负担的PPD风险筛查提供了实证依据，推动了围产期持续心理健康监测的发展。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Postpartum depression (PPD) is a serious perinatal mental health condition affecting approximately 20% of new mothers worldwide. Common screening approaches for PPD, such as self-report questionnaires and active digital logs, rely heavily on user input and thus impose a substantial burden on participants, limiting their feasibility for long-term use. Recent passive mobile sensing (PMS) approaches have enabled low-burden detection of depressive symptoms using machine learning methods with multi-modal sensor data from off-the-shelf mobile devices including smartphones. However, the postpartum period entails distinct behavioral patterns, raising uncertainty about whether sensing-based indicators for general depression and mental disorders generalize to PPD. To address this gap, we propose PocketPPD, a PMS-based PPD screening method that detects PPD risk using maternal contextual features, such as disruptions in behavioral rhythms and shifts in stability, collected through a smartphone. In our exploratory four-week feasibility study with 61 postpartum women, the PMS-only model achieved an AUC of 0.75, while the best-performing model, integrating PMS-oriented data and self-report features, achieved an AUC of 0.83. Moreover, we find that morning and late-night routine volatility ranks among the top digital biomarkers, dynamically moderated by maternal contexts such as infant developmental stage and employment status. This work provides empirical evidence for low-burden PPD risk screening and our findings lay the groundwork for continuous perinatal mental health monitoring.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
