@@ -6,26 +6,22 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-21
-- 运行时间：2026-07-21 21:52:30 UTC
+- 最新运行日期：2026-07-22
+- 运行时间：2026-07-22 21:45:00 UTC
 - 运行状态：成功
-- 本次总论文数：2
-- 精读区：1
-- 速读区：1
+- 本次总论文数：0
+- 精读区：0
+- 速读区：0
 
 ### 今日简报（AI）
-今天精读了一篇在线变点检测中序贯控制假阳性的方法（8.0分），并速读了一篇用智能手机被动传感筛查产后抑郁风险的研究（7.0分）。最值得关注的是变点检测的假阳性控制技术，以及手机传感在心理健康筛查中的应用。建议进一步了解变点检测在实时监控中的落地，同时探索智能设备在早期心理风险识别中的潜力。
-- 详情：[/202607/21/README](/202607/21/README)
+> 今日无新推荐，系统未产出可展示论文。
+- 详情：[/202607/22/README](/202607/22/README)
 
 ### 精读区论文标签
-1. [Sequential Control of False Positives in Online Change Point Detection](/202607/21/2607.15423v1-sequential-control-of-false-positives-in-online-change-point-detection)  
-   标签：评分：8.0/10、query:ema-mental
-   evidence：移动健康中控制假阳性的方法，适用于EMA数据流
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [PocketPPD: Screening for Postpartum Depression Risk Using Passive Smartphone Sensing](/202607/21/2607.17185v1-pocketppd-screening-for-postpartum-depression-risk-using-passive-smartphone-sensing)  
-   标签：评分：7.0/10、query:ema-mental
-   evidence：使用被动智能手机感测进行产后抑郁筛查，关联数字表型与移动心理健康监测
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
