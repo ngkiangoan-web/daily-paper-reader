@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-24",
+  "date": "2026-07-24",
+  "generated_at": "2026-07-24T21:48:58",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/24/2607.20310v1-capturing-inner-experience-at-scale-an-ai-interviewer-co-developed-with-the-founder-of-a-landmark-phenomenological-method",
+      "section": "deep",
+      "title_en": "Capturing Inner Experience At Scale: An AI Interviewer Co-Developed with the Founder of a Landmark Phenomenological Method",
+      "authors": "Jona Carmon, Clara Bersch, Charles Fernyhough, Russell T. Hurlburt, Simone Kühn",
+      "date": "2026-07-22",
+      "pdf": "https://arxiv.org/pdf/2607.20310v1",
+      "score": "9.0",
+      "evidence": "直接涉及经验抽样方法和生态瞬时评估",
+      "tldr": "主观体验研究面临深度与规模的权衡：经典EMA方法限制响应格式，DES依赖稀缺专家访谈导致样本小。本文提出首个基于DES方法的AI面试官，通过11个质量维度评估消息、保守记录已确认内容、选择阶段适当干预、生成非引导查询，并与其创始人合作开发。运行于Introscope平台，支持研究者分享链接、审查样本。该工具将免费开放，用于大规模众包采样和个人内省探索。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Subjective experience is central to psychological science, yet methods for studying it force a choice between depth and scale. Classical Experience sampling, as in ecological momentary assessments (EMA), captures experience as it occurs, but it confines participants to predetermined response formats that prescribe how experience is measured. Descriptive Experience Sampling (DES) instead investigates specific moments in depth through expert expositional interviews, but its reliance on scarce trained interviewers keeps samples small. Large language model (LLM) systems can scale qualitative interviewing. Some models operationalize established interviewing methods such as motivational interviewing, yet none is grounded in a method for apprehending inner experience. Here we present an AI interviewer that aspires to operationalize DES into an explicit, inspectable reasoning architecture. At each turn it appraises the participant's message across eleven quality dimensions, maintains a conservative account of what has been established, selects a stage-appropriate intervention, and composes a single non-leading query, always holding that temporal grounding precedes experiential content. It was derived from the full corpus of DES transcripts and refined with the method's originator Russell T. Hurlburt. To our knowledge it is the first AI interviewer grounded in an established method for studying inner experience. The interviewer runs inside Introscope, an application that delivers the beeps and conducts the interviews and a study platform that lets researchers run studies via shareable links and review the sampled experience. It is demonstrated in an accompanying video https://introscope.mpib-berlin.mpg.de/video. Pending validation studies, we will make it freely available to researchers and the public, for crowdsourced sampling and individual exploration of inner experience.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/24/2607.21527v1-sources-of-inequity-and-fairness-risks-inwellbeing-sensing",
+      "section": "quick",
+      "title_en": "Sources of Inequity and Fairness Risks inWellbeing Sensing",
+      "authors": "Han Zhang, Vedant Das Swain, Koustuv Saha, Anind K. Dey, Jennifer Mankoff",
+      "date": "2026-07-23",
+      "pdf": "https://arxiv.org/pdf/2607.21527v1",
+      "score": "7.0",
+      "evidence": "讨论健康感知中的公平性，被动传感是EMA的关键方法",
+      "tldr": "被动感知系统在幸福感监测中广泛应用，但公平性研究局限于事后基于身份的比较。通过对14位研究人员和从业者的半结构化访谈，考察了系统全生命周期中的公平风险。识别出五种情境化不平等方面（如对监控的舒适度、行为规律性），综合出15种公平风险及缓解策略，并发现结构性障碍。强调需要生态系统级治理支持，包括资助方、出版机构和部署机构。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Passive sensing for wellbeing uses smartphones and wearables to continuously collect human behavioral data and applies ML/AI models to infer psychological states and behaviors (e.g., depression, cognitive load). These systems are increasingly adopted in high-stakes settings (e.g., hospitals, universities), yet fairness research remains limited---primarily to post-hoc, identity-based comparisons of model performance. However, passive sensing combines heterogeneous sensing infrastructures, indirect behavioral inference, and longitudinal deployment---characteristics that, while not exclusive to the domain, are jointly pronounced here and raise two underexplored questions: (1) what additional sources of inequity arise from these characteristics, and (2) how do such inequities propagate beyond algorithmic audits across the system lifecycle? To address this gap, we conducted semi-structured interviews with 14 researchers and practitioners across five countries, examining how fairness risks emerge and are negotiated across the full passive sensing lifecycle. Our findings empirically characterize five situated sources of inequity (e.g., comfort with monitoring, behavioral regularity) that systematically shape fairness risks beyond identity-based attributes. We further synthesize 15 fairness risks and corresponding mitigation strategies across the lifecycle, from study design to deployment. Finally, we identify structural barriers that constrain fair practice in reality, and argue that enabling fair passive sensing requires both individual researcher efforts and ecosystem-level governance support from funders, publication venues, and deploying institutions.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

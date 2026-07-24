@@ -1,0 +1,99 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-24T21:47:15.566836+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 1,
+    "deep_cap": 7,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 12,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2607.20310v1",
+      "source": "arxiv",
+      "title": "Capturing Inner Experience At Scale: An AI Interviewer Co-Developed with the Founder of a Landmark Phenomenological Method",
+      "abstract": "Subjective experience is central to psychological science, yet methods for studying it force a choice between depth and scale. Classical Experience sampling, as in ecological momentary assessments (EMA), captures experience as it occurs, but it confines participants to predetermined response formats that prescribe how experience is measured. Descriptive Experience Sampling (DES) instead investigates specific moments in depth through expert expositional interviews, but its reliance on scarce trained interviewers keeps samples small. Large language model (LLM) systems can scale qualitative interviewing. Some models operationalize established interviewing methods such as motivational interviewing, yet none is grounded in a method for apprehending inner experience. Here we present an AI interviewer that aspires to operationalize DES into an explicit, inspectable reasoning architecture. At each turn it appraises the participant's message across eleven quality dimensions, maintains a conservative account of what has been established, selects a stage-appropriate intervention, and composes a single non-leading query, always holding that temporal grounding precedes experiential content. It was derived from the full corpus of DES transcripts and refined with the method's originator Russell T. Hurlburt. To our knowledge it is the first AI interviewer grounded in an established method for studying inner experience. The interviewer runs inside Introscope, an application that delivers the beeps and conducts the interviews and a study platform that lets researchers run studies via shareable links and review the sampled experience. It is demonstrated in an accompanying video https://introscope.mpib-berlin.mpg.de/video. Pending validation studies, we will make it freely available to researchers and the public, for crowdsourced sampling and individual exploration of inner experience.",
+      "authors": [
+        "Jona Carmon",
+        "Clara Bersch",
+        "Charles Fernyhough",
+        "Russell T. Hurlburt",
+        "Simone Kühn"
+      ],
+      "primary_category": "q-bio.NC",
+      "categories": [
+        "q-bio.NC"
+      ],
+      "published": "2026-07-22T15:56:49+00:00",
+      "link": "https://arxiv.org/pdf/2607.20310v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "directly addresses experience sampling method and EMA",
+      "llm_evidence_cn": "直接涉及经验抽样方法和生态瞬时评估",
+      "llm_evidence": "直接涉及经验抽样方法和生态瞬时评估",
+      "canonical_evidence": "直接涉及经验抽样方法和生态瞬时评估",
+      "llm_tldr_en": "This paper proposes an AI interviewer that scales qualitative experience sampling by combining EMA-like methodology with LLMs, enabling deeper phenomenological interviews at scale for psychological research.",
+      "llm_tldr_cn": "论文针对传统经验抽样在深度与规模之间的两难问题，提出一种结合生态瞬时评估（EMA）和大语言模型的AI访谈者。该方法在保留EMA即时捕捉体验优势的同时，通过AI引导的深度访谈克服了封闭式问卷的限制，并在大规模样本中实现了对主观体验的丰富刻画。实验表明，该工具在访谈质量、参与度及可扩展性方面均优于纯问卷方法，为心理科学中的现象学调查提供了可复用的计算框架。",
+      "llm_tldr": "论文针对传统经验抽样在深度与规模之间的两难问题，提出一种结合生态瞬时评估（EMA）和大语言模型的AI访谈者。该方法在保留EMA即时捕捉体验优势的同时，通过AI引导的深度访谈克服了封闭式问卷的限制，并在大规模样本中实现了对主观体验的丰富刻画。实验表明，该工具在访谈质量、参与度及可扩展性方面均优于纯问卷方法，为心理科学中的现象学调查提供了可复用的计算框架。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "Experience Sampling Method in clinical psychology",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.21527v1",
+      "source": "arxiv",
+      "title": "Sources of Inequity and Fairness Risks inWellbeing Sensing",
+      "abstract": "Passive sensing for wellbeing uses smartphones and wearables to continuously collect human behavioral data and applies ML/AI models to infer psychological states and behaviors (e.g., depression, cognitive load). These systems are increasingly adopted in high-stakes settings (e.g., hospitals, universities), yet fairness research remains limited---primarily to post-hoc, identity-based comparisons of model performance. However, passive sensing combines heterogeneous sensing infrastructures, indirect behavioral inference, and longitudinal deployment---characteristics that, while not exclusive to the domain, are jointly pronounced here and raise two underexplored questions: (1) what additional sources of inequity arise from these characteristics, and (2) how do such inequities propagate beyond algorithmic audits across the system lifecycle? To address this gap, we conducted semi-structured interviews with 14 researchers and practitioners across five countries, examining how fairness risks emerge and are negotiated across the full passive sensing lifecycle. Our findings empirically characterize five situated sources of inequity (e.g., comfort with monitoring, behavioral regularity) that systematically shape fairness risks beyond identity-based attributes. We further synthesize 15 fairness risks and corresponding mitigation strategies across the lifecycle, from study design to deployment. Finally, we identify structural barriers that constrain fair practice in reality, and argue that enabling fair passive sensing requires both individual researcher efforts and ecosystem-level governance support from funders, publication venues, and deploying institutions.",
+      "authors": [
+        "Han Zhang",
+        "Vedant Das Swain",
+        "Koustuv Saha",
+        "Anind K. Dey",
+        "Jennifer Mankoff"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-07-23T17:12:24+00:00",
+      "link": "https://arxiv.org/pdf/2607.21527v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Discusses fairness in passive sensing for wellbeing, a key method for EMA",
+      "llm_evidence_cn": "讨论健康感知中的公平性，被动传感是EMA的关键方法",
+      "llm_evidence": "讨论健康感知中的公平性，被动传感是EMA的关键方法",
+      "canonical_evidence": "讨论健康感知中的公平性，被动传感是EMA的关键方法",
+      "llm_tldr_en": "Identifies sources of inequity in passive wellbeing sensing used for EMA, highlighting risks in depression inference and mobile health apps.",
+      "llm_tldr_cn": "本文探讨了被动健康感知（如智能手机和可穿戴设备）在推断抑郁等心理状态时存在的公平性风险。由于这些系统常用于生态瞬时评估（EMA）和数字表型，其不公平来源尚未充分研究。文章分析了传感基础设施、行为推断和纵向部署带来的额外不公平问题，为设计更公平的移动健康应用提供了指导。",
+      "llm_tldr": "本文探讨了被动健康感知（如智能手机和可穿戴设备）在推断抑郁等心理状态时存在的公平性风险。由于这些系统常用于生态瞬时评估（EMA）和数字表型，其不公平来源尚未充分研究。文章分析了传感基础设施、行为推断和纵向部署带来的额外不公平问题，为设计更公平的移动健康应用提供了指导。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
