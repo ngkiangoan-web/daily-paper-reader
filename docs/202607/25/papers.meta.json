@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-25",
+  "date": "2026-07-25",
+  "generated_at": "2026-07-25T21:19:30",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/25/2607.21019v1-hime-real-time-self-hosted-personal-agent-platform-for-health-insights-with-wearable-devices",
+      "section": "quick",
+      "title_en": "HiMe: Real-Time Self-Hosted Personal Agent Platform for Health Insights with Wearable Devices",
+      "authors": "Wei Liu, Siya Qi, Linhai Zhang, Lorainne Tudor Car, Yulan He",
+      "date": "2026-07-23",
+      "pdf": "https://arxiv.org/pdf/2607.21019v1",
+      "score": "6.0",
+      "evidence": "实时可穿戴健康平台，支持移动EMA投放",
+      "tldr": "传统可穿戴健康分析框架刚性且个性化不足，LLM智能体带来新机遇但缺乏本地实时平台。HiMe作为本地部署、隐私优先的智能体平台，将数据库作为一流组件，联合优化效率与效果，实现实时处理与长期用户建模。结果表明，HiMe达到低成本帕累托最优平衡，兼容多种可穿戴设备，支持连续个性化健康监测。该平台使个人健康智能体实用化，提升健康洞察并保护隐私。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Traditional approaches to wearable health signal analysis, such as smartwatches, are constrained by rigid analytical frameworks and limited personalisation. The emergence of LLM agents creates a new opportunity for Personal Health Agentic Analysis, where health insights can be generated adaptively and in context. However, currently there is no open-source locally deployable platform capable of processing personal health data in real time while preserving privacy. We present HiMe, a locally deployable, privacy-first agent platform that is fully compatible with real-time health data ecosystems across a wide range of wearable devices. HiMe is guided by three design principles. The database is treated as a first-class component. Effectiveness and efficiency are jointly optimised to achieve a low-cost Pareto-optimal balance. Data are processed in real time while the user is modelled over the long term. Together, these principles make it practical for individuals to harness Personal Health Agents for continuous, personalised health monitoring for better wellbeing.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
