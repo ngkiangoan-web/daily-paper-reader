@@ -1,0 +1,62 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-26T21:24:40.571785+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 0,
+    "deep_cap": 7,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 12,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.21403v1",
+      "source": "arxiv",
+      "title": "A Diffusion-Model Subpopulation Digital Twin for Mobile Health Deployment: A Case Study on the HeartSteps Intervention",
+      "abstract": "Mobile-health interventions increasingly use online learning and decision making algorithms to personalize when to nudge users toward healthier behavior, but a poorly designed algorithm can burden and disengage participants. New algorithm design decisions should therefore be vetted against realistic simulated users before each real-life deployment. We propose a method to develop ``JITAI-Twins'': digital twins of a target subpopulation for comparing candidate online algorithms before a just-in-time adaptive intervention (JITAI) deployment. The method builds on a conditional time-series diffusion model that is temporally consistent (future actions do not affect the generated past), and it supports repeated updating from three sources of information, in three steps: pre-training on a large observational dataset, fine-tuning on small prior intervention deployments in related populations, and inference-time calibration to the next target population from domain-scientist expertise. We validate the twin at each pre-deployment stage of the long-running HeartSteps series (v2 through v4) of physical-activity suggestion intervention deployments, treating each successive deployment as an upcoming study. The proposed method reproduces the target subpopulation's temporal and between-participant structure better than simpler simulators. These results suggest that our twin can be used to simulate a target deployment before it runs, the prerequisite for testing and informing online algorithm design decisions.",
+      "authors": [
+        "Ziping Xu",
+        "Yuyi Chang",
+        "Chenshun Ni",
+        "Nithin Sugavanam",
+        "Asim H. Gazi",
+        "Pedja Klasnja",
+        "Emre Ertin",
+        "Susan A. Murphy"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "stat.ME"
+      ],
+      "published": "2026-07-23T15:03:16+00:00",
+      "link": "https://arxiv.org/pdf/2607.21403v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Digital twin for mHealth JITAI: enabling simulation of user behavior for EMA app testing",
+      "llm_evidence_cn": "移动健康数字孪生：支持EMA应用的算法测试",
+      "llm_evidence": "移动健康数字孪生：支持EMA应用的算法测试",
+      "canonical_evidence": "移动健康数字孪生：支持EMA应用的算法测试",
+      "llm_tldr_en": "This paper develops a diffusion-model-based digital twin of subpopulations to compare online algorithms for just-in-time adaptive interventions (JITAI) in mobile health, using HeartSteps as a case study. The method enables realistic simulation before real deployment, supporting mHealth app development for EMA.",
+      "llm_tldr_cn": "移动健康干预中在线学习算法常缺乏测试，直接部署可能干扰参与者。本文提出基于条件时间序列扩散模型的数字孪生方法，用于在部署前比较候选算法。以步行干预HeartSteps为例，该方法能生成与目标子种群一致的模拟用户行为，支持反复模拟测试，从而优化移动健康应用中的JITAI算法设计。该方法为移动健康中EMA相关应用提供了安全、高效的算法评估工具，有望提升干预效果和用户依从性。",
+      "llm_tldr": "移动健康干预中在线学习算法常缺乏测试，直接部署可能干扰参与者。本文提出基于条件时间序列扩散模型的数字孪生方法，用于在部署前比较候选算法。以步行干预HeartSteps为例，该方法能生成与目标子种群一致的模拟用户行为，支持反复模拟测试，从而优化移动健康应用中的JITAI算法设计。该方法为移动健康中EMA相关应用提供了安全、高效的算法评估工具，有望提升干预效果和用户依从性。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

@@ -6,26 +6,24 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-25
-- 运行时间：2026-07-25 21:19:24 UTC
+- 最新运行日期：2026-07-26
+- 运行时间：2026-07-26 21:26:18 UTC
 - 运行状态：成功
 - 本次总论文数：1
 - 精读区：0
 - 速读区：1
 
 ### 今日简报（AI）
-1. 今日速读1篇论文，聚焦可穿戴设备的实时健康洞察。  
-2. 最值得关注的方向：自托管个人代理平台实现实时健康监测，但评分中等（6.0/10），方法或数据有待验证。  
-3. 普通读者可先了解自托管平台在健康隐私中的潜力，但需注意当前成熟度有限，建议结合其他研究对比。
-- 详情：[/202607/25/README](/202607/25/README)
+今日速览一篇关于扩散模型子群体数字孪生的移动健康部署研究，案例聚焦HeartSteps干预。值得关注的方向：利用扩散模型构建数字孪生体，为个性化健康干预提供新思路。建议普通读者从理解数字孪生如何赋能移动健康场景入手，探索其在行为干预中的落地可能。
+- 详情：[/202607/26/README](/202607/26/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [HiMe: Real-Time Self-Hosted Personal Agent Platform for Health Insights with Wearable Devices](/202607/25/2607.21019v1-hime-real-time-self-hosted-personal-agent-platform-for-health-insights-with-wearable-devices)  
-   标签：评分：6.0/10、query:ema-mental
-   evidence：实时可穿戴健康平台，支持移动EMA投放
+1. [A Diffusion-Model Subpopulation Digital Twin for Mobile Health Deployment: A Case Study on the HeartSteps Intervention](/202607/26/2607.21403v1-a-diffusion-model-subpopulation-digital-twin-for-mobile-health-deployment-a-case-study-on-the-heartsteps-intervention)  
+   标签：评分：7.0/10、query:ema-mental
+   evidence：移动健康数字孪生：支持EMA应用的算法测试
 
 
 <div class="dpr-home-promo-card">

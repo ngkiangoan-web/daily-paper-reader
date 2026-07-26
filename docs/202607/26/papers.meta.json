@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-26",
+  "date": "2026-07-26",
+  "generated_at": "2026-07-26T21:26:23",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/26/2607.21403v1-a-diffusion-model-subpopulation-digital-twin-for-mobile-health-deployment-a-case-study-on-the-heartsteps-intervention",
+      "section": "quick",
+      "title_en": "A Diffusion-Model Subpopulation Digital Twin for Mobile Health Deployment: A Case Study on the HeartSteps Intervention",
+      "authors": "Ziping Xu, Yuyi Chang, Chenshun Ni, Nithin Sugavanam, Asim H. Gazi, Pedja Klasnja, Emre Ertin, Susan A. Murphy",
+      "date": "2026-07-23",
+      "pdf": "https://arxiv.org/pdf/2607.21403v1",
+      "score": "7.0",
+      "evidence": "移动健康数字孪生：支持EMA应用的算法测试",
+      "tldr": "移动健康干预中在线学习算法的设计需在真实部署前进行模拟测试。本文提出基于条件时间序列扩散模型的子群体数字孪生方法，通过预训练、微调和校准三阶段结合多源信息，生成逼真的模拟用户。在HeartSteps系列研究中的验证表明，该方法能准确再现目标子群体的时间与个体间结构，为算法设计提供可靠的虚拟测试环境。",
+      "tags": "query:ema-mental",
+      "abstract_en": "Mobile-health interventions increasingly use online learning and decision making algorithms to personalize when to nudge users toward healthier behavior, but a poorly designed algorithm can burden and disengage participants. New algorithm design decisions should therefore be vetted against realistic simulated users before each real-life deployment. We propose a method to develop ``JITAI-Twins'': digital twins of a target subpopulation for comparing candidate online algorithms before a just-in-time adaptive intervention (JITAI) deployment. The method builds on a conditional time-series diffusion model that is temporally consistent (future actions do not affect the generated past), and it supports repeated updating from three sources of information, in three steps: pre-training on a large observational dataset, fine-tuning on small prior intervention deployments in related populations, and inference-time calibration to the next target population from domain-scientist expertise. We validate the twin at each pre-deployment stage of the long-running HeartSteps series (v2 through v4) of physical-activity suggestion intervention deployments, treating each successive deployment as an upcoming study. The proposed method reproduces the target subpopulation's temporal and between-participant structure better than simpler simulators. These results suggest that our twin can be used to simulate a target deployment before it runs, the prerequisite for testing and informing online algorithm design decisions.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
