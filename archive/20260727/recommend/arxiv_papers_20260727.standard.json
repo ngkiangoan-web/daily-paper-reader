@@ -1,0 +1,100 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-27T21:40:51.053287+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 0,
+    "deep_cap": 7,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 12,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.20027v1",
+      "source": "arxiv",
+      "title": "Zero-Shot Heart Rate Variability Forecasting from Consumer Wearables Using Time Series Foundation Models",
+      "abstract": "Short-term Heart Rate Variability (HRV) forecasting could provide clinicians with actionable lead time for detecting autonomic dysfunction and adverse cardiac events. Consumer wearable devices generate fragmented, artifact-rich HRV signals that challenge conventional forecasting approaches. In this study, we evaluated the forecasting ability of three Time Series Foundation Models (TSFMs), TimesFM, Chronos, and MOIRAI, against traditional baselines (Mean, Exponential Smoothing, and Exponentially Weighted Moving Average) on real-world wearable data collected from 49 healthy individuals. To address data fragmentation, we introduce a variability-preserving imputation method that augments linear interpolation with locally adaptive stochastic noise, retaining physiological dynamics essential for accurate forecasting. The results show that TSFMs outperformed all baselines without fine-tuning, achieving average Mean Absolute Scaled Error (MASE) between 0.81 and 0.87 across TSFMs and both context lengths (32 and 64 time steps), with Chronos and TimesFM as the top models, though MOIRAI showed limited gains over baselines. With up to a 2-hour forecast horizon, the results establish a baseline for TSFMs' performance on a real-world dataset, highlighting domain-specific fine-tuning as a promising direction for clinical deployment.",
+      "authors": [
+        "Luukas Peräkylä",
+        "Fahad Sohrab",
+        "Ville Hautamäki",
+        "Merja Heinäniemi",
+        "Sui Huang",
+        "Pekka Abrahamsson"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-22T11:12:07+00:00",
+      "link": "https://arxiv.org/pdf/2607.20027v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Wearable HRV forecasting for ambulatory assessment",
+      "llm_evidence_cn": "可穿戴设备HRV预测用于动态评估",
+      "llm_evidence": "可穿戴设备HRV预测用于动态评估",
+      "canonical_evidence": "可穿戴设备HRV预测用于动态评估",
+      "llm_tldr_en": "This paper evaluates time series foundation models for zero-shot HRV forecasting from consumer wearable data, introducing a variability-preserving imputation method to handle fragmented signals, enabling potential applications in ambulatory health monitoring.",
+      "llm_tldr_cn": "本研究针对消费级可穿戴设备HRV信号碎片化、伪影多的问题，评估了多种时间序列基础模型的零样本预测能力，并提出了一种保留变异性的插值方法。实验表明，这些模型在真实可穿戴数据上优于传统基线，为动态临床监测和早期预警提供了新工具。该工作可支持生态瞬时评估中的生理信号分析。",
+      "llm_tldr": "本研究针对消费级可穿戴设备HRV信号碎片化、伪影多的问题，评估了多种时间序列基础模型的零样本预测能力，并提出了一种保留变异性的插值方法。实验表明，这些模型在真实可穿戴数据上优于传统基线，为动态临床监测和早期预警提供了新工具。该工作可支持生态瞬时评估中的生理信号分析。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.21377v1",
+      "source": "arxiv",
+      "title": "A Logic-based Temporal Cohort Discovery Engine: Algorithms, Indices, and Experimental Results on the National Sleep Research Resource",
+      "abstract": "Large sleep-study repositories contain rich time-stamped physiological annotations, but cohort discovery is still commonly implemented as ad hoc scripts or scalar-index filters. We present a logic-based temporal cohort discovery engine that brings formal semantics, model checking, specialized indexing, and empirical evaluation into a unified biomedical informatics framework. We adopt Rational Ensemble Logic (QEL) as a dense-time formal foundation for sleep-data querying and represent each annotated polysomnogram as a Biomedical Event Structure Temporal Model (BEST), a finite mapping from event labels to non-overlapping rational interval ensembles. Cohort discovery is formulated as model checking of QEL formulas over BEST databases. We organize common sleep-research requirements into three reusable temporal query patterns: single-event retrieval, dual-event temporal pattern matching, and event data extraction. The prototype cohort discovery engine was implemented in Python with in-memory and MongoDB-backed execution modes and evaluated on synthetic interval datasets containing up to 90 million intervals and on real-world National Sleep Research Resource annotations from the Cleveland Children's Sleep and Health Study (CCSHS) containing 515 subjects, 202,587 intervals, 23 event labels. 2DFC constructs indexes in linear space and linear build time, reducing build time at 90 million intervals from 11,549 s with RTFC and 23,902 seconds with 2DRT to 3,655 seconds. On CCSHS, cohort-selection queries executed at sub-second latency at native scale and under 45 seconds at 1,000 times scale. This work is a part of the Symbolic Biomedicine program championed by the corresponding author.",
+      "authors": [
+        "Yan Huang",
+        "Xiaojin Li",
+        "Licong Cui",
+        "Guo-Qiang Zhang"
+      ],
+      "primary_category": "cs.DB",
+      "categories": [
+        "cs.DB",
+        "cs.LO"
+      ],
+      "published": "2026-07-23T14:42:17+00:00",
+      "link": "https://arxiv.org/pdf/2607.21377v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "sleep data cohort discovery engine for sleep research",
+      "llm_evidence_cn": "用于睡眠研究的队列发现引擎",
+      "llm_evidence": "用于睡眠研究的队列发现引擎",
+      "canonical_evidence": "用于睡眠研究的队列发现引擎",
+      "llm_tldr_en": "This paper presents a logic-based temporal cohort discovery engine for sleep research, using formal semantics and model checking to query polysomnogram data from the National Sleep Research Resource, enabling efficient temporal queries for sleep quality assessment.",
+      "llm_tldr_cn": "该论文提出了一种基于逻辑的时态队列发现引擎，用于睡眠研究中的大规模数据查询。该引擎采用理性集成逻辑作为时态形式基础，将多导睡眠图表示为事件结构时态模型，并在国家睡眠研究资源数据集上验证了查询效率与准确性。该引擎为睡眠质量评估和测量提供了可扩展的数据基础设施支持，可直接服务于睡眠研究中的队列发现任务。",
+      "llm_tldr": "该论文提出了一种基于逻辑的时态队列发现引擎，用于睡眠研究中的大规模数据查询。该引擎采用理性集成逻辑作为时态形式基础，将多导睡眠图表示为事件结构时态模型，并在国家睡眠研究资源数据集上验证了查询效率与准确性。该引擎为睡眠质量评估和测量提供了可扩展的数据基础设施支持，可直接服务于睡眠研究中的队列发现任务。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

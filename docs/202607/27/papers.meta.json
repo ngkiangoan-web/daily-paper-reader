@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-27",
+  "date": "2026-07-27",
+  "generated_at": "2026-07-27T21:41:40",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/27/2607.20027v1-zero-shot-heart-rate-variability-forecasting-from-consumer-wearables-using-time-series-foundation-models",
+      "section": "quick",
+      "title_en": "Zero-Shot Heart Rate Variability Forecasting from Consumer Wearables Using Time Series Foundation Models",
+      "authors": "Luukas Peräkylä, Fahad Sohrab, Ville Hautamäki, Merja Heinäniemi, Sui Huang, Pekka Abrahamsson",
+      "date": "2026-07-22",
+      "pdf": "https://arxiv.org/pdf/2607.20027v1",
+      "score": "6.0",
+      "evidence": "可穿戴设备HRV预测用于动态评估",
+      "tldr": "消费级可穿戴设备产生的HRV信号存在碎片化和伪影问题，传统预测方法效果不佳。本研究首次评估三种时间序列基础模型（TimesFM、Chronos、MOIRAI）在零样本下的HRV预测能力，并提出一种保留变异性的插值填充方法处理数据碎片。在49名健康个体的真实数据上，TSFM模型无需微调即超越传统基线，平均MASE为0.81-0.87，其中Chronos和TimesFM最优。研究为可穿戴HRV预测建立了零样本基线，提示领域微调可进一步提升临床部署潜力。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "Short-term Heart Rate Variability (HRV) forecasting could provide clinicians with actionable lead time for detecting autonomic dysfunction and adverse cardiac events. Consumer wearable devices generate fragmented, artifact-rich HRV signals that challenge conventional forecasting approaches. In this study, we evaluated the forecasting ability of three Time Series Foundation Models (TSFMs), TimesFM, Chronos, and MOIRAI, against traditional baselines (Mean, Exponential Smoothing, and Exponentially Weighted Moving Average) on real-world wearable data collected from 49 healthy individuals. To address data fragmentation, we introduce a variability-preserving imputation method that augments linear interpolation with locally adaptive stochastic noise, retaining physiological dynamics essential for accurate forecasting. The results show that TSFMs outperformed all baselines without fine-tuning, achieving average Mean Absolute Scaled Error (MASE) between 0.81 and 0.87 across TSFMs and both context lengths (32 and 64 time steps), with Chronos and TimesFM as the top models, though MOIRAI showed limited gains over baselines. With up to a 2-hour forecast horizon, the results establish a baseline for TSFMs' performance on a real-world dataset, highlighting domain-specific fine-tuning as a promising direction for clinical deployment.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/27/2607.21377v1-a-logic-based-temporal-cohort-discovery-engine-algorithms-indices-and-experimental-results-on-the-national-sleep-research-resource",
+      "section": "quick",
+      "title_en": "A Logic-based Temporal Cohort Discovery Engine: Algorithms, Indices, and Experimental Results on the National Sleep Research Resource",
+      "authors": "Yan Huang, Xiaojin Li, Licong Cui, Guo-Qiang Zhang",
+      "date": "2026-07-23",
+      "pdf": "https://arxiv.org/pdf/2607.21377v1",
+      "score": "6.0",
+      "evidence": "用于睡眠研究的队列发现引擎",
+      "tldr": "大型睡眠研究中的队列发现常依赖临时脚本或简单标量过滤，缺乏形式语义和高效索引。本文提出一种基于逻辑的时间序列队列发现引擎，采用QEL密集时间逻辑作为形式基础，将PSG注释表示为BEST模型，并将队列发现转化为模型检查问题。设计2DFC索引实现线性空间和构建时间，在9000万区间合成数据上构建时间从11549秒降至3655秒。在真实NSRR数据上查询亚秒级延迟，千倍规模小于45秒。该工作为生物医学时间序列数据提供了形式化、可扩展的队列发现框架。",
+      "tags": "query:sleep-mental",
+      "abstract_en": "Large sleep-study repositories contain rich time-stamped physiological annotations, but cohort discovery is still commonly implemented as ad hoc scripts or scalar-index filters. We present a logic-based temporal cohort discovery engine that brings formal semantics, model checking, specialized indexing, and empirical evaluation into a unified biomedical informatics framework. We adopt Rational Ensemble Logic (QEL) as a dense-time formal foundation for sleep-data querying and represent each annotated polysomnogram as a Biomedical Event Structure Temporal Model (BEST), a finite mapping from event labels to non-overlapping rational interval ensembles. Cohort discovery is formulated as model checking of QEL formulas over BEST databases. We organize common sleep-research requirements into three reusable temporal query patterns: single-event retrieval, dual-event temporal pattern matching, and event data extraction. The prototype cohort discovery engine was implemented in Python with in-memory and MongoDB-backed execution modes and evaluated on synthetic interval datasets containing up to 90 million intervals and on real-world National Sleep Research Resource annotations from the Cleveland Children's Sleep and Health Study (CCSHS) containing 515 subjects, 202,587 intervals, 23 event labels. 2DFC constructs indexes in linear space and linear build time, reducing build time at 90 million intervals from 11,549 s with RTFC and 23,902 seconds with 2DRT to 3,655 seconds. On CCSHS, cohort-selection queries executed at sub-second latency at native scale and under 45 seconds at 1,000 times scale. This work is a part of the Symbolic Biomedicine program championed by the corresponding author.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

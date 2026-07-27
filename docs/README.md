@@ -6,24 +6,31 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-26
-- 运行时间：2026-07-26 21:26:18 UTC
+- 最新运行日期：2026-07-27
+- 运行时间：2026-07-27 21:41:33 UTC
 - 运行状态：成功
-- 本次总论文数：1
+- 本次总论文数：2
 - 精读区：0
-- 速读区：1
+- 速读区：2
 
 ### 今日简报（AI）
-今日速览一篇关于扩散模型子群体数字孪生的移动健康部署研究，案例聚焦HeartSteps干预。值得关注的方向：利用扩散模型构建数字孪生体，为个性化健康干预提供新思路。建议普通读者从理解数字孪生如何赋能移动健康场景入手，探索其在行为干预中的落地可能。
-- 详情：[/202607/26/README](/202607/26/README)
+今天浏览两篇6分论文，分别关注可穿戴设备的心率变异性预测和睡眠研究的时间队列发现引擎。
+
+值得关注的是时间序列基础模型在健康领域的零样本应用，以及逻辑驱动的睡眠数据队列挖掘方法。
+
+建议深入探索时间序列基础模型在可穿戴健康监测中的潜力，并尝试将逻辑队列引擎应用于个人睡眠数据分析。
+- 详情：[/202607/27/README](/202607/27/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [A Diffusion-Model Subpopulation Digital Twin for Mobile Health Deployment: A Case Study on the HeartSteps Intervention](/202607/26/2607.21403v1-a-diffusion-model-subpopulation-digital-twin-for-mobile-health-deployment-a-case-study-on-the-heartsteps-intervention)  
-   标签：评分：7.0/10、query:ema-mental
-   evidence：移动健康数字孪生：支持EMA应用的算法测试
+1. [Zero-Shot Heart Rate Variability Forecasting from Consumer Wearables Using Time Series Foundation Models](/202607/27/2607.20027v1-zero-shot-heart-rate-variability-forecasting-from-consumer-wearables-using-time-series-foundation-models)  
+   标签：评分：6.0/10、query:sleep-mental
+   evidence：可穿戴设备HRV预测用于动态评估
+2. [A Logic-based Temporal Cohort Discovery Engine: Algorithms, Indices, and Experimental Results on the National Sleep Research Resource](/202607/27/2607.21377v1-a-logic-based-temporal-cohort-discovery-engine-algorithms-indices-and-experimental-results-on-the-national-sleep-research-resource)  
+   标签：评分：6.0/10、query:sleep-mental
+   evidence：用于睡眠研究的队列发现引擎
 
 
 <div class="dpr-home-promo-card">
