@@ -1,0 +1,140 @@
+Title: A Computational Ethical Framework for Financial Digital Phenotyping for Mental Health
+
+URL Source: https://arxiv.org/pdf/2607.24275v1
+
+Published Time: Tue, 28 Jul 2026 01:51:00 GMT
+
+Number of Pages: 7
+
+Markdown Content:
+Proceedings of CIBB 2026 1
+
+# A Computational Ethical Framework for Financial Digital Phenotyping for Mental Health 
+
+# Oluwadara Adedeji ∗1, Michael Mayowa Farayola 2, Jeff Brozena 3,Irina Tal 2, Regina Connolly 4, and Mark Matthews 1    
+
+> 1School of Computer Science, University College Dublin, Dublin, Ireland.
+> 2School of Computing, Dublin City University, Dublin, Ireland.
+> 3College of Information Sciences and Technology, Pennsylvania State University,University Park, PA, USA.
+> 4Business School, Dublin City University, Dublin, Ireland. ORCID codes: OA 0000-0002-3430-6011; MMF 0009-0002-3495-4155; JB 0000-0001-7621-1566; IT 0000-0001-9656-668X; RC 0000-0003-3196-2889; MM 0000-0001-8862-5141.
+> ∗corresponding author: oluwadara.adedeji@ucdconnect.ie
+
+Keywords : Computational ethics, digital phenotyping, financial data, financial technologies. 
+
+Abstract Ethical governance of AI-driven systems is often expressed through high-level princi-ples and static documentation, creating a gap between regulatory requirements and system-level verification. This challenge is particularly acute in digital phenotyping, where continuous be-havioural data raises concerns around consent, privacy, and fairness. In this paper, we propose a computational ethical framework for AI-driven digital phenotyping system in which ethical requirements are formalised as deontic temporal logic constraints, alongside a conceptual ethi-cal agent that oversees the system and ensures that any supervised system satisfies the specified constraints. Using a case study involving financial data and mental health, we model key ethi-cal properties and verify them using the Z3 Satisfiability Modulo Theories (SMT) solver. Our evaluation shows that the framework is logically consistent and that violations of the specified ethical properties are ruled out within the formal model through counterexample-based verifi-cation. This presents early research enabling continuous, machine-verifiable ethical checking, moving beyond retrospective compliance based on static documentation. We discuss limita-tions, including the need for real-world verification with data, the challenge with subjectivity and contextual sensitivity, the need for human oversight, and outline how such approaches can support the development of digital phenotyping and AI systems with continuous and auditable ethical guarantees. 
+
+1 Introduction 
+
+Digital phenotyping, the moment-by-moment quantification of individual behaviour using data from personal devices such as smartphones and wearables as digital biomarkers [ 1 ], has emerged as a promising approach for passive monitoring and early detection of mental illness. These systems increasingly rely on artificial intelligence (AI) to infer behavioural and clinical states from continuous data streams, introducing new challenges related to privacy, consent, fairness, and data governance that limit their clinical adoption. While these ethical challenges are well studied, they are typically expressed as high-level principles rather than formal specifications that can be directly implemented or verified within AI systems. Prior work identifies a range of ethical challenges in digital phenotyping, including 
+
+Article version: 28th July 2026 h01:50 CET arXiv:2607.24275v1 [cs.LO] 27 Jul 2026 Proceedings of CIBB 2026 2issues related to data provenance, algorithmic bias, transparency, and accountability [ 2, 3], as well as difficulties in obtaining meaningful consent in vulnerable populations [ 4 ]. However, these approaches do not provide computational mechanisms to oversee and enforce such requirements in AI systems [ 5]. As a result, there remains a gap between ethical requirements and actual system behaviour, particularly in settings where decisions are automated and continuously evolving. Addressing this gap requires moving ethics from high-level principles and static requirements to computationally verifiable mechanisms. In this work, we adopt a computational ethics approach in which ethical requirements are formalised as machine-interpretable constraints. We argue that AI agents, software components that can monitor and act on system behaviour, provide a natural mechanism for operationalising such constraints. Specifically, an ethical oversight agent can be integrated into a digital phenotyping system to continuously monitor system behaviour and verify compliance with specified ethical requirements, with the potential to support enforcement. This enables a shift from static documentation to machine-verifiable checking and oversight. Formal methods, including deontic and temporal logic, support the specification of obligations and prohibitions over time, while constraint-solving techniques enable verification and detection of violations [ 6]. Despite this potential, agent-based approaches for overseeing and enforcing formalised ethical constraints remain largely unexplored in digital phenotyping. To instantiate this framework, we focus on financial data as an emerging modality for digital phenotyping [ 7 ]. Financial behaviour has been shown to reflect mental health states, for example through increased spending during manic or hypomanic episodes in bipolar disorder [ 8]. This modality introduces distinct characteristics and challenges: financial data is highly sensitive, and its misuse carries direct legal and economic consequences, raising ethical concerns beyond those typically associated with smartphone data; it enables passive, scalable collection of behavioural signals with minimal user burden, potentially reducing missing data caused by dropout in smartphone- and wearable-based studies; and ethical considerations and formal frameworks for this data modality are largely absent from the literature, highlighting a critical gap in digital phenotyping ethics. From a regulatory perspective, such systems are classified as high-risk under the EU Artificial Intelligence Act [ 9], which imposes requirements including data governance, fairness and non-discrimination and human oversight. However, these requirements are specified at a high level, creating a gap between regulatory obligations and technical verification. In this paper, we propose a computational ethical framework for financial digital phenotyping in which ethical requirements are encoded as deontic temporal logic constraints and evaluated by a conceptual ethical oversight agent. We use the Z3 Satisfiability Modulo Theories (SMT) solver to verify consistency and violations. The framework supports hybrid human–AI oversight through continuous ethical evaluation, analogous to conformance testing in high-stakes domains. 
+
+2 Methods 
+
+Deontic logic is a formal framework for reasoning about normative concepts such as obligation 
+
+(Oφ ), permission (P φ ), and prohibition (F φ ). Deontic temporal logic extends this framework with temporal operators (e.g., G for always ) to model these norms over time. Giordano et al. [ 10 ] contain expanded lessons on mathematical deontic logic formulations. Note that prohibition is logically equivalent to the obligation of the negation: F (φ) ≡ O(¬φ).We identified ethical issues through our institutional ethics review and Data Protection Impact Assessment (DPIA), a structured process for assessing and mitigating risks associated with data processing in our ongoing financial digital phenotyping study. This was complemented by a review of challenges in the literature and the EU AI Act, particularly in data collection and Proceedings of CIBB 2026 3modelling. While a typical AI pipeline includes stages such as deployment and monitoring, we focus on data collection and modelling, as these remain the primary stages in current digital phenotyping research, especially for financial data. We model ethical requirements using deontic temporal logic to represent obligations and prohibitions over time-dependent system behaviour. These deontic constructs are compiled into logical constraints for verification. We define a conceptual ethical agent that supervises the financial digital phenotyping system and ensures that any supervised system satisfies the formalised ethical constraints. Predicates are defined to represent system states, and used within deontic expressions to encode ethical rules. We then assess satisfiability and detect potential conflicts using the Z3 solver. We define the domains, variables, and predicate symbols used to formalise the ethical con-straints of the agent in this study as follows: 
+
+Domain (sort) Variables 
+
+p ∈ P : set of participants 
+
+t ∈ T : time domain 
+
+f ∈ F : set of financial data fields 
+
+ρ ∈ R : set of specified research purposes 
+
+A ∈ A : set of agents 
+
+S ∈ S : set of digital phenotyping systems 
+
+Predicates 
+
+Cap (p) : Participant p has decision-making capacity Info (p) : Participant p is adequately informed Vol (p) : Consent from participant p is voluntary Withdraw (S, p, t ) : System S records withdrawal of participant p at time t
+
+ConsentValid (p, t ) : Consent of participant p is valid at time t
+
+UseData (S, p, t ) : System S uses data from participant p at time t
+
+Collect (S, f, p, t ) : System S collects field f from participant p at time t
+
+IdentifyingField (f ) : Field f is identifying or linkable Necessary (f, ρ ) : Field f is necessary for research purpose ρ
+
+Fair (S) : System S satisfies a defined fairness criterion BiasMitigated (S) : Bias in system S is mitigated Discriminate (S, p, t ) : System S produces a discriminatory outcome for participant p at time t
+
+Responsible (S) : System S satisfies responsibility criteria Supervises (A, S ) : Agent A supervises system S
+
+Ethical (A) : Agent A satisfies all ethical constraints 
+
+3 Results 
+
+3.1 Deontic Temporal Logic for Financial Digital Phenotyping 
+
+To formulate and verify the ethics of this system logically, we represent the properties as follows, where S denotes the financial digital phenotyping system and A denotes the conceptual ethical oversight agent: Proceedings of CIBB 2026 4
+
+3.1.1 Proposition for Financial Digital Phenotyping 
+
+a) Informed consent is valid only if a participant has the capacity to make the decision, is provided with clear and sufficient information about the study, gives consent voluntarily, and retains the right to withdraw that consent at any time without penalty. 
+
+O ConsentValid (p, t ) → (Cap (p) ∧ Info (p) ∧ Vol (p))  (1) 
+
+O Withdraw (S, p, t ) → Gt′>t ¬ConsentValid (p, t ′) (2) These constraints specify obligations on the system. First, informed consent is considered valid only if, for a participant at time t, the participant must have the capacity to consent, be adequately informed, and act voluntarily. These conditions may be operationalised through AI or human assessments of capacity, clarity of information provided, and measures of voluntariness (e.g., questionnaires). Second, if the system records a withdrawal initiated by a participant at time t, then consent must be invalidated for all future times t′ > t . In (b), this implies that the system must cease any further data collection or use once consent is withdrawn, for example by deleting or disabling access to the participant’s data. Note that “only if” denotes a necessary condition, not a sufficient one. 
+
+b) Data must not be collected or used if informed consent is not valid. 
+
+F  (Collect (S, f, p, t ) ∨ UseData (S, p, t )) ∧ ¬ ConsentValid (p, t ) (3) Data collection and data use are modeled as separate predicates, allowing for cases where data is used without being collected by the system. The disjunctive condition ensures that consent is required whenever either operation occurs. 
+
+c) It is forbidden to collect identifying financial data fields unless they are necessary for the specified research purpose. 
+
+F  Collect (S, f, p, t ) ∧ IdentifyingField (f ) ∧ ¬ Necessary (f, ρ ) (4) This prevents the collection of fields, such as merchant names, that contain identifiable information without a clear research need. 
+
+d) If the system is responsible, then it must satisfy fairness constraints, mitigate measurable biases, and not produce discriminatory outcomes. 
+
+O
+
+
+
+Responsible (S) → Fair (S) ∧ BiasMitigated (S) ∧ ∀ p, t ¬Discriminate (S, p, t )
+
+
+
+(5) Fairness ensures equitable outcomes across individuals or groups, bias mitigation addresses systematic distortions in data or models, and discrimination refers to unjust or unequal treatment resulting from such biases. These conditions are necessary for responsibility, and a system cannot be considered responsible without satisfying them. Additional criteria, such as transparency and accountability, may further constrain responsibility in practice but are not formalised here. 
+
+Explicit Ethical Agent : An agent A is considered ethical only if every system it supervises satisfies all specified ethical constraints ((a)–(d)) Ethical (A) → ∀ S ∈ S 
+
+
+
+Supervises (A, S ) → Constraints (S)
+
+
+
+(6) Constraints (S) ≜ Eq. (1) ∧ Eq. (2) ∧ Eq. (3) ∧ Eq. (4) ∧ Eq. (5) (7) Proceedings of CIBB 2026 5The consent constraints (Eqs. (1)–(3)) correspond to the data governance obligations of Article 10 of the EU AI Act, while the responsibility constraint (Eq. (5)), which subsumes fairness and non-discrimination, operationalises the bias mitigation requirements of Article 10. This demonstrates that the high-level obligations of the EU AI Act can be operationalised as machine-verifiable constraints, providing a pathway toward continuous, auditable compliance rather than reliance on static documentation alone. 3.2 Verification 
+
+We evaluated the formal model using the Z3 SMT solver for both global consistency and scenario-based verification. Eqs. (1)–(5) are asserted as global constraints, while the ethical-agent condition (Eq. 6) defines an agent as ethical only if every system it supervises satisfies all specified ethical constraints. The global satisfiability check returned sat , indicating that Eqs. (1)–(6) are logically consistent and that at least one assignment of variables and predicates satisfies all constraints. However, the generated satisfying model is vacuous, as several key system behaviours, including data collection, data use, withdrawal, and supervision, are assigned False by the solver. This is expected because the global satisfiability check verifies logical consistency rather than real-istic system behaviour. Therefore, meaningful behaviours are evaluated separately through counterexample-based and positive verification tests. We evaluated the framework using counterexample-based verification by formulating a violating scenario for each ethical property and submitting it to the solver. These scenarios included invalid informed consent, continued consent following withdrawal, data collection or use without valid consent, unnecessary collection of identifying financial data, violations of responsible AI requirements, and an ethical oversight agent supervising a non-compliant system. In every case, the solver returned unsatisfiable , confirming that the proposed constraints prevent the corresponding ethical violation. Furthermore, a positive test confirmed that the framework permits data collection when all ethical requirements are satisfied. 
+
+4 Discussion 
+
+The proposed framework represents an initial step toward formalising computational ethics in digital phenotyping. By translating ethical requirements into logical constraints and verifying them using the Z3 solver, the framework moves ethical governance from abstract principles toward an operational and testable approach. Rather than replacing human oversight, it is designed to complement existing ethical review processes through continuous and systematic verification. This human-in-the-loop approach, aligned with Article 14 of the EU AI Act, preserves human judgement while supporting more robust ethical governance. It may also enable controlled “sandbox” environments where systems can be evaluated for ethical compliance before and after deployment. The conceptual ethical oversight agent could be implemented as an AI agent powered by existing large language models (LLMs), with the proposed ethical rules and constraints integrated into its reasoning and decision-making processes. While the constraint system is logically consistent, its ethical guarantees are better validated through targeted scenario-based checks than through global satisfiability alone. While we tested counterexamples within the formal model, further evaluation with real-world data and systems may reveal additional scenarios and strengthen the assessment of the framework’s robustness. However, several limitations remain. First, the model assumes that concepts such as capacity, informed consent, and voluntariness can be formally defined and verified. In practice, these concepts are context-dependent and often require human interpretation, particularly in mental health settings. For example, assessing a participant’s capacity to provide informed consent Proceedings of CIBB 2026 6may require clinical judgement, while evaluating voluntariness may depend on individual and social contexts. Although hybrid human–AI approaches could support these assessments by escalating uncertain cases for human review, further research is needed to formally represent these complex concepts. Second, the framework focuses on consent-based data processing and does not currently capture alternative legal or ethical bases, such as proxy decision-making, public interest, or clinical necessity. Third, the use of formal logic introduces limitations in handling ambiguity, uncertainty, and context-dependent scenarios, indicating the need for hybrid approaches such as neurosymbolic methods that combine rule-based reasoning with data-driven models. While the framework is aligned with the EU AI Act, it does not fully account for variations in ethical norms across different regional, cultural, or institutional contexts. Its scope is also limited to data collection and modelling, excluding important considerations related to deployment, monitoring, data retention, and lifecycle management. In addition, the framework does not evaluate whether the underlying research purpose (i.e., 
+
+ρ) is itself ethically justified. Adversarial or unethical uses, such as attempts to manipulate or bypass constraints, may undermine automated ethical verification. More broadly, the model does not capture socio-technical system (STS) dynamics, where ethical outcomes depend not only on system design but also on real-world use. For example, financial-data–based mental health assessments could be misused for discriminatory decisions in insurance or credit contexts, even if the model itself satisfies formal fairness constraints. Despite these limitations, the proposed framework demonstrates that high-level obligations of the EU AI Act can be operationalised as machine-verifiable deontic constraints, providing a computational foundation for formalising ethical requirements in digital phenotyping. This supports a shift from reliance on static documentation toward more transparent, auditable, and verifiable approaches to ethical compliance. As the need for practical compliance mechanisms in digital health continues to grow, this framework represents a step toward regulatory-ready systems in domains where privacy, trust, and fundamental rights are critical considerations. 
+
+5 Conclusion 
+
+This study proposes a computational ethical framework for financial digital phenotyping for mental health, in which ethical requirements are formalised as deontic temporal logic constraints and verified using the Z3 SMT solver. We introduce a conceptual ethical oversight AI agent that supervises financial digital phenotyping systems to ensure compliance with key ethical requirements, including informed consent, data minimisation, fairness, and non-discrimination. Counterexample-based verification demonstrates that these ethical properties can be system-atically verified, providing a foundation for continuous, machine-verifiable governance of AI systems that use objective financial data to support mental health assessment. To our knowledge, this is the first work to apply computational ethics methods to digital phenotyping, offering a pathway towards trustworthy, privacy-preserving, and regulatory-aligned AI for mental health applications. Future research should evaluate the framework in real-world mental health digital phenotyping systems, particularly those using objective behavioural data such as financial transactions to support early detection and monitoring of conditions such as bipolar disorder. Extending the framework to incorporate additional legal and ethical bases beyond consent, model the full AI lifecycle, address ambiguity through neurosymbolic approaches, and account for socio-technical and cultural factors will further strengthen its applicability. These advances will support the development of safe, trustworthy, and ethically governed AI technologies for mental healthcare. Proceedings of CIBB 2026 7
+
+Conflict of interests 
+
+The authors declare no conflict of interest. 
+
+Funding 
+
+This publication is the result of research conducted with the financial support of Health Rhythms Inc. and Taighde ´Eireann – Research Ireland under Grant Nos. 18/CRT/6183 (ML-Labs), 13/RC/2094 P2 (Lero), and 13/RC/2106 P2 (ADAPT), and is co-funded by the European Re-gional Development Fund (ERDF). This work is also based upon work supported by the National Science Foundation Graduate Research Fellowship Program under Grant No. DGE1255832. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation. 
+
+Availability of data and software code 
+
+The software implementation supporting this work is publicly available at: https:// github.com/darasiemi/ethics-cibb-2026 
+
+References 
+
+[1] Jukka-Pekka Onnela and Scott L. Rauch. Harnessing Smartphone-Based Digital Phenotyping to Enhance Behavioral and Mental Health. Neuropsychopharmacology , 41(7):1691–1696, June 2016. [2] Maurice D. Mulvenna, Raymond Bond, Jack Delaney, Fatema Mustansir Dawoodbhoy, Jennifer Boger, Courtney Potts, and Robin Turkington. Ethical Issues in Democratizing Digital Phenotypes and Machine Learning in the Next Generation of Digital Health Technologies. Philosophy & Technology , 34(4):1945–1960, December 2021. [3] Nicole Martinez-Martin, Henry T Greely, and Mildred K Cho. Ethical Development of Digital Phenotyping Tools for Mental Health Applications: Delphi Study. JMIR mHealth and uHealth , 9(7):e27343, July 2021. [4] Gottfried Schweiger. The ethics of AI-assisted digital phenotyping in adolescent mental health: a framework for informed consent and trust. AI and Ethics , 5(6):5867–5887, December 2025. [5] Aaron J. Gorelik, Mengyuan Li, Jessica Hahne, Junyi Wang, Yongqi Ren, Lei Yang, Xin Zhang, Xing Liu, Xiaomin Wang, Ryan Bogdan, and Brian D. Carpenter. Ethics of AI in healthcare: a scoping review demonstrating applicability of a foundational framework. Frontiers in Digital Health , 7, September 2025. [6] Edmond Awad, Sydney Levine, Michael Anderson, Susan Leigh Anderson, Vincent Conitzer, M. J. Crockett, Jim A. C. Everett, Theodoros Evgeniou, Alison Gopnik, Julian C. Jamison, Tae Wan Kim, S. Matthew Liao, Michelle N. Meyer, John Mikhail, Kweku Opoku-Agyemang, Jana Schaich Borg, Juliana Schroeder, Walter Sinnott-Armstrong, Marija Slavkovik, and Josh B. Tenenbaum. Computational ethics. Trends in Cognitive Sciences , 26(5):388–405, May 2022. [7] Johnna Blair, Jeff Brozena, Mark Matthews, Thomas Richardson, and Saeed Abdullah. Financial technologies (FinTech) for mental health: The potential of objective financial data to better understand the relationships between financial behavior and mental health. Frontiers in Psychiatry , 13, 2022. [8] Thomas Richardson, Megan Jansen, Wendy Turton, and Lorraine Bell. The relationship between bipolar disorder and financial difficulties: A qualitative exploration of clients’ views. Clinical Psychology Forum ,1(295):2–6, July 2017. [9] European Parliament and Council of the European Union. Regulation (EU) 2024/1689 of the European Parliament and of the Council of 13 June 2024 laying down harmonised rules on artificial intelligence (Artificial Intelligence Act), August 2024. OJ L 2024/1689. [10] Laura Giordano, Alberto Martelli, and Daniele Theseider Dupr ´e. Temporal deontic action logic for the verification of compliance to norms in ASP. In Proceedings of the Fourteenth International Conference on Artificial Intelligence and Law , ICAIL ’13, pages 53–62, New York, NY, USA, June 2013. Association for Computing Machinery.

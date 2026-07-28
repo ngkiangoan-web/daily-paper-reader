@@ -1,0 +1,230 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-28T21:54:44.127346+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 2,
+    "deep_cap": 7,
+    "deep_selected": 2,
+    "quick_candidates": 3,
+    "quick_skim_target": 12,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2607.21331v1",
+      "source": "arxiv",
+      "title": "Ensemble Logic for Symbolic Representation of Sleep Medicine Guidelines",
+      "abstract": "The American Academy of Sleep Medicine (AASM) Manual is the clinical standard for polysomnography (PSG) scoring, but its narrative rules can admit multiple reasonable interpretations, contributing to inter-scorer variability and implementation differences across studies and software systems. We present a formal framework for translating sleep-scoring rules into Rational Ensemble Logic (QEL), a dense-time (i.e., a continuous, rational-valued timeline rather than discrete steps) formalism that combines first-order quantification with metric temporal operators. Using an extraction-and-compilation procedure, we identified 18 unique atomic propositions and derived 12 final specifications corresponding to clinically scoreable AASM events. Back-translation of QEL specifications into clinician-facing language retained high semantic fidelity to the original scoring narratives (embedding cosine similarity: 79.3, 95% CI: 79.0--79.7) despite low lexical overlap (ROUGE-L: 18.3, 95 CI: 17.6--18.9). Formalization also clarifies latent ambiguities, including implicit physiological latencies and overlapping exclusions. This framework yields executable, rigorous rule specifications for computational phenotyping, more consistent implementation across datasets, and standardized open-source PSG analysis. This work is a part of the \"Symbolic Biomedicine\" program championed by the corresponding author.",
+      "authors": [
+        "Jiahao Fan",
+        "Xiaojin Li",
+        "Yan Huang",
+        "Xubing Hao",
+        "Licong Cui",
+        "Guo-Qiang Zhang"
+      ],
+      "primary_category": "cs.LO",
+      "categories": [
+        "cs.LO"
+      ],
+      "published": "2026-07-23T13:59:07+00:00",
+      "link": "https://arxiv.org/pdf/2607.21331v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Sleep medicine guidelines formal representation for polysomnography scoring",
+      "llm_evidence_cn": "睡眠医学指南的符号化表示用于多导睡眠图评分",
+      "llm_evidence": "睡眠医学指南的符号化表示用于多导睡眠图评分",
+      "canonical_evidence": "睡眠医学指南的符号化表示用于多导睡眠图评分",
+      "llm_tldr_en": "Proposes Rational Ensemble Logic to encode AASM sleep scoring rules, reducing inter-scorer variability and improving consistency in sleep quality assessment.",
+      "llm_tldr_cn": "本研究针对睡眠评分规则解释不一致导致评分变异的问题，提出了一种基于理性集成逻辑的形式化框架，用于将美国睡眠医学学会的睡眠评分规则转化为精确的时态逻辑规范。该方法通过提取原子命题和推导最终规范，实现了睡眠事件的精确评分。这项工作为提高睡眠质量评估的一致性和可靠性提供了计算基础。",
+      "llm_tldr": "本研究针对睡眠评分规则解释不一致导致评分变异的问题，提出了一种基于理性集成逻辑的形式化框架，用于将美国睡眠医学学会的睡眠评分规则转化为精确的时态逻辑规范。该方法通过提取原子命题和推导最终规范，实现了睡眠事件的精确评分。这项工作为提高睡眠质量评估的一致性和可靠性提供了计算基础。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.24275v1",
+      "source": "arxiv",
+      "title": "A Computational Ethical Framework for Financial Digital Phenotyping for Mental Health",
+      "abstract": "Ethical governance of AI-driven systems is often expressed through high-level principles and static documentation, creating a gap between regulatory requirements and system-level verification. This challenge is particularly acute in digital phenotyping, where continuous behavioural data raises concerns around consent, privacy, and fairness. In this paper, we propose a computational ethical framework for AI-driven digital phenotyping system in which ethical requirements are formalised as deontic temporal logic constraints, alongside a conceptual ethical agent that oversees the system and ensures that any supervised system satisfies the specified constraints. Using a case study involving financial data and mental health, we model key ethical properties and verify them using the Z3 Satisfiability Modulo Theories (SMT) solver. Our evaluation shows that the framework is logically consistent and that violations of the specified ethical properties are ruled out within the formal model through counterexample-based verification. This presents early research enabling continuous, machine-verifiable ethical checking, moving beyond retrospective compliance based on static documentation. We discuss limitations, including the need for real-world verification with data, the challenge with subjectivity and contextual sensitivity, the need for human oversight, and outline how such approaches can support the development of digital phenotyping and AI systems with continuous and auditable ethical guarantees.",
+      "authors": [
+        "Oluwadara Adedeji",
+        "Michael Mayowa Farayola",
+        "Jeff Brozena",
+        "Irina Tal",
+        "Regina Connolly",
+        "Mark Matthews"
+      ],
+      "primary_category": "cs.LO",
+      "categories": [
+        "cs.LO",
+        "cs.AI",
+        "cs.CY"
+      ],
+      "published": "2026-07-27T11:19:52+00:00",
+      "link": "https://arxiv.org/pdf/2607.24275v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "digital phenotyping for mental health with ethical framework",
+      "llm_evidence_cn": "面向心理健康数字表型的计算伦理框架",
+      "llm_evidence": "面向心理健康数字表型的计算伦理框架",
+      "canonical_evidence": "面向心理健康数字表型的计算伦理框架",
+      "llm_tldr_en": "This paper proposes a computational ethical framework for digital phenotyping in mental health, formalizing ethical constraints as deontic temporal logic, using a financial data case study to demonstrate verification of consent, privacy, and fairness.",
+      "llm_tldr_cn": "该论文针对心理健康数字表型系统中的伦理治理问题，提出了一个计算伦理框架，将伦理要求形式化为道义时序逻辑约束，并设计了一个概念性伦理代理来监督系统。通过一个涉及财务数据与心理健康的应用案例，展示了如何在系统层面验证同意、隐私和公平等伦理要求，弥合了高级原则与系统验证之间的鸿沟。",
+      "llm_tldr": "该论文针对心理健康数字表型系统中的伦理治理问题，提出了一个计算伦理框架，将伦理要求形式化为道义时序逻辑约束，并设计了一个概念性伦理代理来监督系统。通过一个涉及财务数据与心理健康的应用案例，展示了如何在系统层面验证同意、隐私和公平等伦理要求，弥合了高级原则与系统验证之间的鸿沟。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "digital phenotyping using EMA in mental health",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.21527v2",
+      "source": "arxiv",
+      "title": "Sources of Inequity and Fairness Risks in Wellbeing Sensing",
+      "abstract": "Passive sensing for wellbeing uses smartphones and wearables to continuously collect human behavioral data and applies ML/AI models to infer psychological states and behaviors (e.g., depression, cognitive load). These systems are increasingly adopted in high-stakes settings (e.g., hospitals, universities), yet fairness research remains limited---primarily to post-hoc, identity-based comparisons of model performance. However, passive sensing combines heterogeneous sensing infrastructures, indirect behavioral inference, and longitudinal deployment---characteristics that, while not exclusive to the domain, are jointly pronounced here and raise two underexplored questions: (1) what additional sources of inequity arise from these characteristics, and (2) how do such inequities propagate beyond algorithmic audits across the system lifecycle? To address this gap, we conducted semi-structured interviews with 14 researchers and practitioners across five countries, examining how fairness risks emerge and are negotiated across the full passive sensing lifecycle. Our findings empirically characterize five situated sources of inequity (e.g., comfort with monitoring, behavioral regularity) that systematically shape fairness risks beyond identity-based attributes. We further synthesize 15 fairness risks and corresponding mitigation strategies across the lifecycle, from study design to deployment. Finally, we identify structural barriers that constrain fair practice in reality, and argue that enabling fair passive sensing requires both individual researcher efforts and ecosystem-level governance support from funders, publication venues, and deploying institutions.",
+      "authors": [
+        "Han Zhang",
+        "Vedant Das Swain",
+        "Koustuv Saha",
+        "Anind K. Dey",
+        "Jennifer Mankoff"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-07-23T17:12:24+00:00",
+      "link": "https://arxiv.org/pdf/2607.21527v2",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Examines fairness risks in passive sensing for wellbeing using smartphones and wearables to infer psychological states like depression, relevant to mobile health EMA applications.",
+      "llm_evidence_cn": "审查了利用智能手机和可穿戴设备被动感知幸福感以推断抑郁等心理状态中的公平风险，与移动健康EMA应用相关。",
+      "llm_evidence": "审查了利用智能手机和可穿戴设备被动感知幸福感以推断抑郁等心理状态中的公平风险，与移动健康EMA应用相关。",
+      "canonical_evidence": "审查了利用智能手机和可穿戴设备被动感知幸福感以推断抑郁等心理状态中的公平风险，与移动健康EMA应用相关。",
+      "llm_tldr_en": "This paper identifies sources of inequity and fairness risks in passive sensing systems that infer mental health states from smartphone and wearable data, highlighting challenges relevant to mobile health EMA.",
+      "llm_tldr_cn": "该论文聚焦于利用智能手机和可穿戴设备被动感知行为数据以推断抑郁、认知负荷等心理状态的系统，探讨了其中存在的公平性风险。通过分析被动感知的特性（如异构传感基础设施、间接行为推断和纵向部署），论文揭示了除传统身份比较之外的新不平等来源，并提出了未来研究方向。该工作对移动健康领域中的生态瞬时评估（EMA）工具的设计和部署具有重要警示意义。",
+      "llm_tldr": "该论文聚焦于利用智能手机和可穿戴设备被动感知行为数据以推断抑郁、认知负荷等心理状态的系统，探讨了其中存在的公平性风险。通过分析被动感知的特性（如异构传感基础设施、间接行为推断和纵向部署），论文揭示了除传统身份比较之外的新不平等来源，并提出了未来研究方向。该工作对移动健康领域中的生态瞬时评估（EMA）工具的设计和部署具有重要警示意义。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.17654v1",
+      "source": "arxiv",
+      "title": "An efficient adaptive dimension selection algorithm for multidimensional probit graded response models",
+      "abstract": "Multidimensional graded response models (MGRMs) are widely used for analyzing ordinal questionnaire data in psychological and educational assessments. A central challenge in applying these models is determining the number of latent dimensions. Conventional approaches usually fit multiple fixed-dimensional models and select among them using post-hoc criteria such as AIC, BIC, or cross-validation, which can be computationally demanding and ignore uncertainty in dimensionality during estimation. We develop an adaptive Bayesian dimension selection framework for probit MGRMs. Building on the cumulative shrinkage process, we assign a cumulative ordered spike-and-slab (COSS) prior to the column-specific variances of the item loading matrix. This prior induces increasing shrinkage across latent dimensions, allowing redundant dimensions to be shrunk toward zero while preserving flexibility for active dimensions. Albert--Chib latent response augmentation is used to handle the ordinal probit likelihood, yielding conditionally Gaussian updates for item loadings and latent traits. These updates are combined with Gibbs updates for threshold and shrinkage parameters in an efficient adaptive sampler.   Simulation studies evaluate the proposed   method in terms of dimension recovery, parameter   estimation accuracy, and computational efficiency, with comparisons to conventional fixed-dimensional estimation and model selection procedures. The results show that the proposed approach accurately recovers the latent structure while avoiding repeated model fitting over multiple candidate dimensions. We further illustrate the method using real psychological assessment data, demonstrating its practical utility for uncovering interpretable latent structures in ordinal item responses.",
+      "authors": [
+        "Yu Zhou",
+        "Yincai Tang",
+        "Bin Lv",
+        "Meng Gao"
+      ],
+      "primary_category": "stat.ML",
+      "categories": [
+        "stat.ML",
+        "cs.LG",
+        "stat.ME"
+      ],
+      "published": "2026-07-20T08:06:47+00:00",
+      "link": "https://arxiv.org/pdf/2607.17654v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "adaptive dimension selection for ordinal questionnaire data, applicable to EMA data analysis",
+      "llm_evidence_cn": "适用于EMA数据分析的序数问卷数据自适应维度选择",
+      "llm_evidence": "适用于EMA数据分析的序数问卷数据自适应维度选择",
+      "canonical_evidence": "适用于EMA数据分析的序数问卷数据自适应维度选择",
+      "llm_tldr_en": "This paper develops an adaptive Bayesian dimension selection algorithm for multidimensional graded response models, enabling efficient and uncertainty-aware determination of latent dimensions for ordinal questionnaire data, which is relevant for analyzing EMA data.",
+      "llm_tldr_cn": "该论文针对多维分级响应模型中的维度确定难题，提出了一种自适应贝叶斯维度选择框架，利用累积有序spike-and-slab先验自动推断潜在维度数量。该方法避免了传统后验选择的计算负担，并能够量化维度不确定性，对于分析生态瞬时评估（EMA）中的序数问卷数据具有重要应用价值。",
+      "llm_tldr": "该论文针对多维分级响应模型中的维度确定难题，提出了一种自适应贝叶斯维度选择框架，利用累积有序spike-and-slab先验自动推断潜在维度数量。该方法避免了传统后验选择的计算负担，并能够量化维度不确定性，对于分析生态瞬时评估（EMA）中的序数问卷数据具有重要应用价值。",
+      "llm_tags": [
+        "query:ema-mental:composite"
+      ],
+      "matched_query_tag": "query:ema-mental:composite",
+      "matched_query_text": "Papers central to 请帮我查找在心理与精神健康领域使用到EMA工具的论文, especially work that connects or combines: Ecological Momentary Assessment mental health research; EMA use in psychological studies; Experience Sampling Method in clinical psychology; mobile health applications for ecological momentary assessment; digital phenotyping using EMA in mental health; ecological momentary assessment for depression monitoring; Ecological Momentary Assessment applications in mental health research; Studies using EMA to monitor psychiatric symptoms; Effectiveness of EMA in mental health interventions.",
+      "matched_requirement_id": "req-composite-ema-mental",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.24603v1",
+      "source": "arxiv",
+      "title": "Characterizing In-the-Wild Personal Listening Device Use to Inform Earable Application Design",
+      "abstract": "Ear-worn devices are evolving from audio-playback tools into sensing platforms for health, interaction, and context-awareness. Yet, earable systems are typically designed and evaluated under strong assumptions about how long, how often, and in which situations people actually wear personal listening devices (PLDs). To ground these assumptions in-the-wild behavior, we combine a survey of 330 adults with multi-year, passively logged headphone audio-exposure records donated via Apple Health by 90 of them. We characterize where and when people use PLDs, how logged use has changed in recent years, and how psychological traits and social context associate with PLD usage. Our results show that logged mean daily use has increased from 37 minutes in 2020 to 64 minutes in 2024. Listening was intermittent: no listening was logged on 48% of participant-days in 2024, and sessions were fewer but longer on weekends. Sensation seeking, particularly disinhibition, showed small to medium positive associations with self-reported PLD use. Younger adults listened at higher volumes than the 25-34 group. High-volume exposure was uncommon, with only 4% of participant-weeks exceeding World Health Organization (WHO) safe-listening limits. Finally, most participants also reported avoiding PLD use in social situations. We translate these findings into implications for earable computing: realistic expectations of intermittent rather than continuous wear, contextual coverage that anticipates systematic gaps, targeted safe-listening interventions, and personalization grounded in psychosocial and demographic profiles rather than assumptions of uniform use.",
+      "authors": [
+        "Supraja Ramesh",
+        "Jonas Hummel",
+        "Silvia Becker",
+        "Christopher Clarke",
+        "Jake Stuchbury-Wass",
+        "Kai Kunze",
+        "Axel Loewe",
+        "Michael Beigl",
+        "Tobias Röddiger"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-07-27T16:05:11+00:00",
+      "link": "https://arxiv.org/pdf/2607.24603v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "in-the-wild personal listening device use for mobile health sensing",
+      "llm_evidence_cn": "野外个人听力设备使用用于移动健康感知",
+      "llm_evidence": "野外个人听力设备使用用于移动健康感知",
+      "canonical_evidence": "野外个人听力设备使用用于移动健康感知",
+      "llm_tldr_en": "Analyzes real-world headphone usage via survey and logged data from Apple Health, revealing usage patterns and associations with psychological traits. Informs earable design for health sensing.",
+      "llm_tldr_cn": "针对耳戴式健康感知设备设计缺乏真实场景数据的问题，本文通过330人调查和90人多年度被动日志，刻画了个人听力设备的使用时长、场景及心理社会关联。发现日均使用时间从37分钟逐年增加，且使用模式与人格特质相关。为生态瞬时评估中的移动健康应用提供了真实行为依据。",
+      "llm_tldr": "针对耳戴式健康感知设备设计缺乏真实场景数据的问题，本文通过330人调查和90人多年度被动日志，刻画了个人听力设备的使用时长、场景及心理社会关联。发现日均使用时间从37分钟逐年增加，且使用模式与人格特质相关。为生态瞬时评估中的移动健康应用提供了真实行为依据。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "mobile health applications for ecological momentary assessment",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

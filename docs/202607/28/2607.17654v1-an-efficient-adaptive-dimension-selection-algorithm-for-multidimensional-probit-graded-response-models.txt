@@ -1,0 +1,1027 @@
+Title: An efficient adaptive dimension selection algorithm for multidimensional probit graded response models
+
+URL Source: https://arxiv.org/pdf/2607.17654v1
+
+Published Time: Tue, 21 Jul 2026 01:35:41 GMT
+
+Number of Pages: 36
+
+Markdown Content:
+# An efficient adaptive dimension selection algorithm for multidimensional probit graded response models 
+
+Yu Zhou 1 ∗
+
+, Yincai Tang 1, Bin Lv 1, Meng Gao 2
+
+> 1
+
+KLATASDS-MOE 
+
+> 1
+
+School of Statistics, East China Normal University, Shanghai, 200062, China 
+
+> 2
+
+Zhiyuan School of Liberal Arts,Beijing Institute of Petrochemical Technology,Beijing 102617, China 
+
+Abstract 
+
+Multidimensional graded response models (MGRMs) are widely used for analyz-ing ordinal questionnaire data in psychological and educational assessments. A cen-tral challenge in applying these models is determining the number of latent dimen-sions. Conventional approaches usually fit multiple fixed-dimensional models and se-lect among them using post-hoc criteria such as AIC, BIC, or cross-validation, which can be computationally demanding and ignore uncertainty in dimensionality during estimation. We develop an adaptive Bayesian dimension selection framework for pro-bit MGRMs. Building on the cumulative shrinkage process, we assign a cumulative ordered spike-and-slab (COSS) prior to the column-specific variances of the item load-ing matrix. This prior induces increasing shrinkage across latent dimensions, allowing redundant dimensions to be shrunk toward zero while preserving flexibility for active dimensions. Albert–Chib latent response augmentation is used to handle the ordinal probit likelihood, yielding conditionally Gaussian updates for item loadings and latent traits. These updates are combined with Gibbs updates for threshold and shrinkage parameters in an efficient adaptive sampler. Simulation studies evaluate the proposed method in terms of dimension recovery, parameter estimation accuracy, and compu-tational efficiency, with comparisons to conventional fixed-dimensional estimation and 
+
+> ∗
+
+Email: 52274404005@stu.ecnu.edu.cn 
+
+1arXiv:2607.17654v1 [stat.ML] 20 Jul 2026 model selection procedures. The results show that the proposed approach accurately recovers the latent structure while avoiding repeated model fitting over multiple candi-date dimensions. We further illustrate the method using real psychological assessment data, demonstrating its practical utility for uncovering interpretable latent structures in ordinal item responses.  
+
+> Key words: Multidimensional graded response model; Item response theory; Bayesian dimension selection; Cumulative ordered spike-and-slab prior; Adaptive Gibbs sam-pling.
+
+# 1 Introduction 
+
+Multidimensional item response theory (MIRT) models are now a cornerstone of modern psychometrics, educational testing, and behavioral science. By linking multiple latent traits to observed item responses through a probabilistic measurement framework, MIRT provides a principled way to analyze complex assessment data and to uncover the latent structure underlying human responses (Reckase, 1997; McDonald, 1999; Reckase, 2009). In many applications, however, responses are often ordinal rather than binary, arising from Likert-type questionnaires, rating scales, or polytomous test items. To model such ordered categorical outcomes, a rich family of polytomous item response models has been developed (Masters, 1982; Muraki, 1992). Among these models, the graded response model (GRM), originally introduced by Samejima (1969) and later systematized by Samejima (1997), has become one of the most widely used frameworks. Its appeal lies in the use of ordered threshold parameters, which allow flexible modeling of transitions across response categories. The multidimensional graded response model (MGRM) extends this idea to multiple latent traits and is particularly attractive when several correlated psychological or educational constructs are measured simultaneously (Forero et al., 2009). Despite its flexibility and interpretability, the practical use of MGRM raises a funda-mental modeling question: how many latent dimensions should be included? This issue is central to the success of multidimensional item response modeling, yet it remains one of the most difficult aspects of implementation. Classical estimation approaches for MIRT mod-els—including marginal maximum likelihood via the EM algorithm (Bock and Aitkin, 1981; Bock et al., 1988), Bayesian MCMC methods (Albert, 1992; Patz and Junker, 1999; B´ eguin 2and Glas, 2001), and the MH-RM algorithm (Cai, 2010a; Chalmers, 2012; Cai, 2010b)—all require the latent dimension to be fixed in advance. If the dimension is set too small, the model may fail to capture important latent structure and may yield biased parameter estimates. If it is set too large, redundant factors can enter the model, producing overfit-ting, unstable estimation, and serious interpretability difficulties due to weakly identified or near-zero loadings. In applied research, dimension determination is therefore often carried out using exploratory factor analysis, parallel analysis (Horn, 1965), or a model compari-son strategy based on criteria such as AIC, BIC, DIC, or WAIC (Kang and Cohen, 2007). While widely used, these strategies can be computationally expensive when multiple high-dimensional MGRMs must be fitted repeatedly, and they may be unreliable in finite samples or sparse ordinal data settings where asymptotic approximations break down (Li et al., 2025). Regularized frequentist alternatives based on lasso-type or ridge-type penalties (Chen et al., 2017) offer another route to sparsity, but they still require tuning-parameter selection, often through cross-validation, which can be burdensome in large-scale psychometric applications. Bayesian methods provide a coherent alternative for learning latent structure directly from the data (Fox, 2010; Levy and Mislevy, 2016). In particular, shrinkage priors and infinite-dimensional latent factor models have made it possible to infer effective model com-plexity without relying on repeated model fitting. A key theoretical insight comes from the asymptotic behavior of overfitted mixture models (Rousseau and Mengersen, 2011), which suggests that properly designed sparse priors can empty redundant components automati-cally. In Bayesian factor analysis, one influential development is the multiplicative gamma process (MGP) prior (Bhattacharya and Dunson, 2011), which imposes increasingly strong shrinkage on higher-order factors and thereby encourages parsimonious low-rank representa-tions. This idea has inspired a range of extensions, including sparse Bayesian factor rotation methods (Roˇ ckov´ a and George, 2016) and infinite factor models with adaptive shrinkage (Fr¨ uhwirth-Schnatter and Lopes, 2018). Building on this line of work, Legramanti et al. (2020) proposed the cumulative shrinkage process, also known as the cumulative ordered spike-and-slab (COSS) prior. The key idea is to impose an ordered sequence of spike probabilities through a stick-breaking construction, so that later latent dimensions are increasingly likely to be shrunk toward zero. Compared with continuous shrinkage priors such as the MGP, the COSS prior offers a more explicit separation between active and inactive factors, making dimension selection more interpretable and often 3more stable in finite samples. This idea has been extended to generalized infinite factorization models (Schiavon et al., 2022) and network eigenmodels (Loyal and Chen, 2025), but its application to ordinal psychometric models remains limited. Extending adaptive shrinkage ideas to the MGRM is not straightforward. The ordinal probit likelihood is non-linear and non-conjugate, and once it is combined with a hierarchical shrinkage prior, the posterior distribution becomes analytically intractable. As a result, stan-dard MCMC samplers may mix slowly, especially when the model includes a large number of potential latent dimensions and many loadings are close to zero. Moreover, latent factor models suffer from rotational and sign indeterminacy, which complicates both estimation and interpretation. These issues make adaptive Bayesian dimension selection particularly challenging in the psychometric setting. To address these difficulties, we propose a fully Bayesian adaptive dimension selection algorithm for multidimensional probit graded response models using the COSS prior. The proposed method places the shrinkage prior on the columns of the loading matrix, so that higher-indexed latent dimensions are progressively discouraged from contributing to the re-sponse process. This ordered shrinkage structure provides a soft mechanism for selecting the effective latent dimension while promoting a parsimonious and interpretable factorization of the response model. In this sense, the prior plays a dual role: it regularizes the loading structure and helps align the latent space with decreasing factor importance. To make posterior inference computationally tractable, we adopt the data augmentation strategy of Albert and Chib (1993). By introducing latent truncated normal variables under-lying the ordinal responses, the probit MGRM can be rewritten as a sequence of Gaussian regression updates. This augmentation restores conjugacy for the latent traits, the loadings, and the threshold parameters, allowing us to develop an efficient Gibbs sampling scheme with closed-form conditional updates. Compared with reversible jump MCMC or other trans-dimensional methods (Green, 1995; Carlin and Chib, 1995; Stephens, 2000; Davies et al., 2023), the proposed sampler avoids complicated dimension-matching steps and in-stead learns the model complexity through dynamic truncation during sampling. The remainder of this paper is organized as follows. Section 2 introduces the multidimen-sional probit graded response model and the COSS prior specification. Section 3 presents the data augmentation scheme and derives the adaptive Gibbs sampler. Section 4 reports simulation studies that evaluate parameter recovery and dimension-selection accuracy across 4a range of sample sizes, test lengths, and true dimensionalities. Section 5 illustrates the prac-tical usefulness of the proposed method using real psychometric data. Section 6 concludes the paperand discusses future directions. 
+
+# 2 Model specification 
+
+Suppose a test consisting of q items is administered to n individuals. Let Yij denote the random variable representing the ordered categorical response of individual i (i “ 1, 2, . . . , n )to item j (j “ 1, 2, . . . , q ), taking values in t1, 2, . . . , t j u, where tj ą 2 is the number of response categories for item j.We adopt an overfitted working model with a conservatively large number of potential latent dimensions, denoted by K. The response of each individual is assumed to be driven by a K-dimensional latent trait vector zi “ p zi1, z i2, . . . , z iK qJ P RK , where redundant dimensions are shrunk toward zero through the cumulative shrinkage prior introduced below. 
+
+2.1 The Multidimensional Probit Graded Response Model 
+
+Under the probit specification of the graded response model (GRM), the cumulative proba-bility that individual i’s response to item j falls into category t or lower, conditional on the latent trait zi, is modeled using the standard normal cumulative distribution function Φ p¨q :
+
+P pYij ď t | zi, βj , γj q “ Φpγj,t ` zJ 
+
+> i
+
+βj q, t “ 1, 2, . . . , t j ´ 1, (1) where βj “ p βj1, β j2, . . . , β jK qJ is the vector of discrimination parameters (factor loadings) for item j, and γj “ p γj, 1, γ j, 2, . . . , γ j,t j ´1qJ contains the item-specific threshold parameters. The probability of responding exactly in category t is then given by the difference between adjacent cumulative probabilities: 
+
+P pYij “ t | zi, βj , γj q “ Φpγj,t ` zJ 
+
+> i
+
+βj q ´ Φpγj,t ´1 ` zJ 
+
+> i
+
+βj q, (2) where we define the boundary thresholds as γj, 0 “ ´8 and γj,t j “ `8 to ensure a valid prob-ability mass function. To satisfy the monotonicity of cumulative probabilities, the thresholds must be ordered: γj, 0 ă γj, 1 ă γj, 2 ă ¨ ¨ ¨ ă γj,t j ´1 ă γj,t j .5The joint likelihood of the observed response matrix Y can be expressed as: 
+
+ppY | Z, B, γq “ 
+
+> n
+
+ź
+
+> i“1
+> q
+
+ź
+
+> j“1
+> tj
+
+ÿ
+
+> t“1
+
+IpYij “ tq `Φpγj,t ` zJ 
+
+> i
+
+βj q ´ Φpγj,t ´1 ` zJ 
+
+> i
+
+βj q˘ , (3) where Ip¨q is the indicator function, Z is the n ˆ K matrix of latent traits, and B is the q ˆ K
+
+matrix of factor loadings, γ is the q ˆ p tj ´ 1q matrix of threshold parameters. As with all latent variable models, the MGRM faces inherent identifiability challenges. Unrestricted estimation is subject to rotational ambiguity and scale indeterminacy. To ad-dress scale indeterminacy, we fix the distribution of the latent traits by assigning a standard multivariate normal prior, zi „ N p0, IK q. The proposed cumulative shrinkage prior im-poses an ordered structure on the columns of the loading matrix, thereby encouraging a representation in which earlier dimensions explain more variation and later dimensions are increasingly shrunk toward zero. This ordered shrinkage substantially mitigates rotational and column-permutation ambiguity for the purpose of dimension selection. 
+
+2.2 Adaptive Dimension Selection via Cumulative Shrinkage 
+
+A critical challenge in MIRT modeling is the selection of the number of latent dimensions. Let 
+
+K0 denote the unknown true effective dimension underlying the response data. In practice, 
+
+K0 is not assumed to be known. A fixed, pre-specified dimension may lead to underfitting if important psychological constructs are omitted, or to overfitting if redundant dimensions are introduced to capture noise. To address this issue, we adopt an overfitted working model with a conservatively large number of potential latent dimensions, denoted by K.We then use a cumulative shrinkage prior on the columns of the loading matrix B to shrink redundant dimensions toward zero and infer the effective number of active dimensions from the data. Specifically, let B “ p β1, . . . , βqqJ be the q ˆ K loading matrix, where the hth column corresponds to the loadings on the hth potential latent dimension. For each item 
+
+j “ 1, . . . , q and dimension h “ 1, . . . , K , we assume 
+
+βjh | θh „ N p0, θ hq, (4) where θh is a column-specific variance parameter controlling the overall magnitude of the 
+
+hth column of B. Small values of θh shrink the corresponding column of loadings toward 6zero, thereby deactivating the associated latent dimension. The key idea is to impose an ordered shrinkage structure on the sequence tθhuKh“1, encour-aging earlier dimensions to capture the dominant variation in the responses while increasingly shrinking later dimensions toward zero. We formalize this idea using a cumulative ordered spike-and-slab (COSS) prior, building on the cumulative shrinkage process of Legramanti et al. (2020). 
+
+2.2.1 Non-homogeneous Cumulative Shrinkage Process 
+
+For the column-specific variance parameters introduced above, we assign each θh a spike-and-slab prior of the form 
+
+θh | πh „ p 1 ´ πhqPslab ` πhPspike , h “ 1, . . . , K, (5) where Pslab is a diffuse distribution that allows active dimensions to have non-negligible loadings, whereas Pspike is concentrated near zero and shrinks redundant dimensions. To induce increasing shrinkage across dimensions, the spike probabilities are constrained to be nondecreasing: 
+
+π1 ď π2 ď ¨ ¨ ¨ ď πK .
+
+This is achieved through a stick-breaking construction. Specifically, let 
+
+πh “
+
+> h
+
+ÿ
+
+> l“1
+
+ωl, ωl “ vll´1ź
+
+> m“1
+
+p1 ´ vmq, h “ 1, . . . , K, (6) where 
+
+v1 „ Beta pκ, 1q, vl „ Beta pa, 1q, l “ 2, . . . , K ´ 1, vK “ 1.
+
+The constraint vK “ 1 ensures that řKl“1 ωl “ 1 and hence πK “ 1. The process is non-homogeneous in the sense that the stick-breaking variables are not identically distributed. The hyperparameter κ controls the prior probability that the first dimension is shrunk, with smaller values of κ favoring an active first dimension. The hyperparameter a controls the rate at which shrinkage increases across dimensions; larger values of a place more mass on earlier stick-breaking components, causing the spike probabilities πh to increase more rapidly with h.7This construction induces an ordered shrinkage mechanism: early columns of B are rel-atively more likely to be associated with the slab component, whereas later columns have increasingly larger prior probabilities of being assigned to the spike component. Conse-quently, redundant latent dimensions are automatically shrunk toward zero, and the effective dimensionality can be inferred from the posterior distribution of the column-specific vari-ances tθhuKh“1. When the spike distribution is taken to be a point mass at zero, Pspike “ δ0,this ordered shrinkage mechanism further implies an ordering of the prior probabilities that columns are exactly zero, as formalized below. 
+
+Proposition 1 (Stochastic Ordering). Let tθhuKh“1 follow the prior defined by (5) -(6) 
+
+with Pspike “ δ0. Then for any ϵ ą 0 and all 1 ď h ă K, we have Pr p| θh`1| ď ϵq ą Pr p| θh| ď 
+
+ϵq.Proof. By the law of total probability and Pspike p| θh| ą ϵq “ 0, we have: Pr p| θh| ą ϵq “ E“p1 ´ πhqPslab p| θh| ą ϵq‰ “ Pslab p| θ| ą ϵq ¨ Ep1 ´ πhq.
+
+Based on the stick-breaking construction, 1 ´ πh “ śhl“1p1 ´ vlq. Since tvlu are independent, and Ep1 ´ v1q “ 11`κ , Ep1 ´ vlq “ 11`a for l ą 1, we obtain: 
+
+Ep1 ´ πhq “ E
+
+” hź
+
+> l“1
+
+p1 ´ vlq
+
+ı
+
+“ 1
+
+κ ` 1
+
+ˆ 1
+
+a ` 1
+
+˙h´1
+
+.
+
+For a ą 0, 0 ă 1 
+
+> a`1
+
+ă 1, making Ep1´πhq strictly decreasing with respect to h. Consequently, Pr p| θh`1| ą ϵq ă Pr p| θh| ą ϵq, which directly leads to Pr p| θh`1| ď ϵq ą Pr p| θh| ď ϵq for all 1 ď h ă K. ˝
+
+2.2.2 Prior Specification for Factor Loadings 
+
+We now apply the proposed COSS framework to the factor loading matrix B. For each column h, all loading parameters βjh share a common column-specific variance parameter 
+
+θh:
+
+βjh | θh „ N p0, θ hq, j “ 1, . . . , q, θh | πh „ p 1 ´ πhq IG paθ, b θq ` πh δθ0 .
+
+(7) Here, the slab component is specified as an Inverse-Gamma distribution IG paθ, b θq, while the spike component δθ0 is taken to be a point mass at a very small positive value θ0 ą 0. 8This choice provides a continuous relaxation of an exact point mass at zero variance, which avoids numerical degeneracy in MCMC sampling while still effectively shrinking loadings in redundant columns toward zero. After integrating out θh, the marginal prior distribution of each loading is 
+
+βjh | πh „ p 1 ´ πhq t2aθ p0, b θ{aθq ` πh N p0, θ 0q,
+
+where t2aθ p0, b θ{aθq denotes a Student-t distribution with degrees of freedom 2 aθ, location 0, and scale squared bθ{aθ.The heavy-tailed slab component protects relevant loadings from excessive shrinkage, whereas the narrow Gaussian spike component concentrates irrelevant loadings near zero. Thus, compared with the exact spike case in Proposition 1, the present continuous relaxation yields an analogous ordering in terms of the prior probabilities of near-zero loadings. 
+
+Corollary 1 (Stochastic Ordering of Loadings). Let βjh be drawn from the COSS prior (7) . For any ϵ ą 0, the inequality Pr p| βj,h `1| ď ϵq ą Pr p| βjh | ď ϵq holds for all 
+
+1 ď h ă K, provided θ0 ă bθ{aθ.Proof. Let 
+
+G0pϵq “ Pr  
+
+> Np0,θ 0q
+
+p| X| ď ϵq
+
+and 
+
+G1pϵq “ Pr    
+
+> t2aθp0,b θ{aθq
+
+p| X| ď ϵq.
+
+Conditional on πh, the marginal distribution of βjh is 
+
+βjh | πh „ p 1 ´ πhqt2aθ p0, b θ{aθq ` πhN p0, θ 0q.
+
+Hence Pr p| βjh | ď ϵ | πhq “ G1pϵq ` πhtG0pϵq ´ G1pϵqu .
+
+Taking expectation with respect to the stick-breaking process gives Pr p| βjh | ď ϵq “ G1pϵq ` Epπhqt G0pϵq ´ G1pϵqu .
+
+9Therefore, Pr p| βj,h `1| ď ϵq ´ Pr p| βjh | ď ϵq“ t Epπh`1q ´ Epπhqut G0pϵq ´ G1pϵqu .
+
+By the stick-breaking construction, 
+
+Epπhq “ 1 ´ 1
+
+κ ` 1
+
+ˆ 1
+
+a ` 1
+
+˙h´1
+
+,
+
+and thus 
+
+Epπh`1q ´ Epπhq “ 1
+
+κ ` 1
+
+ˆ 1
+
+a ` 1
+
+˙h´1 aa ` 1 ą 0.
+
+It remains to show that G0pϵq ą G1pϵq. Since 
+
+G0pϵq “ 2Φ 
+
+ˆ ϵ
+
+?θ0
+
+˙
+
+´ 1,
+
+and 
+
+G1pϵq “ 2T2aθ
+
+˜
+
+ϵ
+
+abθ{aθ
+
+¸
+
+´ 1,
+
+where T2aθ denotes the cdf of a standard Student’s t distribution with 2 aθ degrees of freedom, the condition 
+
+θ0 ă bθ
+
+aθ
+
+implies 
+
+ϵ
+
+?θ0
+
+ą ϵ
+
+abθ{aθ
+
+.
+
+Moreover, for any x ą 0, Tν pxq ă Φpxq. Therefore, Φ
+
+ˆ ϵ
+
+?θ0
+
+˙
+
+ą Φ
+
+˜
+
+ϵ
+
+abθ{aθ
+
+¸
+
+ą T2aθ
+
+˜
+
+ϵ
+
+abθ{aθ
+
+¸
+
+,
+
+which implies G0pϵq ą G1pϵq. Consequently, Pr p| βj,h `1| ď ϵq ą Pr p| βjh | ď ϵq.
+
+This completes the proof. ˝
+
+Through the stochastic ordering induced by the COSS prior, later columns of B are 10 progressively assigned stronger shrinkage toward zero. In the probit GRM setting, this or-dered shrinkage encourages the retained latent traits to be arranged according to decreasing explanatory relevance, while redundant latent dimensions are shrunk toward zero. It there-fore provides a shrinkage-based mechanism for dimension selection and enables posterior inference on the effective number of latent traits. 
+
+# 3 Posterior Inference via Adaptive Gibbs Sampling 
+
+In this section, we develop an efficient Markov chain Monte Carlo (MCMC) algorithm for posterior inference in the multidimensional probit graded response model equipped with the cumulative ordered spike-and-slab (COSS) prior. The main challenges in posterior sampling arise from two sources: first, the nonconjugate form of the ordinal probit likelihood before data augmentation; and second, the complex hierarchical structure of the COSS prior. To address these challenges, we construct a Gibbs sampling algorithm based on data augmentation and an adaptive truncation scheme. The data augmentation step restores con-ditional conjugacy for the ordinal probit component, while the adaptive truncation scheme allows the sampler to focus computation on the relevant latent dimensions. Together, these components enable efficient posterior exploration of the model parameters and the effective number of latent traits. We first present the sampler under a fixed truncation level K, and then introduce an adaptive scheme that dynamically adjusts K during the MCMC iterations to improve computational efficiency. 
+
+3.1 Data Augmentation and Parameter Updates 
+
+To overcome the non-conjugacy of the probit MGRM, we adopt the latent variable data augmentation strategy proposed by Albert and Chib (1993). Specifically, we introduce a continuous latent response variable Y ˚ 
+
+> ij
+
+for each observed ordinal response Yij . Conditional on the latent traits zi, the factor loadings βj , and the observed category Yij “ t, Y ˚ 
+
+> ij
+
+is drawn from a truncated normal distribution: 
+
+Y ˚ 
+
+> ij
+
+| zi, βj , Y ij “ t „ N p´ zJ 
+
+> i
+
+βj , 1qIpγj,t ´1 ă Y ˚ 
+
+> ij
+
+ď γj,t q, (8) 11 where Ip¨q is the indicator function. The introduction of Y ˚ 
+
+> ij
+
+reformulates the probit MGRM into a standard Bayesian linear regression model, Y ˚ 
+
+> ij
+
+“ ´ zJ 
+
+> i
+
+βj ` ϵij , with ϵij „ N p0, 1q,thereby rendering the conditional posterior distributions of Z and B analytically tractable. Given the augmented data Y˚ “ t Y ˚ 
+
+> ij
+
+u, the full conditional posterior distribution for the factor loading vector βj of item j follows a multivariate normal distribution: 
+
+βj | rest „ N pμβj , Σβj q, (9) where the posterior covariance and mean are given by 
+
+Σβj “ `Σ´1 
+
+> B
+
+` ZJZ˘´1 and μβj “ Σβj p´ ZJY˚¨j q,
+
+respectively. Here, Y˚¨j “ p Y ˚ 
+
+> 1j
+
+, Y ˚ 
+
+> 2j
+
+, . . . , Y ˚ 
+
+> nj
+
+qJ, and ΣB “ diag pθ1, . . . , θ K q represents the prior covariance matrix governed by the COSS prior. To ensure strict identifiability, lower-triangular constraints are imposed on B during the sampling process. Similarly, the full conditional posterior distribution for the latent trait vector zi of indi-vidual i is: 
+
+zi | rest „ N pμzi , Σzi q, (10) with the covariance and mean given by 
+
+Σzi “ `IK ` BJB˘´1 and μzi “ Σzi p´ BJY˚
+
+> i¨
+
+q,
+
+where Y˚ 
+
+> i¨
+
+“ p Y ˚
+
+> i1
+
+, Y ˚
+
+> i2
+
+, . . . , Y ˚ 
+
+> iq
+
+qJ. Since a standard normal prior N p0, IK q is assigned to zi to anchor the scale of the latent space, the prior precision matrix reduces to the identity matrix 
+
+IK .For the threshold parameters γj,t , assuming a diffuse prior bounded by appropriate con-straints, the full conditional distribution is uniform over a restricted interval: 
+
+γj,t | rest „ Uniform pΩL, ΩU q, (11) where the lower and upper bounds are determined by the maximum and minimum values of the augmented data within adjacent categories, combined with the order constraints from neighboring thresholds: Ω L “ max `max i:Yij “t Y ˚ 
+
+> ij
+
+, γ j,t ´1
+
+˘ , ΩU “ min `min i:Yij “t`1 Y ˚ 
+
+> ij
+
+, γ j,t `1
+
+˘ .
+
+12 3.2 Updating the COSS Prior Parameters 
+
+To facilitate posterior computation under the COSS prior, we introduce a latent allocation indicator ρh P t 1, 2, . . . , K u for each dimension h, with Pr pρh “ l | ωq “ ωl, l “ 1, . . . , K. 
+
+Recall that the spike probability is πh “ řhl“1 ωl. It follows that Pr pρh ď h | ωq “ řhl“1 ωl “
+
+πh. Therefore, the event ρh ď h corresponds to assigning the hth dimension to the spike component, whereas ρh ą h corresponds to assigning it to the slab component. This yields a latent-variable representation that is marginally equivalent to the original spike-and-slab prior. Specifically, 
+
+θh | ρh „
+
+$’&’%
+
+δθ0 , ρh ď h, 
+
+IG paθ, b θq, ρh ą h, 
+
+(12) Equivalently, 
+
+θh | ρh „ Ipρh ď hq δθ0 ` t 1 ´ Ipρh ď hqu IG paθ, b θq. (13) Marginalizing out independent indicators ρh recovers θh | πh „ πhδθ0 ` p 1 ´ πhq IG paθ, b θq,
+
+which is the original COSS spike-and-slab prior. The number of active dimensions can then be counted as K˚ “ řKh“1 Ipρh ą hq.
+
+The latent indicators ρh are updated by sampling from their conditional posterior distri-bution. For each h, by Bayes’ rule, Pr pρh “ l | β¨h, ωq9 Pr pρh “ l | ωqppβ¨h | ρh “ lq, where Pr pρh “ l | ωq “ ωl. It remains to derive the marginal density ppβ¨h | ρh “ lq.Recall that β¨h | θh „ Nqp0, θ hIqq and (12), when l ď h, the event ρh “ l implies that θh “ θ0. Hence, ppβ¨h | ρh “ lq “ Nqpβ¨h; 0, θ 0Iqq, l ď h. When l ą h, θh follows the inverse-gamma slab prior. Therefore, 
+
+ppβ¨h | ρh “ lq “ 
+
+ż
+
+ppβ¨h | θhqppθh | ρh “ lq dθ h
+
+“
+
+ż
+
+Nqpβ¨h; 0, θ hIqq IG pθh; aθ, b θq dθ h.
+
+Using the Gaussian–inverse-gamma conjugacy, this integral yields a q-variate Student-t den-sity, ppβ¨h | ρh “ lq “ t2aθ
+
+´
+
+β¨h; 0, bθ 
+
+> aθ
+
+Iq
+
+¯
+
+, l ą h. Combining these results, the conditional 13 posterior probabilities of ρh are given by Pr pρh “ l | rest q9 
+
+$’&’%
+
+ωl Nqpβ¨h; 0, θ 0Iqq, if l ď h, ωl t2aθ pβ¨h; 0, pbθ{aθqIqq, if l ą h. 
+
+(14) Here, Nqp¨ ; 0, θ 0Iqq denotes the q-variate Gaussian density, and t2aθ p¨ ; 0, pbθ{aθqIqq denotes the q-variate Student-t density with 2 aθ degrees of freedom, location 0, and scale matrix 
+
+pbθ{aθqIq.Furthermore, the stick-breaking weights are given by ωl “ vl
+
+ś
+
+> măl
+
+p1 ´ vmq, l “ 1, . . . , K, 
+
+with vK “ 1 under the truncated representation. Given the stick-breaking weights ω, the latent indicators ρ1, . . . , ρ K are conditionally independent, with Pr pρj “ l | ωq “ ωl. Since ω
+
+is determined by the stick-breaking variables v, this can equivalently be written as Pr pρj “
+
+l | vq “ ωl. Therefore, the joint conditional probability of the indicators is ppρ1, . . . , ρ K |
+
+vq “ śKj“1 ppρj | vq “ śKj“1 ωρj .
+
+For a fixed stick-breaking variable vl, each indicator ρj contributes a factor vl if ρj “ l,a factor p1 ´ vlq if ρj ą l, and no factor involving vl if ρj ă l. Hence, ppρ1, . . . , ρ K |
+
+vq9 v   
+
+> řKj“1Ipρj“lq
+> l
+
+p1 ´ vlqřKj“1 Ipρj ąlq. Combining this likelihood with the Beta priors gives the Gibbs updates. For v1 „ Beta pκ, 1q,
+
+v1 | rest „ Beta 
+
+˜
+
+κ `
+
+> K
+
+ÿ
+
+> j“1
+
+Ipρj “ 1q, 1 `
+
+> K
+
+ÿ
+
+> j“1
+
+Ipρj ą 1q
+
+¸
+
+. (15) For l “ 2, . . . , K ´ 1, if vl „ Beta pa, 1q, then 
+
+vl | rest „ Beta 
+
+˜
+
+a `
+
+> K
+
+ÿ
+
+> j“1
+
+Ipρj “ lq, 1 `
+
+> K
+
+ÿ
+
+> j“1
+
+Ipρj ą lq
+
+¸
+
+. (16) Finally, given the updated allocation variables ρh, the variance parameters θh are updated according to the spike–slab structure. If ρh ď h, θh is deterministically set to the near-zero constant θ0. Conversely, if ρh ą h, the inverse-gamma prior remains conjugate to the Gaussian likelihood of β¨h, yielding: 
+
+θh | ρh ą h, rest „ IG 
+
+ˆ
+
+aθ ` q
+
+2, b θ ` 12}β¨h}22
+
+˙
+
+. (17) 14 In summary, given the current state pZ, γ, B, θ, ρ, vq, with ω “ p ω1, ω 2, . . . , ω K q computed from v, the exact Gibbs sampler proceeds by sequentially sampling or updating each block from the closed-form full conditional distributions (8), (9), (10), (11), (14), (15), (16), and (17). 
+
+3.3 Adaptive Truncation Strategy 
+
+The exact Gibbs sampler described above is derived under a fixed truncation level K. Under the finite cumulative shrinkage construction, the last component is reserved as a terminal spike component. Therefore, at most K ´ 1 dimensions can be active. Although one may choose a conservative truncation level, for example K “ q ` 1, such a choice is often com-putationally inefficient. In applications with a large number of items, the true number of latent traits is typically much smaller than q, and most columns of the loading matrix are expected to be shrunk to the spike component. To avoid repeatedly updating unnecessary spike columns, we adopt an adaptive trunca-tion strategy following Bhattacharya and Dunson (2011); Legramanti et al. (2020). The idea is to adjust the truncation level during the MCMC run according to the current number of active dimensions. At iteration t, after a pre-specified burn-in period ¯ t, an adaptation step is attempted with probability pptq “ exp pα0 ` α1tq, α 0 ď 0, α 1 ă 0. Since this probability decreases to zero as t increases, the adaptation becomes less frequent along the chain, which is in line with the diminishing adaptation condition of Roberts and Rosenthal (2007). Given the current truncation level K, define the number of active dimensions as K˚ “
+
+řKh“1 Ipρh ą hq. Here dimension h is active when ρh ą h, and it is assigned to the spike component when ρh ď h. Since the last component is the terminal spike component, we have K˚ ď K ´ 1. If K˚ ă K ´ 1, then the current truncation level contains redundant inactive dimensions. In this case, the inactive columns of B, together with their associated parameters, are removed from the sampler, and the truncation level is reset to Knew “ K˚ `1.
+
+The extra component is retained as the terminal spike component. On the other hand, if 
+
+K˚ “ K ´ 1, then all available non-terminal dimensions are active, suggesting that the current truncation level may be insufficient. The sampler then expands the model by setting 
+
+Knew “ K ` 1, and initializing the newly introduced final component from its corresponding prior distribution. This adaptive scheme allows the sampler to keep only the dimensions that are currently 15 needed, while still leaving one terminal spike component for possible future expansion. As a result, it avoids the computational burden caused by an overly conservative fixed trun-cation level, without preventing the posterior from exploring larger latent dimensions when supported by the data. The adaptive procedure proceeds as follows: 1. Evaluation. Compute the current number of active dimensions K˚ “ řKh“1 Ipρh ą hq.
+
+2. Contraction step. If K˚ ă K ´ 1, then the current truncation level is larger than needed. In this case, all inactive columns of B, together with their associated parame-ters, are removed from the sampler. The truncation level is then reset to Knew “ K˚`1.
+
+The additional final component is kept as the terminal spike component, so that the sampler still has one inactive dimension available for subsequent exploration. 3. Expansion step. If K˚ “ K ´ 1, then all currently available non-terminal dimensions are active. This suggests that the current truncation level may be too small. In this case, the sampler increases the truncation level by one: Knew “ K ` 1. A new final col-umn is added to B, and its associated parameters are sampled from the corresponding prior distributions. This newly added component is initialized as the terminal spike component. Combining the Gibbs updates derived above with the adaptive truncation strategy, we obtain the adaptive Gibbs sampler summarized in Algorithm 1. 
+
+# 4 Simulation Study 
+
+4.1 Performance of the Adaptive Probit GRM 
+
+In this simulation study, we evaluate the performance of the proposed adaptive approach in terms of parameter recovery, latent structure reconstruction, and adaptive dimension selection under varying sample sizes ( n), test lengths ( q), and true latent dimensionalities (K0 P t 2, 3, 4u). For each simulation condition, we generated 25 independent datasets. The observed ordinal responses Y were generated from the probit graded response model. To satisfy the strict monotonicity constraint on the threshold parameters, the item-specific intercept parameters γ were independently generated from non-overlapping uniform distri-butions. The true latent traits were generated as zi „ N p0, IK0 q. For the true loading 16 Algorithm 1: Adaptive Gibbs sampler for the probit GRM 
+
+Input: Total iterations T , burn in T0, initial truncation level K, adaptation parameters α0, α 1, adaptation starting iteration ¯ t
+
+Output: Posterior samples of Z, B, γ, and the estimated active dimension indicators Initialize K, Z, B, γ, θ, ρ;
+
+for t “ 1, . . . , T do 
+
+Sample augmented responses Y ˚ 
+
+> ij
+
+from the truncated normal distribution in (8); Update item loading vectors βj , j “ 1, . . . , q , using (9) ; Update latent trait vectors zi, i “ 1, . . . , n , using (10); Update threshold parameters γj,t using (11); Update allocation indicators ρh, h “ 1, . . . , K , using (14); Update stick-breaking variables vh, h “ 1, . . . , K ´ 1, using (15)–(16), and compute ω;Update variance parameters θh, h “ 1, . . . , K , using (17); set θh “ θ0 when 
+
+ρh ď h;
+
+if t ą ¯t then 
+
+With probability pptq “ exp pα0 ` α1tq, compute K˚ “ řKh“1 Ipρh ą hq;
+
+if K˚ ă K ´ 1 then 
+
+Remove the inactive columns of B, namely those assigned to the spike component with ρh ď h, together with their associated parameters in θ,
+
+ρ, Z, and ω;Set Knew “ K˚ ` 1; Add a final component to B, θ, ρ, Z, and ω sampled from the corresponding prior distributions; Set K Ð Knew ;
+
+end else if K˚ ě K ´ 1 then 
+
+Set Knew “ K ` 1; Add a final column sampled from the spike to B, together with the associated parameters in θ, ρ, Z, and ω sampled from the corresponding prior distributions; Set K Ð Knew ;
+
+end end end 
+
+17 matrix B0 P RJˆK0 , we used a simple structure design: each item loaded on exactly one la-tent dimension, and the nonzero loading was independently drawn from Up0.25 , 1.25 q. This design ensures that each item measures a single latent trait. In the MCMC implementation, the maximum truncation level was set to K “ 8. For the COSS prior imposed on the loading matrix, the slab hyperparameters were set to aθB “
+
+bθB “ 2, the stick-breaking parameter was set to a “ 2, and the spike variance was fixed at 
+
+θ0 “ 0.05. The Gibbs sampler was run for 20,000 iterations, with the first 10,000 iterations discarded as burn-in. A thinning interval of 10 was applied to the post-burn-in samples. The adaptive truncation mechanism was activated after ¯ t “ 500 iterations, with the decaying probability parameters set to pη0, η 1q “ p´ 1, ´5 ˆ 10 ´4q.To evaluate parameter recovery while accounting for the rotational invariance of latent variable models, we used normalized Frobenius errors based on the induced inner-product matrices: ∆Z “ }ˆZˆZJ ´ Z0ZJ 
+
+> 0
+
+}F
+
+n , ∆B “ } ˆBJ ˆB ´ BJ 
+
+> 0
+
+B0}F
+
+q .
+
+These criteria are invariant to orthogonal rotations, column permutations, and sign changes of the latent factors. The accuracy of threshold estimation was measured by the root mean squared error, denoted by γrmse .We also report global bias measures for the posterior mean estimates. For the threshold parameters, bias was computed as the average entrywise difference between ˆ γ and γ0. For the loading matrix and latent scores, bias was computed as the average entrywise difference between the estimated and true inner-product matrices, ˆBJ ˆB ´ BJ 
+
+> 0
+
+B0 and ˆZˆZJ ´ Z0ZJ 
+
+> 0
+
+,respectively. For dimension recovery, the estimated latent dimension was defined as the posterior mode of the number of active factors: ˆK “ arg max  
+
+> l
+
+Pr pK˚ “ l | Yq.
+
+We report the accuracy rate, denoted by Acc, which is the proportion of replications satis-fying ˆK “ K0, and the mean absolute bias, denoted by MAB, computed conditional on the replications in which ˆK ‰ K0.Table 1 summarizes the simulation results for the proposed probit GRM under different combinations of sample size, test length, and true latent dimensionality. Overall, the pro-18 posed Gibbs sampler provides accurate parameter recovery, and its performance improves as the amount of information in the data increases. In particular, the threshold RMSE γrmse 
+
+decreases substantially as the sample size increases from n “ 200 to n “ 1000. Similarly, the loading error ∆ B and the latent trait error ∆ Z generally decrease as either n or q in-creases. These trends provide empirical support for the consistency behavior of the proposed estimation procedure. The global bias measures are close to zero across most settings, suggesting that the COSS prior induces sparsity without introducing substantial systematic bias for the active parameters. This is particularly important because shrinkage priors may, in principle, over-shrink nonzero loadings. The small values of Bbias observed in the simulations indicate that the proposed prior achieves a favorable balance between sparsity and estimation accuracy. For dimension recovery, the proposed method performs very well in the lower-dimensional cases. When the true dimension is K0 “ 2, the correct dimension is selected in all replications across all combinations of n and q. For K0 “ 3, the accuracy is also high, reaching 100% in almost all settings once the test length is at least q “ 60. The most challenging scenario occurs when the true latent dimension is K0 “ 4, especially under small sample size and short test length. For example, when n “ 200 and q “ 40, the accuracy drops to 16%. This behavior is expected, as each latent dimension is measured by only about 10 items on average, and the available ordinal information is insufficient to fully overcome the shrinkage toward a more parsimonious model. As either the test length or sample size increases, however, the dimension recovery improves markedly. For example, when n “ 1000 and q “ 100, the accuracy reaches 96%. Moreover, when dimension selection is incorrect, the conditional mean absolute bias is mostly between one and two, indicating that the selected dimension typically remains close to the true dimension rather than exhibiting large selection errors. 
+
+4.2 Comparison with Post-hoc Dimension Selection Criteria 
+
+We further evaluated the dimension selection performance of the proposed method under the true latent dimension K0 “ 3 by comparing it with several standard post-hoc model selection criteria. Unlike the proposed approach, which infers the effective latent dimension within a single overfitted model, these competing procedures require fitting a sequence of probit graded response models with different fixed candidate dimensions. Specifically, for 19 Table 1: Simulation results for the proposed adaptive probit graded response model under different sample sizes, test lengths, and true latent dimensions. 
+
+n “ 200 n “ 500 n “ 1000 Metric q “ 40 q “ 60 q “ 80 q “ 100 q “ 40 q “ 60 q “ 80 q “ 100 q “ 40 q “ 60 q “ 80 q “ 100 
+
+True dimension: K0 “ 2
+
+γrmse 0.168 0.169 0.163 0.166 0.116 0.115 0.112 0.111 0.085 0.082 0.081 0.081 ∆B 0.125 0.115 0.116 0.121 0.080 0.074 0.077 0.072 0.056 0.054 0.055 0.053 ∆Z 0.633 0.537 0.466 0.442 0.610 0.520 0.452 0.412 0.595 0.510 0.436 0.401 Acc 100% 100% 100% 100% 100% 100% 100% 100% 100% 100% 100% 100% MAB 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 
+
+γbias -0.007 -0.005 -0.007 0.003 -0.003 0.002 -0.005 -0.003 -0.001 -0.003 0.002 -0.001 
+
+Bbias 0.015 0.005 0.006 0.014 0.010 0.004 0.005 -0.001 0.007 0.006 0.002 0.007 
+
+Zbias -0.003 -0.002 0.001 -0.005 -0.001 0.000 0.000 -0.001 0.000 0.000 0.000 0.000 
+
+True dimension: K0 “ 3
+
+γrmse 0.167 0.167 0.168 0.167 0.115 0.111 0.114 0.112 0.085 0.082 0.084 0.083 ∆B 0.145 0.123 0.120 0.117 0.083 0.076 0.075 0.071 0.061 0.054 0.053 0.051 ∆Z 0.955 0.780 0.678 0.634 0.896 0.738 0.674 0.607 0.888 0.738 0.658 0.592 
+
+Acc 72% 100% 100% 100% 96% 100% 100% 100% 100% 100% 100% 100% 
+
+MAB 1.143 0.000 0.000 0.000 1.000 0.000 0.000 0.000 1.000 0.000 0.000 0.000 
+
+γbias 0.003 ´0.014 ´0.001 0.003 ´0.006 ´0.001 ´0.003 0.002 ´0.002 ´0.004 0.002 ´0.006 
+
+Bbias ´0.006 0.012 0.008 0.008 0.002 0.001 0.007 0.004 ´0.003 0.004 0.002 0.004 
+
+Zbias ´0.000 ´0.002 0.000 ´0.004 0.001 0.001 ´0.000 0.001 ´0.001 0.001 0.001 ´0.000 
+
+True dimension: K0 “ 4
+
+γrmse 0.187 0.175 0.171 0.166 0.132 0.118 0.115 0.113 0.099 0.087 0.085 0.085 ∆B 0.185 0.166 0.141 0.129 0.142 0.106 0.089 0.078 0.117 0.064 0.056 0.054 ∆Z 1.487 1.231 1.021 0.910 1.388 1.108 0.944 0.859 1.297 0.985 0.873 0.787 
+
+Acc 16% 32% 60% 64% 28% 56% 72% 84% 36% 80% 92% 96% 
+
+MAB 2.000 1.529 1.500 1.000 1.789 1.182 1.286 1.250 1.562 1.000 1.000 1.000 
+
+γbias ´0.002 0.001 ´0.001 ´0.003 0.005 ´0.004 0.003 0.002 ´0.000 ´0.003 0.004 0.001 
+
+Bbias ´0.045 ´0.036 ´0.014 ´0.008 ´0.036 ´0.012 ´0.009 0.001 ´0.027 ´0.002 0.001 0.002 
+
+Zbias ´0.005 ´0.004 ´0.003 ´0.000 ´0.002 ´0.004 ´0.002 ´0.000 ´0.001 ´0.001 ´0.002 0.000 
+
+Note: Acc is the proportion of replications with ˆK “ K0.MAB is the mean absolute bias of ˆK conditional on incorrect dimension selection. 
+
+20 each candidate dimension H, we fitted the probit GRM with independent N p0, 1q priors on the loading parameters βjh , and then selected the dimension using AIC, BIC, DIC, WAIC, and V -fold cross-validation with V “ 5. We also considered a one-standard-error version of cross-validation, denoted by CV-1SE, which selects the smallest dimension whose cross-validated predictive performance is within one standard error of the best-performing model. Let tξpsquSs“1 denote posterior samples under a fitted model with a fixed candidate dimen-sion, and let ˆξ be the posterior mean of the model parameters. The log-likelihood evaluated at ξ is denoted by 
+
+ℓpξq “ log Pr pY | ξq “ 
+
+> n
+
+ÿ
+
+> i“1
+> q
+
+ÿ
+
+> j“1
+
+log Pr pYij | ξq,
+
+where Y is the n ˆ q ordinal response matrix. The AIC is defined as AIC “ ´ 2ℓp ˆξq ` 2d, 
+
+where d is the number of free parameters. For a probit GRM with C response categories and candidate dimension H, we take 
+
+d “ nH ` qH ` qpC ´ 1q,
+
+where nH corresponds to the subject-specific latent scores, qH to the item loading parame-ters, and qpC ´ 1q to the item threshold parameters. The BIC is computed as BIC “ ´ 2ℓp ˆξq ` d log pNobs q,
+
+where 
+
+Nobs “ nq 
+
+is the total number of observed item responses. The DIC is defined as DIC “ ´ 2ℓp ˆξq ` 2pDIC ,
+
+where 
+
+pDIC “ 2
+
+#
+
+ℓpˆξq ´ 1
+
+S
+
+> S
+
+ÿ
+
+> s“1
+
+ℓpξpsqq
+
++
+
+.
+
+21 We also computed the WAIC using the pointwise likelihood contributions from the ordinal item responses: WAIC “ ´ 2
+
+« nÿ
+
+> i“1
+> q
+
+ÿ
+
+> j“1
+
+log 
+
+#
+
+1
+
+S
+
+> S
+
+ÿ
+
+> s“1
+
+Pr pYij | ξpsqq
+
++
+
+´
+
+> n
+
+ÿ
+
+> i“1
+> q
+
+ÿ
+
+> j“1
+
+Var s
+
+␣log Pr pYij | ξpsqq( ff 
+
+,
+
+where the variance terms are computed across the posterior draws tξpsquSs“1.For V -fold cross-validation, we randomly partitioned the n subjects into V “ 5 approx-imately equal-sized folds. For each fold, the subjects in that fold were treated as the test set, while the remaining subjects formed the training set. For each candidate dimension H,the model was fitted using the training data, and predictive probabilities for the held-out responses were evaluated using the posterior mean of the model parameters. The held-out log-likelihood was then computed as 
+
+ℓtest “ ÿ
+
+> iPItest
+> q
+
+ÿ
+
+> j“1
+
+log Pr pYij | ˆξtrain q,
+
+where Itest denotes the set of held-out subjects. The standard CV criterion selects the dimension with the largest average held-out log-likelihood across the V folds. The CV-1SE criterion selects the smallest dimension whose average held-out log-likelihood is within one standard error of the maximum, thereby encouraging a more parsimonious model. Figure 1 summarizes the dimension selection results across different combinations of 
+
+n and q, with the true latent dimension fixed at K0 “ 3. Correct dimension selection therefore corresponds to selecting H “ 3. The proposed method achieves high accuracy and remains stable across all considered combinations of sample size and test length. In contrast, the post-hoc criteria exhibit noticeable and systematic biases. DIC and standard cross-validation tend to overestimate the latent dimension, whereas WAIC also shows a tendency to overfit, especially in smaller-sample settings. BIC is more conservative and tends to underestimate the dimension when n is small, although its performance improves as the sample size increases. AIC performs reasonably well overall, but it is still less stable than the proposed method in smaller samples. The CV-1SE rule mitigates the over-selection problem of standard cross-validation to some extent, but its performance remains sensitive to the sample size and the number of items. Overall, within the K0 “ 3 simulation setting considered here, these results demonstrate 22 (a) n “ 500 , q “ 40 4% 36% 100% 96% 60% 92% 72% 92% 4% 8% 8% 24% 8% 4% 12% 80% 
+
+K−fold CV 1SE K−fold CV WAIC DIC BIC AIC Proposed 
+
+1 2 3 4 5 6 7
+
+Selected dimension 
+
+Frequency of Dimension Selection (n=500, q=60) (b) n “ 500 , q “ 60 4% 12% 100% 84% 88% 100% 56% 92% 12% 44% 8% 36% 64% 
+
+K−fold CV 1SE K−fold CV WAIC DIC BIC AIC Proposed 
+
+1 2 3 4 5 6 7
+
+Selected dimension 
+
+Frequency of Dimension Selection (n=500, q=80) 
+
+(c) n “ 500 , q “ 80 100% 8% 100% 92% 40% 76% 92% 36% 16% 8% 16% 8% 8% 16% 12% 68% 4% 
+
+K−fold CV 1SE K−fold CV WAIC DIC BIC AIC Proposed 
+
+1 2 3 4 5 6 7
+
+Selected dimension 
+
+Frequency of Dimension Selection (n=1000, q=40) (d) n “ 1000 , q “ 40 
+
+(e) n “ 1000 , q “ 60 100% 96% 100% 96% 4% 72% 4% 4% 72% 24% 4% 16% 4% 20% 76% 8% 
+
+K−fold CV 1SE K−fold CV WAIC DIC BIC AIC Proposed 
+
+2 3 4 5 6 7
+
+Selected dimension 
+
+Frequency of Dimension Selection (n=1000, q=80) (f) n “ 1000 , q “ 80 
+
+Figure 1: Dimension selection performance of the proposed method and competing post-hoc selection criteria for the probit GRM under different configurations of n and q. Darker colors indicate higher selection frequencies for the corresponding latent dimension. 23 that the cumulative shrinkage prior provides a robust and accurate mechanism for dimen-sion selection in the probit GRM. Importantly, the proposed approach requires only a single MCMC run under an overfitted model, whereas AIC, BIC, DIC, WAIC, and cross-validation require fitting multiple models over a grid of candidate dimensions. Thus, in addition to im-proving dimension selection accuracy, the proposed method substantially reduces the com-putational burden and naturally propagates uncertainty about the latent dimension into posterior inference. 
+
+4.3 Adaptive Estimation versus Fixed-Dimensional Methods 
+
+Table 2 compares the proposed adaptive method with two fixed-dimensional benchmark methods, the Gibbs sampler and the traditional MH-RM algorithm, under the true latent dimension K0 “ 2. Since both benchmark methods require the latent dimension to be pre-specified, they are implemented using the true dimension K “ K0, thereby serving as oracle fixed-dimensional benchmarks. The comparison therefore evaluates whether the proposed method can achieve estimation accuracy comparable to fixed-dimensional oracle methods while retaining the additional ability to recover the latent dimension automatically. The results show that, when K0 “ 2, the proposed adaptive method achieves estimation accuracy comparable to, and in several cases better than, the oracle fixed-dimensional bench-marks. In particular, the proposed method yields threshold RMSEs similar to those of the Gibbs sampler and substantially smaller than those of MHRM, while maintaining compara-ble errors for the loading and latent score structures. Moreover, unlike the fixed-dimensional benchmark methods, the proposed method accurately recovers the latent dimension in all reported settings, as indicated by Acc “ 100% and MAB “ 0. 
+
+# 5 Real Data Analysis 
+
+As an illustration, we apply the proposed probit graded response model with adaptive di-mension selection to the publicly available IPIP-NEO personality assessment data obtained from https://osf.io/tbmh5/ . The IPIP-NEO inventory is a public-domain representation of the widely used NEO personality inventory framework (Costa and McCrae, 1985), and is designed to measure the Big Five personality factors: Neuroticism (N), Extraversion (E), Openness to experience (O), Agreeableness (A), and Conscientiousness (C). The original 24 Table 2: Comparison of the proposed method, the Gibbs sampler, and the MHRM algorithm under different sample sizes and test lengths with true latent dimension K0 “ 2. 
+
+n “ 400 n “ 800 n “ 1200 Method Metric q “ 40 q “ 60 q “ 80 q “ 100 q “ 40 q “ 60 q “ 80 q “ 100 q “ 40 q “ 60 q “ 80 q “ 100 Proposed γrmse 0.125 0.126 0.121 0.124 0.097 0.091 0.090 0.092 0.075 0.076 0.074 0.075 ∆B 0.089 0.089 0.084 0.083 0.062 0.061 0.057 0.059 0.051 0.052 0.049 0.047 ∆Z 0.604 0.520 0.458 0.410 0.601 0.503 0.449 0.409 0.600 0.502 0.438 0.397 Acc 100% 100% 100% 100% 100% 100% 100% 100% 100% 100% 100% 100% MAB 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 
+
+γbias -0.003 -0.008 -0.001 -0.004 -0.004 0.002 -0.000 0.010 -0.002 0.008 -0.004 0.000 
+
+Bbias 0.006 0.008 0.009 0.002 0.005 0.006 0.006 0.001 0.005 0.004 0.008 0.003 
+
+Zbias 0.000 0.002 0.001 0.002 -0.001 -0.001 0.001 0.000 0.000 0.000 0.000 0.000 Gibbs γrmse 0.124 0.122 0.121 0.122 0.094 0.091 0.087 0.089 0.074 0.076 0.074 0.075 ∆B 0.097 0.106 0.117 0.121 0.064 0.068 0.069 0.072 0.052 0.056 0.055 0.055 ∆Z 0.608 0.529 0.488 0.443 0.601 0.508 0.455 0.418 0.601 0.506 0.442 0.403 Acc – – – – – – – – – – – –MAB – – – – – – – – – – – –
+
+γbias -0.002 -0.003 -0.001 -0.005 0.001 0.002 -0.002 0.005 -0.009 0.003 0.001 -0.005 
+
+Bbias 0.020 0.032 0.044 0.049 0.010 0.017 0.022 0.022 0.008 0.010 0.018 0.017 
+
+Zbias 0.001 0.001 0.001 0.001 -0.001 0.000 -0.000 -0.001 0.000 -0.000 0.001 0.000 MHRM γrmse 0.291 0.297 0.308 0.327 0.226 0.218 0.217 0.223 0.201 0.189 0.201 0.197 ∆B 0.124 0.130 0.105 0.102 0.103 0.095 0.087 0.075 0.092 0.092 0.066 0.066 ∆Z 0.631 0.533 0.466 0.423 0.627 0.518 0.458 0.415 0.625 0.513 0.447 0.407 Acc – – – – – – – – – – – –MAB – – – – – – – – – – – –
+
+γbias 0.009 0.009 0.021 0.023 0.008 0.006 0.003 0.011 -0.005 0.003 -0.002 0.002 
+
+Bbias 0.025 0.019 0.015 -0.000 0.019 0.018 0.015 -0.002 0.021 0.013 0.014 -0.000 
+
+Zbias -0.005 -0.004 -0.004 -0.004 -0.003 -0.002 -0.002 -0.003 -0.002 -0.002 -0.001 -0.002 
+
+Note: Gibbs and MHRM are implemented with the true latent dimension K “ K0 and therefore serve as an oracle benchmark. Acc is the proportion of replications with ˆK “ K0. MAB is the mean absolute bias of ˆK conditional on incorrect dimension selection. Acc and MAB are not applicable to Gibbs and MHRM because the latent dimension is fixed in advance. 
+
+25 dataset contains 20,993 respondents and 300 items. In this analysis, we use a complete-case subset of 3,000 respondents who provided valid responses to all 300 items. The goal of this real-data analysis is twofold. First, we examine whether the proposed algorithm can recover the theoretically expected Big Five structure without fixing the num-ber of latent factors in advance. Second, we assess whether the proposed model can produce interpretable parameter estimates, including the factor loading structure and item-category threshold parameters, under a high-dimensional ordinal response setting. For model identi-fiability, we impose a lower-triangular constraint on the loading matrix, which is sufficient under our theoretical framework while still allowing the effective latent dimension to be learned from the data. Rather than pre-specifying a five-dimensional structure as is commonly done in confirma-tory factor analysis, we fit the model with a conservatively large upper bound K “ 10 on the number of latent dimensions. This overfitted specification allows the cumulative shrinkage prior to shrink redundant dimensions toward inactivity and to determine the effective num-ber of factors in a data-adaptive manner. Therefore, the analysis provides a direct empirical test of whether the proposed method can simultaneously select the latent dimensionality and estimate the parameters of a graded response model for large-scale personality assessment data. To assess the stability of dimension selection, we repeated the analysis across 25 inde-pendent runs with different random initializations. Across 25 independent runs on the real IPIP-NEO dataset, the proposed algorithm selected the theoretically anticipated Big Five structure, ˆK “ 5, in 24 runs (96%), as summarized in Table 3. Representative traceplots of the number of active dimensions from six independent runs are shown in Figure 2. These tra-ceplots indicate that, after an initial transient phase, the sampler typically stabilizes around five active dimensions, providing a visual diagnostic consistent with the numerical selection results. The only deviation was a single run in which the sampler selected ˆK “ 3, suggesting a rare case of under-extraction, possibly due to convergence to a local posterior mode or residual Monte Carlo variability. Overall, the strong concentration of the selected dimensionality at ˆK “ 5 provides empirical evidence for the robustness of the algorithm in recovering the dominant latent personality structure without requiring the number of factors to be specified in advance. 26 0 5000 10000 15000 20000 4 5 6 7 8 9
+
+Traceplot of Active Dimensions on IPIP−NEO Data 
+
+MCMC Iterations Number of Active Factors (K*) (a) Run 1 0 5000 10000 15000 20000 4 5 6 7 8 9
+
+Traceplot of Active Dimensions on IPIP−NEO Data 
+
+MCMC Iterations Number of Active Factors (K*) (b) Run 5 0 5000 10000 15000 20000 5 6 7 8 9
+
+Traceplot of Active Dimensions on IPIP−NEO Data 
+
+MCMC Iterations Number of Active Factors (K*) 
+
+(c) Run 10 0 5000 10000 15000 20000 4 5 6 7 8 9
+
+Traceplot of Active Dimensions on IPIP−NEO Data 
+
+MCMC Iterations Number of Active Factors (K*) (d) Run 15 0 5000 10000 15000 20000 4 5 6 7 8 9
+
+Traceplot of Active Dimensions on IPIP−NEO Data 
+
+MCMC Iterations Number of Active Factors (K*) 
+
+(e) Run 20 0 5000 10000 15000 20000 4 5 6 7 8 9
+
+Traceplot of Active Dimensions on IPIP−NEO Data 
+
+MCMC Iterations Number of Active Factors (K*) (f) Run 25 
+
+Figure 2: Traceplots of the number of active dimensions for six representative independent runs on the IPIP-NEO dataset. The selected runs correspond to runs 1, 5, 10, 15, 20, and 25. 27 Table 3: Dimension selection results across 25 independent runs on the IPIP-NEO dataset. Selected dimension Number of runs Proportion 3 1 4% 5 24 96% After determining the effective latent dimensionality, we further examined the estimated slope parameters to assess the interpretability of the recovered factors. The complete set of estimated primary loadings is reported in Table 4. Each entry gives the posterior mean of the estimated slope parameter, with the corresponding item number shown in parentheses. The loading pattern is broadly consistent with the intended IPIP-NEO item organization: items assigned to the same theoretical domain tend to load most strongly on the correspond-ing recovered latent trait. To facilitate interpretation, Table 5 further lists the five items with the largest estimated loadings for each factor. Overall, the recovered factors show a clear and interpretable correspondence with the Big Five domains. Items with the largest loadings on the first factor are primarily related to emotional instability and stress reactivity, corresponding to Neuroticism. The second factor is mainly associated with interpersonal en-gagement and social withdrawal, which is consistent with Extraversion. The third factor is dominated by items reflecting aesthetic sensitivity, reflection, and intellectual curiosity, cor-responding to Openness to experience. The fourth factor is characterized by items related to distrust, antagonism, and interpersonal conflict, matching Agreeableness after accounting for reverse-keyed item coding. The fifth factor is associated with orderliness, rule-following, effort, and self-discipline, which is consistent with Conscientiousness. These results indicate that the proposed probit graded response model not only selects the theoretically expected number of latent dimensions, but also yields substantively meaningful loading estimates. In particular, the items with the largest estimated slopes are consistent with the intended psychological content of the corresponding IPIP-NEO domains, providing empirical support for the interpretability of the estimated latent structure. 28 Table 4: Estimated primary slope parameters for the IPIP-NEO dataset. Each cell reports the estimated loading, with the corresponding item number shown in parentheses. 
+
+Latent trait Estimated loading parameter with item number 0.87 pI1 q 0.97 pI6 q 0.95 pI11 q 0.53 pI16 q 0.27 pI21 q 0.94 pI26 q 0.80 pI31 q 1.01 pI36 q 0.80 pI41 q 0.72 pI46 q
+
+0.56 pI51 q 0.73 pI56 q 0.77 pI61 q 1.17 pI66 q 1.04 pI71 q 0.37 pI76 q 0.57 pI81 q 0.81 pI86 q 1.30 pI91 q 0.97 pI96 q
+
+N 0.85 pI101 q 0.25 pI106 q 0.34 pI111 q 0.49 pI116 q 1.01 pI121 q 1.05 pI126 q 1.10 pI131 q 0.29 pI136 q 0.21 pI141 q 1.13 pI146 q
+
+0.95 pI151 q 1.06 pI156 q 0.79 pI161 q 0.27 pI166 q 0.28 pI171 q 0.69 pI176 q 0.76 pI181 q 0.86 pI186 q 0.44 pI191 q 0.46 pI196 q
+
+0.30 pI201 q 0.39 pI206 q 0.64 pI211 q 0.97 pI216 q 0.78 pI221 q 0.30 pI226 q 0.32 pI231 q 0.63 pI236 q 0.73 pI241 q 0.86 pI246 q
+
+0.72 pI251 q 0.40 pI256 q 0.21 pI261 q 0.41 pI266 q 0.47 pI271 q 0.66 pI276 q 0.64 pI281 q 0.27 pI286 q 0.23 pI291 q 0.75 pI296 q
+
+0.84 pI2 q 0.93 pI7 q 0.28 pI12 q 0.23 pI17 q 0.57 pI22 q 0.77 pI27 q 0.82 pI32 q 0.92 pI37 q 0.25 pI42 q 0.39 pI47 q
+
+0.33 pI52 q 0.88 pI57 q 1.09 pI62 q 0.75 pI67 q 0.16 pI72 q 0.22 pI77 q 0.42 pI82 q 0.39 pI87 q 0.90 pI92 q 0.71 pI97 q
+
+E 0.18 pI102 q 0.03 pI107 q 0.88 pI112 q 0.38 pI117 q 0.66 pI122 q 0.68 pI127 q 0.25 pI132 q 0.07 pI137 q 0.24 pI142 q 0.56 pI147 q
+
+0.87 pI152 q 0.88 pI157 q 0.25 pI162 q 0.02 pI167 q 0.72 pI172 q 0.60 pI177 q 0.80 pI182 q 0.87 pI187 q 0.98 pI192 q 0.14 pI197 q
+
+0.20 pI202 q 0.48 pI207 q 1.05 pI212 q 0.81 pI217 q 0.51 pI222 q 0.02 pI227 q 0.11 pI232 q 0.39 pI237 q 0.51 pI242 q 0.93 pI247 q
+
+0.75 pI252 q 0.03 pI257 q 0.10 pI262 q 0.38 pI267 q 0.99 pI272 q 0.86 pI277 q 0.33 pI282 q 0.17 pI287 q 0.30 pI292 q 0.30 pI297 q
+
+1.67 pI3 q 1.80 pI8 q 1.71 pI13 q 0.66 pI18 q 0.93 pI23 q 0.44 pI28 q 1.45 pI33 q 1.41 pI38 q 1.98 pI43 q 1.39 pI48 q
+
+1.25 pI53 q 0.41 pI58 q 1.75 pI63 q 2.15 pI68 q 1.19 pI73 q 1.92 pI78 q 1.28 pI83 q 0.21 pI88 q 2.00 pI93 q 1.34 pI98 q
+
+O 1.33 pI103 q 1.36 pI108 q 1.35 pI113 q 0.43 pI118 q 0.96 pI123 q 2.40 pI128 q 2.04 pI133 q 0.06 pI138 q 2.43 pI143 q 0.60 pI148 q
+
+2.09 pI153 q 2.11 pI158 q 1.16 pI163 q 0.39 pI168 q 1.64 pI173 q 1.06 pI178 q 1.62 pI183 q 1.68 pI188 q 1.33 pI193 q 0.54 pI198 q
+
+1.67 pI203 q 0.25 pI208 q 1.94 pI213 q 1.58 pI218 q 1.39 pI223 q 0.23 pI228 q 1.74 pI233 q 0.02 pI238 q 1.50 pI243 q 1.00 pI248 q
+
+1.09 pI253 q 1.01 pI258 q 1.84 pI263 q 0.41 pI268 q 1.97 pI273 q 1.12 pI278 q 1.67 pI283 q 0.47 pI288 q 1.58 pI293 q 0.46 pI298 q
+
+0.36 pI4 q 0.08 pI9 q 0.04 pI14 q 0.34 pI19 q 0.24 pI24 q 0.29 pI29 q 0.39 pI34 q 0.02 pI39 q 0.02 pI44 q 0.48 pI49 q
+
+0.14 pI54 q 0.28 pI59 q 0.38 pI64 q 0.19 pI69 q 0.14 pI74 q 0.45 pI79 q 0.30 pI84 q 0.39 pI89 q 0.24 pI94 q 0.31 pI99 q
+
+A 0.30 pI104 q 0.64 pI109 q 0.18 pI114 q 0.30 pI119 q 0.30 pI124 q 0.45 pI129 q 0.48 pI134 q 0.33 pI139 q 0.10 pI144 q 0.17 pI149 q
+
+0.40 pI154 q 0.48 pI159 q 0.47 pI164 q 0.40 pI169 q 0.66 pI174 q 0.33 pI179 q 0.51 pI184 q 0.19 pI189 q 0.23 pI194 q 0.32 pI199 q
+
+0.16 pI204 q 0.49 pI209 q 0.26 pI214 q 0.42 pI219 q 0.31 pI224 q 0.21 pI229 q 0.13 pI234 q 0.35 pI239 q 0.38 pI244 q 0.53 pI249 q
+
+0.51 pI254 q 0.38 pI259 q 0.35 pI264 q 0.21 pI269 q 0.26 pI274 q 0.49 pI279 q 0.22 pI284 q 0.13 pI289 q 0.38 pI294 q 0.37 pI299 q
+
+0.65 pI5 q 0.79 pI10 q 0.89 pI15 q 0.42 pI20 q 0.78 pI25 q 0.45 pI30 q 0.30 pI35 q 0.70 pI40 q 0.45 pI45 q 0.86 pI50 q
+
+0.62 pI55 q 0.25 pI60 q 0.52 pI65 q 0.43 pI70 q 0.56 pI75 q 0.37 pI80 q 0.79 pI85 q 0.49 pI90 q 0.23 pI95 q 0.89 pI100 q
+
+C 0.49 pI105 q 0.33 pI110 q 0.81 pI115 q 0.67 pI120 q 0.05 pI125 q 0.79 pI130 q 0.33 pI135 q 0.50 pI140 q 0.71 pI145 q 0.57 pI150 q
+
+0.47 pI155 q 0.61 pI160 q 0.86 pI165 q 0.32 pI170 q 0.93 pI175 q 0.72 pI180 q 0.19 pI185 q 0.66 pI190 q 0.50 pI195 q 0.21 pI200 q
+
+0.80 pI205 q 0.57 pI210 q 0.10 pI215 q 0.60 pI220 q 0.58 pI225 q 0.35 pI230 q 0.69 pI235 q 0.88 pI240 q 0.05 pI245 q 0.53 pI250 q
+
+0.70 pI255 q 0.77 pI260 q 0.73 pI265 q 0.69 pI270 q 0.50 pI275 q 0.69 pI280 q 0.49 pI285 q 0.70 pI290 q 0.50 pI295 q 0.65 pI300 q
+
+Note: Item numbers are shown in parentheses. 
+
+29 Table 5: Top five items with the largest estimated loadings for each recovered factor. 
+
+Factor Item Loading Content N91 (N `) 1.30 Get stressed out easily. 66 (N `) 1.17 Get upset easily. 146 (N `) 1.13 Get overwhelmed by emotions. 131 (N `) 1.10 Have frequent mood swings. 156 (N ´) 1.06 Rarely get irritated. E62 (E `) 1.09 Feel comfortable around people. 212 (E ´) 1.05 Avoid contacts with others. 272 (E ´) 0.99 Keep others at a distance. 192 (E ´) 0.98 Keep in the background. 247 (E ´) 0.93 Avoid crowds. O143 (O `) 2.43 Enjoy thinking about things. 128 (O `) 2.40 Enjoy the beauty of nature. 68 (O `) 2.15 See beauty in things that others might not notice. 158 (O ´) 2.11 Do not like art. 153 (O `) 2.09 Spend time reflecting on things. A174 (A ´) 0.66 Think highly of myself. 109 (A ´) 0.64 Have a sharp tongue. 249 (A ´) 0.53 Take advantage of others. 184 (A ´) 0.51 Distrust people. 254 (A ´) 0.51 Turn my back on others. C175 (C ´) 0.93 Find it difficult to get down to work. 15 (C `) 0.89 Try to follow the rules. 100 (C `) 0.89 Love order and regularity. 240 (C ´) 0.88 Do crazy things. 50 (C `) 0.86 Work hard. 
+
+30 -3 03N E O A C
+
+> Trait value
+
+Figure 3: Violin plots of the estimated individual latent factor scores for the five recovered Big Five dimensions in the IPIP-NEO dataset. In addition to the loading estimates, we also examined the posterior estimates of the individual latent factor scores. Figure 3 displays violin plots of the estimated latent traits corresponding to the five recovered Big Five dimensions. The distributions are centered around zero, which is consistent with the standard location constraint commonly imposed on latent traits, while still showing substantial between-person variability within each di-mension. This indicates that the proposed model produces non-degenerate and informative estimates of individual-level latent personality traits. Overall, the estimated factor-score distributions provide an additional diagnostic for the fitted model. Together with the dimension selection results and the interpretable loading patterns, these plots suggest that the proposed COSS-Gibbs sampler can not only recover the effective number of latent dimensions, but also estimate meaningful person-level latent traits in the probit graded response model. 31 6 Concluding Remarks 
+
+In this paper, we proposed a Bayesian framework for estimating a multidimensional probit graded response model with an unknown latent dimensional structure. The main goal was to provide a flexible yet regularized modeling strategy for ordinal response data, where the number of latent traits is not fixed in advance but is instead inferred from the data. To achieve this, we introduced a cumulative shrinkage prior on the item loading matrix, which encourages higher-order latent dimensions to be increasingly shrunk toward a spike component. This prior construction allows the model to retain the most relevant latent dimensions while automatically suppressing redundant ones. For posterior computation, we developed an adaptive Gibbs sampler based on standard data augmentation for the probit graded response model. The sampler updates the aug-mented continuous responses, item loading parameters, latent traits, threshold parameters, shrinkage indicators, stick-breaking weights, and variance parameters in a fully Bayesian manner. To improve computational efficiency, we further incorporated an adaptive trun-cation strategy. This strategy dynamically removes inactive latent dimensions and adds a terminal spike component when needed, thereby avoiding the need to pre-specify a large fixed truncation level. The adaptation probability decreases over the MCMC iterations, so that adaptation becomes less frequent as the chain evolves. The proposed method has several practical advantages. First, it avoids treating the latent dimensionality as a fixed tuning parameter and instead estimates the effective number of la-tent dimensions from the posterior distribution. Second, the cumulative shrinkage structure provides interpretable dimension-specific regularization, making it possible to distinguish active dimensions from redundant ones. Third, the probit formulation leads to conditionally conjugate updates for many model parameters, which facilitates posterior computation. To-gether, these features make the proposed framework useful for exploratory analysis of ordinal response data, especially when the underlying latent structure is complex or uncertain. There are several directions for future research. First, the current adaptive MGRM framework could be extended to joint latent space models (JLSMs), enabling the simultane-ous inference of complex network topologies and ordinal nodal attributes within a shared, self-truncating latent space. Second, as the scale of educational and psychological assess-ments continues to grow, adapting this exact Gibbs sampler into a ”divide-and-conquer” 32 distributed Bayesian framework would significantly enhance its computational scalability for massive datasets. Finally, generalizing the cumulative shrinkage mechanism to accom-modate mixed-format assessments (e.g., jointly modeling continuous, nominal, and ordinal responses) or incorporating structured sparsity to account for local item dependence remains an important avenue for future methodological exploration. 
+
+# Acknowledgements 
+
+This work is supported by the National Natural Science Foundation of China (Grants Nos. 12271168,12531013, and 12301373) as well as the Shanghai Science and Technology Com-mittee Rising-Star Program (Grant No. 22YF1411100). 
+
+# References 
+
+Albert, J. H. (1992). Bayesian estimation of normal ogive item response curves using gibbs sampling. Journal of Educational Statistics , 17(3):251–269. Albert, J. H. and Chib, S. (1993). Bayesian analysis of binary and polychotomous response data. Journal of the American Statistical Association , 88(422):669–679. B´ eguin, A. A. and Glas, C. A. (2001). Mcmc estimation and some model-fit analysis of multidimensional irt models. Psychometrika , 66(4):541–561. Bhattacharya, A. and Dunson, D. B. (2011). Sparse bayesian infinite factor models. 
+
+Biometrika , 98(2):291–306. Bock, R. D. and Aitkin, M. (1981). Marginal maximum likelihood estimation of item pa-rameters: Application of an em algorithm. Psychometrika , 46(4):443–459. Bock, R. D., Gibbons, R., and Muraki, E. (1988). Full-information item factor analysis. 
+
+Applied Psychological Measurement , 12(3):261–280. Cai, L. (2010a). High-dimensional exploratory item factor analysis by a metropolis-hastings robbins-monro algorithm. Psychometrika , 75(1):33–57. 33 Cai, L. (2010b). Metropolis-hastings robbins-monro algorithm for confirmatory item factor analysis. Journal of Educational and Behavioral Statistics , 35(3):307–335. Carlin, B. P. and Chib, S. (1995). Bayesian model choice via markov chain monte carlo methods. Journal of the Royal Statistical Society: Series B (Methodological) , 57(3):473– 484. Chalmers, R. P. (2012). mirt: A multidimensional item response theory package for the r environment. Journal of Statistical Software , 48(6):1–29. Chen, Y., Li, X., Liu, J., and Ying, Z. (2017). Regularized latent class analysis with appli-cation in cognitive diagnosis. Psychometrika , 82(3):660–692. Costa, P. T. and McCrae, R. R. (1985). The NEO Personality Inventory Manual . Psycho-logical Assessment Resources, Odessa, FL. Davies, V., Machado, S., and Latuszy´ nski, K. (2023). Transport reversible jump proposals. In 
+
+International Conference on Artificial Intelligence and Statistics , pages 356–387. PMLR. Forero, C. G., Maydeu-Olivares, A., and Gallardo-Pujol, D. (2009). Factor analysis with ordinal indicators: A monte carlo study comparing dwls and uls estimation. Structural Equation Modeling , 16(4):625–641. Fox, J.-P. (2010). Bayesian item response modeling: Theory and applications . Springer Science & Business Media. Fr¨ uhwirth-Schnatter, S. and Lopes, H. F. (2018). Sparse bayesian factor analysis when the number of factors is unknown. arXiv preprint arXiv:1804.04231 .Green, P. J. (1995). Reversible jump markov chain monte carlo computation and bayesian model determination. Biometrika , 82(4):711–732. Horn, J. L. (1965). A rationale and test for the number of factors in factor analysis. Psy-chometrika , 30(2):179–185. Kang, T. and Cohen, A. S. (2007). Irt model selection methods for dichotomous items. 
+
+Applied Psychological Measurement , 31(4):331–352. 34 Legramanti, S., Durante, D., and Dunson, D. B. (2020). Bayesian cumulative shrinkage for infinite factorizations. Biometrika , 107(3):745–752. Levy, R. and Mislevy, R. J. (2016). Bayesian psychometric modeling . CRC Press. Li, J., Gibbons, R., and Roˇ ckov´ a, V. (2025). Sparse bayesian multidimensional item response theory. Journal of the American Statistical Association , 120(552):1–14. Loyal, J. D. and Chen, Y. (2025). A spike-and-slab prior for dimension selection in generalized linear network eigenmodels. Biometrika , page asaf014. Masters, G. N. (1982). A rasch model for partial credit scoring. Psychometrika , 47(2):149– 174. McDonald, R. P. (1999). Test theory: A unified treatment . Lawrence Erlbaum Associates. Muraki, E. (1992). A generalized partial credit model: Application of an em algorithm. 
+
+Applied Psychological Measurement , 16(2):159–176. Patz, R. J. and Junker, B. W. (1999). A straightforward approach to markov chain monte carlo methods for item response models. Journal of Educational and Behavioral Statistics ,24(2):146–178. Reckase, M. D. (1997). The past and future of multidimensional item response theory. 
+
+Applied Psychological Measurement , 21(1):25–36. Reckase, M. D. (2009). Multidimensional item response theory . Springer. Roberts, G. O. and Rosenthal, J. S. (2007). Coupling and ergodicity of adaptive markov chain monte carlo algorithms. Journal of Applied Probability , 44(2):458–475. Roˇ ckov´ a, V. and George, E. I. (2016). Fast bayesian factor analysis via automatic rotations to sparsity. Journal of the American Statistical Association , 111(516):1608–1622. Rousseau, J. and Mengersen, K. (2011). Asymptotic behaviour of the posterior distribution in overfitted mixture models. Journal of the Royal Statistical Society: Series B (Statistical Methodology) , 73(5):689–710. 35 Samejima, F. (1969). Estimation of latent ability using a response pattern of graded scores. 
+
+Psychometrika monograph supplement , 34(4):1–100. Samejima, F. (1997). Graded response model. Handbook of modern item response theory ,pages 85–100. Schiavon, L., Canale, A., and Dunson, D. B. (2022). Generalized infinite factorization models. 
+
+Biometrika , 109(3):817–835. Stephens, M. (2000). Bayesian analysis of mixture models with an unknown number of components-an alternative to reversible jump methods. The Annals of Statistics , 28(1):40– 74. 36
