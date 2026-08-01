@@ -1,0 +1,840 @@
+Title: The positivity assumption in causal mediation analyses? Checked!
+
+URL Source: https://arxiv.org/pdf/2607.25072v1
+
+Published Time: Wed, 29 Jul 2026 00:16:09 GMT
+
+Number of Pages: 23
+
+Markdown Content:
+# The positivity assumption in causal mediation analyses? Checked! 
+
+# Arthur Chatton 1,2,3,4 , Geneviève Lefebvre 5, Mireille E. Schnitzer 6,3,7 , and Denis Talbot 1,2 
+
+> 1
+
+Département de Médecine Sociale et Préventive, Université Laval, Québec, QC, Canada 
+
+> 2
+
+Centre de Recherche du CHU de Québec - Université Laval, Québec, QC, Canada 
+
+> 3
+
+Département de Médecine Sociale et Préventive, Université de Montréal, Montréal, QC, Canada 
+
+> 4
+
+Centre de recherche Azrieli, CHU Sainte-Justine, Montréal, QC, Canada 
+
+> 5
+
+Département de Mathématiques, Université du Québec à Montréal, Montréal, QC, Canada 
+
+> 6
+
+Faculté de Pharmacie, Université de Montréal, Montréal, QC, Canada 
+
+> 7
+
+Department of Epidemiology, Biostatistics and Occupational Health, McGill University, Montreal, QC, Canada 
+
+Causal mediation analyses are increasingly used in psychological sciences. Among the required assumptions, positivity is unfortunately seldom men-tioned, likely due to the lack of tools for checking it. Mediational positivity is more complex than positivity in standard, non-mediated exposure effect anal-ysis, because it requires positivity for both the exposure and the mediator, and because the specific form of the positivity assumption depends on the media-tion estimand of interest. We propose an extension of the Positivity Regression Trees (PoRT) algorithm — which was recently designed to check positivity in non-mediated settings without requiring assumptions about the modeling or the data-generating process — to controlled, natural and interventional media-tional effects. We illustrate its use through an application in mental health and have made it accessible through the port R package and a related notebook available at github.com/ArthurChatton/dePoRT-notebook. Finally, we discuss consequences and provide recommendations for when positivity violations are identified. 
+
+Keywords: Assumption, Causal inference, Data support, Decision tree, Mediation analysis. 
+
+The rise of the potential outcome framework (Neyman, 1923; Rubin, 1974) has profoundly changed the way we study causal questions. From the definition of causal estimands (i.e., what is the question?) to the non-statistical assumptions needed to identify causal estimands (i.e., can we answer the question?), this framework has led to improvements in how we think about causality, how we teach it, and how we estimate causal ef-fects (Lundberg et al., 2021). Mediation analysis, the study of causes’ mech-anisms (Baron & Kenny, 1986; Judd & Kenny, 1981; Wright, 1934), has also benefited from this causal revolution. 1 In a seminal paper, Robins and Greenland (1992) were the first to use the potential 
+
+> 1
+
+The link between traditional and causal mediation analyses is extensively discussed in MacKinnon et al. (2020). arXiv:2607.25072v1 [stat.ME] 27 Jul 2026 2 CHATTON ET AL. 
+
+outcome notation Y a,m to represent the outcome 
+
+Y that would have been observed if the exposure 
+
+A been set to some value a and the mediator M
+
+been set to m, yielding major developments in our understanding of the assumptions needed to iden-tify mediational effects (reviewed in Nguyen et al., 2021). Among these assumptions, exchangeability (or no unmeasured/residual confounding) has re-ceived a lot of attention (e.g., Vanderweele, 2015), while positivity has been left far behind. Positivity violations occur for two reasons (Pe-tersen et al., 2012). There may be a structural rea-son why no individual experiences the exposure (i.e., practical violations), or a particular subgroup may lack exposures by chance in the sample due to random fluctuation (i.e., near violations). Only domain knowledge allows us to differentiate them in practice, but their implications vary. Structural violations arise from an ill-defined target popula-tion, potentially due to a missing exclusion crite-rion (Platt et al., 2012), and no statistical procedure can fix them. Possible solutions are redefining the population of interest (Zhu et al., 2021) or the po-tential outcomes involved (Nguyen et al., 2022). In contrast, random violations are more of an estima-tion issue that may be circumvented by techniques such as extrapolation (Léger et al., 2022; Petersen et al., 2012). It is therefore crucial to qualitatively      
+
+> Arthur Chatton was initially supported by a CRM-StatLab-CANSSI postdoctoral fellowship. Geneviève Lefebvre is an FRQS Senior Research Scholar. Jesse Gervais is supported by a doctoral scholarship from the FRQNT. Mireille E. Schnitzer is a Canada Research Chair (Tier 2) in Causal inference and Machine learning in Health Sciences. Denis Talbot is an FRQS Junior-2 Research Scholar. We have no conflicts of interest to disclose. The dataset used for the tutorial is available at icpsr.umich.edu/web/ICPSR/studies/29583/versions/V1. This dataset has been used in previous studies by nu-merous research groups. Contact: Arthur Chatton, École de Santé Publique de l’Université de Montréal, 7101 Av. du Parc, Montréal, QC H3N-1X9, Canada. email: arthur.chatton@umontreal.ca
+
+interpret the source of violations in order to assess their underlying cause. Even if no studies investigated lack of positiv-ity in mediation analysis, several studies demon-strated that several estimators of the total effect are biased when positivity is lacking (S. A. Diop et al., 2022; Léger et al., 2022; Lendle et al., 2013; Moore et al., 2012). When the goal is to esti-mate the total causal effect of an exposure A on an outcome Y (i.e., irrespective of any potential mediator), the positivity assumption means that each individual in the target population may the-oretically receive each possible value of the stud-ied exposure. However, in mediation analysis, the positivity assumption is more complex since it re-quires that the probabilities of each exposure and each mediator value of interest are non-zero (Imai et al., 2010). Furthermore, the specific form of the positivity assumption depends on the specific causal mediation estimand being targeted. Nguyen et al. (2022) formalized these positivity assump-tions according to the different potential outcomes involved in the estimand of interest. Despite these critical developments, a gap remains: How can these positivity assumptions be verified in prac-tice? Unfortunately, positivity has seldom been as-sessed in mediation settings. Coffman and Zhong (2012) suggested estimating propensity scores for both the exposure and the mediator since extreme estimates indicate a lack of positivity. How-ever, Zhu et al. (2021) illustrated that the propen-sity score can vary substantially depending on the model used, such that any evaluation of positiv-ity may also substantially vary depending on an-alytical choices. Furthermore, extreme propensity scores may not identify the subgroups causing pos-itivity violations; they only highlight specific in-dividuals for whom the assumption appears to be violated based on the ensemble of their covariate values. For the total effect, Danelian et al. (2023) devel-oped a method called Positivity Regression Trees (PoRT) to identify subgroups with practical pos-MEDIATIONAL POSITIVITY VERIFICATION 3itivity violations without requiring assumptions about the data-generating process or the specifica-tion of parametric models. In this study, we extend the PoRT approach from Danelian et al. (2023) to verify the practical positivity assumptions needed for various estimands of causal mediation analy-ses. We refer to this development as dePoRT for 
+
+decomposition PoRT .The following section introduces our motivating example investigating the effect of childhood ex-posure to violence on dating violence in university students with various mediators. In the next two sections, we briefly present PoRT for the average causal effect (i.e., the total effect), after demon-strating why positivity is crucial for causal esti-mation. In Sections 4 to 6, we introduce dePoRT for the controlled direct, natural, and interventional effects, respectively. Finally, we discuss the im-plications of non-positivity in practice and outline strategies for addressing them. 
+
+Motivating example 
+
+Our motivating example is informed by a cor-pus of previous studies investigating the effect of childhood exposure to violence 2 (A) on dating vi-olence perpetration ( Y ) mediated by religiosity in-volvement ( M; Bierman, 2005; Gonçalves et al., 2022). Post-traumatic stress symptoms (PTSS) are another mediator ( L) of this exposure-outcome re-lationship in several populations ( e.g. , Berthelot et al., 2014; Jouriles et al., 2012), but are also posited as a mediator between childhood exposure to vio-lence and religiosity (Leo et al., 2021). Figure 1 illustrates the posited causal structure. Our sample consists of university students from the United States of America, Canada, and Eu-rope who have been in a relationship for at least one year. Among the 6,224 students included be-tween 2001 and 2006, 1,175 (18.9%) reported hav-ing been exposed to violence during childhood. This sample comes from the International Dating Violence Study (Straus, 2011). The study ques-tionnaire includes two scales, the Conflict Tactics Scales (Straus et al., 1996) measuring dating vi-
+
+C A M Y
+
+L
+
+Figure 1 
+
+Posited causal structure of the motivating example. A is the childhood exposure to violence, Y is the dating violence perpetration, M is the religiosity involvement, L is the post-traumatic stress symp-toms, and C is the set of confounders. 
+
+olence, and the Personal and Relationships Profile measuring several related risk factors (Straus et al., 2010). Confounders include gender, age, each par-ent’s education level, family income, and parental marital status during childhood. We assume that all confounders are (accurately) recorded, and that there is no interference or selection bias. 3 Child-hood exposure to violence is binary, while the scale for religiosity goes from 1 = none to 4 = high. Post-traumatic stress symptoms are measured as an av-erage of several items bounded between 1 = none and 4 = high. Sample characteristics are presented in Appendix B. 
+
+A journey in Positivity 
+
+To illustrate positivity, we will temporarily set aside the mediator and focus in this section on the total causal effect. As previously introduced, A
+
+and Y denote a binary exposure and an outcome, respectively. We use Y a to represent the poten-tial outcome in a world where all individuals ex-perienced the exposure A = a. We denote by C
+
+the adjustment set used to achieve the exchange-ability assumption, which will be defined shortly. This set should include confounders, but may in-
+
+> 2Violence was defined broadly to include physical, psychological and sexual maltreatment.
+> 3See Chatton and Rohrer (2024) for a discussion tar-geted towards psychologists about these issues.
+
+4 CHATTON ET AL. 
+
+clude other variables. For example, pure causes of the outcome could be included to reduce the vari-ance of various total and natural effects estimators (Brookhart et al., 2006; Chatton et al., 2020; A. Diop et al., 2021). The total effect is the contrast between the expectations of the two potential out-comes: T E = E(Y 1) − E(Y 0). To identify this ef-fect, we need three causal assumptions: (a) consis-tency: Y = Y a if A = a, (b) exchangeability: Y a ⊥⊥
+
+A|C, and (c) positivity: P(A = a|C = c) > β ≥ 0, ∀c
+
+where P(C = c) > 0 (Hernán & Robins, 2020, p. 28). These assumptions allow mapping of the mean of potential outcomes Y a to a function of the observed outcomes and other data as follows: E(Y a) = ∑
+
+> c
+
+E(Y a|C = c)P(C = c) (1) 
+
+= ∑
+
+> c
+
+E(Y a|A = a,C = c)P(C = c) (2) 
+
+= ∑
+
+> c
+
+E(Y |A = a,C = c)P(C = c). (3) The first equality comes from the law of total ex-pectation, the second from exchangeability and positivity, and the last from consistency. To un-derstand why positivity is needed for the second equality, imagine a specific subgroup with C = c∗
+
+in which no individual is experiencing the expo-sure A = a. In this case, E (Y a|A = a,C = c∗) is undefined, and the second equality does not hold. 4
+
+Note, however, that we only need positivity for val-ues of c such that P (C = c) > 0. Indeed, when P(C = c) = 0 (with some abuse of notation or as-suming discrete C), E (Y a|A = a,C = c)P(C = c) = 
+
+0 regardless of whether E (Y a|A = a,C = c) is well-defined or not. The range of values of C for which the positivity assumption is required is called the “support for positivity”. The positivity assump-tions required for mediation analyses can be de-duced similarly (Nguyen et al., 2022) and are pre-sented in Appendix A. 
+
+Reach the PoRT 
+
+The PoRT algorithm is based on a succession of regression trees (Breiman et al., 1984), 5 where the exposure is regressed on one or more con-founders. Regression trees split the data into sub-groups (called nodes) according to successive bi-nary partitions learned from the data (Figure 2). Importantly, regression trees can learn nonlinear and nonmonotone association rules from the data, without the need to specify them in advance, un-like parametric regressions. These splits lead to potentially interpretable subgroups (i.e., nodes representing subgroups with homogeneous expo-sure levels), which explains the popularity of this method for prediction purposes. While we are not interested in prediction, the interpretability of the resulting subgroups is the heart of PoRT. For in-stance, the bottom-left node in Figure 2 represents the subgroup of individuals having married par-ents, identifying themselves as female, and being at school since at least 12 years. PoRT works as follows. It takes four inputs: (a) confounder set C, (b) values of two flagging hy-perparameters α and β , and (c) value of stopping hyperparameter γ. First, for each confounder, a tree is built using the exposure as the dependent variable and the confounder as the sole indepen-dent variable. Second, each node is “read”, with respect to the chosen values of α and β , to iden-tify positivity violations (described below). If a vi-olation is found, the confounder is removed from 
+
+C for future iterations of PoRT. The same process    
+
+> 4One can alternatively show identifiability using an inverse-probability-weighting expression. It puts the probability of the exposure in the denominator (Hernán & Robins, 2020, p. 25), yielding a division by zero in case of lack of positivity.
+> 5While the dependent variable in the tree is categori-cal, PoRT uses regression trees instead of classification trees. Both are valid; their difference lies in the loss function used to split the data: the Gini index and the sum of squared errors of the child nodes, respectively. Because regression trees operate on predicted probabil-ities, they may retain a split that affects predicted prob-abilities even if the split does not affect the predicted class, unlike classification trees. See Strobl et al. (2009) for an introduction to regression trees in psychology. MEDIATIONAL POSITIVITY VERIFICATION
+
+5
+
+Figure 2 
+
+Example of a tree regression of childhood exposure to violence on three baseline confounders. The top node represents the whole sample, while the others each correspond to a subgroup defined by the pre-vious splits. Each node’s top number is the node-specific exposure prevalence. 
+
+is then repeated, but two confounders are used to-gether as independent variables. This process is iterated by progressively increasing the number of independent variables considered simultaneously until the value of the stopping hyperparameter γ
+
+is exceeded. For instance, if γ = 3, one tree per confounder is fit, then one tree per pair of remain-ing confounders, and finally, one tree per trio of remaining confounders. But how to “read” these trees? The goal is to identify subgroups (i.e., nodes) violating the em-pirical bound of the positivity assumption; these correspond to nodes where the probability of ex-posure is lower than a bound β . This bound rep-resents a threshold where the exposure probability becomes too small for the exposure causal effect in a subgroup to be supported by the data (D’Amour et al., 2021). Gruber et al. (2022) proposed a mean square error-optimal bound of β = 5/(√n · ln (n)) 
+
+to truncate propensity score weights to circumvent practical non-positivity. The value of β must be specified a priori as a hyperparameter of PoRT. The second hyperparameter α controls the size of identified subgroups by excluding the smallest ones (for instance, those consisting of less than 1% of the total number of individuals from the study sample). Positivity violations in very small sub-groups may not impact the estimation when the model extrapolates over the subgroup (Léger et al., 2022; Petersen et al., 2012). In our motivating example, positivity for the ex-posure must be checked for any potential outcome involved in a causal effect (Nguyen et al., 2022). Therefore, we must check positivity related to the identifiability of E (Y 1) and E (Y 0). First, we fit a regression tree conditional on each confounder. With α = 0.01, γ = 2, and Gruber’s bound for β ,we found no subgroups that have both (i) more than 62 individuals (i.e., more than α =1% of the total sample size) and (ii) a proportion exposed to childhood violence below Gruber’s bound of 
+
+β =0.7%. Then, a tree with each pair of con-founders was built (since no violations were identi-fied in the first step, no confounders were excluded in this second step) and read identically. Again, no violations were identified. No more complex trees were fit since the hyperparameter γ = 2 was reached. In summary, no violations of the positiv-ity assumption for the total effect estimation were found. Since positivity was found to hold, we pro-ceeded with the estimation of the total effect. Here, we used the inverse probability weighting estima-tor (Robins et al., 2000), which is well known in the psychological community (Harder et al., 2010; Lanza et al., 2013). We thus obtained an odds ratio (OR) of 1.81 with a 95% confidence interval (95% CI) from 1.51 to 2.16. We now turn to dePoRT for various mediational effects. 
+
+Simplest case: Controlled direct effect Positivity 
+
+Controlled direct effects (CDEs) are causal ef-fects of the exposure in a world where the mediator is set to a specific level m for everyone. Formally, 
+
+CDE (m) = E(Y 1,m) − E(Y 0,m), where Y a,m stands for the outcome in a counterfactual world where all 6 CHATTON ET AL. 
+
+individuals are exposed to A = a and M = m. Pos-itivity for E (Y a,m) implies both P (A = a|C = c) >
+
+β ≥ 0 and P (M = m|A = a,C = c) > β ≥ 0, ∀c such that P(C = c) > 0 (Nguyen et al., 2022). 
+
+dePoRT 
+
+These two positivity assumptions for the CDE are similar in form to the positivity assumption for the total causal effect. As such, dePoRT uses the exact same PoRT algorithm as for the total effect thrice: once regressing the exposure A as the de-pendent variable and the covariates C as the inde-pendent variables, and then regressing the media-tor M = m as the dependent variable and the co-variates as the independent variables, while sub-setting on A = a for each of a = 0 and 1. For the latter application of PoRT, note that the mediator needs to be dichotomized in order to model M = m
+
+vs M , m for the specific m of interest. 
+
+Application 
+
+Let’s illustrate positivity evaluation for CDE through our motivating example. Imagine we study the effect of childhood exposure to violence (A) on dating violence perpetration ( Y ) while set-ting their religious involvement ( M) to a high level (m = 4). Note that we do not consider PTSS as a mediator until the section related to interven-tional effects for pedagogical purposes. Positivity for the exposure was already checked in the pre-vious section. We kept the same hyperparameter values ( i.e. , α = 0.01 and γ = 2) for exposure and mediational positivities. Since we used Gruber’s bound for β , its value differs across the two sub-sets due to their different sizes ( β = 0.008 for in-dividuals with A = 0 and β = 0.021 for individuals with A = 1). Applying PoRT to estimate the prob-ability of high religious involvement (using a di-chotomous version of the original ordinal variable 
+
+M; i.e., the highest value vs the others) according to the childhood exposure to violence and the co-variates identifies 14 subgroups of individuals for whom the mediator positivity assumption is vio-lated. One of these subgroups concerns students who were not exposed to violence during child-hood, while thirteen subgroups concern students who were (Table 1). As an example, the result for the first problematic subgroup among the exposed in Table 1 should be interpreted as follows: The 57 individuals with a childhood exposure to violence (A = 1) with both (i) a father education z-score be-tween -2 and -0.5 and (ii) a mother education z-score between -1.5 and -1 present a high religious involvement ( M = 4) probability of 2%, which is lower than the posited positivity threshold (here 2.1%). Consequently, the positivity assumption is deemed violated for those individuals. Note that we are applying the α and β thresholds directly to the sample size of the exposure group. The fi-nal step would be to determine whether the identi-fied violations are structural or random, based on subject-matter expertise. Here, it seems unlikely that this violation is structural, as a high religious involvement is theoretically possible regardless of parents’ education. Because there are no structural violations, we can begin the estimation. The presence of a few random violations may lead us to prefer a causal estimator that can better extrapolate over regions where there are positivity violations (Petersen et al., 2012). Hence, we used the iterated g-formula (Loh et al., 2024; Robins, 1986) that is imple-mented in the CMAverse R package (Shi et al., 2021) for mediation analyses instead of an inverse probability weighting estimator. We obtained an OR of 1.87 (95% CI from 1.61 to 2.22). 
+
+Decomposing causal pathways: Natural effects 
+
+Consider now natural effects that allow us to de-compose the total effect of the exposure on the out-come into direct and indirect effects through a me-diator. The potential outcomes are defined in a hy-pothetical world where individuals experience the exposure A = a, but the mediator takes the value it would have under the opposite exposure A = a∗,formally Y a,Ma∗
+
+. As we will see, this requires dif-ferent positivity assumptions. MEDIATIONAL POSITIVITY VERIFICATION 7
+
+Table 1 
+
+Mediator positivity violations for the controlled di-rect effect application                                                                                                                                
+
+> Subgroup Prob. n∗(%)
+> P(M=4|A=1,C),β=0.021 FEZ ∈[−2,−0.5[& MEZ ∈[−1.5,−1[0.02 57 (4.9) FEZ ∈[−1,−0.5[& MEZ ∈[0.5,1.5[0.00 22 (1.9) Age ∈[25 ,30 [& FEZ ∈[−2,−1[0.00 17 (1.4) FEZ ∈[−2,−1.5[& Age ∈[23 ,25 [0.00 13 (1.1) Age ∈[25 ,30 [& FEZ ∈[0.5,1[0.00 12 (1.0) MEZ ∈[−1.5,−1[& FIZ <−10.00 24 (2.0) Age <30 & MEZ ∈[−2,−1.5[0.00 34 (2.9) MEZ ∈[−1.5,−1[& Age ∈[21 ,27 [0.00 26 (2.2) Age ∈[27 ,30 [& MEZ ∈[−1,−0.5[0.00 16 (1.4) Age ∈[30 ,45 [& MEZ ∈[−1.5,−1[0.00 13 (1.1) FIZ ∈[−1,0[& Age ∈[19 ,20 [0.02 51 (4.3) Age ∈[25 ,30 [& FIZ <−10.00 29 (2.5)
+> P(M=4|A=0,C),β=0.008 MEZ <−2.50.00 56 (1.1) Abbreviations: β, Gruber bound; FEZ, Father education z-score; FIZ, Family income z-score; MEZ, Mother education z-score; n* , subgroup size; Prob., Estimated probability of in-terest.
+
+Positivity 
+
+The focus is on the decomposition of the to-tal effect on either pure natural direct effect and total natural indirect effect (formally PNDE =
+
+E(Y 1,M0
+
+) − E(Y 0) and T NIE = E(Y 1) − E(Y 1,M0
+
+))or pure natural indirect effect and total natural di-rect effect (formally PNIE = E(Y 0,M1
+
+) − E(Y 0)
+
+and T NDE = E(Y 1) − E(Y 0,M1
+
+)) (MacKinnon et al., 2020). Here, the challenging potential out-come’s expectation is E (Y a,Ma∗
+
+), where a , a∗.6
+
+Pearl (2001) derived the so-called mediation for-mula for natural effects as E(Y a,Ma∗
+
+) = ∑
+
+> m
+
+# ∑
+
+> c
+
+E(Y |A = a, M = m,C = c)×
+
+P(M = m|A = a∗,C = c)P(C = c) (4) (see Appendix A for the proof). The positivity assumption encompasses both the exposure and the mediator. Contrary to the CDE, natural effects involve a nested potential outcome’s expectation E (Y a,Ma∗
+
+) that implies exposure posi-tivity as both P (A = a|C = c) > β ≥ 0 and P (A =
+
+a∗|C = c) > β ≥ 0. One may illustrate this through Equation (4). The quantity E (Y |A = a, M = m,C =
+
+c) is undefined when P (A = a|C = c) > β ≥ 0, as discussed in the Section “A journey in Posi-tivity”, while P (M = m|A = a∗,C = c) is unde-fined when P (A = a∗|C = c) > β ≥ 0 by apply-ing the same reasoning. Furthermore, positivity of the mediator must hold, within each observed stratum c, for each value m observed in the op-posite counterfactual world (i.e., where A = a∗)(Nguyen et al., 2022): P (M = m|A = a,C = c) >
+
+β ≥ 0, ∀m s .t. P(M = m|A = a∗,C = c) > 0. Me-diator positivity is lacking when, focusing on the particular subgroup C = c, the mediator values’ range is more restricted among those with A = a
+
+than among those with A = a∗. When this happens, the mediator positivity is respected for the oppo-site cross-world outcome’s expectation E (Y a∗,Ma
+
+)
+
+for this subgroup C = c, since the support of the mediator’s distribution among A = a∗ fully covers that among A = a. Therefore, it’s possible that pos-itivity violations could lead to one decomposition (i.e., PNDE and TNIE vs TNDE and PNIE) being identified when another is not. Details, including a toy simulation study, are given in Appendix C. 
+
+> 6
+
+Natural effects could also be defined by replacing E(Y a) with E (Y a,Ma
+
+). However, under the composition assumption Y a,Ma
+
+= Y a both expressions are equivalent (Pearl, 2000, p. 229). 8 CHATTON ET AL. 
+
+dePoRT 
+
+dePoRT is more challenging to apply to nested potential outcome’s expectations, such as E(Y a,Ma∗
+
+). Indeed, one must now check, for all possible covariate values c, whether the mediator’s distribution in the exposed covers those of the un-exposed individuals. We suggest using a “reverse engineering” trick as follows. First, apply PoRT (i) with the mediator as the dependent variable, and (ii) only among individuals with A = a to find subgroups c′ where the mediator-related part of the positivity assumption is potentially violated. Sec-ond, for each problematic subgroup c′ identified this way, compute the mediator prevalence among individuals with A = a∗ and C = c′. If the resulting prevalence is lower than β , the potential positivity violation occurs in a subgroup that can be deemed outside of the support of interest and is therefore not an actual positivity violation; it can be ignored. If the resulting prevalence is greater than β , an ac-tual positivity violation is present in the subgroup 
+
+c′. The exposure positivity is checked as usual. The whole process is implemented in the R pack-age port (Chatton, 2024) through the function 
+
+deport , and illustrated in the notebook available at github.com/ArthurChatton/dePoRT-notebook. 
+
+Application 
+
+Let’s return to our motivating example, but now consider the entire range of the mediator’s val-ues (religious involvement on a 1-4 psychometric scale). We still use the previous set of hyperparam-eters. For checking mediator positivity, we begin by running PoRT using the mediator religiosity as the dependent variable in the decision trees (see Sec-tion “Reach the PoRT” for verification of exposure positivity). Since religiosity is no longer binary, yet still categorical, classification trees are used in-stead of regression trees, with no impact on inter-pretation. For E (Y 0,M1
+
+), the trees are built on the subset of individuals with A = 0. Only one viola-tion was identified at this step and presented at the top of Table 2. Now, we compute the prevalence of the problematic religiosity category ( M = 3) in the same subgroup (i.e., 23-year-old students with a mother’s education z-score between 1.5 and 2.5) but among individuals with A = 1; this prevalence is equal to 0. Since the mediator value was not observed in this subgroup among A = 1, it is not needed for the same subgroup definition among 
+
+A = 0. Thus, the subgroup does not violate the mediator positivity for E (Y 0,M1
+
+).Second, we shift the exposure groups. Media-tor positivity for E (Y 1,M0
+
+) is checked using PoRT on the individuals with A = 1 first. Ten violations were identified at this step (bottom of Table 2). The prevalence of these subgroups is now checked in the other exposure group (i.e., A = 0), and all sub-groups showed a prevalence higher than β , con-firming mediator positivity violations. In this application, we may prefer to use the decomposition involving the nested potential out-come E (Y 0,M1
+
+) (i.e., T NDE and PNIE ) since it presents a lower risk of bias related to mediator positivity violations than its alter ego (i.e., T NIE 
+
+and PNDE ). For the estimation, we used a weighting-based natural model (Lange et al., 2012), implemented in the medflex R package (Steen et al., 2017). On the OR scale, the TNDE was estimated to be 1.79 (95% CI from 1.48 to 2.18) while the PNIE estimate was 1.01 (95% CI from 0.99 to 1.03). These results indicate that exposure to violence during childhood impacts conjugal violence, but not through religiosity. However, natural effects are not the appropriate effects to look for in this application since PTSS is a post-exposure con-founder, as detailed in the next section. 
+
+Post-exposure confounding: Interventional effects 
+
+Until now, we have set aside PTSS, a mediator-outcome confounder influenced by the exposure. However, in the presence of such an intermedi-ate confounder L (as illustrated in Figure 1), nat-MEDIATIONAL POSITIVITY VERIFICATION 9
+
+Table 2 
+
+Mediator positivity violations for natural effects 
+
+Subgroup C = c m Prob. n∗(%) Prev. a∗ Violation for 
+
+P(M = m|A = a = 0,C), β = 0.008 Age = 23 & MEZ ∈ [1.5, 2.5[ 3 0.00 51 (1.0) 0.00 None 
+
+P(M = m|A = a = 1,C), β = 0.021 Age ≥ 45 & FEZ < −1 1 0.00 16 (1.4) 0.18 E(Y 1,M0
+
+)
+
+FEZ < −2 & FIZ ≥ − 1 1 0.00 25 (2.1) 0.20 E(Y 1,M0
+
+)
+
+FEZ ∈ [−0.5, 0.5[ & MEZ ≥ 1.5 3 0.00 13 (1.1) 0.05 E(Y 1,M0
+
+)
+
+Age ≥ 36 & FEZ ≥ 0.5 3 0.00 15 (1.3) 0.06 E(Y 1,M0
+
+)
+
+Age ∈ [30 , 36 [ & MEZ ∈ [−1, −0.5[ 3 0.00 19 (1.6) 0.10 E(Y 1,M0
+
+)
+
+Age ≥ 45 & FIZ ∈ [0, 1[ 3 0.00 20 (1.7) 0.07 E(Y 1,M0
+
+)
+
+FEZ ∈ [−2, −1.5[ & MEZ ≥ − 0.5 4 0.00 14 (1.2) 0.14 E(Y 1,M0
+
+)
+
+Abbreviations: β , Gruber bound; FEZ, Father education z-score; FIZ, Family income z-score; MEZ, Mother education z-score; n* , subgroup size; Prob., Estimated proba-bility of interest; Prev., Estimated prevalence of interest within the alternative exposure group (i.e., A = a∗). ural effects are not identifiable (Avin et al., 2005). Interventional mediation effects represent a solu-tion to this problem (VanderWeele & Vansteelandt, 2014). Interventional effects are often used to try to mimic how natural effects decompose the total ef-fect into direct and indirect effects. 7 Interventional effects consider counterfactual outcomes under in-terventions on both the exposure and the media-tor, similar to the CDE. However, the interven-tion on the mediator is stochastic (i.e., it has a random component). The goal is for the inter-vention on the mediator to emulate the popula-tion distribution of the mediator under fixed ex-posure A = a∗ and conditional on covariates C.8
+
+The distribution of the mediator under this stochas-tic intervention is denoted hereafter by M a|C and 
+
+M a∗|C, following Nguyen et al. (2022). The inter-ventional direct effect is often expressed as PIDE 
+
+= E (Y 1,M 0|C
+
+) − E(Y 0,M 0|C
+
+), and the interventional indirect effect as T IIE = E (Y 1,M 1|C
+
+) − E(Y 1,M 0|C
+
+),similar to the decomposition into a PNDE and a T NIE . It is, however, also possible to ex-press the interventional direct effect as T IDE =E(Y 1,M 1|C
+
+) − E(Y 0,M 1|C
+
+) and the interventional in-direct effect as PIIE = E (Y 0,M 1|C
+
+) − E(Y 0,M 0|C
+
+),similar to the decomposition into a T NDE and a 
+
+PNIE .9
+
+> 7
+
+Interventional effects are sometimes referred to as the randomized-intervention analogue of natural effects (VanderWeele & Vansteelandt, 2014) or as stochastic effects (Díaz & Hejazi, 2020). However, note that they do not truly decompose the total effect, but rather an undefined overall effect (VanderWeele et al., 2014). Sometimes natural and interventional effects coincide, notably when there is no interaction between L and M in the true data-generating process (Gervais et al., 2025b). 
+
+> 8
+
+Nguyen et al. (2022) also discuss a draw from a distribution of Ma∗
+
+conditional on ( C, L) representing an intervention definition that might be plausibly linked to a real-life intervention. 
+
+> 9
+
+Note that the composition assumption does not hold for interventional effects since Y a,M a|C
+
+and Y a are not equivalent (Nguyen et al., 2021). 10 CHATTON ET AL. 
+
+Positivity 
+
+Under appropriate identifiability assumptions, the potential outcome means are identified as fol-lows (Nguyen et al., 2022): E(Y a,M a|C
+
+) = ∑
+
+> c,l,m
+
+E(Y |a, m, l, c)×
+
+P(M = m|a, c)P(L = l|a, c)P(C = c) (5) E(Y a,M a∗|C
+
+) = ∑
+
+> c,l,m
+
+E(Y |a, m, l, c)×
+
+P(M = m|a∗, c)P(L = l|a, c)P(C = c) (6) where we use lowercase letters only on the right side of the conditional probabilities to alleviate the notational burden. Following (5) and contrary to natural effects, mediator positivity is now required for the poten-tial outcomes’ expectations E (Y a,M a|C
+
+). Formally, mediator positivity is defined as P (M = m|A =
+
+a, L = l,C = c) > β ≥ 0, ∀m, l such that P (M =
+
+m|A = a,C = c) > 0 and P (L = l|A = a,C = c) > 0. Positivity for nested potential outcomes’ expecta-tions E (Y a,M a∗|C
+
+) is similar to that of natural ef-fects. The only difference is that mediator positiv-ity is now P (M = m|A = a, L = l,C = c) > β ≥ 0instead of P (M = m|A = a,C = c) > β ≥ 0. How-ever, the constraint on the support is the same, i.e. mediator positivity is needed only for values 
+
+m such that P (M = m|A = a∗,C = c) > 0. 
+
+dePoRT 
+
+The diagnostic procedure is similar to the one we used for natural effects, with some notable dif-ferences arising from the definition of the support. For E (Y a,M a|C
+
+), the first step consists of running PoRT for exposure positivity as usual. The sec-ond step is to run PoRT for mediator positivity on each exposure group A = a separately, condi-tional on (C, L). Potential violations, for a given 
+
+m, identified at this step need to be confirmed in a third step by verifying whether they occur on the support, that is, in regions of the covari-ate space where P (M = m|A = a,C = c) > 0 and P(L = l|A = a,C = c) > 0. For example, suppose we identify the following potential positivity vio-lation: P (M = m|A = 1, L = l′,C = c′) ≤ β , where 
+
+c′ and l′ stand for specific values of C and L, re-spectively. The third step is now to compute the prevalence of m among individuals with A = 1 and 
+
+C = c′, regardless of their L value. There is no violation if the prevalence computed at this third step is null. The special case where the subgroup involves L but not C (e.g., P (M = m|A = 1, L =
+
+l′) ≤ β ) does not represent a positivity violation either since the support here would be the whole exposure group. The process is almost identical for E (Y a,M a∗|C
+
+),except that one computes the prevalence of the me-diator in the problematic subgroup on the other exposure group at step 3. Formally, for a viola-tion observed in exposure group A = a, one com-putes P (M = m|A = a∗,C = c′) rather than P (M =
+
+m|A = a,C = c′). As for natural effects, the vary-ing amount of mediator positivity violations across the nested potential outcomes may influence the choice of decomposition of interest before con-ducting any statistical analysis. 
+
+Application 
+
+Our motivating example still includes a binary exposure (childhood exposure to violence), a four-class mediator (religious involvement), and the fol-lowing hyperparameters: α = 0.01, β = 5/(√n ·
+
+ln (n)) , and γ = 2. But, this time, it also includes an intermediate confounder (PTSS) on a continu-ous scale. As previously, we focus on mediator positivity since exposure positivity was already ex-plained in Section “Reach the PoRT”. First, we ran PoRT on the exposed individuals to (i) obtain a classification tree modeling the reli-gious involvement conditional on each confounder (including PTSS), (ii) read them to save potential positivity violations given α and β , (iii) exclude the confounder(s) involved in these trees, (iv) build other classification trees using each possible pair MEDIATIONAL POSITIVITY VERIFICATION 11 
+
+Table 3 
+
+Mediator positivity violations for interventional effects 
+
+Subgroup {C = c, L = l} m Prob. n∗(%) Prev. a Prev. a∗ Violation for 
+
+P(M = m|A = a = 0,C, L), β = 0.008 Age = 23 & MEZ ∈ [1.5, 2.5[ 3 0.00 51 (1.0) 0.00 0.00 None PTSS ∈ [1.5, 1.75 [ & MEZ ∈ [−1.5, −1[ 3 0.00 51 (1.0) 0.05 0.13 E(Y 0,M 0|C
+
+), E(Y 0,M 1|C
+
+)
+
+P(M = m|A = a = 1,C, L), β = 0.021 PTSS ∈ [3.5, 3.625 [ 4 0.00 14 (1.2) - - None FEZ ∈ [−2, −1.5[ & MEZ ≥ − 0.5 4 0.00 14 (1.2) 0.00 0.14 E(Y 1,M 0|C
+
+)
+
+FEZ ∈ [−0.5, 0.5[ & MEZ ≥ 1.5 3 0.00 13 (1.1) 0.00 0.05 E(Y 1,M 0|C
+
+)
+
+FEZ < −2 & FIZ ≥ − 1 1 0.00 25 (2.1) 0.00 0.20 E(Y 1,M 0|C
+
+)
+
+Age ≥ 36 & FEZ ≥ 0.5 3 0.00 15 (1.3) 0.00 0.06 E(Y 1,M 0|C
+
+)
+
+Age ≥ 45 & FEZ < −1 1 0.00 16 (1.4) 0.00 0.18 E(Y 1,M 0|C
+
+)
+
+Age [30 , 36 [ & MEZ ∈ [−1, −0.5[ 3 0.00 19 (1.6) 0.00 0.10 E(Y 1,M 0|C
+
+)
+
+Age ≥ 45 & FIZ ∈ [0, 1[ 3 0.00 20 (1.7) 0.00 0.07 E(Y 1,M 0|C
+
+)
+
+Abbreviations: β , Gruber bound; FEZ, Father education z-score; FIZ, Family income z-score; MEZ, Mother education z-score; n* , subgroup size; Prob., Estimated probability of interest; Prev., Estimated prevalence of interest in the comparator group ( i.e. , without L and within a for E (Y a,M a|C
+
+) or a∗ for E (Y a,M a∗|C
+
+)); PTSS, Post-traumatic stress disorder. of the remaining confounders, (v) read them to save the potential positivity violations. This itera-tive process stops when the number of confounders per tree exceeds γ at the next iteration. Second, we apply the very same process to the unexposed individuals. Following this procedure, we obtained two lists of subgroups that yield potential positivity viola-tions. Our goal is to reduce them according to the support that defines the four potential outcomes. For E (Y 1,M 1|C
+
+) and E (Y 0,M 0|C
+
+), we pick the sub-groups involving any value or range of PTSS. We compute the prevalence of the mediator value that lacks positivity, but among the broader subgroup that does not condition on PTSS (for exposed or unexposed, respectively). For example, the sub-group of unexposed individuals with both a PTSS between 1.5 and 1.75 and a mother education z-score between -1.5 and -1 was identified at the first step (no m = 3 in this subgroup, Table 3). The prevalence of m = 3 among unexposed individuals who have only a mother’s education z-score be-tween 1.5 and -1 (regardless of their PTSS value) is 0.05. Since this last prevalence is greater than β ,the subgroup represents a mediator positivity vio-lation for E (Y 0,M 0|C
+
+).The process is similar for E(Y 1,M 0|C
+
+) and E(Y 0,M 1|C
+
+), except that one checks the prevalence in the broader subgroup among the other exposure group. Back to our problematic subgroup, we now compute the prevalence of m = 3 among exposed individuals (rather than unexposed) that have only a mother’s education z-score between 1.5 and -1 (still regardless of their PTSS value). This value being greater than β , the subgroup also represents a mediator positivity violation for E (Y 0,M 1|C
+
+). In contrast, the subgroup of 23-year-old individuals with a mother’s education z-score (potential viola-12 CHATTON ET AL. 
+
+tion for E (Y 0,M 1|C
+
+), first line of Table 3) also pre-sented a null prevalence among the exposed, negat-ing the violation. To summarize, a subgroup (C =
+
+c′, L = l′) identified by dePoRT may represent a mediator positivity violation (for the value M = m)for E (Y a,M a|C
+
+) if P (M = m|A = a,C = c′) ≥ β and for E (Y a,M a∗|C
+
+) if P (M = m|A = a∗,C = c′) ≥ β .Looking at the complete results in Table 3, we have one mediator positivity violation for E(Y 0,M 0|C
+
+) and E (Y 0,M 1|C
+
+), and ten others for E(Y 1,M 0|C
+
+). In this situation, one may prefer using the decomposition based on E (Y 0,M 1|C
+
+), to reduce the risk of bias related to non-positivity. We use the g-formula estimator from the CMA-verse R package (Shi et al., 2021). The TIDE, on an OR scale, is 1.83 (95% CI from 1.50 to 2.23), while the PIIE is estimated at 0.99 (95% CI from 0.98 to 1.01), confirming the previous conclusions about the absence of a mediating role for religios-ity involvement. 
+
+Discussion 
+
+Causal mediation analyses aim to answer highly relevant scientific questions, but their assumptions are especially strong (Keele, 2015; Rohrer et al., 2022) and their application is challenging. Unfor-tunately, these assumptions are rarely assessed in mediation analysis (Stuart et al., 2021), likely due to a lack of tools to check them. In this study, we propose the dePoRT algorithm to check the positivity assumption in causal mediation analysis. Built as a wrapper around PoRT, dePoRT facili-tates both the assessment and interpretation of the positivity assumption in causal mediation analysis. We illustrated the use of dePoRT with the poten-tial outcomes involved in defining three common estimands: the CDE, natural effects, and interven-tional effects. The relevance of interventional ef-fects is currently debated in the literature, with pro and con arguments (see e.g., Loh & Ren, 2022; Miles, 2023; Moreno-Betancur & Carlin, 2018). Other estimands might be of interest when inter-mediate confounders are present. For instance, Chen and Lin (2025) introduced separable path-specific effects while Gervais et al. (2025a) dis-cussed the joint effect of L and M as well as natu-ral path-specific effects. The positivity of the me-diator will differ for each of them. We can ap-ply the same reasoning to check them using PoRT: derive the mediation formula, define the mediator positivity and the support of m, and finally build a specific version of dePoRT using the port func-tion (Chatton, 2024). Finally, positivity for the causal contrast of interest (e.g., natural effects) needs exposure and mediator positivities for all potential outcomes involved in this contrast. We chose to check the positivity involved in the iden-tifiability of different expectations of the potential outcomes (e.g., E (Y a) or E (Y a,Ma∗
+
+)) for two rea-sons. First, it allows for studying the different de-compositions. This is also useful when the inter-est lies in path-specific natural effects with sev-eral mediators. Second, it can highlight the non-identifiability of some causal contrasts and may lead to choosing a less realistic but still informa-tive causal estimand. For instance, Nguyen et al. (2022) discussed a modified intervention defined by the difference between E (Y a,M a∗|C
+
+) and E (Y a∗
+
+)
+
+instead of the PIIE considered in the section related to interventional effects. In this study, we mostly set aside the estimation process. Nonetheless, some weighting estimators, such as inverse odds ratio weighting (Tchetgen Tchetgen, 2013), use weights that have a denom-inator estimated by a model of the exposure con-ditional on the mediator. In such cases, dePoRT could be used to confirm whether the data are suf-ficient to support the estimation of the weights. We also only considered binary exposure and cat-egorical mediators. Contrary to Danelian et al. (2023), we employed classification trees instead of regression trees to handle non-binary categor-ical mediators (this approach could also be ap-plied to the exposure) since the latter has not yet been implemented in the R package rpart (Th-erneau & Atkinson, 2019) for a multi-class depen-dent variable. Continuous exposures or mediators MEDIATIONAL POSITIVITY VERIFICATION 13 are more challenging to deal with. One can typi-cally expect a lack of positivity in such cases be-cause the support is too vast (Petersen et al., 2012). In the case of continuous exposures or mediators, we suggest checking positivity by categorizing the dependent variable into multiple classes and apply-ing dePoRT to each, treating them as categorical. By default, PoRT uses the variable’s quartiles, al-though we recommend prioritizing expert knowl-edge whenever possible. Recently, positivity di-agnostic tools were proposed for a continuous ex-posure by Moodie and Schulz (2025), in regres-sion settings, and by Ring and Schomaker (2026) using kernel-based sparsity. However, their inter-pretability is challenging, and their use in media-tion analysis needs further evaluation. Continuous confounders could also be slightly categorized into meaningful cut-offs to reduce the computational time of PoRT (Danelian et al., 2023). There are several ways to address positivity vi-olations. The most extreme is to target another es-timand that is identifiable with the data at hand. While this shifts the scientific question one aims to answer, it is the only solution that works for a structural violation. A second solution is to select the decomposition that achieves the best positiv-ity, as illustrated in our second application. Ad-ditionally, regression or imputation-based estima-tors may be favored over weighting estimators for practical violations if we allow for extrapolation (e.g., Imai et al., 2010; Lange et al., 2012; Pósch, 2021; Samoilenko & Lefebvre, 2023). Finally, one might balance the risks of violating positivity against those of residual confounding by excluding weak confounders — that is, variables expected to be strongly associated with the exposure but only weakly related to the outcome (Cole & Hernán, 2008) or the mediator. This is especially likely to occur in high-dimensional settings. Nonetheless, dePoRT is not a silver bullet. Its proper use presupposes an accurate a priori iden-tification of confounders, the correct temporal or-dering of all variables, and the absence of mea-surement errors or misclassification; evaluation of these relies heavily on domain expertise. In addition, dePoRT’s performance is influenced by PoRT’s hyperparameters, α, β , and γ (and, to a lesser extent, those of the regression or classifica-tion tree). We recommend exploring a grid of prag-matically chosen values for them (see the Discus-sion in Danelian et al. (2023)). 
+
+Conclusion 
+
+This study extends the analysts’ toolbox in causal mediation analysis for checking assump-tions to achieve more robust results and transpar-ent analyses. The PoRT framework is available for cross-sectional (Danelian et al., 2023), longi-tudinal (Chatton et al., 2025), and now media-tion settings. It does not rely on parametric as-sumptions and can be used before applying any causal estimator. To encourage its broader adop-tion by the applied community, we have made de-PoRT easy and free to use through the R package 
+
+port (Chatton, 2024) and a notebook available at github.com/ArthurChatton/dePoRT-notebook. 
+
+References 
+
+Avin, C., Shpitser, I., & Pearl, J. (2005). Identifia-bility of path-specific effects. Proceedings of International Joint Conference on Artifi-cial Intelligence .Baron, R. M., & Kenny, D. A. (1986). The moder-ator–mediator variable distinction in social psychological research: Conceptual, strate-gic, and statistical considerations. Jour-nal of Personality and Social Psychology ,
+
+51 (6), 1173–1182. https://doi.org/10.1037/ 0022-3514.51.6.1173 Berthelot, N., Hébert, M., Godbout, N., Goulet, M., Bergeron, S., & Boucher, S. (2014). Childhood maltreatment increases the risk of intimate partner violence via ptsd and anger personality traits in individuals con-sulting for sexual problems. Journal of Ag-gression, Maltreatment & Trauma , 23 (9), 14 CHATTON ET AL. 
+
+982–998. https : / / doi . org / 10 . 1080 / 10926771.2014.960631 Bierman, A. (2005). The effects of childhood mal-treatment on adult religiosity and spiritu-ality: Rejecting god the father because of abusive fathers? Journal for the Scientific Study of Religion , 44 (3), 349–359. https : / / doi . org / 10 . 1111 / j . 1468 - 5906 . 2005 . 00290.x Breiman, L., Friedman, J., Stone, C. J., & Olshen, R. A. (1984, January). Classification and regression trees . Taylor & Francis. Brookhart, M. A., Schneeweiss, S., Rothman, K. J., Glynn, R. J., Avorn, J., & Stürmer, T. (2006). Variable selection for propensity score models. American Journal of Epi-demiology , 163 (12), 1149–1156. https : / / doi.org/10.1093/aje/kwj149 Chatton, A. (2024). port: Positivity Regression Trees. https://github.com/ArthurChatton/ PoRT Chatton, A., Le Borgne, F., Leyrat, C., Gillaizeau, F., Rousseau, C., Barbin, L., Laplaud, D., Léger, M., Giraudeau, B., & Foucher, Y. (2020). G-computation, propensity score-based methods, and targeted maximum likelihood estimator for causal inference with different covariates sets: A compar-ative simulation study. Scientific Reports ,
+
+10 (1), 9219. https : / / doi . org / 10 . 1038 / s41598-020-65917-x Chatton, A., & Rohrer, J. M. (2024). The causal cookbook: Recipes for propensity scores, g-computation, and doubly robust stan-dardization. Advances in Methods and Practices in Psychological Science , 7(1), 25152459241236149. https://doi.org/10. 1177/25152459241236149 Chatton, A., Schomaker, M., Luque-Fernandez, M.-A., Platt, R. W., & Schnitzer, M. E. (2025). Is checking for sequential posi-tivity violations getting you down? Try sPoRT! Epidemiology , Published ahead of print . https : / / doi . org / 10 . 1097 / EDE . 0000000000001902 Chen, Y.-L., & Lin, S.-H. (2025). Definition and interpretation of separable path-specific ef-fects with multiple ordered mediators. Epi-demiology , 36 (5), 677–685. https://doi.org/ 10.1097/EDE.0000000000001887 Coffman, D. L., & Zhong, W. (2012). Assessing mediation using marginal structural models in the presence of confounding and moder-ation. Psychological Methods , 17 (4), 642– 664. https://doi.org/10.1037/a0029311 Cole, S. R., & Hernán, M. A. (2008). Constructing inverse probability weights for marginal structural models. American Journal of Epidemiology , 168 (6), 656–664. https : / / doi.org/10.1093/aje/kwn164 D’Amour, A., Ding, P., Feller, A., Lei, L., & Sekhon, J. (2021). Overlap in observational studies with high-dimensional covariates. 
+
+Journal of Econometrics , 221 (2), 644–654. https://doi.org/10.1016/j.jeconom.2019. 10.014 Danelian, G., Foucher, Y., Léger, M., Le Borgne, F., & Chatton, A. (2023). Identification of in-sample positivity violations using re-gression trees: The port algorithm. Jour-nal of Causal Inference , 11 (1), 20220032. https://doi.org/10.1515/jci-2022-0032 Díaz, I., & Hejazi, N. S. (2020). Causal mediation analysis for stochastic interventions. Jour-nal of the Royal Statistical Society Series B: Statistical Methodology , 82 (3), 661– 683. https://doi.org/10.1111/rssb.12362 Diop, A., Lefebvre, G., Duchaine, C. S., Laurin, D., & Talbot, D. (2021). The impact of ad-justing for pure predictors of exposure, me-diator, and outcome on the variance of nat-ural direct and indirect effect estimators. 
+
+Statistics in Medicine , 40 (10), 2339–2354. https://doi.org/10.1002/sim.8906 Diop, S. A., Duchesne, T., G. Cumming, S., Diop, A., & Talbot, D. (2022). Confounding adjustment methods for multi-level treat-MEDIATIONAL POSITIVITY VERIFICATION 15 ment comparisons under lack of positivity and unknown model specification. Journal of Applied Statistics , 49 (10), 2570–2592. https://doi.org/10.1080/02664763.2021. 1911966 Gervais, J., Lefebvre, G., & Moodie, E. E. M. (2025a). Causal mediation analysis with two mediators: A comprehensive guide to estimating total and natural effects across various multiple mediators setups. Psycho-logical Methods , In press .Gervais, J., Lefebvre, G., & Moodie, E. E. M. (2025b). Natural effects in the presence of an intermediate confounder: Evaluation of pragmatic estimation strategies with an emphasis on the relationship between nat-ural and interventional effects. Statistics in Medicine , 44 (15–17), e70038. https://doi. org/10.1002/sim.70038 Gonçalves, J. P. d. B., Lucchetti, G., Latorre, M. d. R. D., Laranjeira, R., & Vallada, H. (2022). Religiosity as a potential media-tor for violence in childhood and adult-hood: Results from a brazilian nationally representative survey. BMJ Open , 12 (6), e051225. https : / / doi . org / 10 . 1136 / bmjopen-2021-051225 Gruber, S., Phillips, R. V., Lee, H., & van der Laan, M. J. (2022). Data-adaptive selec-tion of the propensity score truncation level for inverse-probability-weighted and tar-geted maximum likelihood estimators of marginal point treatment effects. American Journal of Epidemiology , 191 (9), 1640– 1651. https://doi.org/10.1093/aje/kwac087 Harder, V. S., Stuart, E. A., & Anthony, J. C. (2010). Propensity score techniques and the assessment of measured covariate bal-ance to test causal associations in psycho-logical research. Psychological Methods ,
+
+15 (3), 234–249. https://doi.org/10.1037/ a0019623 Hernán, M., & Robins, J. M. (2020). Causal infer-ence: What if? Chapman & Hall/CRC. Imai, K., Keele, L., & Yamamoto, T. (2010). Iden-tification, inference and sensitivity analy-sis for causal mediation effects. Statistical Science , 25 (1), 51–71. https://doi.org/10. 1214/10-STS321 Jouriles, E. N., McDonald, R., Mueller, V., & Grych, J. H. (2012). Youth experiences of family violence and teen dating violence perpetration: Cognitive and emotional me-diators. Clinical Child and Family Psychol-ogy Review , 15 (1), 58–68. https://doi.org/ 10.1007/s10567-011-0102-7 Judd, C. M., & Kenny, D. A. (1981). Process analysis: Estimating mediation in treat-ment evaluations. Evaluation Review , 5(5), 602–619. https : / / doi . org / 10 . 1177 / 0193841X8100500502 Keele, L. (2015). Causal mediation analysis: Warning! assumptions ahead. American Journal of Evaluation , 36 (4), 500–513. https : / / doi . org / 10 . 1177 /1098214015594689 Lange, T., Vansteelandt, S., & Bekaert, M. (2012). A simple unified approach for estimating natural direct and indirect effects. Ameri-can Journal of Epidemiology , 176 (3), 190– 195. https://doi.org/10.1093/aje/kwr525 Lanza, S. T., Moore, J. E., & Butera, N. M. (2013). Drawing causal inferences using propen-sity scores: A practical guide for com-munity psychologists. American Journal of Community Psychology , 52 (3–4), 380– 392. https://doi.org/10.1007/s10464-013-9604-4 Léger, M., Chatton, A., Le Borgne, F., Pirrac-chio, R., Lasocki, S., & Foucher, Y. (2022). Causal inference in case of near-violation of positivity: Comparison of methods. Bio-metrical Journal , 64 (8), 1389–1403. https: //doi.org/10.1002/bimj.202000323 Lendle, S. D., Fireman, B., & van der Laan, M. J. (2013). Targeted maximum likelihood esti-mation in safety analysis. Journal of Clin-16 CHATTON ET AL. 
+
+ical Epidemiology , 66 (8), S91–S98. https: //doi.org/10.1016/j.jclinepi.2013.02.017 Leo, D., Izadikhah, Z., Fein, E. C., & Forooshani, S. A. (2021). The effect of trauma on re-ligious beliefs: A structured literature re-view and meta-analysis. Trauma, Violence & Abuse , 22 (1), 161–175. https://doi.org/ 10.1177/1524838019834076 Loh, W. W., & Ren, D. (2022). Improving causal inference of mediation analysis with multi-ple mediators using interventional indirect effects. Social and Personality Psychology Compass , 16 (10), e12708. https://doi.org/ 10.1111/spc3.12708 Loh, W. W., Ren, D., & West, S. G. (2024). Para-metric g-formula for testing time-varying causal effects: What it is, why it matters, and how to implement it in lavaan. Multi-variate Behavioral Research , 59 (5), 995– 1018. https://doi.org/10.1080/00273171. 2024.2354228 Lundberg, I., Johnson, R., & Stewart, B. M. (2021). What is your estimand? defining the target quantity connects statistical evi-dence to theory. American Sociological Re-view , 86 (3), 532–565. https://doi.org/10. 1177/00031224211004187 MacKinnon, D. P., Valente, M. J., & Gonzalez, O. (2020). The correspondence between causal and traditional mediation analysis: The link is the mediator by treatment in-teraction. Prevention science , 21 (2), 147. https : / / doi . org / 10 . 1007 / s11121 - 019 -01076-4 Miles, C. H. (2023). On the causal interpretation of randomised interventional indirect effects. 
+
+Journal of the Royal Statistical Society Series B: Statistical Methodology , 85 (4), 1154–1172. https://doi.org/10.1093/jrsssb/ qkad066 Moodie, E. E. M., & Schulz, J. (2025). A sim-ple diagnostic for the positivity assump-tion for continuous exposures. Statistics in Medicine , 44 (15–17), e70194. https://doi. org/10.1002/sim.70194 Moore, K. L., Neugebauer, R., van der Laan, M. J., & Tager, I. B. (2012). Causal inference in epidemiological studies with strong con-founding. Statistics in Medicine , 31 (13), 1380–1404. https://doi.org/10.1002/sim. 4469 Moreno-Betancur, M., & Carlin, J. B. (2018). Un-derstanding interventional effects: A more natural approach to mediation analysis? 
+
+Epidemiology , 29 (5), 614–617. https://doi. org/10.1097/EDE.0000000000000866 Neyman, J. (1923). On the application of prob-ability theory to agricultural experiments: Essay on principles. Annals of agricultural sciences. Translated in Statistical Science (1990) by DM Dabrowska and TP Speed ,
+
+5, 465–480. Nguyen, T. Q., Schmid, I., Ogburn, E. L., & Stu-art, E. A. (2022). Clarifying causal media-tion analysis: Effect identification via three assumptions and five potential outcomes. 
+
+Journal of Causal Inference , 10 (1), 246– 279. https://doi.org/10.1515/jci-2021-0049 Nguyen, T. Q., Schmid, I., & Stuart, E. A. (2021). Clarifying causal mediation analysis for the applied researcher: Defining effects based on what we want to learn. Psycho-logical Methods , 26 (2), 255–271. https : / / doi.org/10.1037/met0000299 Pearl, J. (2000). Causality: Models, reasoning, and inference . Cambridge University Press. Pearl, J. (2001). Direct and indirect effects. Pro-ceedings of the Seventeenth conference on Uncertainty in artificial intelligence , 411– 420. Petersen, M. L., Porter, K. E., Gruber, S., Wang, Y., & van der Laan, M. J. (2012). Diag-nosing and responding to violations in the positivity assumption. Statistical Methods in Medical Research , 21 (1), 31–54. https: //doi.org/10.1177/0962280210386207 MEDIATIONAL POSITIVITY VERIFICATION 17 Platt, R. W., Delaney, J. A. C., & Suissa, S. (2012). The positivity assumption and marginal structural models: The example of warfarin use and risk of bleeding. European Jour-nal of Epidemiology , 27 (2), 77–83. https : //doi.org/10.1007/s10654-011-9637-7 Pósch, K. (2021). Testing complex social theo-ries with causal mediation analysis and g-computation: Toward a better way to do causal structural equation modeling. 
+
+Sociological Methods & Research , 50 (3), 1376–1406. https : / / doi . org / 10 . 1177 / 0049124119826159 Ring, K., & Schomaker, M. (2026). A diagnostic to find and help combat stochastic positivity issues – with a focus on continuous treat-ments. Journal of Causal Inference , 14 (1). https://doi.org/10.1515/jci-2025-0007 Robins, J. M., Hernán, M. A., & Brumback, B. (2000). Marginal structural models and causal inference in epidemiology. Epidemi-ology , 11 (5), 550–560. https://doi.org/10. 1097/00001648-200009000-00011 Robins, J. M. (1986). A new approach to causal inference in mortality studies with a sus-tained exposure period—application to control of the healthy worker survivor ef-fect. Mathematical Modelling , 7(9), 1393– 1512. https : / / doi . org / 10 . 1016 / 0270 -0255(86)90088-6 Robins, J. M., & Greenland, S. (1992). Identifiabil-ity and exchangeability for direct and indi-rect effects. Epidemiology , 3(2), 143. Rohrer, J. M., Hünermund, P., Arslan, R. C., & Elson, M. (2022). That’s a lot to process! pitfalls of popular path models. Advances in Methods and Practices in Psychological Science , 5(2), 25152459221095827. https: //doi.org/10.1177/25152459221095827 Rubin, D. B. (1974). Estimating causal effects of treatments in randomized and nonrandom-ized studies. Journal of Educational Psy-chology , 66 (5), 688–701. https://doi.org/ 10.1037/h0037350 Samoilenko, M., & Lefebvre, G. (2023). An ex-act regression-based approach for the es-timation of natural direct and indirect ef-fects with a binary outcome and a continu-ous mediator. Statistics in Medicine , 42 (3), 353–387. https://doi.org/10.1002/sim.9621 Shi, B., Choirat, C., Coull, B. A., VanderWeele, T. J., & Valeri, L. (2021). Cmaverse: A suite of functions for reproducible causal mediation analyses. Epidemiology , 32 (5), e20. https : / / doi . org / 10 . 1097 / EDE . 0000000000001378 Steen, J., Loeys, T., Moerkerke, B., & Vanstee-landt, S. (2017). medflex: An R package for flexible mediation analysis using nat-ural effect models. Journal of Statistical Software , 76 , 1–46. https : / / doi . org / 10 . 18637/jss.v076.i11 Straus, M., Hamby, S., Boney-McCoy, S., & Sug-arman, D. (2010). Manual for the personal and relationships profile (PRP). Durham, NH: University of New Hampshire. Straus, M., Hamby, S. L., Boney-McCoy, S., & Sugarman, D. B. (1996). The revised con-flict tactics scales (CTS2): Development and preliminary psychometric data. Jour-nal of Family Issues , 17 (3), 283–316. https: //doi.org/10.1177/019251396017003001 Straus, M. (2011). International dating violence study, 2001-2006. Inter-university Consor-tium for Political and Social Research [dis-tributor] . https : / / doi . org / 10 . 3886 / ICPSR29583.v1 Strobl, C., Malley, J., & Tutz, G. (2009). An introduction to recursive partitioning: Ra-tionale, application, and characteristics of classification and regression trees, bagging, and random forests. Psychological Meth-ods , 14 (4), 323–348. https : / / doi . org / 10 . 1037/a0016973 Stuart, E. A., Schmid, I., Nguyen, T., Sarker, E., Pittman, A., Benke, K., Rudolph, K., Badillo-Goicoechea, E., & Leoutsakos, J.-M. (2021). Assumptions not often as-18 CHATTON ET AL. 
+
+sessed or satisfied in published media-tion analyses in psychology and psychia-try. Epidemiologic Reviews , 43 (1), 48–52. https://doi.org/10.1093/epirev/mxab007 Tchetgen Tchetgen, E. J. (2013). Inverse odds ratio-weighted estimation for causal me-diation analysis. Statistics in Medicine ,
+
+32 (26), 4567–4580. https : / / doi . org / 10 . 1002/sim.5864 Therneau, T. M., & Atkinson, B. (2019). rpart: Recursive partitioning and regression trees. (20 october 2021, date last accessed). https: //CRAN.R-project.org/package=rpart VanderWeele, T. J., & Vansteelandt, S. (2014). Mediation analysis with multiple medi-ators. Epidemiologic Methods , 2(1), 95– 115. https : / / doi . org / 10 . 1515 / em - 2012 -0010 Vanderweele, T. J. (2015). Explanation in causal inference: Methods for mediation and in-teraction . Oxford University Press. VanderWeele, T. J., Vansteelandt, S., & Robins, J. M. (2014). Effect decomposition in the presence of an exposure-induced mediator-outcome confounder. Epidemiology , 25 (2), 300–306. https : / / doi . org / 10 . 1097 / EDE . 0000000000000034 Wright, S. (1934). The method of path coeffi-cients. The Annals of Mathematical Statis-tics , 5(3), 161–215. https : / / doi . org / 10 . 1214/aoms/1177732676 Zhu, Y., Hubbard, R. A., Chubak, J., Roy, J., & Mitra, N. (2021). Core concepts in phar-macoepidemiology: Violations of the pos-itivity assumption in the causal analysis of observational data: Consequences and statistical approaches. Pharmacoepidemi-ology and Drug Safety , 30 (11), 1471–1485. https://doi.org/10.1002/pds.5338 MEDIATIONAL POSITIVITY VERIFICATION 19 
+
+Appendix A Proofs 
+
+The three proofs presented below are taken from Nguyen et al. (2022) and VanderWeele et al. (2014). 
+
+Controlled direct effect 
+
+Assume the following identifiability assumptions: 
+
+Assumption A1. Consistency: Y = Y a,m if A = a and M = m. 
+
+Assumption A2. Exchangeability of the exposure: A ⊥⊥ Y a,m|C. 
+
+Assumption A3. Exchangeability of the mediator: M ⊥⊥ Y a,m|A = a,C, L. 
+
+Assumption A4. Positivity of the exposure: P(A = a|C = c) > β ≥ 0, ∀c such as P(C = c) > 0.
+
+Assumption A5. Positivity of the mediator: P(M = m|A = a,C = c, L = l) > β ≥ 0, ∀l, c such as 
+
+P(L = l,C = c) > 0.Proof. 
+
+E(Y a,m) = ∑
+
+> c
+
+E(Y a,m|C)P(C = c) (iterated expectation) 
+
+= ∑
+
+> c
+
+E(Y a,m|C = c, A = a)P(C = c) (A2) and (A4) 
+
+= ∑
+
+> c,l
+
+E(Y a,m|C = c, A = a, L = l)P(L = l|C = c, A = a)P(C = c) (iterated expectation) 
+
+= ∑
+
+> c,l
+
+E(Y a,m|C = c, A = a, L = l, M = m)P(L = l|C = c, A = a)P(C = c) (A3) and (A5) 
+
+= ∑
+
+> c,l
+
+E(Y |C = c, A = a, L = l, M = m)P(L = l|C = c, A = a)P(C = c). (A1) 
+
+□
+
+Note that our application in the main text did not consider L. Therefore, the final line of the proof simplifies to E (Y a,m) = ∑c E(Y |C = c, A = a, M = m)P(C = c).
+
+Natural effects 
+
+Assume the following identifiability assumptions for the nested potential outcome’s expectation E(Y a,Ma∗
+
+) (where a∗ can equal a): 
+
+Assumption A6. Consistency of the nested potential outcome: Y a,Ma∗
+
+= Y a,m if M a∗
+
+= m. 
+
+Assumption A7. Consistency of the mediator: M = Ma if A = a. 
+
+Assumption A8. Exchangeability of the exposure: A ⊥⊥ Y a,m|C and A ⊥⊥ Ma∗
+
+|C. 
+
+Assumption A9. Exchangeability of the mediator: M ⊥⊥ Y a,m|A = a,C and M a∗
+
+⊥⊥ Y a,m|C. 20 CHATTON ET AL. 
+
+Assumption A10. Positivity of the mediator: P (M = m|A = a,C = c) > β ≥ 0, ∀c such as P (M = m|A =
+
+a∗,C = c) > 0 and P(C = c) > 0.Proof. 
+
+E(Y a,Ma∗
+
+) = ∑
+
+> c,m
+
+E(Y a,Ma∗
+
+|Ma∗
+
+= m,C = c)P(Ma∗
+
+= m|C = c)P(C = c) (iterated expectation) 
+
+= ∑
+
+> c,m
+
+E(Y a,m|Ma∗
+
+= m,C = c)P(Ma∗
+
+= m|C = c)P(C = c) (A6) 
+
+= ∑
+
+> c,m
+
+E(Y a,m|C = c)P(Ma∗
+
+= m|C = c)P(C = c) (A9) and (A10) 
+
+= ∑
+
+> c,m
+
+E(Y a,m|A = a,C = c)P(Ma∗
+
+= m|C = c)P(C = c) (A8) and (A4) 
+
+= ∑
+
+> c,m
+
+E(Y a,m|A = a, M = m,C = c)P(Ma∗
+
+= m|C = c)P(C = c) (A9) and (A10) 
+
+= ∑
+
+> c,m
+
+E(Y |A = a, M = m,C = c)P(Ma∗
+
+= m|C = c)P(C = c) (A1) 
+
+= ∑
+
+> c,m
+
+E(Y |A = a, M = m,C = c)P(Ma∗
+
+= m|A = a∗,C = c)P(C = c) (A8) and (A4) 
+
+= ∑
+
+> c,m
+
+E(Y |A = a, M = m,C = c)P(M = m|A = a∗,C = c)P(C = c). (A7) 
+
+□
+
+Interventional effects 
+
+The counterfactual random variable M a|C presents the following two properties (VanderWeele et al., 2014): 
+
+Property P1. M a|C follows the same conditional distribution given C as M a.
+
+Property P2. M a|C is randomized within strata of C according to the distribution of M a such that it is conditionally independent of all other observed and counterfactual (nested or not) variables given C. 
+
+Assume also the following identifiability assumptions for the nested potential outcome Y a,M a∗|C
+
+(where a∗ can equal a): Consistency of the outcome (A1) and the mediator (A7), Exchangeability (A8), and positivity of the exposure (A4), and: 
+
+Assumption A11. Exchangeability of the mediator: M ⊥⊥ Y a,m|A = a,C, L. 
+
+Assumption A12. Positivity of the mediator: P(M = m|A = a,C = c, L = l) > β ≥ 0, ∀c such as P(M = m|A = a∗,C = c) > 0 and P(C = c) > 0.Proof. To reduce the notational burden, we reduce the random variables to their realization, except for MEDIATIONAL POSITIVITY VERIFICATION 21 observed and counterfactual mediators below. E(Y a,M a∗|C
+
+) = ∑
+
+> c,m
+
+E(Y a,M a∗|C
+
+|c, M a∗|C = m)P(M a∗|C = m|c)P(c) (iterated expectation) 
+
+= ∑
+
+> c,m
+
+E(Y a,m|c)P(Ma∗
+
+= m|c)P(c) (P1) and (P2) 
+
+= ∑
+
+> c,m
+
+E(Y a,m|c, a)P(Ma∗
+
+= m|c, a∗)P(c) (A8) and (A4) 
+
+= ∑
+
+> c,l,m
+
+E(Y a,m|c, a, l)P(l|c, a)P(Ma∗
+
+= m|c, a∗)P(c) (iterated expectation) 
+
+= ∑
+
+> c,l,m
+
+E(Y a,m|c, a, l, M = m)P(l|c, a)P(Ma∗
+
+= m|c, a∗)P(c) (A11) and (A12) 
+
+= ∑
+
+> c,l,m
+
+E(Y |c, a, l, M = m)P(l|c, a)P(M = m|c, a∗)P(c). (A1) and (A7) 
+
+□
+
+Appendix B Descriptive statistics for the application Table B1 
+
+Characteristics of the included individuals from the International Dating Violence Study, 2001-2006. 
+
+Overall No CVE CVE n=6224 n=5049 n=1175 Age, mean (SD) 23.90 (7.05) 23.88 (7.06) 23.97 (7.01) Years in school, mean (SD) 14.42 (1.17) 14.42 (1.17) 14.42 (1.21) FEZ, mean (SD) -0.02 (0.99) 0.00 (0.98) -0.09 (1.02) MEZ, mean (SD) -0.01 (1.00) 0.01 (0.99) -0.09 (1.01) FIZ, mean (SD) 0.01 (1.00) 0.04 (0.99) -0.07 (1.02) PTSS, mean (SD) 2.15 (0.54) 2.10 (0.53) 2.37 (0.52) Female, n (%) 4760 (76.5) 3918 (77.6) 842 (71.7) Married parents, n (%) 4143 (66.6) 3446 (68.3) 697 (59.3) Mixed sex couple, n (%) 6084 (97.8) 4940 (97.8) 1144 (97.4) Religious involvement High, n (%) 1143 (18.4) 882 (17.5) 261 (22.2) Moderate, n (%) 616 (9.9) 469 (9.3) 147 (12.5) Low, n (%) 2940 (47.2) 2393 (47.4) 547 (46.6) None, n (%) 1525 (24.5) 1305 (25.8) 220 (18.7) Abbreviations: CVE, Childhood exposure to violence; FEZ, Father educa-tion z-score; FIZ, Family income z-score; MEZ, Mother education z-score; PTSS, Post-traumatic stress symptoms. 22 CHATTON ET AL. 
+
+Appendix C Mediator positivity for natural effects Decompositions into direct and indirect effects 
+
+Two decompositions coexist and are equally valid for the natural effects. The mediator positivity assumption differs between them. As such, when there is no substantive reason to prefer one over the other, the verification of their positivity assumptions could be used to choose the most suitable decompo-sition according the data one has at hand. Recall the g-formula for the total effect: E (Y a) = ∑c E(Y |A = a,C = c)P(C = c). Consider a specific subgroup c′ (e.g., men younger than 20 years) for which no individual is exposed (P (A = 1|C =
+
+c′) = 0). It follows that one cannot compute the outcome conditional expectation (E (Y |A = 1,C = c′)) and this quantity is thus undefined. In that case, the expectation of the potential outcome is also undefined, except when the subgroup c′ cannot be observed (i.e., P (C = c′) = 0) because the product of the terms in the mediational formula would then be zero. Note that when continuous variables are present in C, the sum is replaced by an integral. We can apply the same reasoning to the natural effects using the mediational formula (4). We have E(Y 1,M0
+
+) = ∑
+
+> m
+
+# ∑
+
+> c
+
+E(Y |A = 1, M = m,C = c)P(M = m|A = 0,C = c)P(C = c) (C1) and E(Y 0,M1
+
+) = ∑
+
+> m
+
+# ∑
+
+> c
+
+E(Y |A = 0, M = m,C = c)P(M = m|A = 1,C = c)P(C = c). (C2) When, in an observed specific subgroup c′, there are no exposed individuals (i.e., P (A = 1|C = c′) = 
+
+0, and P (C = c′) > 0), the quantity E (Y |A = 1, M = m,C = c′) cannot be directly estimated, and the potential outcome Y 1,M0
+
+is undefined. Thus, one also needs the exposure-related part of the positivity assumption for natural effects estimation. The mediator-related part of the positivity assumption can be understood in a similar manner. First, consider the case when there are no individuals with a certain value of the mediator M = m′, regardless of the exposure value (i.e., P (M = m′|A = 1,C = c′) = 0 and P(M = m′|A = 0,C = c′) = 0). In that case, the outcome conditional expectations in both (C1) and (C2) are not directly estimable. However, since these expectations are multiplied by the conditional probability of the mediator in the other exposure group, which is equal to zero (e.g., E (Y |A = 1, M = m′,C = c′) is mul-tiplied by P (M = m′|A = 0,C = c) = 0 in (C1)), the potential outcomes’ expectations are still identifiable. In contrast, when there are individuals for whom the mediator’s value M = m′ is observed in one exposure group but not in the other (e.g., P (M = m′|A = 1,C = c′) = 0 but P(M = m′|A = 0,C = c′) > 0), the story is different. In this example, while the product E (Y |A = 0, M = m′,C = c′) × P(M = m′|A = 1,C = c) is still equal to zero, the other product E (Y |A = 1, M = m′,C = c′) × P(M = m′|A = 0,C = c) is no longer defined. Thus, E (Y 0,M1
+
+) is identifiable, while E (Y 1,M0
+
+) is not. 
+
+Toy simulation 
+
+To provide a deeper understanding of the differential bias between the natural effect decompo-sitions, consider the following toy simulation study. We simulated three independent confounders, the exposure, the two potential mediators and the four potential outcomes using the following set of equa-MEDIATIONAL POSITIVITY VERIFICATION 23 tions: 
+
+C1 ∼ Uni f orm (0, 2), rounded at the nearest integer 
+
+C2 ∼ Bernoulli (0.5)
+
+C3 ∼ Bernoulli (0.5)
+
+A ∼ Bernoulli (expit (−0.2 + 1.2C1 − 0.4C2 − 0.4C3)) 
+
+Ma ∼ Bernoulli (expit (−0.5 + 2a + 0.2C1 + 0.5C2 + 0.2C3 + 50 a1(C1 = 0))) 
+
+M = AM 1 + ( 1 − A)M0
+
+Y a,Ma∗
+
+∼ Bernoulli (expit (0.4a + Ma∗
+
+− 0.8C1 + 0.8C2 + 0.35 C3)) , where a∗ can equal aY = AY 1,M1
+
++ ( 1 − A)Y 0,M0
+
+We added a mediator positivity violation on the potential mediator Ma by including a strong interaction between a and 1(C1 = 0). On one hand, no individuals with M = 0 are present among those with both A = 1 and C1 = 0. On the other hand, individuals with A = 0 may have any value m. Thereby, a mediator positivity violation is expected for Y 1,M0
+
+but not Y 0,M1
+
+. Note that there was no violation of the exposure positivity. We simulated 1,000, 5,000 and 10,000 individuals to avoid practical positivity vio-lations. We used the weighted natural effect model of Lange et al. (2012) implemented in the R package 
+
+medflex (Steen et al., 2017) to estimate the potential outcome’s value. We performed 1,000 simulations, denoted nsim . Our main performance measure is the relative bias, defined as 100 × n−1
+
+> sim
+
+ bE(Y a,m)  
+
+> E(Ya,m)
+
+− 1
+
+
+
+.As expected, both ˆ E(Y 1) and ˆ E(Y 0) were unbiased and ˆ E(Y 1,M0
+
+) was biased (Table C1). Surprisingly, ˆE(Y 0,M1
+
+) also presented a slight bias, likely attributable to a misspecification of the mediator model induced by the positivity violation simulated on M. In this toy example, the potential outcome Y 0,M1
+
+is identifiable, whereas Y 1,M0
+
+is not due to mediator positivity violation. 
+
+Table C1 
+
+Relative bias (%) for each potential outcome in the presence of a mediator positivity violation. 
+
+n E(Y 1) E(Y 0) E(Y 1,M0
+
+) E(Y 0,M1
+
+)
+
+1,000 -0.1 0.4 -3.1 -1.0 5,000 0.0 -0.1 -3.1 -1.3 10,000 -0.0 0.0 -3.1 -1.2

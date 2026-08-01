@@ -1,0 +1,709 @@
+Title: Longitudinal Random Forests for Sparse and Irregular Response Trajectories
+
+URL Source: https://arxiv.org/pdf/2607.21817v1
+
+Published Time: Mon, 27 Jul 2026 00:12:14 GMT
+
+Number of Pages: 30
+
+Markdown Content:
+# Longitudinal Random Forests for Sparse and Irregular Response Trajectories 
+
+## Yangsheng Wang 1, Xiaotian Dai 2, Haoda Fu 3, and Guifang Fu ∗11Department of Mathematics and Statistics, Binghamton University, Binghamton, New York 13902, USA 
+
+> 2
+
+## Department of Mathematics, Illinois State University, Normal, Illinois 61790, USA 
+
+> 3
+
+## Department of Biostatistics, The University of North Carolina at Chapel Hill, Chapel Hill, North Carolina 27599, USA 
+
+Abstract 
+
+Longitudinal studies often collect data at sparse, irregular, and unequally spaced time points. Such heterogeneity is often driven by subject-specific covariates, yet existing methods have been restricted to a scalar endpoint value, completely neglecting the underlying response trajectories. We propose a novel Longitudinal Random Forest (LRF) framework that leverages tree-based ensemble machine learning with adaptive node-wise longitudinal trajectory estimation. The LRF framework makes five methodological contributions: it captures each subject’s individual response trajectory while simultaneously accommodating within-node correlation, between-node heterogeneity, and nonlinear and interactive covariate effects; it introduces a novel trajectory-based splitting criterion that maximizes trajectory separation while incorporating a size-weighted penalty; it provides two variants, Principal Analysis by Conditional Expectation (LRF–PACE) and adaptive linear mixed-effects models (LRF–adaptiveLMM), which employ nonparametric and semiparametric node-wise smoothers, respectively, while learning covariate effects in a data-driven manner; it provides a comprehensive interpretation of covariates using both the classical trajectory-based permutation variable importance measure (PVIM) and a newly proposed finite-way interaction frequency count; and it not only predicts entire trajectories for new subjects but also forecasts future trajectories for existing subjects. Extensive simulation studies demonstrate that LRF achieves superior performance over several competing methods, even under severe sparsity. The practical significance of the LRF framework lies in its ability to address five important clinical questions. To the best of our knowledge, it is the first method to model underlying longitudinal response trajectories for characterizing treatment durability in diabetes clinical trials, representing a revolutionary advance over traditional endpoint efficacy analysis. LRF has important implications for personalized medicine through individualized model structures, individualized response trajectories, and subject-specific covariate effects. 
+
+Keywords: Random Forests | Longitudinal Data Analysis | Sparse and Irregular Observations | Clinical Trials | Nonparametric/Semiparametric Statistics 
+
+# 1 Introduction 
+
+Diabetes mellitus is one of the most prevalent chronic diseases worldwide and is associated with severe complications, reduced life expectancy, and substantial public health and economic costs 
+
+> ∗
+
+Corresponding author: gfu@binghamton.edu 
+
+1arXiv:2607.21817v1 [stat.ME] 23 Jul 2026 [50 ]. Long-term glycemic control is commonly assessed by glycated hemoglobin (HbA1c), which reflects the average blood glucose level over approximately the preceding 90 days of the measurement time [ 19 ]. Repeated HbA1c measurements characterize how glycemic levels change over time after treatment initiation and reflect the durability of treatment effects [ 19 , 29 , 48 ]. This work is motivated by a de-identified longitudinal diabetes clinical trial dataset derived from an insulin-initiation study (INSULIN trial), a large multinational study comparing glycemic responses to two treatments in adults with type 2 diabetes (T2D) [ 3, 4]. T2D is a heterogeneous disease, with individuals exhibiting markedly different responses to the same treatment [ 38 , 41 , 42 ]. Such heterogeneity may arise from variations in subjects’ baseline metabolic, anthropometric, hemodynamic, glucose profiles, disease duration, as well as genetic factors, lifestyle, etc. In many clinical studies, however, such heterogeneity is mainly evaluated using endpoint efficacy, which is a scalar response defined as the response value at the final scheduled measurement minus its baseline value. This approach has been commonly applied in existing T2D studies, including large phase 3 clinical trials such as SURPASS, SUSTAIN, and AWARD [ 15 , 22 , 49 ]. Two widely used statistical approaches for analyzing endpoints were analysis of covariance (ANCOVA) and the mixed model for repeated measures (MMRM). ANCOVA estimated treatment effects on endpoint efficacy while adjusting for covariates [ 57 ]. MMRM accounted for repeated measurements through a marginal covariance structure; however, it was primarily used to estimate treatment effects on the population mean response at the final scheduled visit, rather than to model subject-specific response trajectories [ 36 ]. Prior analyses of the same INSULIN trial dataset have primarily focused on personalized treatment recommendations based on HbA1c endpoint efficacy. For example, Wang et al. [59] proposed two learning frameworks for determining personalized treatments based on a scalar HbA1c endpoint efficacy response value. One framework fit regression models to estimate subject-specific treatment contrasts under a prespecified risk constraint, while the other employed an outcome-weighted learning approach to estimate treatment strategies through inverse probability weighted classification. Similarly, Doubleday et al. [14] developed a univariate random forest–based approach that employed an inverse probability weighted (IPW) function to determine candidate splits and established an individualized treatment strategy based on the higher estimated HbA1c endpoint efficacy value. In practice, the final scheduled measurement is often unavailable because subjects discontinue treatment before completing all follow-up visits, so it has to be imputed to estimate the endpoint efficacy. Existing approaches included single-imputation methods such as last observation carried forward (LOCF), baseline or worst observation carried forward (BOCF/WOCF), as well as multiple-imputation procedures that generated plausible endpoint values from distributions estimated on the repeatedly observed measurements [ 26 , 27 , 62 ]. Consequently, endpoint efficacy was not uniquely defined and may vary across studies depending on study-specific analytic choices [ 43 ]. In addition, subjects with the same endpoint value may exhibit markedly different HbA1c trajectories following treatment initiation [ 35 , 52 ]. This highlights a fundamental limitation of scalar endpoint efficacy because it cannot capture the durability of a treatment. Long-term durability reflects not only the magnitude of glycemic reduction but also the rate and overall trajectory of HbA1c change over time. This perspective motivates several important clinical questions: 1) How to enable precision medicine by assigning treatments based on each patient’s baseline characteristics; 2) How to characterize the durability of HbA1c response following treatment initiation; 3) Which patients are most likely to benefit from a given treatment; 4) How to predict a patient’s HbA1c response durability throughout the treatment period before treatment is actually initiated; and 5) how to forecast future HbA1c response values after the treatment initiation period. The well-established longitudinal data analysis approaches in the existing literature were designed to capture underlying trajectories from repeated measurements while accounting for both within-2subject correlation and between-subject heterogeneity [ 7, 13 , 21 , 51 ]. However, they did not yet fully address several important challenges arising in real-world clinical applications: First, longitudinal data are often sparsely and irregularly observed, with different subjects measured at different time points and contributing varying numbers of observations, which complicates estimation of the underlying mean and covariance functions [ 9, 10 , 20 ]. Second, repeated measurements within a subject are inherently correlated, and the correlation structure may vary over time and differ among subjects, making it difficult to model subject-specific longitudinal trends accurately [ 34 , 45 , 56 ]. Third, when incorporating covariates into longitudinal response trajectories, complex nonlinear and interactive covariate effects complicate model specification. Generalized estimating equations (GEE) and linear mixed-effects models (LMM) were two of the most widely used traditional parametric statistical approaches for longitudinal data analysis [31 , 32 ]. GEE extended generalized linear models to longitudinal data by specifying a marginal mean structure together with a marginal working correlation structure to accommodate repeated measurements. However, it did not model subject-specific trajectories and hence did not consider between-subject heterogeneity [ 12 , 37 , 60 ]. In comparison, LMM introduced subject-specific random effects to account for within-subject correlation and to model individual longitudinal trajectories [54 , 55 ]. However, both GEE and LMM assumed linear trajectory trends and linear covariate effects. These assumptions may be restrictive when HbA1c trajectories are highly dynamic or when covariate effects are nonlinear and interactive [1, 25, 39, 52]. Traditional nonparametric statistical approaches estimated each subject’s longitudinal response as a smooth function of time without imposing any prespecified forms. Methods such as Principal Analysis by Conditional Expectation (PACE) were particularly well suited for sparse and irregularly observed longitudinal data. PACE first estimated smooth population-level mean and covariance functions and then obtained subject-specific functional principal component (FPC) scores through conditional expectation given each subject’s observed measurements [ 63 ]. However, PACE was simply a method for estimating trajectories alone without involving any covariates. PACE-based functional regression first extracted subject-specific FPC scores and then connected these estimated FPC scores with covariates using a regression model [ 63 ]. This two-step approach separated trajectory feature extraction from covariate modeling, so information from covariates was not incorporated when estimating subject-specific trajectories. In this article, we propose a novel Longitudinal Random Forest (LRF) framework that extends tree-based ensemble learning to longitudinal data by leveraging adaptive longitudinal estimation approaches and machine learning techniques. The proposed framework makes five methodological contributions: First, this framework captures each subject’s individual response trajectory, while simultaneously accommodating within-node correlation, between-node heterogeneity, nonlinear and interactive covariate effects, and sparse and irregularly observed repeated measurements. Second, to separate heterogeneous trajectories, we propose a novel trajectory-based splitting criterion that selects candidate splits by maximizing the integrated squared difference between the estimated representative trajectories of the resulting child nodes, while incorporating a size-weighted penalty to prevent unstable splits driven by random noise. Third, we develop two flexible variants, LRF– PACE and LRF–adaptiveLMM, which differ in their node-wise longitudinal smoothers while both allowing covariate effects to be learned in a data-driven manner. Specifically, LRF–PACE is a fully nonparametric approach that flexibly models dynamic response trajectories within every node of the tree structure, whereas LRF–adaptiveLMM is a semiparametric approach that embeds an LMM at each node of the tree structure, with node-specific fixed-effect model determined adaptively by the variables selected for splitting along the path from the root to each node. Fourth, inspired by univariate random forests, we design a trajectory-based permutation variable importance measure (PVIM) to rank covariates according to the change in out-of-bag prediction 3error, measured over the repeated measures along the response trajectory, before and after permuting each covariate individually. In addition, we propose a new frequency-based interaction detection strategy that identifies covariate interactions by tracking how frequently each multi-way covariate combination jointly appears along the same tree paths across all trees fitted over all cross-validation replications. Existing permutation-based approaches for interaction detection typically require jointly permuting multiple covariates as a whole unit, leading to  pk
+
+ number of combinations when assessing 
+
+k-way interactions. When p is large, this number becomes enormous even for 2-way interactions. Moreover, the procedure must be repeated separately for each k-way interaction. In contrast, the proposed frequency-based interaction detection strategy is computationally efficient and enables simultaneous detection of any finite multi-way interactions in a single procedure. Fifth, the proposed LRF framework predicts the response trajectory over the entire observed time period for new subjects using only their covariates. Moreover, it forecasts future unobserved response values beyond the observed time window for existing subjects using their covariates and observed longitudinal response history. Several tree-based methods for longitudinal data have been developed in the literature, but they differ fundamentally from the proposed LRF framework in how longitudinal trajectories and tree structures are incorporated. These existing approaches fall into two broad categories: semiparametric and nonparametric methods. The semiparametric category combined mixed-effects models with recursive partitioning. For example, Stochastic Random Effects Expectation Maximization Forest (SREEMF) embedded random forests into a mixed-effects model by replacing the fixed-effects term with random forests to estimate a nonlinear mean structure after adjusting for random effects [5, 6, 23 , 24 , 46 , 47 ]. Longitudinal Classification and Regression Tree (LongCART) partitioned subjects through parameter instability tests and estimated longitudinal trends only at the terminal nodes using a parsimonious linear mixed-effects model containing only an intercept and a time effect term [ 30 ]. By comparison, LRF–adaptiveLMM adaptively determines a linear mixed-effects model at each node, simultaneously leveraging the tree structure, allowing different covariate effects and corresponding linear mixed-effects models across different nodes. Consequently, subjects assigned to the same node share the same fixed-effect structure while generating individualized trajectories through their subject-specific random effects. Neither SREEMF nor LongCART explicitly incorporated covariates into node-specific mixed-effects models. Among the nonparametric category, SplineForest (SPLF) first estimated individual trajectories using smoothing splines and subsequently applied multivariate random forests to the resulting spline coefficients [ 40 , 65 ]. Since smoothing splines were generally designed for densely observed data, the resulting trajectory estimation may lose accuracy under severely sparse and irregularly observed schedules. Furthermore, SPLF separated trajectory estimation from covariate learning through a two-step procedure. In contrast, the proposed LRF–PACE framework jointly performs covariate partitioning and longitudinal trajectory estimation within a unified framework through a trajectory-based splitting criterion. We evaluate the proposed LRF models through two simulation settings under various levels of sparsity. For variable selection, we compare the LRF models with SREEMF and SPLF, as only these two methods provide variable importance measures. For prediction, we consider SREEMF, SPLF, LongCART, and classical LMM and GEE as competing approaches. The simulation results show that the LRF models accurately identify all the true covariates and achieve high prediction and forecast accuracy, even under high missingness and complex nonlinear interaction effects. We further apply the proposed LRF framework to the INSULIN trial to demonstrate its practical utility through a real data analysis. The practical significance of the proposed LRF framework lies in its ability to address the five important clinical questions described above. In addition, to the best of our knowledge, this is the first method to model longitudinal response trajectories for characterizing treatment durability in diabetes clinical trials, representing a revolutionary advance over traditional 4endpoint efficacy analysis. 
+
+# 2 Motivating Dataset 
+
+As the motivating data, the INSULIN trial [ 3, 4], is a 24-week, randomized, open-label, multinational study comparing the efficacy and durability of two insulin treatments in adults with T2D inadequately controlled on oral antidiabetic agents. The trial enrolled 2, 091 insulin-naive participants from 242 
+
+centers across 11 countries. Participants were randomly assigned to one of two different treatments and followed for up to 24 weeks, with repeated HbA1c measurements collected during the initiation phase. Among the enrolled subjects, 1, 520 subjects with complete baseline covariate information were retained for analysis. A total of 19 baseline covariates were measured, encompassing metabolic, anthropometric, hemodynamic, and glucose profile measures, etc. The metabolic category includes four core biomarkers: baseline A1C, fasting insulin, fasting blood glucose (FG), and adiponectin. The anthropometric category comprises body weight, height, and body mass index (BMI). The hemodynamic category includes heart rate, diastolic blood pressure, and systolic blood pressure. To capture same-day glycemic variation, seven self-monitored blood glucose (SMBG) covariates are incorporated: morning fasting glucose, 2-hour post-breakfast glucose, noon fasting glucose, 2-hour post-lunch glucose, evening fasting glucose, 2-hour post-dinner glucose, and 3 a.m. fasting glucose. In addition, diabetes duration and a categorical treatment assignment (Therapy 1 vs. Therapy 2) are included to account for disease history and treatment choice. The HbA1c measurements in the INSULIN trial data exhibit a highly irregular missingness pattern over time. Measurements are nearly complete during the initial few weeks. All subjects are measured at Week 1, after which subjects follow one of the two prespecified visit schedules: 97% are measured at Weeks 3 and 5, whereas the remaining 3% are measured at Weeks 2 and 4. After Week 5, observation rate decreases substantially, with only 25%–55% of subjects observed at visits between Weeks 6 and 14. Measurements are almost empty between Weeks 15 and 22, with 0% observations recorded at these seven weeks except Week 20 that has fewer than 1.2% of subjects observed. Observation rates rise again to approximately 35% at Weeks 23–24, where the final scheduled measurement ends. Overall, the near-empty interval between Weeks 15 and 22, spanning approximately 1/3 of the entire interval, presents substantial challenges for reliable trajectory estimation. Throughout this paper, HbA1c response is defined as each post-baseline HbA1c measurement minus the subject-specific baseline value. Under this definition, all trajectories begin at a zero value. Figure 1 presents the HbA1c measurements for nine representative subjects and illustrates several important characteristics of the longitudinal data. First, the total numbers and detailed schedules of sampling differ across subjects. Panels (a) and (b) represent subjects with only 5 out of the 24 scheduled measurements, observed primarily during the early study phase (up to Week 5), followed by a completely empty period between Weeks 6 and 22, and regain the last two observations at Weeks 23 and 24 at the end of the trial. In comparison, Panels (c) and (d) show subjects with relatively dense follow-up during Weeks 1–14, contributing more than 10 out of the 24 scheduled measurements during this period, but with no further observations during the remainder of the study period. Second, Figure 1 illustrates heterogeneity both in endpoint values and in temporal trajectories. Specifically, the last observed HbA1c response value may decrease (Panels (a) and (c)), increase (Panel (b)), or remain nearly unchanged (Panel (d)) compared with its baseline value. Notably, the same endpoint values may arise from fundamentally different longitudinal trajectories, underscoring the importance of modeling the full trajectory rather than relying solely on a scalar endpoint. For example, in Panel (c), one subject exhibits an initial decrease followed by a rebound 5Figure 1: The original discretely and repeatedly measured HbA1c values for nine representative subjects, illustrating the heterogeneous characteristics of the longitudinal INSULIN trial. Panels show (a) decreased HbA1c value at Week 24, (b) increased HbA1c value at Week 24, (c) decreasing HbA1c value at Week 14, and (d) similar HbA1c value at Week 14. and subsequent decline, whereas the other shows a more gradual overall decrease. To further illustrate the motivation behind the proposed LRF framework for capturing hetero-geneous longitudinal response trajectories as a function of baseline covariates, Figure 2 shows a representative tree obtained by fitting LRF–PACE to the INSULIN trial data. Subjects assigned to the same terminal node exhibit homogeneous response trajectories, summarized by the red represen-tative curve within each node. The resulting tree structure reveals complex nonlinear and interactive covariate effects that partition heterogeneous longitudinal response trajectories into distinct terminal nodes. This process provides valuable insights for personalized medicine. 
+
+# 3 Methodology 
+
+We consider longitudinal data of the form 
+
+{(tij , Y ij ) : i = 1 , . . . , N ; j = 1 , . . . , T i },
+
+where Yij denotes the longitudinal response for subject i discretely measured at time point tir , and 
+
+Ti is the subject-specific total number of time points. The measurement times (ti1, . . . , t iT i ) vary in both spacing and timing across subjects, resulting in irregular, sparse, and unequal numbers of measurements. Let Xi = ( Xi1, . . . , X ip ) ∈ Rp denote the covariate vector and Yi = ( Yi1, . . . , Y iT i ) ∈
+
+6Figure 2: A representative tree obtained by fitting LRF–PACE to the INSULIN trial data. The covariates appearing in the tree are selected through the proposed trajectory-based splitting op-timization procedure. The red curves represent the node-specific estimated HbA1c trajectories, which are modeled nonparametrically as functions of covariates while accommodating nonlinear and interactive covariate effects as well as heterogeneous response trajectories.  
+
+> Abbreviations: Metabolic covariates: A1C = baseline glycated hemoglobin (HbA1c); FG = fasting glucose. SMBG measurements: MFG = morning fasting glucose; M2hG = morning 2-hour postprandial glucose; NFG = noon fasting glucose; E2hG = evening 2-hour postprandial glucose; N3FG = 3 a.m. fasting glucose. Anthropometric covariate: BMI = body mass index. Hemodynamic covariate: SBP = systolic blood pressure.
+
+RTi denote the longitudinal response vector for subject i, respectively. Our goal is to model and predict each subject’s response trajectory bYi(t) conditional on Xi, while capturing nonlinear and interactive covariate effects, and accommodating subject-specific heterogeneity, sparsity, and irregularity. 
+
+## 3.1 Node-Specific Trajectory Estimation for Longitudinal Data 
+
+For a given node I, let bYi, I (t) denote the smoothed response trajectory for subject i estimated within that node. To accommodate different longitudinal modeling strategies, the LRF framework can incorporate either of two flexible node-wise smoothers: LRF–PACE or LRF–adaptiveLMM. 
+
+3.1.1 LRF–PACE 
+
+Within each node I, subject-specific trajectories are estimated using the PACE framework, which provides nonparametric reconstruction of smooth functions for sparse and irregular longitudinal sampling. At each node, LRF–PACE treats the observed measurements as noisy realizations of an underlying smooth process and estimates node-specific mean and covariance functions via Gaussian kernel smoothing. Let KhI (·) denote the Gaussian kernel function with bandwidth hI that is selected by generalized cross-validation (GCV). Specifically, for subject i ∈ I observed at times tij , the observed longitudinal response is modeled 7as 
+
+Yij = μI (tij ) + 
+
+> L
+
+X
+
+> l=1
+
+ξil, I ϕl, I (tij ) + εij , j = 1 , . . . , T i,
+
+where εij denote independent and identically distributed measurement errors with mean zero and variance σ2 
+
+> I
+
+. The node-specific mean function bμI (t) is obtained using a local linear smoother, which is defined as bμI (t) = bαI (t), where 
+
+(bαI (t), bγI (t)) = arg min 
+
+> α,γ
+
+X
+
+> i∈I
+> Ti
+
+X
+
+> j=1
+
+KhI (tij − t)Yij − α − γ(tij − t) 2.
+
+The mean-centered observations within node I are defined as 
+
+Rij, I = Yij − bμI (tij ),
+
+whose pairwise products are then smoothed through a two-dimensional kernel smoother to estimate the node-specific covariance surface 
+
+bGI (s, t ) = 
+
+P
+
+> i∈I
+
+P  
+
+> j̸=j′
+
+Khs, I (tij − s)Kht, I (tij ′ − t)Rij, I Rij ′,I
+
+P
+
+> i∈I
+
+P  
+
+> j̸=j′
+
+Khs, I (tij − s)Kht, I (tij ′ − t) .
+
+Eigen-decomposition of bGI (s, t ) yields estimated node-specific eigenvalues {bλl, I } and correspond-ing node-specific eigenfunctions { bϕl, I (t)}, representing the dominant modes of temporal variation within node I. The FPC score for subject i and component l, is estimated by 
+
+bξil, I = bλl, I
+
+ Yi − bμi, I
+
+ bΣ−1 
+
+> i, I
+
+bϕ⊤ 
+
+> il, I
+
+, l = 1 , . . . , L, 
+
+where L denotes the number of FPCs retained for estimation. bμi, I =  bμI (ti1), . . . , bμI (tiT i )
+
+and bϕil, I =   bϕl, I (ti1), . . . , bϕl, I (tiT i ) are obtained by evaluating the mean function and the lth eigenfunction at subject i’s observed time points, respectively. The covariance matrix bΣi, I has entries 
+
+[bΣi, I ]jj ′ = bGI (tij , t ij ′ ) + bσ2 
+
+> I
+
+1{j = j′},
+
+where bσ2 
+
+> I
+
+is the estimated variance of the measurement error εij within node I, and 1{j = j′} is an indicator function that equals 1 when j = j′ and 0 otherwise. The reconstructed smooth trajectory generated by LRF-PACE for subject i at node I is therefore 
+
+bYi, I (t) = bμI (t) + 
+
+> L
+
+X
+
+> l=1
+
+bξil, I bϕl, I (t). (1) 
+
+3.1.2 LRF–adaptiveLMM 
+
+Within each node I, subject-specific trajectories are estimated using a linear mixed-effects model, which provides a semiparametric representation of longitudinal trends. Specifically, the LMM model is fitted using a node-specific covariate set Xi, I , which contains the covariates selected along the branch path from the root to node I for subject i. Consequently, the fixed-effects structure in the LRF–adaptiveLMM is determined adaptively through the tree-growing process rather than prespecified in advance. 8Then, for subject i ∈ I observed at times tij , the node-specific linear mixed-effects model is 
+
+Yij = β0,I + βt, I tij + X⊤ 
+
+> i, I
+
+βI + bi0,I + bi1,I tij + εij , j = 1 , . . . , T i,
+
+where (bi0,I , b i1,I )⊤ are subject-specific random effects with covariance matrix DI , and εij are independent and identically distributed measurement errors with mean zero and variance σ2 
+
+> I
+
+.Let Zi = [ 1Ti , ti ] denote the random-effects design matrix, where 1Ti is a Ti-dimensional column vector of ones and ti = ( ti1, . . . , t iT i )T is the vector of the observed time sampling for subject i. The subject-level covariance of the response vector Yi at node I is 
+
+Cov( Y⊤ 
+
+> i
+
+) = Zi DI Z⊤ 
+
+> i
+
++ σ2 
+
+> I
+
+ITi ,
+
+where ITi is the Ti × Ti identity matrix. This covariance structure induces within-subject correlation through the random intercept and random slope. The fixed-effect parameters and covariance parameters are estimated by restricted maximum likelihood, and subject-specific random effects (bbi0,I , bbi1,I ) are obtained as best linear unbiased predictors. The fitted linear trajectory generated by LRF–adaptiveLMM for subject i at node I is therefore bYi, I (t) = bβ0,I + bβt, I t + X⊤ 
+
+> i, I
+
+bβI + bbi0,I + bbi1,I t. (2) In summary, for the semiparametric LRF–adaptiveLMM, the covariate set Xi, I is explicitly incorporated into the node-specific longitudinal trajectory estimation bYi, I (t) through the fixed-effects component in model (2) . However, LRF–PACE remains fully nonparametric at the node level: covariates are not explicitly incorporated into the construction of bYi, I (t) in model (1) ; instead, they influence the longitudinal trajectory estimation implicitly through the covariate-driven tree partitioning process. 
+
+## 3.2 Splitting Rule 
+
+After subject-level smoothed trajectories { bYi, I (t), i ∈ I} are estimated using a node-wise longitu-dinal smoother (LRF–PACE in (1) or LRF–adaptiveLMM in (2) ), the representative trajectory at node I is defined as 
+
+bfI (t) = 1
+
+nI
+
+X
+
+> i∈I
+
+bYi, I (t), (3) where nI denotes the number of subjects at node I.Consider a candidate split at node I on covariate Xk, where k ∈ { 1, . . . , p }. Let Xik denote the value of Xk for subject i. Let c denote a candidate threshold. For continuous covariates, c is a candidate quantile within the domain of Xk, while for categorical covariates, c represents each level of the category of Xk. The node I is divided into two child nodes 
+
+IL = { i ∈ I : Xik ≤ c }, IR = { i ∈ I : Xik > c },
+
+with sample sizes nIL and nIR , respectively. Let bfIL (t) and bfIR (t) denote the representative trajectories of the left and right child nodes obtained via Equation (3) . To separate heterogeneous trajectories, we propose the trajectory-based splitting criterion 
+
+S(Xk, c ) = nIL nIR
+
+nIL + nIR
+
+Z
+
+> T
+
+bfIL (t) − bfIR (t) 2dt, (4) where T denotes the corresponding time domain. 9This criterion promotes splits that maximize separation between two child nodes by measuring the integrated squared difference between their representative trajectories, capturing both magnitude and trajectory discrepancy. The weighting factor nIL nIR /(nIL + nIR ) penalizes those highly unbalanced splits, preventing partitions driven by a small number of noisy subjects. The optimal split at node I is selected by maximizing S(Xk, c ) across all candidate covariates and thresholds: 
+
+(Xk∗ , c ∗) = arg max  
+
+> k, c
+
+S(Xk, c ).
+
+Recursive partitioning continues while a node remains eligible for further splitting. When the sample size at a node is too small, the estimated trajectory becomes overly sensitive to individual observations, increasing the risk of splits driven by noise rather than meaningful differences in longitudinal response trajectories. To control this, we impose two tuning parameters: the minimum node size nmin , such that each resulting child node must contain sufficient numbers of subjects. However, the minimum node size constraint alone may still allow excessively deep trees. Therefore, tree growth is restricted by a maximum depth constraint, dmax , to prevent overfitting. 
+
+## 3.3 Prediction for New Subjects and Forecast for Future Time Points 
+
+We partition the data into a training set Dtrain and a test set Dtest , with sample sizes Ntrain and 
+
+Ntest , respectively. The LRF model is fitted using Dtrain , and the predictive performance is evaluated on Dtest .The proposed LRF enables two prediction settings. First, given only the covariates for a new subject inew ∈ D test , we predict its entire trajectory over the study period. Second, for an existing subject i ∈ D train with observed longitudinal measurements, we forecast unknown responses at future time beyond the subject’s study period. After a tree is constructed, a new subject inew ∈ D test is routed through the bth tree according to the splitting rules based on its covariates Xinew and assigned to a terminal node Iinew . The tree-level predicted trajectory for the new subject is then obtained as 
+
+eY(b) 
+
+> inew
+
+(t) = 
+
+bfIinew (t), LRF–PACE ,
+
+bY FE  
+
+> inew ,Iinew
+
+(t), LRF–adaptiveLMM . (5) For LRF–PACE, bfIinew (t) is defined by Equation (3) . For LRF–adaptiveLMM, the new-subject prediction is based only on the fixed-effects component because subject-specific random effects cannot be estimated without observed longitudinal measurements. Specifically, bY FE  
+
+> inew ,Iinew
+
+(t) denotes the fixed-effects prediction given by 
+
+bY FE  
+
+> inew ,Iinew
+
+(t) = bβ0,Iinew + bβt, Iinew t + X⊤
+
+> inew ,Iinew
+
+bβIinew .
+
+For future-time forecasting, consider an existing subject i ∈ D train with observed longitudinal responses at time points ti1 < · · · < t iT i and a future time point tnew > t iT i . The subject is routed through the bth tree based on its covariates and assigned to a terminal node I. Its tree-level forecast for future time is obtained as 
+
+eY(b) 
+
+> i
+
+(tnew ) = 
+
+(bfI (tnew ), LRF–PACE ,
+
+bYi, I (tnew ), LRF–adaptiveLMM . (6) For LRF–PACE, bfI (t) is again derived from Equation (3) . For LRF–adaptiveLMM, bYi, I (t) is obtained by incorporating both fixed effects and the estimated subject-specific random effects, as in 10 Equation (2) . The corresponding forecast is then obtained by evaluating Equation (6) at a future time point tnew .After aggregating all B trees, the final prediction generated by LRF for new subjects is given by 
+
+eYinew (t) = 1
+
+B
+
+> B
+
+X
+
+> b=1
+
+eY(b) 
+
+> inew
+
+(t), (7) and the forecast for future time generated by LRF is given by 
+
+eYi(tnew ) = 1
+
+B
+
+> B
+
+X
+
+> b=1
+
+eY(b) 
+
+> i
+
+(tnew ). (8) 
+
+## 3.4 Permutation Variable Importance Measure 
+
+The LRF framework assesses the importance of each covariate through a permutation variable importance measure computed using out-of-bag (OOB) samples. Let Ob ⊂ D train denote the OOB sample associated with the bth tree. For each subject i ∈ O b, its predicted discrete response values 
+
+eY(b) 
+
+> i
+
+(tij ) at each tree are obtained by interpolating the observed time sampling {tij }Ti 
+
+> j=1
+
+through Equation (5). For a given covariate Xk, its values are randomly permuted across subjects within Ob, while all other covariates remain unchanged. Let π(k) denote a permutation applied to covariate Xk. The permutation variable importance measure for Xk is defined as 
+
+PVIM( Xk) = 1
+
+B
+
+> B
+
+X
+
+> b=1
+
+ 1
+
+|O b|
+
+X
+
+> i∈O b
+
+1
+
+TiTiX
+
+> j=1
+
+n Yij − eY(b)
+
+> i,π (k)
+
+(tij )2 −  Yij − eY(b) 
+
+> i
+
+(tij )2oi 
+
+.
+
+(9) where eY(b) 
+
+> i
+
+(t) and eY(b)
+
+> i,π (k)
+
+(t) denote the predictions obtained from the bth tree before and after permuting Xk, respectively. Thus, the PVIM is the average change in OOB prediction error across all trees after permuting Xk. Larger values of PVIM (Xk) indicate that permuting Xk substantially increases prediction error, implying a greater contribution of Xk to longitudinal trajectory prediction. The PVIM is therefore utilized to rank covariates within the LRF framework for variable selection purpose. 
+
+## 3.5 Frequency-based Interaction Importance 
+
+A high PVIM value does not distinguish whether a covariate’s importance arises from its individual effect or from interactions with other covariates. To address this limitation, we propose a frequency-based strategy that leverages the tree structures of the LRF to quantify interaction importance. The key idea is to examine the co-occurrence frequencies of multi-way covariate combinations along root-to-terminal paths across all trees and all cross-validation replications. Specifically, for each tree, we trace every root-to-terminal path and record all subsets of covariates that are involved for splitting along every path. For example, for a three-node tree path with splits based on covariates 
+
+{x2, x 1, x 5}, we record one count for each nested interaction subset {x2}, {x1, x 2}, and {x1, x 2, x 5},where the order of covariates within each subset does not matter. Repeating this process across all paths yields co-occurrence counts for all occurred interaction subsets. Covariates that appear near the root partition a larger portion of the subjects and therefore influence more subjects than those 11 appearing near the terminal node. As a result, this rule assigns greater frequency to the covariates near the root nodes than those near the terminal nodes. To improve stability, the LRF model is fitted across ten cross-validation replications, and interaction counts are aggregated over all trees from all replications. The resulting aggregated co-occurrence frequencies produce an overall ranked list spanning two-way, three-way, four-way, and higher-way interactions, allowing interactions of all finite orders to be identified within one procedure. 
+
+## 3.6 Tuning Parameters 
+
+Several tuning parameters need to be specified to implement the LRF framework. The first is mtry ,which determines the number of candidate covariates randomly considered at each split. Following common practice in random forests, we set mtry to be p/ 3. The second parameter is the minimum node size, nmin , which is set to nmin = 20 to prevent terminal nodes from becoming too small. The third parameter is the maximum tree depth, dmax , which balances model complexity and predictive performance by limiting the number of nodes along any root-to-terminal path. It is preselected by minimizing the fivefold cross-validation error. The final tuning parameter is the number of trees, B, in the forest. We use B = 50 , which is sufficient to yield stable predictive performance, as demonstrated in the simulation studies in Section 4. For the LRF–PACE implementation, one additional tuning parameter is required: the number of FPCs, L, which is selected to explain at least 90% of the total variation at each node. The LRF algorithm is implemented in R with support for parallel computing to facilitate efficient training of large ensembles. A complete workflow of the LRF procedure is provided in Algorithm 1. 
+
+# 4 Simulation Studies 
+
+We evaluate the finite-sample performance of the proposed Longitudinal Random Forest methods under two data-generating settings. Setting (i) considers a fully nonparametric mechanism in which response trajectories are simulated as functions and complex covariate effects are introduced through a tree-structured model. Setting (ii) generates data to closely mimic the real data, INSULIN trial, to reproduce its exact missingness pattern. 
+
+## 4.1 Evaluation Metrics 
+
+We evaluate variable selection and prediction/forecast performance over 100 simulation replicates using the following two criteria: 
+
+• Average Selection Rank : The average rank of each true covariate based on the permuta-tion variable importance measure. Smaller ranks indicate more accurate variable selection performance. 
+
+• Prediction Error (PE) : We evaluate new-subject prediction accuracy by the mean squared prediction error: 
+
+MSPE new subject = 1
+
+Ntest 
+
+X 
+
+> inew ∈D test
+
+1
+
+Tinew 
+
+> Tinew
+
+X
+
+> j=1
+
+n
+
+Yinew j − eYinew (tinew j )
+
+o2
+
+. (10) 
+
+MSPE new subject measures the discrepancy between predicted and observed response values across all observed time points. Smaller MSPE values indicate higher prediction accuracy. 12 Algorithm 1 Longitudinal Random Forest 
+
+Input: Covariates {Xi}Ni=1 , longitudinal observations {(tij , Y ij )}, node-wise smoother (PACE or adaptiveLMM), and tuning parameters: B, mtry , nmin , dmax 
+
+for b = 1 , . . . , B do 
+
+draw a bootstrap sample and OOB sample 
+
+while a node I satisfies the splitting conditions nmin and dmax do 
+
+randomly select mtry candidate covariates 
+
+for each candidate split (Xk, c ) do 
+
+estimate bYi, I (t) using Equation (1) or (2) compute bfI(t) using Equation (3) compute S(Xk, c ) using Equation (4) 
+
+end for 
+
+select (Xk∗ , c ∗) that maximizes S(Xk, c )
+
+partition I into IL and IR
+
+end while end for Prediction and Forecast: for each tree b do 
+
+route a subject to a terminal node obtain eY(b) 
+
+> inew
+
+(t) using Equation (5) or eY(b) 
+
+> i
+
+(tnew ) using Equation (6) 
+
+end for 
+
+aggregate tree-level predictions using Equation (7) or (8) 
+
+Variable Importance: for each covariate Xk do 
+
+compute PVIM( Xk) using Equation (9) 
+
+end for Interaction Exploration: 
+
+aggregate covariate co-occurrence frequencies across all root-to-terminal paths 
+
+Output: Fitted LRF ensemble, trajectory predictions/forecast, PVIM scores, and multi-way covariate co-occurrence frequencies 13 4.2 Simulation 1 
+
+We first generate functional data with regular and dense observations for N = 300 subjects observed at T = 20 equally spaced time points between 0 and 10. A smooth function is created through a functional principal component analysis (FPCA) structure with a population mean function and two eigenfunctions as follows, 
+
+μ(t) = t/ 10 + sin( t),ϕ1(t) = − cos( πt/ 10) 
+
+√5 ,ϕ2(t) = sin( πt/ 10) 
+
+√5 .
+
+Baseline covariates are generated as Xi ∼ N p(0 , ΣX) with p = 100 , where ΣX follows an AR(1) covariance structure with (Σ X)k1k2 = ρ|k1−k2| with ρ = 0 .2.To induce heterogeneous trajectories associated with nonlinear main effects and interactions, subject-specific FPC scores are generated through a randomized tree-based mechanism. Let Strue =
+
+{X1, X 11 , X 21 } denote the set of true covariates. We first generate two node-specific FPC score vectors, ξL = ( ξL 
+
+> 1
+
+, ξ L 
+
+> 2
+
+)⊤ ∼ N (0, diag(4 , 1)) and ξR = ( ξR 
+
+> 1
+
+, ξ R 
+
+> 2
+
+)⊤ ∼ N (0, diag(3 , 2)) , which are used for all trees throughout the simulation. Next, B = 10 trees are generated independently. For each tree, one to three covariates are randomly drawn without replacement from Strue . Each split is determined by a simple threshold rule of the form Xk < 0.5. At each node, a subject is assigned to the corresponding node-specific FPC score vector, ξL or ξR, depending on whether the subject is assigned to the left or right child node. The tree-specific FPC score vector is defined as the average of all node-specific FPC score vectors along the subject’s root-to-terminal path. For example, consider a tree consisting of only two decision nodes, corresponding to variables X1 and X11 . Its tree-specific FPC score vector for subject i is given by 
+
+ξ(b) 
+
+> i
+
+= 12
+
+n
+
+1{Xi1 < 0.5}ξL + 1{Xi1 ≥ 0.5}ξR
+
++ 1{Xi11 < 0.5}ξL + 1{Xi11 ≥ 0.5}ξRo
+
+,
+
+where 1{·} denotes the indicator function, which equals 1 when the specified condition is satisfied and 0 otherwise. Finally, the subject-specific FPC score vector is obtained by averaging the tree-specific FPC score vectors across all B = 10 trees plus independent Gaussian perturbations, 
+
+eξi = 1
+
+B
+
+> B
+
+X
+
+> b=1
+
+ξ(b) 
+
+> i
+
++ εi, εi ∼ N (0, diag(1 , 1)) .
+
+The simulated dense functional trajectory for subject i is generated as 
+
+gi(t) = μ(t) + eξi1ϕ1(t) + eξi2ϕ2(t) + f (Xi1, X i11 , X i21 ), (11) where f (·) introduces additional nonlinear and interactive covariate effects if needed. For example, 
+
+f (X1, X 11 , X 21 ) = X1 + X211 + X1X21 .
+
+After generating densely and regularly sampled functional trajectories at T equally spaced time points, we set sparse and irregular time sampling tij by randomly deleting observations from each subject’s trajectory with missing rate r ∈ { 30% , 50% , 70% }, representing low, moderate, and severe 14 Table 1: Average importance ranks of the true covariates in Simulation 1 under three missingness rates. Smaller ranks indicate more accurate variable selection performance.                                            
+
+> Missing Rate Method Average Selection Rank
+> X1X11 X21
+> 30% SPLF 1.00 2.00 3.81 SREEMF 1.00 2.02 3.95 LRF–adaptiveLMM 1.16 2.33 7.43 LRF–PACE 1.00 2.00 3.55
+> 50% SPLF 1.00 2.27 4.74 SREEMF 1.00 2.01 4.01 LRF–adaptiveLMM 1.36 2.59 8.35 LRF–PACE 1.00 2.00 3.67
+> 70% SPLF 1.24 8.20 25.51 SREEMF 1.00 2.06 4.38 LRF–adaptiveLMM 1.45 2.88 9.66 LRF–PACE 1.00 2.02 4.11
+
+levels of missingness. Note that under a missing rate as high as r = 70% , each subject may retain only 4–8 observed time points, resulting in extremely sparse longitudinal response measurements. The discrete observations are generated as 
+
+Yij = gi(tij ) + εij , εij ∼ N (0 , 1) ,
+
+where gi(t) is generated in equation (11) . Subjects are then randomly split into Ntrain = 200 for model fitting and Ntest = 100 for prediction. Table 2: Average prediction errors for Simulation 1 across 100 replications: predicting the entire response trajectories of new subjects under three missingness scenarios derived from T = 20 . Smaller values indicate higher predictive accuracy. Missing Rate SPLF SREEMF LongCART LMM GEE LRF–adaptiveLMM LRF–PACE 30% 1.66 1.89 2.26 2.05 1.91 1.79 1.73 50% 1.77 1.99 2.27 2.68 2.65 1.83 1.76 
+
+70% 1.97 2.02 2.28 2.79 2.78 1.97 1.81 
+
+Table 1 summarizes the average selection ranks for the three true covariates over 100 replications under missingness rates of 30%, 50%, and 70%, respectively. For the easiest case, X1, all methods perform nearly perfect under all three missingness rates, with average selection ranks close to 1. For the moderate case, X11 , most methods still maintain accurate and stable selection, with average ranks around 2 to 3. The two LRF variants and SREEMF remain robust even under 70% missingness, whereas SPLF’s average selection rank increases to 8.20 under severe sparsity. The largest performance differences arise for the hardest case, X21 . LRF–PACE consistently yields the smallest average selection ranks across all missingness rates, with average ranks ranging from 3 to 4, which aligns well with the number of true covariates. SREEMF also performs competitively for X21 ,although its average ranks are slightly higher than those of LRF–PACE. At the highest missingness level of 70%, SPLF produces the worst average selection rank of 25.51 for X21 .15 Table 2 reports the average prediction error for new test subjects over 100 replications under missingness rates of 30%, 50%, and 70%, respectively. LRF–PACE achieves the smallest prediction errors at moderate and high missingness levels (PE = 1.76 and 1.81). LRF–adaptiveLMM also performs well and shows stable prediction performance as missingness increases, with prediction error rising only modestly from 1.79 to 1.97. SPLF achieves a slightly lower prediction error (PE = 1.66) than LRF–PACE at the lowest missingness level of 30%, but its prediction error increases as sparsity becomes severe. Classical LMM, GEE, and LongCART yield the largest prediction errors in all settings. 
+
+## 4.3 Simulation 2 
+
+This simulation setting is designed to closely mimic the time-specific missingness pattern observed in the INSULIN trial, thereby providing a realistic assessment of how different longitudinal analysis methods perform in this unusually sparse setting. We generate N = 300 subjects observed at M = 24 
+
+discrete time points, each with p = 20 covariates Xi ∼ N p(0, ΣX ), where (Σ X )k1k2 = ρ|k1−k2| with 
+
+ρ = 0 .2 and unit variances, for k1, k 2 = 1 , . . . , 20 . Let Strue = {X1, X 2, X 3} denote the set of true covariates. For subject i, the underlying trajectory is generated as 
+
+gi(t) = ui
+
+ 1 − e−vit − 0.4 wi sin 
+
+ 1.2πt 
+
+24 
+
+
+
++ 0 .5Xi1 − 0.2Xi2 − Xi1Xi3 + Xi2Xi3.
+
+(12) with 
+
+ui ∼ Unif( −4, 0) , vi ∼ Unif(0 , 5) , wi ∼ Unif(0 , 2) .
+
+The first term, ui(1 − e−vit), generates a smooth nonlinear decreasing trend whose magnitude and rate of change vary across subjects through ui and vi. The second term introduces additional oscillatory behavior that allows trajectories to exhibit different degrees of curvature and temporal fluctuation. The remaining terms incorporate nonlinear covariate effects and interactions, allowing subjects with different baseline characteristics to follow systematically different trajectory patterns and thereby introducing additional between-subject heterogeneity. To closely resemble the irregular and sparse sampling schedules observed in the real dataset, we impose the empirical week-specific missingness rates estimated directly from the INSULIN trial data (see Section 2). Specifically, missingness is 0% at Week 1, alternates between 97% for Weeks 2 and 4 and 3% for Weeks 3 and 5, ranges from 45% to 75% between Weeks 6 and 14, reaches 100% for all weeks between Weeks 15 and 22 except Week 20, which has a missingness rate of 98 .8% , and is approximately 65% at Weeks 23 and 24, toward the end of the study period. To generate the discrete and irregular time sampling tij , time points at each week are randomly removed according to the corresponding empirical missingness rate. The discrete sparse and irregular longitudinal responses are then generated by evaluating gi(t) in equation (12) at tij and adding measurement noise, 
+
+Yij = gi(tij ) + εij , εij ∼ N (0 , 1) .
+
+Subjects are then randomly split into a training set of size Ntrain = 200 and a test set of size 
+
+Ntest = 100 .In particular, this design reproduces the large empty region between Weeks 15 and 22 present in the INSULIN trial. Such an extended interval with almost no observations poses a substantial challenge for nonparametric trajectory estimation because smoothing methods rely on sufficient local information. In exploratory analyses, the original LRF–PACE model did not perform well under the entire 24-week study period. To accommodate this nearly empty region, we introduce a 16 Table 3: Average importance ranks of the true covariates in Simulation 2. Smaller ranks indicate more accurate variable selection performance.                   
+
+> Method X1X2X3
+> SPLF 1.75 4.46 9.75 SREEMF 1.09 2.29 4.23 LRF–adaptiveLMM 1.07 2.52 5.85 LRF–PACE 1.90 4.17 6.68
+> LRF–PACE–2 1.01 2.15 3.94
+
+Table 4: Average prediction errors for Simulation 2 across 100 replications: predicting the entire response trajectories of new subjects over Weeks 1-24 under the empirical missingness pattern derived from the INSULIN data. Smaller values indicate higher predictive accuracy. SPLF SREEMF LongCART GEE LMM LRF–adaptiveLMM LRF–PACE LRF–PACE–2 3.24 3.57 3.93 4.05 4.20 3.47 3.28 3.06 
+
+modified version, denoted LRF–PACE–2, which employs an adaptive piecewise smoothing strategy. Specifically, LRF–PACE is applied only to Weeks 1 to 14, where sufficient observations are available for reliable estimation. The estimated trajectory is then extrapolated through Weeks 15 to 22. For the final period, Weeks 23–24, it contains only two scheduled visits, therefore, trajectory values are estimated by simply averaging the available observations. This modification is only specific to LRF–PACE because its trajectory estimation relies on nonparametric smoothing. In contrast, LRF–adaptiveLMM is based on a parametric linear mixed-effects model and can naturally generate predictions at time points with no observations through model-based interpolation. Table 3 summarizes the average selection ranks of the three true covariates across 100 replications in Simulation 2. For the easiest case, X1, all methods achieve nearly perfect variable selection performance, with average selection ranks between 1 and 2. Differences become noticeable for the moderate case, X2, where LRF–PACE–2 achieves the smallest average selection rank (2.15), followed closely by SREEMF (2.29) and LRF–adaptiveLMM (2.52). The largest performance difference appears at the hardest case X3. LRF–PACE–2 is the only method attaining an average selection rank below 4 (3.94), outperforming all competing approaches. SREEMF provides the second-best performance (4.23). LRF–PACE yields a high selection rank (6.68), while SPLF performs the worst overall, with the largest average selection rank (9.75). Overall, these results highlight the necessity of the adaptive piecewise smoothing strategy in LRF–PACE–2 for handling the large empty gap present in the data. Table 4 reports the average prediction error for the estimated response trajectories over Weeks 1– 24 for new subjects in the test data across 100 replications in Simulation 2. Among all methods, LRF–PACE–2 attains the lowest prediction error (PE = 3.06), indicating the highest accuracy for new subject prediction. LRF–adaptiveLMM (PE = 3.47) and SPLF (PE = 3.24) also perform competitively. LongCART, the classical LMM, and GEE yield the largest prediction errors. We next assess each model’s ability to forecast unobserved responses at future time points for existing training subjects. In practice, the response values at future time points are not observed, motivating the need for forecasting. However, forecasting performance cannot be evaluated directly without knowing the actual future observations. Therefore, for evaluation purposes, each model is 17 fitted over Weeks 1–10 and then predicts responses at Weeks 11–14, which are pretended as future time points. Let Tnew denote the future-time domain, and let tnew  
+
+> ij
+
+∈ T new denote the jth future evaluation time point for subject i, corresponding to the future time point tnew defined in Section 3.3. Let Y new 
+
+> ij
+
+denote the response value at tnew  
+
+> ij
+
+, and let Ti, new be the number of future evaluation time points for subject i. Future-time forecasting accuracy is quantified by the mean squared prediction error 
+
+MSPE future = 1
+
+Ntrain 
+
+X
+
+> i∈D train
+
+1
+
+Ti, new 
+
+> Ti, new
+
+X
+
+> j=1
+
+n
+
+Y new  
+
+> ij
+
+− eYi
+
+ tnew 
+
+> ij
+
+o2
+
+. (13) The MSPE future measures the discrepancy between the forecasted and observed responses at future evaluation time points. Smaller MSPE values indicate higher forecasting accuracy. The resulting forecasting performance is reported in Table 5. Table 5: Average forecast errors for Simulation 2 across 100 replications: forecasting future response trajectories of existing subjects over Weeks 11–14 by training observations over Weeks 1–10 under the empirical missingness pattern derived from the INSULIN trial data. Lower values indicate higher forecast accuracy.         
+
+> SPLF SREEMF LongCART LRF–adaptiveLMM LRF–PACE 3.25 4.24 4.19 2.95 2.09
+
+Among all methods, LRF–PACE achieves the lowest forecasting error (2.09), demonstrating its strong ability to forecast dynamic temporal trends beyond the observed time window. LRF– adaptiveLMM (2.95), also exhibits strong forecasting performance and outperforms the other competing approaches, including SPLF (3.25), SREEMF (4.24), and LongCART (4.19). These results highlight the benefits of the LRF framework, in which the tree structure recursively partitions subjects into subgroups whose members share homogeneous temporal trends. This process minimizes within-node trajectory variation, thereby stabilizing node-level estimation and improving both prediction and forecasting accuracy. 
+
+# 5 Real Data Analysis 
+
+We apply the proposed LRF models to the motivating INSULIN trial real dataset [ 3, 4]. The response consists of longitudinal HbA1c measurements collected up to 24 weeks. The baseline covariates are the 19 clinical and biochemical variables described in Section 2. Among these covariates, baseline HbA1c is included in all analyses, following current regulatory guidance from both the U.S. Food and Drug Administration (FDA) and the European Medicines Agency (EMA), which regard baseline adjustment as appropriate [ 18 , 53 ]. The 1,520 eligible subjects are randomly divided into a training set of 1,000 subjects and a test set of 520 subjects. This random splitting is repeated 10 times as a standard cross-validation procedure, and model performance is averaged across the resulting replications. In the real data setting, comparisons across methods focus primarily on prediction performance because the truly influential covariate effects are unknown. Therefore, variable importance results are reported primarily for interpretation rather than for comparison. Although SREEMF performs well in the simulation studies, its publicly available R implementation could not be successfully 18 applied to the INSULIN dataset because of numerical errors, likely arising from singularity issues during matrix estimation. Consequently, SREEMF is not included in our real data comparison. Table 6: Average permutation variable importance ranks of all baseline covariates in the INSULIN trial data obtained from the two LRF variants. Smaller ranks indicate higher importance. 
+
+Baseline Covariate LRF–PACE–2 LRF–adaptiveLMM 
+
+Baseline A1C 1 1Fasting Blood Glucose 2 6Morning Fasting Glucose 3 7Noon 2-h Post-Lunch Glucose 4 4Noon Fasting Glucose 5 3Evening Fasting Glucose 6 2Nighttime 3 a.m. Glucose 7 9Evening 2-h Post-Dinner Glucose 8 5Morning 2-h Post-Breakfast Glucose 9 8BMI 10 11 Height 11 16 Weight 12 10 Systolic Blood Pressure 13 12 Heart Rate 14 19 Duration of Diabetes 15 18 Therapy 16 17 Adiponectin 17 14 Diastolic Blood Pressure 18 15 Fasting Insulin 19 13 Table 6 summarizes the average variable importance ranks across 10 cross-validation runs obtained from the two LRF variants. Although the exact ranks vary slightly between the two methods, both variants reveal a highly consistent group structure. First, baseline HbA1c is identified as the most influential covariate, highlighting its central role in influencing HbA1c response durability in type 2 diabetes. This finding is consistent with numerous previous studies that differed substantially in their analytical approaches, treatment regimens, scientific questions, and study populations, yet consistently reported greater treatment-induced reductions in HbA1c among patients with higher baseline HbA1c levels [ 16 , 17 , 44 , 64 ]. Second, glucose-related measurements, including fasting blood glucose and the SMBG profile (ranks 2–9), form the next most important group. This finding further validates previous studies showing that fasting and postprandial glucose levels are strongly associated with treatment-related HbA1c responses [ 8, 33 , 58 , 61 ]. Third, anthropometric variables, including BMI, weight, and height, exhibit moderate importance. This result aligns with previous studies showing associations between obesity-related measures, insulin sensitivity, and glycemic control in patients with T2D [ 2, 11 , 28 ]. Finally, hemodynamic and additional clinical variables, including blood pressure, heart rate, adiponectin, fasting insulin, and diabetes duration, consistently appear near the bottom of the rankings, suggesting relatively limited contributions to variation in HbA1c durability. The treatment assignment (i.e., Therapy) ranks only 16th and 17th under LRF–PACE–2 and LRF–adaptiveLMM, respectively. This finding provides additional support for the original INSULIN trial analysis, which reported only a slight mean treatment difference of approximately 0.1% in HbA1c reduction between the two treatments [3]. 19 Beyond corroborating the broader diabetes literature, the proposed LRF framework uncovers novel insights that have not been reported in previous analyses of the INSULIN trial. Specifically, existing analyses based on scalar endpoint values often assigned substantially different importance ranks to covariates within the same clinical category, making the results difficult to interpret. In contrast, without incorporating any prior knowledge of clinical categories, the proposed LRF methods naturally organize covariates into clinically meaningful importance groups. Table 6 shows that baseline HbA1c emerges as the dominant factor, followed by the glucose-related, anthropometric, and hemodynamic categories. This category-level importance pattern highlights the clinical group effects influencing long-term HbA1c durability more clearly than inconsistent individual ranks. For example, Wang et al. [59] identified baseline HbA1c, BMI, and fasting blood glucose as highly influential variables, whereas individual SMBG measurements, weight, and height received substantially lower ranks. Similarly, Doubleday et al. [14] ranked baseline body weight and mid-morning glucose highly, whereas other SMBG measurements, BMI, and height were assigned relatively low importance. By contrast, the proposed LRF methods consistently assign high importance to the entire glucose-related and anthropometric categories, revealing a more coherent clinical structure. To avoid the potential confounding of multicollinearity among variables within the same category, we experiment the process using different values of mtry (mtry = 3 and 5). This category-level importance pattern remains highly stable. Table 7: Top-ranked two-way, three-way, and four-way interactions identified by the frequency-based interaction detection procedure obtained from the two LRF variants. 
+
+LRF–PACE–2 LRF–adaptiveLMM 
+
+A1C × BMI A1C × EFG A1C × WT A1C × E2hG A1C × BMI × SBP A1C × SBP × EFG A1C × BMI × HT A1C × SBP × M2hG MFG × M2hG × E2hG × N3FG FG × SBP × M2hG × E2hG FG × MFG × NFG × EFG BMI × M2hG × EFG × E2hG 
+
+> Abbreviations:
+> Metabolic covariates: A1C = baseline HbA1c; FG = fasting glucose. SMBG measurements: MFG = morning fasting glucose; M2hG = morning 2-hour postprandial glucose; NFG = noon fasting glucose; EFG = evening fasting glucose; E2hG = evening 2-hour postprandial glucose; N3FG = 3 a.m. fasting glucose. Anthropometric covariates: BMI = body mass index; WT = weight; HT = height. Hemodynamic covariate: SBP = systolic blood pressure.
+
+Table 8: Average prediction and forecast errors in the INSULIN trial real data. Smaller values indicate higher predictive accuracy. Top Panel: prediction of the entire HbA1c trajectories over Weeks 1–24 for new subjects. Bottom Panel: forecast of future HbA1c trajectories over Weeks 11–14 based on observations over Weeks 1–10 for existing subjects. 
+
+Task SPLF LongCART LRF–adaptiveLMM LRF–PACE LRF–PACE–2 
+
+New-subject 7.636 1.616 1.588 – 1.553 Future-time 7.660 3.263 0.678 0.536 –20 Figure 3: Predicted trajectories for three randomly selected test subjects from the INSULIN trial data. For comparison purposes, each column displays the same subject, with LRF–PACE–2 in the top Panel and LRF–adaptiveLMM in the bottom Panel. The black points represent the original sparse and irregularly observed HbA1c measurements, and the red curves denote the corresponding predicted trajectories over Weeks 1–24. The proposed LRF framework further reveals another novel scientific finding through the frequency-based interaction procedure described in Section 3.5. To the best of our knowledge, neither the general diabetes literature nor previous analyses of the INSULIN trial have reported comparable interaction effects on HbA1c responses to treatments. Table 7 summarizes the top ranked frequencies for two-way, three-way, and four-way interaction subsets that are obtained from the two LRF variants. Focusing on LRF–PACE–2, the most prominent two-way interactions involve baseline A1C paired with anthropometric category, and the leading three-way interactions further incorporate systolic blood pressure. In particular, the frequent co-occurrence of baseline A1C with anthropometric category suggests that its importance arises not only from its individual effect but also from its interactions with other covariates. The repeated appearance of systolic blood pressure in the top interaction sets, despite its relatively low individual importance rankings (13th in LRF–PACE–2 and 12th in LRF–adaptiveLMM), indicates that its contribution to HbA1c trajectories is driven primarily by interaction effects. The four-way interactions mainly involve glucose measures collected at different times throughout the day, which further explain their joint effects as a group. In addition, LRF–adaptiveLMM identifies other interactions involving baseline A1C, SMBG measures, and systolic blood pressure. The top Panel of Table 8 summarizes the new-subject prediction performance across competing methods on the test data. Among all approaches, LRF–PACE–2 attains the smallest cross-validation prediction error ( 1.553 ), followed closely by LRF–adaptiveLMM ( 1.588 ), while SPLF performs substantially worse under this prediction setting ( 7.636 ). Figure 3 illustrates the predicted HbA1c trajectories for three randomly selected test subjects. For each subject, the trajectory predicted 21 Figure 4: Forecasted trajectories for three randomly selected training subjects from the INSULIN trial data. For comparison purpose, each column displays the same subject, with LRF–PACE–2 in the top Panel and LRF–adaptiveLMM in the bottom Panel. The black points represent the original sparse and irregularly observed HbA1c measurements. Solid red curves denote the estimated trajectories over the observed period (Weeks 1–10), whereas dashed red curves represent the forecasted future trajectories over Weeks 11–14. by LRF–PACE–2 closely follows the underlying dynamic trend reflected in the original discretely observed measurements. In Panels (a) and (b), the predicted trajectories capture the rapid decline in HbA1c immediately after treatment initiation followed by a slower increasing trend later in the study period. In Panel (c), the subject has only five observed measurements located near the beginning and the end of the study period. LRF–PACE–2 is still able to recover the early rapid decrease followed by an upward trend at the end. Note that the predicted trajectories do not necessarily closely follow all of the original observations because they are generated for test subjects using the learned covariate–trajectory relationships from the entire forest structure, rather than by simply smoothing each individual’s observed longitudinal measurements. In comparison, LRF–adaptiveLMM produces trajectory estimates based on linear restriction and can only capture the overall decreasing trend of HbA1c after treatment initiation (Panels (d)–(f)). The bottom Panel of Table 8 reports the future-time forecasting performance across competing methods on the training data. Because the INSULIN dataset contains an almost empty interval between Weeks 15 and 22 (see Section 2), for evaluation purposes, we fit each model on Weeks 1–10 and forecast Weeks 11–14. Among all approaches, LRF–PACE attains the smallest average forecasting error ( 0.536 ) across 10 cross-validation replications, followed by LRF–adaptiveLMM (0.678 ), while SPLF yields the largest forecasting error ( 7.66 ). Figure 4 illustrates the forecasting results for three randomly selected training subjects. The forecasts produced by LRF–PACE at Weeks 11–14 closely align with those "future" observed values. For example, the forecast trajectories may exhibit a decreasing trend (Panel (a)), remain relatively flat (Panel (b)), or show a gradual 22 Table 9: Average Spearman rank correlation coefficients ( ρ) and corresponding p-values across 10 cross-validation replications for the INSULIN trial real data. Top Panel: prediction performance for new subjects. Bottom Panel: forecasting performance for existing subjects. Both Panels demonstrate only Week 12.                    
+
+> Task SPLF LongCART LRF–adaptiveLMM LRF–PACE LRF–PACE–2
+> New-subject 0.35 ( p < 0.01 ) 0.46 ( p < 0.01 )0.26 ( p < 0.01 )–0.58 ( p < 10 −8)Future-time 0.43 ( p < 10 −5) 0.17 ( p= 0 .11 )0.45 ( p < 10 −6)0.79 ( p < 10 −12 )–
+
+Figure 5: Scatterplots of the ranks of the predicted/forecasted HbA1c response values versus the ranks of the corresponding originally observed response values from the INSULIN data for one cross-validation replication. The left Panel presents the predicted response values for test data using LRF–PACE–2, yielding a Spearman rank correlation of ρ = 0 .51 (p = 5 × 10 −11 ). The right Panel presents the forecasted response values for training data using LRF–PACE, yielding ρ = 0 .81 
+
+(p < 2.2 × 10 −16 ). The dashed red line indicates perfect agreement, and the green ellipse encloses 95% of the observations. Both Panels demonstrate only Week 12. increase (Panel (c)). In contrast, LRF–adaptiveLMM produces linear forecasts, with an overall linear decreasing trend across Panels (d), (e), and (f). As an additional assessment of prediction accuracy, we compute Spearman’s rank correlation coefficient ρ. At each evaluation time point, subjects are ranked separately according to their observed and predicted response values, and ρ is calculated as the correlation between the two sets of ranks. Values of ρ close to 1 indicate strong agreement in the ordering between predicted and observed responses, whereas values near 0 indicate little or no agreement. The reported p-value corresponds to the hypothesis test H0 : ρ = 0 versus H1 : ρ̸ = 0 .Table 9 summarizes the average Spearman rank correlations and corresponding p-values across 10 cross-validation runs at Week 12 for both prediction settings. Similar results are obtained at the 23 other three weeks. For new-subject prediction, LRF–PACE–2 achieves the highest rank concordance with ρ = 0 .58 (p < 10 −8). LongCART and SPLF attain moderate correlations of 0.46 and 0.35 ,respectively, while LRF–adaptiveLMM yields a weaker correlation of 0.26 , although still statistically significant ( p < 0.01 ). For future-time forecasting, LRF–PACE again achieves the highest rank correlation with ρ = 0 .79 (p < 10 −12 ). LRF–adaptiveLMM and SPLF obtain moderate correlations of 0.45 and 0.43 , respectively, whereas LongCART shows weak rank agreement with ρ = 0 .17 and a non-significant p-value ( p = 0 .11 ). Figure 5 further illustrates the rank correlation results at Week 12. The left Panel presents the new-subject prediction results from one cross-validation replication obtained by LRF–PACE–2. The model is fitted using all available training observations from Weeks 1–24, and predictions are generated based on the baseline covariates of all test subjects, yielding a Spearman rank correlation of ρ = 0 .51 (p = 5 × 10 −11 ). The right Panel presents the future-time forecasting results from one cross-validation replication using LRF–PACE. The model is fitted on observations at Weeks 1–10 from the training subjects, and the forecast at Week 12, eYi(tnew ), is obtained according to (6) using the subject’s baseline covariates, yielding a correlation of ρ = 0 .81 (p < 2.2 × 10 −16 ). Both correlations are highly statistically significant, with extremely small p-values, indicating strong agreement between the predicted and observed response rankings. The difference between the two correlation scores reflects the relative difficulty of the two tasks. Future-time forecasting only requires predicting outcomes over Weeks 11–14 for existing training subjects, whose observations from Weeks 1–10 have already been used to train the model. However, new-subject prediction requires predicting entire trajectories over Weeks 1–24 for previously unseen subjects using baseline covariates only, making it substantially more challenging than that of future-time forecasting. 
+
+# 6 Discussion 
+
+In this article, we propose a novel Longitudinal Random Forest framework that jointly models sparse, irregular, and heterogeneous longitudinal response trajectories and their associations with scalar covariates within a unified framework, while flexibly accommodating complex nonlinear and interactive covariate effects. We also develop a trajectory-based splitting criterion that selects candidate splits using the size-weighted integrated squared difference between the representative trajectories of the resulting child nodes. To enable more comprehensive interpretation, we introduce a frequency-based interaction exploration strategy that efficiently identifies covariate interactions of arbitrary finite order within a single procedure. The LRF framework includes two variants that differ in their node-wise trajectory estimation strategies: (i) LRF–PACE and (ii) LRF–adaptiveLMM. This design gives researchers the flexibility to select the node-wise smoother that best matches their data characteristics and analysis preferences. LRF–PACE adopts a fully nonparametric smoothing strategy, in which covariate information is incor-porated indirectly through the tree structure. In contrast, LRF–adaptiveLMM is a semiparametric approach that explicitly incorporates the covariates that are selected along the path from the root to the corresponding node into the fixed-effects term of a linear mixed-effects model at each node. The node-specific model structure is then combined with subject-specific random effects to enable individualized trajectory estimation for each subject at each node. Compared with LRF–PACE, LRF–adaptiveLMM imposes a strict linear trajectory structure and is therefore less flexible; however, it may be preferred when researchers wish to retain the interpretability and convenience of the popular mixed-effects models while leveraging advances in machine learning. Overall, LRF–PACE (or LRF–PACE–2) achieves the strongest performance in variable selection, entire trajectory prediction, and future-time forecast among all competing methods across a wide 24 range of simulation settings, including scenarios with severe sparsity. The real-data application to the longitudinal INSULIN trial dataset further demonstrates the ability of the proposed LRF framework to uncover novel findings on treatment progression and long-term durability that are not identified in previous analyses of the same dataset using scalar endpoints. The proposed LRF framework has important implications for personalized medicine, where treatment decisions rely on individualized patient characteristics rather than uniform treatment strategies. In addition to the 19 baseline covariates analyzed in this study, the proposed LRF framework has a broad application scope and can readily incorporate a much larger range of patient characteristics, including genetic, lifestyle, diet, environmental, and other factors. This flexibility enhances its potential to support personalized medicine by providing a more comprehensive understanding of treatment durability. 
+
+# 7 Conflicts of Interest 
+
+The authors declare no conflicts of interest. 
+
+# References 
+
+[1] Tafere Tilahun Aniley, Legesse Kassa Debusho, Zelalem Mehari Nigusie, Wondwosen Kassahun Yimer, and Belay Birlie Yimer. A semi-parametric mixed models for longitudinally measured fasting blood sugar level of adult diabetic patients. BMC Medical Research Methodology , 19(1): 13, 2019. doi: 10.1186/s12874-018-0648-x. [2] Beverley Balkau, Françoise Calvi-Gries, Nick Freemantle, Maya Vincent, Valérie Pilorget, and Philip D. Home. Predictors of hba1c over 4 years in people with type 2 diabetes starting insulin therapies: The credit study. Diabetes Research and Clinical Practice , 108(3):432–440, 2015. doi: 10.1016/j.diabres.2015.02.010. URL https://www.sciencedirect.com/science/ article/pii/S0168822715001357 .[3] John B. Buse, Bruce H.R. Wolffenbuttel, William H. Herman, Natalie K. Shemonsky, Honghua H. Jiang, Jessie L. Fahrbach, Jamie L. Scism-Bacon, and Sherry A. Martin. Durability of basal versus lispro mix 75/25 insulin efficacy (durable) trial 24-week results: Safety and efficacy of insulin lispro mix 75/25 versus insulin glargine added to oral antihyperglycemic drugs in patients with type 2 diabetes. Diabetes Care , 32(6):1007–1013, 03 2009. ISSN 0149-5992. doi: 10.2337/dc08-2117. URL https://doi.org/10.2337/dc08-2117 .[4] John B. Buse, Bruce H. R. Wolffenbuttel, William H. Herman, Stephen Hippler, Sherry A. Martin, Honghua H. Jiang, Sylvia K. Shenouda, and Jessie L. Fahrbach. Durability of basal versus lispro mix 75/25 insulin efficacy (durable) trial: comparing the durability of lispro mix 75/25 and glargine. Diabetes Care , 34(2):249–255, February 2011. doi: 10.2337/dc10-1701. [5] Loïc Capitaine. LongituRF: Random forests for longitudinal data , 2020. URL https://cran. r-project.org/package=LongituRF . R package version 0.9. [6] Loïc Capitaine, Robin Genuer, and Rodolphe Thiébaut. Random forests for high-dimensional longitudinal data. Statistical Methods in Medical Research , 30(1):166–184, 2021. [7] E. J. Caruana, M. Roman, J. Hernández-Sánchez, and P. Solli. Longitudinal studies. Journal of Thoracic Disease , 7(11):E537–E540, 2015. doi: 10.3978/j.issn.2072-1439.2015.10.63. 25 [8] Gaurav Chandra, Petteri Lavikainen, Pekka Siirtola, Sanna Tamminen, Anuradha Ihalap-athirana, Tiina Laatikainen, and Juha Röning. Explainable prediction of long-term glycated hemoglobin response change in finnish patients with type 2 diabetes following drug initiation using evidence-based machine learning approaches. Clinical Epidemiology , 17:225–240, 2025. doi: 10.2147/CLEP.S505966. URL https://doi.org/10.2147/CLEP.S505966 .[9] Yong Chen, Jing Ning, and Chunyan Cai. Regression analysis of longitudinal data with irregular and informative observation times. Biostatistics , 16(4):727–739, 2015. doi: 10.1093/biostatis-tics/kxv008. URL https://doi.org/10.1093/biostatistics/kxv008 .[10] M. Delporte, M. Aerts, G. Verbeke, and G. Molenberghs. Analysing matched continuous longitudinal data: A review. Statistical Methods in Medical Research , 34(1):170–179, 2024. doi: 10.1177/09622802241300823. URL https://doi.org/10.1177/09622802241300823 .[11] L. Deng, L. Jia, X. L. Wu, and M. Cheng. Association between body mass index and glycemic control in type 2 diabetes mellitus: A cross-sectional study. Diabetes, Metabolic Syndrome and Obesity: Targets and Therapy , 18:555–563, February 2025. doi: 10.2147/DMSO.S508365. URL 
+
+https://doi.org/10.2147/DMSO.S508365 .[12] Camille Eugénie Dieu and Giovanni Briganti. Biostatistics of generalized estimating equations in developmental medicine and child neurology. Developmental Medicine & Child Neurology , 68 (6):767–773, 2026. doi: 10.1111/dmcn.70060. [13] Peter J. Diggle, Patrick Heagerty, Kung-Yee Liang, and Scott L. Zeger. Analysis of Longitudinal Data . Oxford University Press, 2 edition, 2002. [14] Kevin Doubleday, Hua Zhou, Haoda Fu, and Jin Zhou. An algorithm for generating individualized treatment decision trees and random forests. Journal of Computational and Graphical Statistics ,27(4):849–860, 2018. doi: 10.1080/10618600.2018.1451337. PMCID: PMC7274035. [15] Kathleen M. Dungan, Silvio Torro Povedano, Thomas Forst, et al. Once-weekly dulaglutide versus once-daily liraglutide in type 2 diabetes (award-6). Lancet , 384(9951):1349–1357, 2014. doi: 10.1016/S0140-6736(14)60976-4. [16] Katherine Esposito, Paolo Chiodini, Annalisa Capuano, Maria Ida Maiorino, Giuseppe Bel-lastella, and Dario Giugliano. Baseline glycemic parameters predict the hemoglobin A1c response to DPP-4 inhibitors: meta-regression analysis of 78 randomized controlled trials with 20,053 patients. Endocrine , 46(1):43–51, 2014. doi: 10.1007/s12020-013-0090-0. [17] Katherine Esposito et al. Nomogram to estimate the hba1c response to different dpp-4 inhibitors in type 2 diabetes: a systematic review and meta-analysis of 98 trials with 24,163 patients. 
+
+BMJ Open , 5(2):e005892, 2015. doi: 10.1136/bmjopen-2014-005892. URL https://bmjopen. bmj.com/content/5/2/e005892 .[18] European Medicines Agency. Guideline on Adjustment for Baseline Covariates in Clini-cal Trials , 2015. URL https://www.ema.europa.eu/en/documents/scientific-guideline/ guideline-adjustment-baseline-covariates-clinical-trials_en.pdf .[19] E. Eyth, M. Zubair, and R. Naik. Hemoglobin a1c. In StatPearls [Internet] . StatPearls Publishing, Treasure Island, FL, 2025. [Updated 2025 Jun 2]. Available from: https://www. ncbi.nlm.nih.gov/books/NBK549816/ .26 [20] Jianqing Fan, Tao Huang, and Runze Li. Analysis of longitudinal data with semiparametric estimation of covariance function. Journal of the American Statistical Association , 102(478): 632–641, 2007. doi: 10.1198/016214507000000095. [21] Garrett M. Fitzmaurice, Nan M. Laird, and James H. Ware. Applied Longitudinal Analysis .John Wiley & Sons, Hoboken, NJ, 2nd edition, 2011. ISBN 978-0-470-38027-7. [22] Juan P. Frías, Melanie J. Davies, Julio Rosenstock, et al. Tirzepatide versus semaglutide once weekly in patients with type 2 diabetes. New England Journal of Medicine , 385(6):503–515, 2021. doi: 10.1056/NEJMoa2107519. [23] A. Hajjem, F. Bellavance, and D. Larocque. Mixed effects regression trees for clustered data. 
+
+Statistics and Probability Letters , 81(4):451–459, 2011. [24] A. Hajjem, F. Bellavance, and D. Larocque. Mixed effects random forest for clustered data. 
+
+Journal of Statistical Computation and Simulation , 84(6):1313–1328, 2014. [25] Daniel Handley, Alexander C. Gillett, Rahul Bala, John Tyrrell, and Cathryn M. Lewis. Latent class growth mixture modeling of hba1c trajectories identifies individuals at high risk of developing complications of type 2 diabetes mellitus in the UK Biobank. BMJ Open Diabetes Research & Care , 13(5):e004826, 2025. doi: 10.1136/bmjdrc-2024-004826. [26] Yang He. Missing data analysis using multiple imputation: getting to the heart of the matter. 
+
+Circulation: Cardiovascular Quality and Outcomes , 3(1):98–105, 2010. doi: 10.1161/CIRCOUT-COMES.109.875658. [27] Nicholas J. Horton and Ken P. Kleinman. Much ado about nothing: A comparison of missing data methods and software to fit incomplete data regression models. The American Statistician ,61(1):79–90, 2007. doi: 10.1198/000313007X172556. [28] Jae Hyun Huh, Kyu Jeung Kim, Byung-Wan Lee, Dae-Won Kim, Eun Seok Kang, Bong Soo Cha, and Hyeong Cheol Lee. The relationship between bmi and glycated albumin to glycated hemoglobin (ga/a1c) ratio according to glucose tolerance status. PLoS ONE , 9(2):e89478, 2014. doi: 10.1371/journal.pone.0089478. URL https://doi.org/10.1371/journal.pone.0089478 .[29] K. Kim, S. Unni, D. I. Brixner, S. M. Thomas, C. J. Olsen, K. L. Sterling, M. Mitchell, and C. McAdam-Marx. Longitudinal changes in glycated haemoglobin following treatment intensification after inadequate response to two oral antidiabetic agents in patients with type 2 diabetes. Diabetes, Obesity and Metabolism , 21(7):1725–1733, 2019. doi: 10.1111/dom.13694. [30] Malay Ghosh Kundu and Jaroslaw Harezlak. Regression trees for longitudinal data with baseline covariates. Biostatistics & Epidemiology , 3(1):1–22, 2019. doi: 10.1080/24709360.2018.1557797. [31] Nan M. Laird and James H. Ware. Random-effects models for longitudinal data. Biometrics ,38(4):963–974, December 1982. ISSN 0006-341X. [32] Kung-Yee Liang and Scott L. Zeger. Longitudinal data analysis using generalized linear models. 
+
+Biometrika , 73(1):13–22, 1986. doi: 10.1093/biomet/73.1.13. [33] Birong Liao, Yun Chen, Farai Chigutsa, and Carolina Piras de Oliveira. Fasting and postprandial plasma glucose contribution to glycated haemoglobin and time in range in people with type 2 diabetes on basal and bolus insulin therapy: Results from a pooled analysis of insulin lispro clinical trials. Diabetes, Obesity and Metabolism , 23(7):1571–1579, 2021. doi: 10.1111/dom.14370. 27 [34] Kaifeng Lu and Devan V. Mehrotra. Specification of covariance structure in longitudinal data analysis for randomized clinical trials. Statistics in Medicine , 29(4):474–488, 2010. doi: 10.1002/sim.3820. [35] Ming Luo, Kenneth H. X. Tan, Chuen Seng Tan, Wei Yen Lim, E. Shyong Tai, and Kavita Venkataraman. Longitudinal trends in hba1c patterns and association with outcomes: Asystematic review. Diabetes & Metabolism Research and Reviews , 34(6):e3015, 2018. doi: 10.1002/dmrr.3015. [36] Craig H. Mallinckrodt, Peter W. Lane, David Schnell, Yi Peng, and John P. Mancuso. Recommen-dations for the primary analysis of continuous endpoints in longitudinal clinical trials. Therapeutic Innovation & Regulatory Science , 42(4):303–319, 2008. doi: 10.1177/009286150804200402. [37] Lloyd A. Mancl and Timothy A. DeRouen. A covariance estimator for gee with improved small-sample properties. Biometrics , 57(1):126–134, 2001. [38] Mark I. McCarthy. Painting a new picture of personalised medicine for diabetes. Diabetologia ,60(5):793–799, 2017. doi: 10.1007/s00125-017-4210-x. [39] Renee G. McCoy, Lisa Faust, Heather C. Heien, Shilpa Patel, Brian Caffo, and Che Ngufor. Longitudinal trajectories of glycemic control among u.s. adults with newly diagnosed diabetes. 
+
+Diabetes Research and Clinical Practice , 205:110989, 2023. doi: 10.1016/j.diabres.2023.110989. [40] Anna Neufeld and Brianna Heggeseth. splinetree: Longitudinal Regression Trees and Forests ,2025. URL https://CRAN.R-project.org/package=splinetree . R package version 0.2.0, https://CRAN.R-project.org/package=splinetree. [41] Ewan R. Pearson. Type 2 diabetes: a multifaceted disease. Diabetologia , 62(6):1107–1112, 2019. doi: 10.1007/s00125-019-4909-y. [42] Zixin Qiu, Frank Qian, Jun Liu, Rui Li, Hancheng Yu, Yue Wang, Xiao Zhang, Tingting Geng, Xuefeng Yu, Oscar H. Franco, An Pan, Maigeng Zhou, Kai Huang, and Gang Liu. Phenotypic heterogeneity of type 2 diabetes and risks of all-cause and cause-specific mortality. Cell Reports Medicine , page 102367, 2025. ISSN 2666-3791. doi: https://doi.org/10.1016/j.xcrm.2025.102367. URL https://www.sciencedirect.com/science/article/pii/S2666379125004409 .[43] Mouna Sassi-Sayadi, Pierre Verweij, and Peter Cornelisse. Regulatory experiences with the use of multiple imputation for missing data in a phase 3 confirmatory trial. Therapeutic Innovation & Regulatory Science , 60(1):8–14, 2026. doi: 10.1007/s43441-025-00872-1. [44] Hiroshi Sato, Akira Ishikawa, Hiroyuki Yoshioka, et al. Model-based meta-analysis of hba1c reduction across sglt2 inhibitors using dose adjusted by urinary glucose excretion. Scientific Reports , 14:24695, 2024. doi: 10.1038/s41598-024-76256-6. URL https://doi.org/10.1038/ s41598-024-76256-6 .[45] P. Savieri, L. Stas, and K. Barbé. Limmcov: An interactive research tool for efficiently selecting covariance structures in linear mixed models using insights from time series analysis. PLOS ONE , 20(6):e0325834, 2025. doi: 10.1371/journal.pone.0325834. [46] Rebecca J. Sela and Jeffrey S. Simonoff. Re-em trees: A data mining approach for longitudinal and clustered data. Machine Learning , 86(2):169–207, 2012. 28 [47] Rebecca J. Sela, Jeffrey S. Simonoff, and Weixin Jing. REEMtree: Regression trees with random effects for longitudinal (panel) data , 2021. URL https://cran.r-project.org/package= REEMtree . R package version 0.90.4. [48] S. I. Sherwani, H. A. Khan, A. Ekhzaimy, A. Masood, and M. K. Sakharkar. Significance of hba1c test in diagnosis and prognosis of diabetic patients. Biomarker Insights , 11:95–104, 2016. doi: 10.4137/BMI.S38440. [49] Carolina Sorli, Shin Harashima, Marek Tsoukas, Jochen Unger, Takashi Kadowaki, Eiji Araki, Martin Trautmann, Vadim V. Klimontov, Sanjay Kalra, Suzanne Peterson, et al. Efficacy and safety of once-weekly semaglutide vs exenatide er in type 2 diabetes (sustain 3). Lancet Diabetes & Endocrinology , 5(4):251–260, 2017. doi: 10.1016/S2213-8587(17)30013-X. [50] H. Sun, P. Saeedi, S. Karuranga, M. Pinkepank, K. Ogurtsova, B. B. Duncan, C. Stein, A. Basit, J. C. N. Chan, J. C. Mbanya, M. E. Pavkov, A. Ramachandaran, S. H. Wild, S. James, W. H. Herman, P. Zhang, C. Bommer, S. Kuo, E. J. Boyko, and D. J. Magliano. Idf diabetes atlas: Global, regional and country-level diabetes prevalence estimates for 2021 and projections for 2045. 
+
+Diabetes Research and Clinical Practice , 183:109119, 2022. doi: 10.1016/j.diabres.2021.109119. Erratum in Diabetes Research and Clinical Practice , 2023, 204:110945. [51] Yaser Tabarraei, Abbas Ali Keshtkar, Mir Saeed Yekaninejad, Najme Rahimi, Yousef Dowlatabadi, and Kamal Azam. A longitudinal examination of blood sugar dynamics in diabetes and non-diabetes using growth curve model: The sabzevar persian cohort study. 
+
+Advanced Biomedical Research , 13(1):30, 2024. [52] Clarence Tee, Haiyan Xu, Xiuju Fu, Di Cui, Tazeen H. Jafar, and Yong Mong Bee. Longitudinal hba1c trajectory modelling reveals the association of hba1c and risk of hospitalization for heart failure for patients with type 2 diabetes mellitus. PLOS ONE , 18(1):1–13, 2023. doi: 10.1371/journal.pone.0275610. URL https://doi.org/10.1371/journal.pone.0275610 .[53] U.S. Food and Drug Administration. Adjusting for Covariates in Random-ized Clinical Trials for Drugs and Biological Products , 2023. URL https: //www.fda.gov/regulatory-information/search-fda-guidance-documents/ adjusting-covariates-randomized-clinical-trials-drugs-and-biological-products .[54] H. J. van der Horn, E. B. Erhardt, A. B. Dodd, U. Nathaniel, T. V. Wick, J. R. McQuaid, S. G. Ryman, A. A. Vakhtin, T. B. Meier, and A. R. Mayer. A cautionary tale on the effects of different covariance structures in linear mixed effects modeling of fmri data. Human Brain Mapping , 45(7):e26699, 2024. doi: 10.1002/hbm.26699. [55] Geert Verbeke and Geert Molenberghs. Linear Mixed Models for Longitudinal Data . Springer Series in Statistics. Springer, New York, 2nd edition, 2009. doi: 10.1007/978-0-387-77218-1. [56] Geert Verbeke, Steffen Fieuws, Geert Molenberghs, and Marie Davidian. The analysis of multivariate longitudinal data: A review. Statistical Methods in Medical Research , 23(1):42–59, 2014. doi: 10.1177/0962280212445834. [57] Andrew J. Vickers and Douglas G. Altman. Statistics notes: Analysing controlled tri-als with baseline and follow up measurements. BMJ , 323(7321):1123–1124, 2001. doi: 10.1136/bmj.323.7321.1123. 29 [58] B. G. Vittal, Mahantesh Patil, and D. Abhijith. A comparative study of correlation of random, fasting and postprandial blood glucose with glycated haemoglobin: A multicentre study. Journal of Medical Science and Health , 7(3):26–31, 2021. [59] Lu Wang, Haoda Fu, and Donglin Zeng. Learning optimal personalized treatment rules in consideration of benefit and risk: with an application to treating type 2 diabetes patients with insulin therapies. Journal of the American Statistical Association , 113(521):1–13, 2018. doi: 10.1080/01621459.2017.1330207. [60] M. Wang, L. Kong, Z. Li, and L. Zhang. Covariance estimators for generalized estimating equations (gee) in longitudinal analysis with small samples. Statistics in Medicine , 35(10): 1706–1721, 2016. doi: 10.1002/sim.6817. [61] Hans J. Woerle, Walter P. Pimenta, Christian Meyer, et al. Diagnostic and therapeutic impli-cations of relationships between fasting, 2-hour postchallenge plasma glucose and hemoglobin a1c values. Archives of Internal Medicine , 164(15):1627–1632, 2004. doi: 10.1001/arch-inte.164.15.1627. [62] Min Yan, Li Zhou, Chao Zhao, Chen Shi, and Chao Ou. Comparison of different approaches in handling missing data in longitudinal multiple-item patient-reported outcomes: a simulation study. Health and Quality of Life Outcomes , 23(1):34, 2025. doi: 10.1186/s12955-025-02364-0. [63] Fang Yao, Hans-Georg Müller, and Jane-Ling Wang. Functional data analysis for sparse longitudinal data. Journal of the American Statistical Association , 100(470):577–590, 2005. doi: 10.1198/016214504000001745. [64] Jiajing Yin, Yi Lin, Mingyu Gu, and Yongde Peng. Quantitative models for evaluating the correlation between baseline HbA1c levels and sitagliptin as monotherapy or dual therapy treatment in type 2 diabetes: A meta-regression analysis. International Journal of Diabetes and Clinical Research , 3(3):051, 2016. doi: 10.23937/2377-3634/1410051. [65] Yan Yu and Diane Lambert. Fitting trees to functional data, with an application to time-of-day patterns. Journal of Computational and Graphical Statistics , 8(4):749–762, 1999. doi: 10.1080/10618600.1999.10474847. 30

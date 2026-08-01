@@ -1,0 +1,554 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-01T20:19:54.212835+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 9,
+    "deep_cap": 7,
+    "deep_selected": 7,
+    "quick_candidates": 6,
+    "quick_skim_target": 12,
+    "quick_selected": 6
+  },
+  "deep_dive": [
+    {
+      "id": "2607.23284v1",
+      "source": "arxiv",
+      "title": "StageGuard: Physiologically Constrained Sleep Staging",
+      "abstract": "Automated sleep staging is increasingly used in large-scale studies to derive sleep-architecture endpoints: total sleep time, REM latency, sleep efficiency, and bout-duration statistics. Deep learning models achieve epoch-level accuracy approaching inter-rater agreement, yet often produce hypnograms that violate physiological invariants, such as rare transitions (e.g., direct Wake -> REM) or excessively fragmented sequences. Such violations can bias downstream sleep metrics, regardless of overall accuracy. We propose StageGuard, a plug-and-play, backbone-agnostic structured-inference framework that wraps any neural sleep-staging backbone with physiology-informed priors. StageGuard combines (1) a differentiable soft transition penalty that discourages physiologically rare transitions during training, and (2) a semi-Markov constrained decoder with a duration-augmented state space that jointly enforces transition penalties and minimum bout durations at inference. Unlike hard-prohibition methods, it admits rare transitions when emission evidence is overwhelming, leaving informative pathological events recoverable rather than blocked. StageGuard constrains staging outputs to satisfy known physiological priors rather than modeling sleep generatively. We quantify the validity gap using transition-violation rate (TVR) and fragmentation index (FI) and demonstrate that, across six backbones and four datasets, StageGuard reduces TVR to physiologically plausible levels and lowers FI by 56-62%, while maintaining or slightly improving classification accuracy. Crucially, improved constraint satisfaction translates into 59-79% lower error on derived sleep-architecture statistics not directly optimized by the method, and recovers the direction and effect size of expert-defined subgroup differences (OSA severity, age) more faithfully than the unconstrained baseline.",
+      "authors": [
+        "Juntang Wang",
+        "Yihan Wang",
+        "Hao Wu",
+        "Jiayu Gao",
+        "Shixin Xu",
+        "Dongmian Zou"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "q-bio.QM"
+      ],
+      "published": "2026-07-25T16:37:46+00:00",
+      "link": "https://arxiv.org/pdf/2607.23284v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Sleep staging quality assessment and measurement",
+      "llm_evidence_cn": "睡眠分期评估与测量方法",
+      "llm_evidence": "睡眠分期评估与测量方法",
+      "canonical_evidence": "睡眠分期评估与测量方法",
+      "llm_tldr_en": "StageGuard is a plug-and-play framework that enforces physiological priors on any neural sleep-staging backbone, reducing physiologically implausible transitions like direct Wake-to-REM and improving the reliability of downstream sleep-architecture endpoints.",
+      "llm_tldr_cn": "自动睡眠分期模型在逐epoch准确率上接近人工一致性，但常输出违反生理规律的睡眠图，如直接Wake到REM或过多片段化，这会使总睡眠时间、REM潜伏期等下游指标产生偏差。StageGuard提出一个与骨干模型无关的即插即用结构化推断框架，通过可微分的软转迁惩罚等生理先验约束输出。实验表明该框架能显著减少罕见转迁并提升睡眠架构指标的可靠性，为大规模睡眠研究提供通用后处理工具。",
+      "llm_tldr": "自动睡眠分期模型在逐epoch准确率上接近人工一致性，但常输出违反生理规律的睡眠图，如直接Wake到REM或过多片段化，这会使总睡眠时间、REM潜伏期等下游指标产生偏差。StageGuard提出一个与骨干模型无关的即插即用结构化推断框架，通过可微分的软转迁惩罚等生理先验约束输出。实验表明该框架能显著减少罕见转迁并提升睡眠架构指标的可靠性，为大规模睡眠研究提供通用后处理工具。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.25232v1",
+      "source": "arxiv",
+      "title": "Neurai-VN Benchmark: Standardized Machine Learning Models for Multimodal Digital Phenotyping in Mental Health Classification",
+      "abstract": "Digital phenotyping (DP) using smartphones and wearable devices has shown considerable potential for mental health monitoring. However, progress remains difficult to evaluate due to heterogeneous datasets, inconsistent preprocessing pipelines. In this study, we present a reproducible benchmark built upon the Neurai-VN dataset, a high-resolution, multimodal dataset comprising passive sensing and active assessment from wearable and smartphone devices, collected from 100 Vietnamese adults over two weeks. The benchmark defines four clinically relevant binary classification tasks evaluated using standardized subject-wise cross-validation. Representative linear, tree-based, and neural baseline models are evaluated across predefined feature configurations. Mean subject-level F1 scores across five cross-validation folds reached 0.71 for Healthy Control vs. Depression and Healthy Control vs. Clinical, while Healthy Control vs. Anxiety and Depression vs. Anxiety achieved 0.69 and 0.56, respectively. These benchmark results provide reproducible baselines for future research on multimodal DP for mental health classification tasks.",
+      "authors": [
+        "Quoc-Cuong Pham",
+        "Hoang-Thuy-Duong Vu",
+        "Thi-Thanh-Huong Ha",
+        "Huy-Hieu Pham"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-07-28T03:20:26+00:00",
+      "link": "https://arxiv.org/pdf/2607.25232v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Multimodal digital phenotyping benchmark for mental health using wearable and smartphone active assessment",
+      "llm_evidence_cn": "基于可穿戴与智能手机主动评估的心理健康多模态数字表型基准",
+      "llm_evidence": "基于可穿戴与智能手机主动评估的心理健康多模态数字表型基准",
+      "canonical_evidence": "基于可穿戴与智能手机主动评估的心理健康多模态数字表型基准",
+      "llm_tldr_en": "This paper presents a reproducible benchmark for multimodal digital phenotyping in mental health using the Neurai-VN dataset, standardizing preprocessing and evaluation across four classification tasks. It provides baseline models for mental health monitoring from wearable and smartphone data.",
+      "llm_tldr_cn": "针对心理健康数字表型研究缺乏标准化评估的问题,本文基于Neurai-VN数据集构建了一个可复现的基准。该基准包含来自可穿戴设备和智能手机的多模态数据,定义了四个临床相关的二分类任务,并采用标准化的按受试者交叉验证评估逻辑回归、树模型和神经网络等基线。结果表明该基准可促进数字表型方法的比较与进步,对生态瞬时评估和心理健康监测具有直接意义。",
+      "llm_tldr": "针对心理健康数字表型研究缺乏标准化评估的问题,本文基于Neurai-VN数据集构建了一个可复现的基准。该基准包含来自可穿戴设备和智能手机的多模态数据,定义了四个临床相关的二分类任务,并采用标准化的按受试者交叉验证评估逻辑回归、树模型和神经网络等基线。结果表明该基准可促进数字表型方法的比较与进步,对生态瞬时评估和心理健康监测具有直接意义。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "digital phenotyping using EMA in mental health",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.21817v1",
+      "source": "arxiv",
+      "title": "Longitudinal Random Forests for Sparse and Irregular Response Trajectories",
+      "abstract": "Longitudinal studies often collect data at sparse, irregular, and unequally spaced time points. Such heterogeneity is often driven by subject-specific covariates, yet existing methods have been restricted to a scalar endpoint value, completely neglecting the underlying response trajectories. We propose a novel Longitudinal Random Forest (LRF) framework that leverages tree-based ensemble machine learning with adaptive node-wise longitudinal trajectory estimation. The LRF framework makes five methodological contributions. it captures each subject's individual response trajectory while simultaneously accommodating within-node correlation, between-node heterogeneity, and nonlinear and interactive covariate effects. It introduces a novel trajectory-based splitting criterion that maximizes trajectory separation while incorporating a size-weighted penalty; it provides two variants, Principal Analysis by Conditional Expectation (LRF-PACE) and adaptive linear mixed-effects models (LRF-adaptiveLMM), which employ nonparametric and semiparametric node-wise smoothers, respectively, while learning covariate effects in a data-driven manner. It provides a comprehensive interpretation of covariates using both the classical trajectory-based permutation variable importance measure (PVIM) and a newly proposed finite-way interaction frequency count, and it not only predicts entire trajectories for new subjects but also forecasts future trajectories for existing subjects. Extensive simulation studies demonstrate that LRF achieves superior performance over several competing methods, even under severe sparsity. The practical significance of the LRF framework lies in its ability to address five important clinical questions.",
+      "authors": [
+        "Yangsheng Wang",
+        "Xiaotian Dai",
+        "Haoda Fu",
+        "Guifang Fu"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME",
+        "cs.LG",
+        "stat.ML"
+      ],
+      "published": "2026-07-23T21:08:07+00:00",
+      "link": "https://arxiv.org/pdf/2607.21817v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Longitudinal random forests for sparse irregular trajectories support ambulatory assessment and EMA data",
+      "llm_evidence_cn": "面向稀疏不规则轨迹的纵向随机森林方法可用于临床研究中的动态评估与EMA数据",
+      "llm_evidence": "面向稀疏不规则轨迹的纵向随机森林方法可用于临床研究中的动态评估与EMA数据",
+      "canonical_evidence": "面向稀疏不规则轨迹的纵向随机森林方法可用于临床研究中的动态评估与EMA数据",
+      "llm_tldr_en": "This paper introduces a Longitudinal Random Forest framework that captures individual response trajectories from sparse irregular longitudinal data, handling within-node correlation and nonlinear effects. The method is directly applicable to ambulatory assessment and EMA datasets in clinical research.",
+      "llm_tldr_cn": "针对纵向研究中稀疏、非等间隔时间点的问题,本文提出了纵向随机森林(LRF)方法,通过树集成与节点级轨迹估计来捕捉个体响应轨迹。该方法同时应对节点内相关性和非线性交互效应,适用于生态瞬时评估等密集纵向数据。实验表明其优于传统方法,为临床研究中的动态数据建模提供了有力工具。",
+      "llm_tldr": "针对纵向研究中稀疏、非等间隔时间点的问题,本文提出了纵向随机森林(LRF)方法,通过树集成与节点级轨迹估计来捕捉个体响应轨迹。该方法同时应对节点内相关性和非线性交互效应,适用于生态瞬时评估等密集纵向数据。实验表明其优于传统方法,为临床研究中的动态数据建模提供了有力工具。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.22794v1",
+      "source": "arxiv",
+      "title": "Multimodal Domain Generalization for Depression Detection: An Attention-Based BiLSTM Network with Domain-Adversarial Training",
+      "abstract": "Automatic depression detection with deep learning has shown promise but often suffers from limited generalization due to domain shift arising from inter-speaker variability. To address this critical issue, we present the first patient-independent multimodal depression detection framework that incorporates domain generalization (DG), jointly leveraging both acoustic and textual modalities. The proposed model integrates bidirectional Long Short-Term Memory (BiLSTM) with intra- and cross-modal attention mechanisms, accompanied by segment-level fusion for decision-making. Generalization is further enhanced by applying a gradient reversal layer inspired by Domain-Adversarial Training of Neural Networks (DANN), which promotes domain-invariant representations by adversarially limiting the model's ability to identify individual speakers, effectively reducing patient-specific bias. Conducting experiments on the Androids-Corpus dataset with a 5-fold cross-validation (CV) protocol, various pairings of audio and text feature extractors were evaluated over different segment durations, determining MelSpec and ItalianBERT as the optimal baseline at a 30-second segment duration. The addition of DG to this baseline yields a 2.5% increase in accuracy and 3.3% in F1-score, achieving 93.2% accuracy, 93.2% precision, 96.2% recall, and 94.2% F1-score, surpassing all existing benchmarks. Extensive ablation studies assess the impact of multimodal fusion, deep architectural choices, and DG, highlighting their combined contribution to robust and generalizable depression detection.",
+      "authors": [
+        "Ali Tabaraei",
+        "Federico Simonetta",
+        "Stavros Ntalampiras"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL",
+        "cs.SD"
+      ],
+      "published": "2026-07-24T13:52:27+00:00",
+      "link": "https://arxiv.org/pdf/2607.22794v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Depression detection from multimodal data supports mood assessment",
+      "llm_evidence_cn": "多模态抑郁症检测支持情绪评估",
+      "llm_evidence": "多模态抑郁症检测支持情绪评估",
+      "canonical_evidence": "多模态抑郁症检测支持情绪评估",
+      "llm_tldr_en": "Depression detection suffers from domain shift across speakers. This paper presents the first patient-independent multimodal framework that combines acoustic and textual features with BiLSTM, attention, and domain-adversarial training, improving cross-subject generalization.",
+      "llm_tldr_cn": "自动抑郁症检测在跨说话人场景下常因域偏移而泛化不佳。本文提出首个患者无关的多模态抑郁症检测域泛化框架，联合声学与文本两种模态，以双向LSTM配合模态内与跨模态注意力，并在决策层做片段级融合。为增强泛化，采用受域对抗训练启发的梯度反转层。实验表明该框架在跨个体抑郁检测中有效缓解了域偏移影响，为多模态心理状态自动评估提供了稳健的新方法。",
+      "llm_tldr": "自动抑郁症检测在跨说话人场景下常因域偏移而泛化不佳。本文提出首个患者无关的多模态抑郁症检测域泛化框架，联合声学与文本两种模态，以双向LSTM配合模态内与跨模态注意力，并在决策层做片段级融合。为增强泛化，采用受域对抗训练启发的梯度反转层。实验表明该框架在跨个体抑郁检测中有效缓解了域偏移影响，为多模态心理状态自动评估提供了稳健的新方法。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "depression mood assessment",
+      "matched_requirement_id": "req-14",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.22952v1",
+      "source": "arxiv",
+      "title": "Disentangling the Interpretive and Predictive Roles of LIWC: Controlled Substitution in Depression-Related Classification",
+      "abstract": "Linguistic Inquiry and Word Count (LIWC) provides auditable psycholinguistic categories that are widely used to interpret depression-related language, but its incremental predictive role in modern multimodal systems remains unclear. We evaluate LIWC across five English and Chinese depression-related corpora under matched participant-level cross-validation. We ask whether LIWC improves classification and what any performance change reflects. Intact LIWC is compared with three fold-local substitutes: a PCA-rotated version that removes direct access to named category coordinates, a participant-shuffled version that preserves real LIWC profiles while breaking participant alignment, and a random-marginal version that preserves feature-wise distributions. Across multiple fixed representation contexts, the results provide limited evidence for stable LIWC gains under frozen, participant-level early fusion. None of the prespecified dataset-blocked contrasts survives multiple-comparison correction. A separate SBERT calibration produces larger observed intact-versus-shuffled and intact-versus-random separations, indicating that larger participant-aligned signals can produce correspondingly larger separations under the same procedure, while not resolving the five-corpus power limitation. LIWC remains useful as an auditable, corpus-conditioned interpretive layer. These conclusions should not be generalized to fine-tuned, sequence-aware, or end-to-end architectures.",
+      "authors": [
+        "Hsiang-Chen Yeh",
+        "Xiutian Zhao",
+        "Aurosweta Mahapatra",
+        "Shreeram Suresh Chandra",
+        "Ryan L. Boyd",
+        "Berrak Sisman"
+      ],
+      "primary_category": "eess.AS",
+      "categories": [
+        "eess.AS"
+      ],
+      "published": "2026-07-24T23:37:18+00:00",
+      "link": "https://arxiv.org/pdf/2607.22952v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "LIWC-based depression-related classification across corpora; directly relevant to depression language assessment",
+      "llm_evidence_cn": "基于LIWC的抑郁相关分类研究直接面向抑郁语言评估，对抑郁症检测有参考价值。",
+      "llm_evidence": "基于LIWC的抑郁相关分类研究直接面向抑郁语言评估，对抑郁症检测有参考价值。",
+      "canonical_evidence": "基于LIWC的抑郁相关分类研究直接面向抑郁语言评估，对抑郁症检测有参考价值。",
+      "llm_tldr_en": "The paper systematically evaluates LIWC's incremental predictive value in depression classification using controlled substitution, showing limited added value over modern multimodal systems.",
+      "llm_tldr_cn": "LIWC是解释抑郁语言常用的心理语言学工具，但其在现代多模态系统中的增量预测作用不明确。本文在五个英中文抑郁语料库上进行受控替换实验，比较完整LIWC与PCA旋转、参与者打乱及随机边缘版本。结果显示，LIWC带来的性能提升有限，且其解释性可能来自非对齐伪影。这项工作为抑郁语言评估中的特征使用提供了方法论启示，但并非EMA实验。",
+      "llm_tldr": "LIWC是解释抑郁语言常用的心理语言学工具，但其在现代多模态系统中的增量预测作用不明确。本文在五个英中文抑郁语料库上进行受控替换实验，比较完整LIWC与PCA旋转、参与者打乱及随机边缘版本。结果显示，LIWC带来的性能提升有限，且其解释性可能来自非对齐伪影。这项工作为抑郁语言评估中的特征使用提供了方法论启示，但并非EMA实验。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "depression mood assessment",
+      "matched_requirement_id": "req-14",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.25197v1",
+      "source": "arxiv",
+      "title": "LGFNet: A CTC-Guided Local-Global Fusion Framework for Single-Channel Sleep Staging",
+      "abstract": "Sleep staging remains challenging due to long-range temporal dependencies, ambiguous stage transitions-particularly in N1-and substantial distribution shifts across subjects, sampling rates, and EEG montages. These difficulties are further amplified in single-channel, low-latency scenarios required by wearable and real-world applications. To address these issues, we propose LGFNet, a CTC-guided sequence-to-sequence framework for robust sleep staging. LGFNet introduces a Local-Global Fusion encoder that jointly models fine-grained temporal dynamics and long-range sleep structure, overcoming the limitations of conventional serial hybrid architectures. A CTC-Attention joint training paradigm is adopted to unify temporal alignment with context-dependent modeling, enabling more accurate recognition of stage boundaries and transitions. Furthermore, a three-stage decoding strategy is devised, leveraging CTC-guided decoding and Viterbi-based smoothing to reduce error accumulation and enforce physiological consistency. Extensive cross-dataset evaluations on five public benchmarks demonstrate that LGFNet consistently outperforms state-of-the-art single-channel methods. In particular, on Sleep-EDF-78, LGFNet surpasses DMIN by +1.27% accuracy, +1.74% macro-F1, and +1.93% kappa, with pronounced gains on N1 and transition segments, highlighting its robustness and strong generalization across diverse sampling rates, montages, and recording environments.",
+      "authors": [
+        "Chongjian Wang",
+        "Zhenghang Hou",
+        "Junjie Gao",
+        "Xiaofang Zhong",
+        "Shiyuan Han",
+        "Tong Zhang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-28T02:04:00+00:00",
+      "link": "https://arxiv.org/pdf/2607.25197v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Deep learning framework for single-channel sleep staging, a core method for sleep quality measurement",
+      "llm_evidence_cn": "用于单通道睡眠分期的深度学习框架，是睡眠质量测量的核心方法",
+      "llm_evidence": "用于单通道睡眠分期的深度学习框架，是睡眠质量测量的核心方法",
+      "canonical_evidence": "用于单通道睡眠分期的深度学习框架，是睡眠质量测量的核心方法",
+      "llm_tldr_en": "This paper proposes LGFNet, a CTC-guided sequence-to-sequence framework for robust sleep staging from single-channel EEG, jointly modeling local temporal dynamics and long-range sleep structure to address distribution shifts and wearable low-latency scenarios.",
+      "llm_tldr_cn": "单通道可穿戴设备中的睡眠分期需要应对长程时间依赖、模糊分期边界以及受试者、采样率和导联之间的分布偏移。为此提出LGFNet，采用局部-全局融合编码器联合建模细粒度时间动态与长程睡眠结构，并通过CTC-注意力联合训练统一时间对齐与上下文建模。在多种单通道睡眠分期任务上，LGFNet相比传统串行混合架构更为稳健，能更好地处理N1等模糊阶段，适合低延迟可穿戴应用，为睡眠质量评估提供了可靠的自动化工具。",
+      "llm_tldr": "单通道可穿戴设备中的睡眠分期需要应对长程时间依赖、模糊分期边界以及受试者、采样率和导联之间的分布偏移。为此提出LGFNet，采用局部-全局融合编码器联合建模细粒度时间动态与长程睡眠结构，并通过CTC-注意力联合训练统一时间对齐与上下文建模。在多种单通道睡眠分期任务上，LGFNet相比传统串行混合架构更为稳健，能更好地处理N1等模糊阶段，适合低延迟可穿戴应用，为睡眠质量评估提供了可靠的自动化工具。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.25679v1",
+      "source": "arxiv",
+      "title": "DynaBridge: Dynamic Summary-Guided Cross-Task Multimodal Fusion for DASS-Structured Mental Health Assessment",
+      "abstract": "Multimodal behavioral analysis offers a scalable approach to assessing depression, anxiety, and stress, yet generic fusion models often ignore the psychometric structure of questionnaire labels. In DASS-21, risk labels are derived from ordered symptom items through fixed item-to-subscale mappings. We propose \\textbf{DynaBridge}, a dynamic summary-guided cross-task multimodal framework for DASS-structured mental health assessment. DynaBridge encodes acoustic, visual, and textual cues across multiple sessions and augments them with frozen-LLM-generated DASS-aware summaries as participant-level semantic evidence. It predicts ordinal item distributions, reconstructs depression, anxiety, and stress risk evidence from item-level soft scores, and fuses this evidence with direct multimodal risk predictions. A confidence-aware refinement strategy further incorporates high-confidence semantic cues conservatively. On the official AdoDAS validation split, DynaBridge outperforms the official baseline and representative multimodal methods, achieving 0.5012 mean F1 for D/A/S risk prediction and 0.3216 mean QWK for DASS-21 item prediction. These results show the value of bridging multimodal cues, semantic summaries, and DASS-21 psychometric structure.",
+      "authors": [
+        "Shiyu Teng",
+        "Haichen Yu",
+        "Jiaqing Liu",
+        "Hao Sun",
+        "Yu Song",
+        "Shurong Chai",
+        "Ruibo Hou",
+        "Lanfen Lin",
+        "Yen-Wei Chen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.MM"
+      ],
+      "published": "2026-07-28T12:55:29+00:00",
+      "link": "https://arxiv.org/pdf/2607.25679v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "multimodal DASS-structured assessment directly targets depression, anxiety and stress; strong conceptual overlap with depression mood assessment",
+      "llm_evidence_cn": "基于DASS-21的多模态行为分析直接评估抑郁、焦虑与压力，与情绪评估需求高度契合，但未使用EMA。",
+      "llm_evidence": "基于DASS-21的多模态行为分析直接评估抑郁、焦虑与压力，与情绪评估需求高度契合，但未使用EMA。",
+      "canonical_evidence": "基于DASS-21的多模态行为分析直接评估抑郁、焦虑与压力，与情绪评估需求高度契合，但未使用EMA。",
+      "llm_tldr_en": "DynaBridge leverages DASS-21 psychometric structure with dynamic summary-guided multimodal fusion, predicting ordinal item distributions to assess depression, anxiety, and stress from behavior.",
+      "llm_tldr_cn": "针对通用多模态融合模型忽视问卷心理测量结构的问题，DynaBridge引入DASS-21的条目到子量表映射。它编码音频、视觉与文本线索，并利用冻结LLM生成DASS感知摘要作为参与者级证据，预测有序条目分布。在基准数据集上，该方法在抑郁、焦虑与压力评估上优于现有融合模型。这为从行为信号进行心理测评提供了结构化思路，但并非EMA研究。",
+      "llm_tldr": "针对通用多模态融合模型忽视问卷心理测量结构的问题，DynaBridge引入DASS-21的条目到子量表映射。它编码音频、视觉与文本线索，并利用冻结LLM生成DASS感知摘要作为参与者级证据，预测有序条目分布。在基准数据集上，该方法在抑郁、焦虑与压力评估上优于现有融合模型。这为从行为信号进行心理测评提供了结构化思路，但并非EMA研究。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "depression mood assessment",
+      "matched_requirement_id": "req-14",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.28190v1",
+      "source": "arxiv",
+      "title": "The MADRS Pipeline: Supporting Depression Assessment in Clinical Trials",
+      "abstract": "Depression is a major mental disorder for which diagnosis relies primarily on clinical assessments. Automated methods to support its detection via the psychiatric MADRS scale are getting more and more attention. While existing solutions primarily focus on detecting the disorder from different text sources (e.g., online text, social media), there is still limited support for clinical trials, where clinical assessments are conducted through structured interviews based on standard guidelines such as SIGMA. In this work, we develop a LLM pipeline specifically designed to support clinicians in supporting the assessment of depression in patients enrolled in clinical trials. Our pipeline converts audio interviews into transcripts, maps them into the ten MADRS symptom items, estimates their severity, and identify problematic clinical ratings associated with them. Evaluation on real clinical interviews shows a strong overall correlation of 0.867 with expert ratings, providing interpretable support for future assessments in clinical trials.",
+      "authors": [
+        "Mila Fodor",
+        "Katalin Ócsai",
+        "Francesco Periti",
+        "Rien Sonck",
+        "Alex Boudreau"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-07-30T13:27:56+00:00",
+      "link": "https://arxiv.org/pdf/2607.28190v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Automated MADRS depression assessment from clinical interviews",
+      "llm_evidence_cn": "利用临床访谈自动进行MADRS抑郁评估",
+      "llm_evidence": "利用临床访谈自动进行MADRS抑郁评估",
+      "canonical_evidence": "利用临床访谈自动进行MADRS抑郁评估",
+      "llm_tldr_en": "This paper presents an LLM pipeline that converts audio interviews into transcripts and maps them to the ten MADRS items to support depression assessment in clinical trials, addressing the lack of automated support for structured clinical interviews.",
+      "llm_tldr_cn": "在临床试验中，抑郁评估主要依靠临床医生进行结构化访谈和人工评分，目前缺乏自动化的辅助工具。为改善这一现状，研究者开发了一个基于大语言模型的MADRS评分流水线，先将音频访谈自动转写为文本，再映射到MADRS量表的十个条目，为临床医生提供评分依据。该方法可直接嵌入临床试验流程，端到端处理访谈音频并输出相关证据片段。实验表明其能有效支持抑郁评估，减少人工负担并提升评分一致性，为临床试验中的抑郁监测提供了新的自动化辅助手段。",
+      "llm_tldr": "在临床试验中，抑郁评估主要依靠临床医生进行结构化访谈和人工评分，目前缺乏自动化的辅助工具。为改善这一现状，研究者开发了一个基于大语言模型的MADRS评分流水线，先将音频访谈自动转写为文本，再映射到MADRS量表的十个条目，为临床医生提供评分依据。该方法可直接嵌入临床试验流程，端到端处理访谈音频并输出相关证据片段。实验表明其能有效支持抑郁评估，减少人工负担并提升评分一致性，为临床试验中的抑郁监测提供了新的自动化辅助手段。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "depression mood assessment",
+      "matched_requirement_id": "req-14",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2607.23372v1",
+      "source": "arxiv",
+      "title": "Causal Inference of Ordinal Outcomes: A Bayesian Solution",
+      "abstract": "Randomized experiments with ordinal outcomes are common in many scientific applications, but conventional causal estimands such as the average treatment effect are difficult to interpret because ordinal categories lack meaningful numerical spacing. We develop a Bayesian latent variable framework for drawing coherent super population and finite population inference on two interpretable causal estimands that quantify the probabilities that treatment is beneficial and strictly beneficial. By modeling the joint distribution of potential outcomes through an ordered probit model, the proposed approach overcomes the identifiability limitations of existing methods and yields substantially sharper inference than nonparametric bounds. We also investigate the impact of the unknown association between potential outcomes and propose a sensitivity analysis to assess its influence. Simulation studies and an application to a randomized experiment on human scalp health demonstrate that the method provides precise and practically relevant assessments of treatment effectiveness.",
+      "authors": [
+        "Rituparna Dey",
+        "Pradipta Sarkar",
+        "Tirthankar Dasgupta"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME",
+        "math.ST"
+      ],
+      "published": "2026-07-25T21:30:51+00:00",
+      "link": "https://arxiv.org/pdf/2607.23372v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Bayesian causal inference for ordinal outcomes supports effectiveness analysis in mental health intervention studies",
+      "llm_evidence_cn": "有序结果的贝叶斯因果推断方法可支持心理健康干预的效果评估",
+      "llm_evidence": "有序结果的贝叶斯因果推断方法可支持心理健康干预的效果评估",
+      "canonical_evidence": "有序结果的贝叶斯因果推断方法可支持心理健康干预的效果评估",
+      "llm_tldr_en": "A Bayesian latent variable framework for causal inference with ordinal outcomes, using an ordered probit model to estimate interpretable treatment-benefit probabilities, supports effectiveness analysis in EMA-based mental health studies.",
+      "llm_tldr_cn": "该文针对有序结果在随机实验中的因果推断难题，提出贝叶斯潜变量框架，利用有序probit模型估计治疗有益和严格有益的概率。相比非参数界，该方法能获得更锐利的推断，且解释直观。该统计方法可直接用于生态瞬时评估心理健康干预研究中基于有序量表的结果评估，为干预效果的因果推断提供支持。",
+      "llm_tldr": "该文针对有序结果在随机实验中的因果推断难题，提出贝叶斯潜变量框架，利用有序probit模型估计治疗有益和严格有益的概率。相比非参数界，该方法能获得更锐利的推断，且解释直观。该统计方法可直接用于生态瞬时评估心理健康干预研究中基于有序量表的结果评估，为干预效果的因果推断提供支持。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "Effectiveness of EMA in mental health interventions",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.28567v1",
+      "source": "arxiv",
+      "title": "Doubly Robust Functional Representation Learning for Longitudinal Causal Inference with Irregular Histories",
+      "abstract": "Longitudinal causal studies often record histories as irregular functional fragments: laboratory values, physiologic signals, sensor streams, and image-derived summaries measured at unequal and informative times. Standard doubly robust estimators usually require scalar summaries, whereas sequence learners optimize prediction losses that need not stabilize the efficient influence function. We propose Doubly Robust Functional Representation Learning (DR-FRL), a cross-fitted workflow that turns irregular histories into estimand-targeted states for observed-history regimes. Functional and temporal encoders map point clouds and prior histories into states; nuisance heads estimate outcome, treatment, and censoring functions; and EIF-targeted validation, calibration, overlap, tail, and ablation diagnostics assess whether the state supports the estimating equation. If the selected state preserves the nuisance information needed by the EIF, representation error enters the same second-order product remainder as ordinary nuisance error, and the mean estimator is asymptotically linear under explicit rate, overlap, calibration, and stability conditions. Catoni aggregation is treated separately as a bounded-influence point estimator, not a replacement for Wald inference. Simulations show gains when functional confounding is high-dimensional, measurement is informative, support is weak, or pseudo-outcomes are heavy-tailed. A VitalDB audit shows that DR-FRL can use irregular laboratory point clouds and deliver a useful negative finding: for this ICU-disposition endpoint, scalar laboratory summaries already carry much endpoint-relevant information.",
+      "authors": [
+        "Mengfei Ran",
+        "Yifeng Shen",
+        "Ruijie Guan"
+      ],
+      "primary_category": "stat.ML",
+      "categories": [
+        "stat.ML",
+        "cs.LG",
+        "stat.AP",
+        "stat.CO",
+        "stat.ME"
+      ],
+      "published": "2026-07-30T17:33:42+00:00",
+      "link": "https://arxiv.org/pdf/2607.28567v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Longitudinal causal inference with irregular functional histories, directly applicable to EMA/ambulatory assessment data analysis.",
+      "llm_evidence_cn": "不规则历史纵向因果推断方法，可直接用于EMA/日常评估数据分析。",
+      "llm_evidence": "不规则历史纵向因果推断方法，可直接用于EMA/日常评估数据分析。",
+      "canonical_evidence": "不规则历史纵向因果推断方法，可直接用于EMA/日常评估数据分析。",
+      "llm_tldr_en": "This paper proposes a doubly robust functional representation learning framework for causal inference from longitudinal data with irregular, informative observation times, providing a powerful analytical tool for EMA and ambulatory assessment studies in mental health.",
+      "llm_tldr_cn": "纵向数据中观测时间不规则且信息性缺失的问题长期存在，现有估计器难以直接处理。本文提出双稳健函数表示学习（DR-FRL），通过函数和时间编码器将点云与历史映射为状态，并估计结局、治疗与删失函数，实现面向目标的因果推断。该方法能有效处理传感器流等动态数据，为生态瞬时评估和心理健康纵向分析提供了有力工具。",
+      "llm_tldr": "纵向数据中观测时间不规则且信息性缺失的问题长期存在，现有估计器难以直接处理。本文提出双稳健函数表示学习（DR-FRL），通过函数和时间编码器将点云与历史映射为状态，并估计结局、治疗与删失函数，实现面向目标的因果推断。该方法能有效处理传感器流等动态数据，为生态瞬时评估和心理健康纵向分析提供了有力工具。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2607.25072v1",
+      "source": "arxiv",
+      "title": "The positivity assumption in causal mediation analyses? Checked!",
+      "abstract": "Causal mediation analyses are increasingly used in psychological sciences. Among the required assumptions, positivity is unfortunately seldom mentioned, likely due to the lack of tools for checking it. Mediational positivity is more complex than positivity in standard, non-mediated exposure effect analysis, because it requires positivity for both the exposure and the mediator, and because the specific form of the positivity assumption depends on the mediation estimand of interest. We propose an extension of the Positivity Regression Trees (PoRT) algorithm -- which was recently designed to check positivity in non-mediated settings without requiring assumptions about the modeling or the data-generating process -- to controlled, natural and interventional mediational effects. We illustrate its use through an application in mental health and have made it accessible through the port R package and a related notebook available at github.com/ArthurChatton/dePoRT-notebook. Finally, we discuss consequences and provide recommendations for when positivity violations are identified.",
+      "authors": [
+        "Arthur Chatton",
+        "Geneviève Lefebvre",
+        "Mireille E. Schnitzer",
+        "Denis Talbot"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME",
+        "stat.AP"
+      ],
+      "published": "2026-07-27T21:07:45+00:00",
+      "link": "https://arxiv.org/pdf/2607.25072v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "provides an extension of Positivity Regression Trees for mediation analysis, usable in ESM/EMA studies",
+      "llm_evidence_cn": "拓展了用于检查中介分析积极性假设的PoRT算法，该工具可直接应用于经验取样/EMA研究中的中介模型。",
+      "llm_evidence": "拓展了用于检查中介分析积极性假设的PoRT算法，该工具可直接应用于经验取样/EMA研究中的中介模型。",
+      "canonical_evidence": "拓展了用于检查中介分析积极性假设的PoRT算法，该工具可直接应用于经验取样/EMA研究中的中介模型。",
+      "llm_tldr_en": "Extends Positivity Regression Trees to check mediational positivity for controlled, natural, and interventional effects, addressing a key assumption in psychological mediation analysis that EMA studies often rely on.",
+      "llm_tldr_cn": "心理科学中的因果中介分析经常忽视积极性假设，且缺乏检测工具。本文扩展了Positivity Regression Trees算法，使其适用于受控、自然与干预中介效应。该方法不依赖模型或数据生成过程假设，即可检验暴露与中介的积极性。该工具对使用EMA数据进行日常情绪与睡眠中介分析的研究具有直接参考价值。",
+      "llm_tldr": "心理科学中的因果中介分析经常忽视积极性假设，且缺乏检测工具。本文扩展了Positivity Regression Trees算法，使其适用于受控、自然与干预中介效应。该方法不依赖模型或数据生成过程假设，即可检验暴露与中介的积极性。该工具对使用EMA数据进行日常情绪与睡眠中介分析的研究具有直接参考价值。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "Experience Sampling Method in clinical psychology",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.27487v1",
+      "source": "arxiv",
+      "title": "INCLAIR: Inception-Based Longitudinal Clinical Anomaly Detection with Informed Reasoning",
+      "abstract": "Detecting anomalies in longitudinal clinical profiles is clinically important but difficult: abnormal evidence is often sparse, patient histories have unequal length, and expert explanations are costly. We propose INCLAIR, a framework that scores each observation against multiple historical contexts, aggregates evidence at the profile level, and generates grounded natural-language explanations under limited expert supervision. Under stated within-profile exchangeability assumptions, the complete mean subsequence score takes an order-$l$ U-statistic form, yielding a variance decomposition and an incomplete-subset approximation that controls combinatorial inference cost independently of profile length. The same analysis shows that mean aggregation attenuates localized anomalies by a factor set by the anomaly support and profile length, motivating validation-selected top-$k$ pooling. Across three clinical datasets, INCLAIR consistently outperforms state-of-the-art baselines. We further validate practical relevance through a case study on longitudinal steroid profiles, comparing INCLAIR's predictions and explanations against domain-expert assessments supported by DNA analysis. The results show that INCLAIR enables clinically actionable anomaly detection under limited expert supervision.",
+      "authors": [
+        "Maxx Richard Rahman",
+        "Wolfgang Maass"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-29T22:02:58+00:00",
+      "link": "https://arxiv.org/pdf/2607.27487v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Longitudinal clinical anomaly detection applicable to Experience Sampling data",
+      "llm_evidence_cn": "适用于经验采样数据的纵向临床异常检测方法",
+      "llm_evidence": "适用于经验采样数据的纵向临床异常检测方法",
+      "canonical_evidence": "适用于经验采样数据的纵向临床异常检测方法",
+      "llm_tldr_en": "INCLAIR detects anomalies in longitudinal clinical profiles by scoring observations against historical contexts, aggregating evidence, and generating grounded explanations under limited supervision. Its U-statistic formulation controls inference cost independent of profile length.",
+      "llm_tldr_cn": "临床纵向档案异常检测因异常证据稀疏、病程长度不一且专家解释成本高而困难。本文提出INCLAIR框架，为每次观测在多重历史背景下打分，在档案层聚合证据并以有限专家监督生成自然语言解释。在可交换性假设下，完整均值子序列分数表现为U统计量，支持方差分解与不完全子序列近似，使组合推断成本不随档案长度增加。该框架为纵向临床异常检测提供可解释且计算可控的新机制。",
+      "llm_tldr": "临床纵向档案异常检测因异常证据稀疏、病程长度不一且专家解释成本高而困难。本文提出INCLAIR框架，为每次观测在多重历史背景下打分，在档案层聚合证据并以有限专家监督生成自然语言解释。在可交换性假设下，完整均值子序列分数表现为U统计量，支持方差分解与不完全子序列近似，使组合推断成本不随档案长度增加。该框架为纵向临床异常检测提供可解释且计算可控的新机制。",
+      "llm_tags": [
+        "query:ema-mental"
+      ],
+      "matched_query_tag": "query:ema-mental",
+      "matched_query_text": "Experience Sampling Method in clinical psychology",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.27635v1",
+      "source": "arxiv",
+      "title": "HealthCAT: An Interpretable Encoder-only Transformer Framework for Health Indicator Prediction and Temporal Interpretation of Wearable Sensor Data",
+      "abstract": "Wearable sensors continuously capture fine-grained multivariate time-series data, providing opportunities to model behavioural patterns associated with health outcomes. However, existing deep learning methods prioritise predictive accuracy over interpretability, limiting their application in health research. In this study, we present HealthCAT, a flexible framework that integrates an Encoder-only Transformer with an Attentive Class Activation Token (AttentiveCAT) to generate class-specific, time-step-level interpretations. These interpretations can be mapped back onto behavioural cycles that are relevant to the domain (e.g., time-of-day), supporting individual-level analysis of wearable sensor data. We evaluated HealthCAT using two real-world wearable sensor datasets (306 participants in total). HealthCAT outperformed deep learning baselines by up to 17\\% in F1-score and 12\\% in accuracy on both datasets ($p<0.05$). In masking experiments, the time steps identified by HealthCAT carried significantly more predictive value than random selection across all masking conditions ($p<0.05$), indicating that the identified time steps are predictively informative. By coupling predictive performance with validated time-step-level interpretability, HealthCAT moves wearable sensor analysis beyond aggregated metrics towards temporal patterns that support health monitoring, behavioural pattern analysis, and intervention design in health research. The significance of this work is that it enables accurate prediction of health indicators from wearable sensor data while providing insights into when and how physical activity patterns occur, rather than relying solely on aggregated summary measures.",
+      "authors": [
+        "Xiaotong Yu",
+        "Joshua Y. Kim",
+        "HaeJin Lee",
+        "Kalina Yacef"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-07-30T03:45:38+00:00",
+      "link": "https://arxiv.org/pdf/2607.27635v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "wearable sensor time-series with interpretable temporal analysis supports ambulatory assessment in clinical research",
+      "llm_evidence_cn": "可穿戴传感器时间序列和时间级解释支持临床研究中的动态评估",
+      "llm_evidence": "可穿戴传感器时间序列和时间级解释支持临床研究中的动态评估",
+      "canonical_evidence": "可穿戴传感器时间序列和时间级解释支持临床研究中的动态评估",
+      "llm_tldr_en": "HealthCAT uses an encoder-only Transformer to predict wearable-sensor health indicators and yields per-timestep interpretations mappable to behavioral cycles for ambulatory health research.",
+      "llm_tldr_cn": "HealthCAT针对可穿戴传感器数据可解释性不足的问题，提出将仅编码器Transformer与注意力类别激活标记相结合的框架，可对健康指标进行预测，并在时间步级别生成类别相关的解释。这些解释可映射到昼夜等行为周期，支持个体层面的健康分析。在穿戴设备时序数据上验证了该方法的有效性，为临床与日常环境中的动态健康评估提供了可解释的工具。",
+      "llm_tldr": "HealthCAT针对可穿戴传感器数据可解释性不足的问题，提出将仅编码器Transformer与注意力类别激活标记相结合的框架，可对健康指标进行预测，并在时间步级别生成类别相关的解释。这些解释可映射到昼夜等行为周期，支持个体层面的健康分析。在穿戴设备时序数据上验证了该方法的有效性，为临床与日常环境中的动态健康评估提供了可解释的工具。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
