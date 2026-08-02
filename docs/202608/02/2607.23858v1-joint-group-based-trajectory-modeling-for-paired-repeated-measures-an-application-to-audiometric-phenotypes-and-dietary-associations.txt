@@ -1,0 +1,1198 @@
+Title: Joint Group-Based Trajectory Modeling for Paired Repeated Measures: An Application to Audiometric Phenotypes and Dietary Associations
+
+URL Source: https://arxiv.org/pdf/2607.23858v1
+
+Published Time: Tue, 28 Jul 2026 01:20:59 GMT
+
+Number of Pages: 21
+
+Markdown Content:
+# Joint Group-Based Trajectory Modeling for Paired Repeated Measures: An Application to Audiometric Phenotypes and Dietary Associations 
+
+Ying Chen 1 Sharon Curhan 2,3 Kenneth I. Vaden Jr 4 Judy R. Dubno 4 Molin Wang 1,2,3,5
+
+> 1
+
+Department of Epidemiology, Harvard T.H. School of Public Health , e-mail: 
+
+ying chen@hsph.harvard.edu 
+
+> 2
+
+Harvard Medical School , e-mail: scurhan@bwh.harvard.edu 
+
+> 3
+
+Department of Medicine, Brigham and Womens Hospital , 
+
+> 4
+
+Department of Otolaryngology-Head and Neck Surgery, Medical University of South Carolina, e-mail: vaden@musc.edu ; dubnojr@musc.edu 
+
+> 5
+
+Department of Biostatistics, Harvard T.H. School of Public Health , e-mail: 
+
+stmow@channing.harvard.edu 
+
+Abstract: The assumption of conditional independence in conventional group-based trajectory modeling (GBTM) is often violated by paired repeated-measures data with heterogeneous trajectory patterns. While random-effects models can accommodate this dependence, they inflate within-group vari-ability and blur distinct phenotypic shapes. We propose a joint GBTM framework that explicitly models hierarchical dependence in paired trajec-tories while allowing them to follow different latent patterns. We develop a robust two-stage approach to address estimation challenges caused by rare latent groups, and a one-stage EM algorithm that serves as a theo-retical baseline under balanced group sizes. Simulations demonstrate that our methods correct the biases caused by ignoring hierarchical dependence. The proposed model was applied to real-world data from the Conserva-tion of Hearing Study (CHEARS) Audiology Assessment Arm (AAA), a subcohort of the Nurses’ Health Study II (NHS II), to identify distinct audiometric phenotypes and to investigate the association between the Di-etary Approaches to Stop Hypertension (DASH) dietary adherence score and the latent audiometric patterns. 
+
+Keywords and phrases: Group-based trajectory modeling, paired re-peated measurements, mixture modeling, multilevel correlation, audiomet-ric multilevel clustering. 
+
+1. Introduction 
+
+Identifying distinct patterns in repeated measurement data is essential for un-derstanding disease progression and population heterogeneity in biological and medical research. The latent class growth analysis or group-based trajectory modeling (GBTM) ( Nagin , 1999 ; Jones, Nagin and Roeder , 2001 ; Nagin , 2005 ), 
+
+1arXiv:2607.23858v1 [stat.ME] 26 Jul 2026 /Joint GBTM for Paired Repeated Measures 2
+
+a widely used finite mixture model-based framework in clinical research, provides a flexible framework to capture this heterogeneity by uncovering latent groups with distinct trajectory patterns. Comprehensive reviews of GBTM are available in Nagin and Odgers (2010a ,b). Despite their flexibility, conventional GBTMs generally rely on the assumption of conditional independence of trajectories given latent group membership. This assumption may not hold in the context of paired repeated measurement data, such as when a single participant con-tributes two potentially correlated trajectories from paired organs (e.g., the two ears, kidneys, or lungs). Ignoring this inherent hierarchical covariance and apply-ing GBTM naively can result in biased parameter estimates, trajectory misclas-sification, and misleading inferences regarding the associations between expo-sures and latent group memberships ( Goldstein , 2011 ; Davies, Glonek and Giles ,
+
+2017 ). Our work is motivated by the Conservation of Hearing Study (CHEARS), which investigates risk factors for acquired hearing loss among participants in several large ongoing cohorts, including the Nurses’ Health Study II (NHS II). In 1989, NHS II enrolled 116 , 430 US female registered nurses aged 25– 42 years in 1989 ( Curhan et al. , 2018 ). In a subcohort of the NHS II, the CHEARS Audiology Assessment Arm (AAA), 3136 participants have under-gone clinical audiometric assessments in 2012–2014 ( Curhan et al. , 2020 ), with air-conduction hearing thresholds measured across seven pure-tone frequencies (500 , 1000 , 2000 , 3000 , 4000 , 6000 , 8000 Hz) in both ears. The CHEARS-AAA hearing threshold data exhibit a two-level hierarchical dependence structure: hearing thresholds across different frequencies are correlated within each ear, and the two ears are correlated within the same participant through both same-frequency and cross-frequency dependence due to shared participant-level risk factors. In this study, we aim to identify distinct audiometric patterns based on hearing thresholds across pure-tone frequencies in both ears, and to assess their associations with the Dietary Approaches to Stop Hypertension (DASH) dietary adherence score. In related applications, paired data arising from such multilevel clustering are often analyzed at one level due to the lack of appropriate methods. For example, previous studies have applied supervised learning ( Dubno et al. , 2013 ; Vaden et al. , 2017 ) or Gaussian mixture models (Parthasarathy et al. , 2020 ) to classify audiometric patterns for the left and right ears separately. While recent approaches attempt to address between-ear dependence ( Yang et al. , 2024 ), they rely on predefined phenotypes and only account for the correlation marginally after classification. By overlooking the full joint hierarchical correlation structure inherent in paired repeated measure-ments, these existing methods may lead to information loss and potentially biased inference. Existing trajectory analyses handling multilevel dependence frequently utilize Growth Mixture Models (GMM) ( Muth´ en and Shedden , 1999 ; Proust-Lima, Philipps and Liquet ,
+
+2017 ), the inclusion of multilevel random effects, however, assumes the existence of literal subpopulations with natural within-group variation ( Ng and McLachlan ,
+
+2014 ; Sheng et al. , 2022 ). When the objective is to approximate a continuous dis-tribution of trajectories into strict prototypical groups, GBTM is conceptually /Joint GBTM for Paired Repeated Measures 3
+
+more appropriate than GMM ( Nagin and Odgers , 2010b ). For the CHEARS-AAA data, GBTM aligns directly with our clinical objective because it strictly separates these audiometric trajectories into distinct phenotypic groups, with-out allowing random effects to obscure the underlying patterns. Nevertheless, existing GBTM extensions are ill-equipped for paired trajectory data. Group-based dual-trajectory modeling ( Nagin and Tremblay , 2001 ) accommodates re-lated trajectories, but it models dependence merely via linking probabilities be-tween independent group assignments. Conversely, group-based multi-trajectory modeling ( Nagin et al. , 2018 ) establishes a joint profile, but it forces both paired trajectories to share a single latent group assignment and relies on the assump-tion of conditional independence between them. To our knowledge, no GBTM framework currently exists that can simultaneously (i) handle the hierarchi-cal correlation inherent in paired trajectories, and (ii) jointly model the paired trajectories while permitting them to be assigned to different latent groups. To address the aforementioned methodological gap and appropriately ac-count for the hierarchical dependence in the CHEARS-AAA data, we propose a joint GBTM framework that incorporates residual covariance matrix while allowing paired trajectories to be assigned to different latent groups. While GBTM is typically applied to longitudinal data to model changes over time, the method is directly applicable to data measured across any ordered domain (Nagin , 2005 ). In our analysis of the CHEARS-AAA data, we define trajec-tories over an ordered sequence of frequencies rather than time, constructing audiogram trajectories to characterize and classify clinical patterns of hear-ing loss. Although the joint modeling approach is conceptually appealing, its specific formulation presents both methodologically and computationally chal-lenges. Given that paired trajectories can belong to different phenotypes, relax-ing the assumption of conditional independence requires maximizing a complex joint likelihood function across all possible combinatorial group assignments, which poses optimization challenges and identifiability issue, particularly when rare latent groups are present. To make this framework practically feasible, we provide two likelihood-based estimation procedures. First, we propose a compu-tationally robust two-stage approach to address identifiability challenges caused by rare latent groups. Specifically, we fit a covariate-free mixture to obtain group membership assignments probabilities, then link these probabilities to exposures via a mixed-effects multinomial logistic model. Second, we develop a statistically efficient one-stage approach as a theoretical baseline that achieves full maximum likelihood estimation, recommended for studies with balanced group sizes and adequate sample sizes. The rest of this paper is organized as follows: In Section 2, we introduce the notation of GBTM, outline the proposed model, and in Section 3, we describe two iterative estimation approaches and implementation details. In Section 4, the proposed approaches are validated through simulation studies and in Section 5, these approaches are applied to the CHEARS-AAA data. Section 6 concludes with a brief discussion. /Joint GBTM for Paired Repeated Measures 4
+
+2. Methods 
+
+2.1. GBTM for paired repeated measurements 
+
+We present the proposed GBTM for paired repeated measurements using the CHEARS-AAA dataset as an illustration. Suppose we observe paired hearing threshold measurements Yi = ( Y ⊤ 
+
+> i1
+
+, Y ⊤ 
+
+> i2
+
+)⊤, where Yij = ( Yij 1 , . . . , Y ijQ )⊤ de-notes a vector of thresholds across frequencies with Yijq the hearing measure-ment for ear j of participant i at frequency hq for q = 1 , . . . , Q , j = 1 , 2, i =1, . . . , n . Let Kij ∈ { 1, . . . , K } denote the latent group membership for ear j of participant i, and ϕk = ( ϕk0 , . . . , ϕ kp )⊤ is a vector of basis function coefficients for group k. Conditional on the joint group memberships ( Ki1, K i2) = ( k1, k 2), where k1 and k2 are not necessarily identical, we assume the joint model for the paired trajectories Yi:
+
+Yi|(k1,k 2 ) = ( I2 ⊗ W )ϕk1 ,k 2 + εi,
+
+where ϕk1 ,k 2 = ( ϕ⊤ 
+
+> k1
+
+, ϕ⊤ 
+
+> k2
+
+)⊤, εi = ( ε⊤
+
+> i1
+
+, ε⊤
+
+> i2
+
+)⊤ is the error terms, I2 is the 2-dimensional identity matrix, and W is a design matrix constructed from func-tional basis terms of the ordered frequencies thresholds h1, . . . , h Q, which is specified as 
+
+W =
+
+
+
+1 h1 g⊤(h1)1 h2 g⊤(h2)... ... ...1 hQ g⊤(hQ)
+
+ ,
+
+with g(hq) representing a vector of nonlinear terms of hq. We assume the er-ror vector εi ∼ MVN( 0, Σk1 k2 ) conditional on group assignments ( k1, k 2), and 
+
+Σ⊤ 
+
+> k1k2
+
+= Σk1 k2 . We further decompose 
+
+Σk1 k2 = ( I2 ⊗ V )Λk1 k2 (I2 ⊗ V ), (1) where V is a Q×Q diagonal matrix of standard deviations across the Q frequen-cies, and Λk1k2 is the 2 Q×2Q joint correlation matrix for the paired trajectories. 
+
+2.2. Model for the joint mixing probabilities 
+
+We let πk denote the marginal assignment probability of group k, i.e., P (Kij =
+
+k) = πk , and assume a covariate-dependent model for πk as in the mixture-of-experts model ( Jordan and Jacobs , 1994 ). Let Xij = [1 , x⊤ 
+
+> ij
+
+]⊤, where xij 
+
+is a vector of risk factors associated with ear j of participant i. The mixing proportion of a single ear j is, 
+
+πk(Xij |bi) = exp {X⊤ 
+
+> ij
+
+βk + bik }
+
+1 + ∑Kℓ=2 exp {X⊤ 
+
+> ij
+
+βℓ + biℓ } , for k = 2 , . . . , K, /Joint GBTM for Paired Repeated Measures 5
+
+and π1(Xij |bi) = 1 − ∑Kℓ=2 πℓ(Xij |bi), where βk is a vector of unknown logistic regression coefficients for group k, bi = ( bi2, . . . , b iK )⊤ ∼ MVN( 0, Γ) is an unob-servable vector of random effects with covariance matrix Γ = diag {γ2, . . . , γ K }.Conditional on bi, we define the joint mixing proportion πk1 k2 (Xij |bi) = P (Ki1 =
+
+k1, K i2 = k2|bi) for phenotype pair ( k1, k 2) is specified as 
+
+πk1 k2 (Xi|bi) = πk1 (Xi1|bi)πk2 (Xi2|bi).
+
+2.3. The complete-data likelihood function 
+
+We assume that the paired trajectories Yi follow from a mixture model with 
+
+K × K group pairs, 
+
+Yi ∼
+
+> K
+
+∑
+
+> k1=1
+> K
+
+∑ 
+
+> k2=1
+
+πk1 k2 fk1k2 (Yi; ( I2 ⊗ W )ϕk1 ,k 2 , Σk1k2 ),
+
+where fk1 k2 (Yi; ( I2 ⊗ W )ϕk1 ,k 2 , Σk1 k2 ) is the multivariate normal density func-tion with the mean vector ( I2 ⊗W )ϕk1 ,k 2 and variance matrix Σk1 k2 conditional on joint group ( k1, k 2). Let Θ = {β, ϕ, Γ, Σ} denote the full set of unknown parameters, where 
+
+β = ( β⊤ 
+
+> 2
+
+, . . . , β⊤ 
+
+> K
+
+)⊤, ϕ = ( ϕ⊤ 
+
+> 1
+
+, . . . , ϕ⊤ 
+
+> K
+
+)⊤, and Σ = {Σk, Σk1k2 ; k, k 1, k 2 =1, . . . , K }. Given n independent observations Y = {(Xi, Yi); i = 1 , . . . , n }, we propose the following log-likelihood function for all n paired trajectories: 
+
+L(Θ; Y) = 
+
+> n
+
+∑
+
+> i=1
+
+log 
+
+> K
+
+∑ 
+
+> k1=1
+> K
+
+∑ 
+
+> k2=1
+
+∫
+
+> bi
+
+πk1 k2 (Xi|bi)fk1k2 (Yi; ( I2⊗W )ϕk1,k 2 , Σk1 k2 )f (bi; 0, Γ) d bi,
+
+(2) where f (bi) is the normal density function of random effects bi.We introduce latent variables Zik 1 k2 = I(Ki1 = k1, K i2 = k2) and let Z =
+
+{Zik 1k2 ; k1, k 2 = 1 , . . . , K, i = 1 , . . . , n } denote the set of all latent variables. By treating phenotype pair ( Ki1, K i2) as incomplete data, the complete log-likelihood function for all n paired trajectories is given by 
+
+Lc(Θ; Y, Z) = 
+
+> n
+
+∑
+
+> i=1
+> K
+
+∑ 
+
+> k1=1
+> K
+
+∑ 
+
+> k2=1
+
+Zik 1 k2 log fk1k2 (Yi; ( I2 ⊗ W )ϕk1 ,k 2 , Σk1k2 )+
+
+> n
+
+∑
+
+> i=1
+
+
+
+> K
+
+∑ 
+
+> k1=1
+> K
+
+∑ 
+
+> k2=1
+
+Zik 1 k2 log 
+
+∫
+
+> bi
+
+πk1 k2 (Xi|bi; β)f (bi; 0, Γ) d bi
+
+ .
+
+(3) 
+
+2.4. Hierarchical dependence structure in CHEARS-AAA data 
+
+In the CHEARS-AAA data, hearing thresholds are correlated both within and between ears. Within each ear, thresholds at neighboring frequencies tend to /Joint GBTM for Paired Repeated Measures 6
+
+move together; between ears, correlations arise because both ears share common risk factors (e.g., noise exposure, systemic disease). To accommodate this hier-archical correlation, we consider the following exchangeable structures for both within-ear and between ear correlations. We assume ρ(k)1 is the correlation coef-ficient between two frequencies within an ear assigned to phenotype k, ρ(k1,k 2 )2
+
+is between-ear correlation coefficient at the same frequency for ears assigned to phenotypes k1 and k2, and the correlation coefficient for different frequencies across the two ears is given by ρ(k1 ,k 2)2 ρ(k1 ,k 2)3 , with ρ(k1,k 2 )3 reflecting the reduc-tion in correlation for different-frequency pairs between two ears. All correlation coefficients satisfy 0 < ρ (k)1 , ρ (k1 ,k 2)2 , ρ (k1 ,k 2)3 < 1 , for k, k 1, k 2 = 1 , . . . , K . Let 
+
+Λk be the within-ear correlation matrix when a single ear is assigned to phe-notype k, and Ck1k2 the between-ear correlation matrix when the two ears are assigned to phenotypes k1 and k2. We have Λk1 k2 =
+
+( Λk1 Ck1k2
+
+Ck1 k2 Λk2
+
+)
+
+, and 
+
+Λk =
+
+
+
+1 ρ(k)1 . . . ρ(k)1
+
+ρ(k)1 1 . . . ρ(k)1
+
+... . . . ...
+
+ρ(k)1 ρ(k)1 . . . 1
+
+
+
+, Ck1k2 = ρ(k1,k 2 )2
+
+
+
+1 ρ(k1 ,k 2)3 . . . ρ(k1 ,k 2)3
+
+ρ(k1 ,k 2)3 1 . . . ρ(k1 ,k 2)3
+
+... . . . ...
+
+ρ(k1 ,k 2)3 ρ(k1 ,k 2)3 . . . 1
+
+
+
+.
+
+(4) Exploratory analyses of the CHEARS-AAA data indicated that measurement variability increases approximately linearly across higher frequencies ( Curhan et al. ,
+
+2018 ), we therefore adopt a linear parameterization to ensure model parsimony and avoid over-parameterization. Specifically, we assume V = diag( σ0 +σ1, σ 0 +2σ1, . . . , σ 0 + Qσ 1), where σ0 and σ1 are variance parameters shared across the frequencies and groups. 
+
+3. Estimation methods 
+
+The estimator for the parameters Θ is defined as the maximum likelihood esti-mate of the marginal likelihood L(Θ; Y) in ( 2). Because of the presence of la-tent group indicators and random effects, we employ a generalized Expectation-Maximization (EM) framework ( Jordan and Jacobs , 1994 ) based on the complete-data log-likelihood Lc(Θ; Y, Z) in ( 3). In contrast to standard mixture models with only within-trajectory correlations, the parameters ϕ1, . . . , ϕK cannot be estimated independently during the maximization step. The correlations be-tween paired trajectories within a cluster induce dependence across the latent groups, requiring a joint updating procedure. 
+
+3.1. One-stage approach 
+
+Partitioning the parameters Θ as Θ1 = {ϕ, Σ} and Θ2 = {β, Γ}, the condi-tional expectation of complete-data log-likelihood Lc(Θ; Y, Z|Y, ˆΘ(ν)), denoted /Joint GBTM for Paired Repeated Measures 7
+
+by U (Θ| ˆΘ(ν)), can be written as U1(Θ1| ˆΘ(ν)) + U2(Θ2| ˆΘ(ν)), where 
+
+U1(Θ1| ˆΘ(ν)) = 
+
+> n
+
+∑
+
+> i=1
+> K
+
+∑ 
+
+> k1=1
+> K
+
+∑
+
+> k2=1
+
+τ (ν)  
+
+> ik 1k2
+
+log fk1k2 (Yi; ( I2 ⊗ W ) ˆ ϕ(ν)  
+
+> k1,k 2
+
+, ˆΣ(ν) 
+
+> k1k2
+
+), (5) 
+
+U2(Θ2| ˆΘ(ν)) = 
+
+> n
+
+∑
+
+> i=1
+> K
+
+∑ 
+
+> k1=1
+> K
+
+∑
+
+> k2=1
+
+τ (ν)  
+
+> ik 1k2
+
+log 
+
+∫
+
+> bi
+
+πk1 k2 (Xi|bi; ˆβ(ν))f (bi; 0, Γ(ν)) d bi,
+
+(6) where τ (ν)  
+
+> ik 1k2
+
+= E( Zik 1k2 |Yi, Xi, Θ(ν)). The E-step evaluates the conditional expectation of Lc(Θ; Y, Z), conditional on the observed data Y and the current parameter estimates Θ(ν) at iteration 
+
+ν. To avoid computationally intensive integration over the random effects bi,we evaluate the mixing proportions conditional on the current empirical Bayes estimates of the random effects, ˆb(ν) 
+
+> i
+
+. Specifically, ˆτ (ν)  
+
+> ik 1k2
+
+= fk1k2 (Yi; ( I2 ⊗ W ) ˆ ϕ(ν)  
+
+> k1,k 2
+
+, ˆΣ(ν)  
+
+> k1k2
+
+)πk1 k2 (Xi|ˆb(ν) 
+
+> i
+
+; ˆβ(ν))
+
+∑Kℓ=1 
+
+∑Kh=1 fℓh (Yi; ( I2 ⊗ W ) ˆ ϕ(ν) 
+
+> ℓ,h
+
+, ˆΣ(ν) 
+
+> ℓh
+
+)πℓh (Xi|ˆb(ν) 
+
+> i
+
+; ˆβ(ν)) , (7) for k1, k 2 = 1 , . . . , K ; i = 1 , . . . , n .The M-step then updates Θ(ν+1) 1 and Θ(ν+1) 2 by maximizing U1(Θ1|Θ(ν))and U2(Θ2|Θ(ν)) separately as they are not intervened with each other in ( 5)and ( 6). Specifically, by maximizing U1(Θ1|Θ(ν)) with respect to ϕk,ˆϕ(ν+1)  
+
+> k
+
+= arg max 
+
+> ϕk
+
+U1(Θ1|τ (ν)  
+
+> ik 1k2
+
+, ˆϕ(ν), ˆΣ(ν)),
+
+for k = 1 , . . . , K . Computational details are provided under common and group-specific covariance structures in Sections S2.1 and S2.2 of the Supplementary Material, respectively. The maximum likelihood estimator of Θ2 can be obtained by maximizing 
+
+U2(Θ2|Θ(ν)) defined in ( 6). However, the direct maximization of U2(Θ2|Θ(ν))is often infeasible due to the intractable integrals. To address this, numerical ap-proximation techniques such as Gauss-Hermite quadrature, Laplace approxi-mation and Monte Carlo methods can be applied to approximate the integrals (Sun, Rosen and Sampson , 2007 ; Fu et al. , 2024 ). While these approaches are highly effective, they can become computationally intensive when evaluated repeatedly within an iterative EM framework ( Hedeker and Gibbons , 2006 ). As a practical alternative, we employ the unconditional maximum likelihood method of Zhang (2021 ). This approach adapts the iteratively reweighted least squares (IRLS) algorithm ( Green , 1984 ) for generalized linear mixed models, of-fering a computationally efficient option that avoids direct numerical integration while yielding competitive accuracy to the Laplace approximation. Applying this method, the updates in the M-step proceed as follows: ˆβ(ν+1) = arg max  
+
+> β
+
+U2(Θ2|τ (ν)  
+
+> ik 1k2
+
+, ˆβ(ν), ˆb(ν)),/Joint GBTM for Paired Repeated Measures 8
+
+ˆb(ν+1) = E( b|τ (ν)  
+
+> ik 1k2
+
+, ˆβ(ν+1) , ˆb(ν)).
+
+Computational details for estimating the exposure-phenotype coefficients β,random effects b, and its variance matrix Γ are provided in Section S3.1 of the Supplementary Material. In summary, given the initial estimates ˆΘ(0) and realization ˆb(0) , the one-stage procedure iterates through the following steps until convergence. For ν =0, 1, . . . ,
+
+• Step 1 (E-step): Compute τ (ν)  
+
+> ik 1k2
+
+in ( 7) given ˆΘ(ν) and ˆb(ν), for k1, k 2 =1, . . . , K ; i = 1 , . . . , n ;
+
+• Step 2 (M-step): Update ˆ ϕ(ν+1)  
+
+> k
+
+= arg max ϕk U1(Θ1|τ (ν)  
+
+> ik 1k2
+
+, ˆϕ(ν), ˆΣ(ν)) for 
+
+k = 1 , . . . , K ; obtain the variance-covariance matrices ˆΣ(ν+1) based on current estimates τ (ν)  
+
+> ik 1k2
+
+, ˆϕ(ν+1)  
+
+> k
+
+; update ˆβ(ν+1) = arg max β U2(Θ2|τ (ν)  
+
+> ik 1k2
+
+, ˆβ(ν), ˆb(ν))and ˆb(ν+1) = E( b|τ (ν)  
+
+> ik 1k2
+
+, ˆβ(ν+1) , ˆb(ν)); estimate the variance matrix ˆΓ(ν+1) 
+
+based on current estimates ˆβ(ν+1) , ˆb(ν+1) .We found that the inner loop for updating β within each M-step may re-quire a large number of iterations to converge, consistent with observations by 
+
+Xu, Jordan and Hinton (1994 ). To improve computational efficiency, following 
+
+Xu, Jordan and Hinton (1994 ), we limit this inner loop at 5 iterations. Our simulation and data analysis show that this implementation does not have no-ticeable influence on the overall performance of the algorithm. 
+
+3.2. Two-stage approach 
+
+While the one-stage approach provides full maximum likelihood estimation, si-multaneously estimating complex trajectory structures alongside covariate asso-ciations can lead to severe overfitting and identifiability issues when data limited relative to model complexity ( Bolck, Croon and Hagenaars , 2004 ; Fr¨ uhwirth-Schnatter ,
+
+2006 ). In such settings, structural covariates may inadvertently distort the for-mation of latent trajectory groups. To make estimation more stable and reliable, we propose following two-stage estimation procedure, where trajectory identifi-cation and covariate modeling are decoupled. In the first stage, we fit a covariate-free mixture model to reduce the model complexity. Let rk1 and rk2 denote the averaged probabilities that two ears of all subjects are assigned to groups k1 and k2, respectively, for k1, k 2 = 1 , . . . , K .We define ˜ τ (ν)  
+
+> ik 1k2
+
+as the analogue of τ (ν)  
+
+> ik 1k2
+
+, representing the conditional expec-tation of Zik 1 k2 conditional on current parameter estimates but with covariate-independent mixing proportions. Specifically, given the observed data Yi and current parameters estimates Θ(ν)1 , the E-step updates, ˜τ (ν)  
+
+> ik 1k2
+
+= fk1k2 (Yi; ( I2 ⊗ W ) ˆ ϕ(ν)  
+
+> k1,k 2
+
+, ˆΣ(ν) 
+
+> k1k2
+
+)r(ν) 
+
+> k1
+
+r(ν)
+
+> k2
+
+∑Kℓ=1 
+
+∑Kh=1 fℓh (Yi; ( I2 ⊗ W ) ˆ ϕ(ν) 
+
+> ℓ,h
+
+, ˆΣ(ν) 
+
+> ℓh
+
+)r(ν) 
+
+> ℓ
+
+r(ν)
+
+> h
+
+, (8) /Joint GBTM for Paired Repeated Measures 9
+
+for k1, k 2 = 1 , . . . , K ; i = 1 , . . . , n . In the full joint model, directly estimating the mixing probability of a rare combinatorial pair ( k1, k 2) often yields highly unsta-ble and noisy estimates ˆ πk1 k2 . In contrast, the marginal assignment probabilities are estimated much more stably by marginalizing over the joint assignments. By employing a factorized form for the joint group assignments in ( 8), we stabilize the estimation of rare pairs because their joint probability mass is derived from the product of the robustly estimated marginals, rk1 and rk2 . It should be noted that, although the latent group assignments are assumed independent during the E-step in the first stage, the underlying correlation between the paired tra-jectories is still explicitly accounted in the joint distribution in the M-step. In the M-step, we obtain ˆΘ2 by maximizing the following function: ˜U1(Θ1| ˆΘ(ν)) = 
+
+> n
+
+∑
+
+> i=1
+> K
+
+∑ 
+
+> k1=1
+> K
+
+∑
+
+> k2=1
+
+˜τ (ν)  
+
+> ik 1k2
+
+log fk1k2 (Yi; ( I2 ⊗ W ) ˜ ϕ(ν)  
+
+> k1,k 2
+
+, ˜Σ(ν) 
+
+> k1k2
+
+), (9) for ν ≥ 1. Specifically, we update 
+
+r(ν+1)  
+
+> k1
+
+=
+
+> n
+
+∑
+
+> i=1
+> K
+
+∑ 
+
+> k2=1
+
+˜τ (ν)  
+
+> ik 1k2
+
+/n, r (ν+1)  
+
+> k2
+
+=
+
+> n
+
+∑
+
+> i=1
+> K
+
+∑ 
+
+> k1=1
+
+˜τ (ν)  
+
+> ik 1k2
+
+/n, (10) ˜ϕ(ν+1)  
+
+> k
+
+= arg max 
+
+> ϕk
+
+˜U1(Θ1|˜τ (ν)  
+
+> ik 1k2
+
+, ˜ϕ(ν), ˜Σ(ν)). (11) In the second stage, we let τ ∗  
+
+> ik 1k2
+
+denote the posterior probabilities ˜ τik 1 k2
+
+obtained at the last iteration of EM algorithm in the first stage. We account for the dependence in the inference of association between assignment and ex-posure, and estimate the parameter vector Θ2 by maximizing the following log-likelihood with posterior probabilities τ ∗  
+
+> ik 1k2
+
+:˜U2(Θ2|Θ(t)) = 
+
+> n
+
+∑
+
+> i=1
+> K
+
+∑ 
+
+> k1=1
+> K
+
+∑ 
+
+> k2=1
+
+τ ∗  
+
+> ik 1k2
+
+log 
+
+∫
+
+> bi
+
+πk1 k2 (Xi|bi; β(t))f (bi; 0, Γ(t)) d bi,
+
+(12) for t ≥ 1. Estimation details for above optimization problem are provided in Sec-tion S3.2 of the Supplementary Material. In summary, the two-stage procedure consists of the following steps: 1. (The first stage) Given the initial estimates ˆΘ(0) 1 and the realization ˆb(0) ,iterates through the following steps until convergence. For ν = 0 , 1, . . . ,
+
+• Step 1 (E-step): Compute ˜ τ (ν)  
+
+> ik 1k2
+
+in ( 8) given ˜ϕ(ν) 
+
+> k
+
+and ˜Σ(ν), for 
+
+k1, k 2 = 1 , . . . , K ; i = 1 , . . . , n ;
+
+• Step 2 (M-step): Compute r(ν+1)  
+
+> k1
+
+and r(ν+1)  
+
+> k2
+
+in ( 10 ) for k1, k 2 =1, . . . , K ; Update ˜ϕ(ν+1)  
+
+> k
+
+= arg max ϕk U1(Θ1|˜τ (ν)  
+
+> ik 1k2
+
+, ˜ϕ(ν) 
+
+> k
+
+, ˜Σ(ν)) for 
+
+k = 1 , . . . , K ; Obtain the variance-covariance matrices ˜Σ(ν+1) based on current estimates ˜ τ (ν)  
+
+> ik 1k2
+
+, ˜ϕ(ν+1)  
+
+> k
+
+;/Joint GBTM for Paired Repeated Measures 10 
+
+2. Obtain τ ∗  
+
+> ik 1k2
+
+= ˜ τ (ν)  
+
+> ik 1k2
+
+from the last iteration ν at the convergence of the first stage procedure; 3. (The second stage) Given the initial estimates ˆΘ(0) 2 and realization ˆb(0) ,run the following steps until convergence: for t = 0 , 1, . . . , update ˆβ(t+1) =arg max β ˜U2(Θ2|τ ∗  
+
+> ik 1k2
+
+, ˆβ(t), ˆb(t)) and ˆb(t+1) = E( b| ˆβ(t+1) , ˆb(t)); Estimate the variance matrix ˆΓ(t+1) based on current estimates ˆβ(t+1) , ˆb(t+1) .
+
+3.3. Estimation of joint covariances 
+
+When the correlation structure of paired trajectories is specified, the parameters in the structured variance-covariance matrix can be estimated by maximizing the expected complete log-likelihood function. For example, in CHEARS-AAA data, let ρ = {σ0, σ 1, ρ (k)1 , ρ (k1 ,k 2)2 , ρ (k1 ,k 2)3 ; k, k 1, k 2 = 1 , . . . , K } denote the set of parameters of the variance-covariance matrix specified as in ( 4). Given the current parameter estimates ˆΘ(ν), the covariance parameters ρ at iteration ν +1 is estimated by ˆρ(ν+1) = arg max  
+
+> ρ
+
+U1(Θ1|Θ(ν)). (13) This optimization can be performed numerically with L-BFGS-B optimization method using the standard function optim() in R. The covariance matrices ˆΣ(ν+1)  
+
+> k1k2
+
+at iteration ν + 1 are then estimated based on current estimates ˆ ρ(ν+1) .Alternatively, a moment-based estimation method ( Xu, Jordan and Hinton ,
+
+1994 ; Jordan and Xu , 1995 ) can be applied to estimate unstructured covari-ances. The corresponding estimation procedure for group-specified unstructured covariance matrices is described in Section S1 of the Supplementary Material. However, when available data per group pair ( k1, k 2) is limited, the estima-tion of between-ear covariance Σk1 k2 for all possible pairs can be unstable. To accommodate this scenario, we propose to estimate common correlation struc-tures shared across all group pairs to enhance model stability. Accordingly, the within-trajectory covariance matrix Σ(ν+1)  
+
+> k
+
+are estimated by ˆΣ(ν+1)  
+
+> k
+
+= 1
+
+2n
+
+> n
+
+∑
+
+> i=1
+> K
+
+∑
+
+> k=1
+> K
+
+∑
+
+> ℓ=1
+
+ˆτ (ν) 
+
+> ik 1k2
+
+[
+
+(Yi1 − W ˆϕ(ν+1)  
+
+> k
+
+)( Yi1 − W ˆϕ(ν+1)  
+
+> k
+
+)⊤
+
++( Yi2 − W ˆϕ(ν+1)  
+
+> ℓ
+
+)( Yi2 − W ˆϕ(ν+1)  
+
+> ℓ
+
+)⊤]
+
+, (14) for k = 1 , . . . , K . The between-trajectory covariance matrix Σ(ν+1)   
+
+> k1k2
+
+are assumed to be common across all group pairs ( k1, k 2) and is estimated by ˆΣ(ν+1)   
+
+> k1k2
+
+= 1
+
+2n
+
+> n
+
+∑
+
+> i=1
+> K
+
+∑
+
+> k=1
+> K
+
+∑
+
+> ℓ=1
+
+ˆτ (ν) 
+
+> ik 1k2
+
+[
+
+(Yi1 − W ˆϕ(ν+1)  
+
+> k
+
+)( Yi2 − W ˆϕ(ν+1)  
+
+> ℓ
+
+)⊤
+
++( Yi2 − W ˆϕ(ν+1)  
+
+> ℓ
+
+)( Yi1 − W ˆϕ(ν+1)  
+
+> k
+
+)⊤]
+
+. (15) /Joint GBTM for Paired Repeated Measures 11 
+
+For two-stage approach, the covariance matrices ˜Σ(ν) 
+
+> k1k2
+
+can be estimated from equations ( 13 ) - ( 15 ) by substituting ˜ τ (ν)  
+
+> ik 1k2
+
+for ˆ τ (ν)  
+
+> ik 1k2
+
+and ˜ ϕ(ν) 
+
+> k
+
+for ˆ ϕ(ν) 
+
+> k
+
+, respec-tively. 
+
+3.4. Variance estimation of parameters of interests 
+
+Let ˆβ denote the maximum likelihood estimator of β for the likelihood L(Θ; Y)in ( 2). For the one-stage approach in the EM framework, the variance of ˆβ
+
+can be obtained following Louis (1982 ). Alternatively, standard errors can be estimated by directly evaluating the Hessian of the marginal observed log-likelihood L(Θ; Y) at the final parameter estimates. Because evaluating this exact marginal likelihood requires integrating over the continuous random effects 
+
+bi, we utilize a computationally efficient first-order approximation. Specifically, when the magnitudes of the linear predictor X⊤ 
+
+> i
+
+βk + bik and the variance of bi
+
+are relatively small, the logistic function is approximately linear. Under these conditions, the marginal integral ∫ 
+
+> bi
+
+P (Ki1 = k1, K i2 = k2|bi)f (bi) d bi can be reliably approximated by evaluating the conditional probability directly at the estimated conditional mean, P (Ki1 = k1, K i2 = k2|ˆE[ bi|Y]). The accuracy of this approximation relies on both the small magnitudes of Xiβk + bik and vari-ances of random effects. In scenarios where these conditions do not hold, more accurate results may be obtained using numerical integration methods, such as Gaussian quadrature, to evaluate the observed likelihood and its derivatives. For the two-stage approach, the Fisher information of ˆβ(t), denoted by I(t) 
+
+> β
+
+,is obtained by taking the negative expected values of the second-order partial derivatives of the the log-likelihood of the working response variables, follow-ing the approach of Zhang (2021 ). This yields I(t) 
+
+> β
+
+= ( X∗)⊤R(t)X∗, where 
+
+R(t) is the variance-covariance matrix of working responses introduced during the optimization of likelihood ( 12 ) (derived in Section S3 of the Supplemen-tary Material). The variance-covariance matrix of ˆβ(t) can be approximated by 
+
+{I(t) 
+
+> β
+
+}−1 at the convergence of the algorithm. We note that this variance es-timates do not take into account the extra variation introduced by fitting the mixture model in the first stage. To address this extra uncertainty, one could generate B bootstrap samples through sampling with replacement from the original dataset. Following Ren et al. (2010 ), only the highest hierarchical level (i.e., participants, in the context of our AAA example) should be re-sampled when bootstrapping clustered data. For each bootstrap sample b = 1 , . . . , B ,the entire two-stage procedure is repeated to estimate ˆβb from the likelihood in (12 ). The bootstrap variance estimate is then computed as the sample variance of { ˆβb : b = 1 , . . . , B }.
+
+3.5. Determination of the number of groups 
+
+Standard penalized likelihood criteria, such as the Bayesian Information Cri-terion (BIC) and Akaike Information Criterion (AIC), are commonly used to /Joint GBTM for Paired Repeated Measures 12 
+
+select the number of trajectory groups in GBTM ( Nagin et al. , 2018 ). In this paper, we apply BIC to select the number of groups for our proposed mixture model. Specifically, BIC = log( L(Θ; Y)) − 0.5m log( n),
+
+where L(Θ; Y) is the observed likelihood as specified in ( 2) obtained from the model, m is the total number of parameters estimated in the model. 
+
+4. Simulation studies 
+
+We evaluated the proposed model through simulation studies that mimic the CHEARS-AAA data. We assumed the number of phenotypes K = 4, and set the following true parameters as ( β02 , β 03 , β 04 , β 12 , β 13 , β 14 ) = ( − log(0 .5) , 0.5, log(1 .5) , 1.5, log(2) , 1). We generated πk(Xij |bi), the probability of assigning to phenotype k for ear j
+
+of participant i, using mixed-effect multinomial logistic regression model log 
+
+(
+
+πk (Xij |bi)
+
+π1(Xij |bi)
+
+)
+
+= X⊤ 
+
+> ij
+
+βk + bik = β0k + Xij β1k + bik , k = 2 , 3, 4.
+
+Specifically, Pijk = exp( x⊤ 
+
+> ij
+
+βk + bik )/
+
+[
+
+1 + ∑Kl=2 exp( x⊤ 
+
+> ij
+
+βl + bil )
+
+]
+
+for k = 2 , 3, 4, and Pij 1 = 1 /
+
+[
+
+1 + ∑Kl=2 exp( x⊤ 
+
+> ij
+
+βl + bil )
+
+]
+
+. The covariates Xi1 = Xi2 were gen-erated independently from N (0 , 0.5). The random effects bik were generated in-dependently from N (0 , γ k) with true parameter ( γ1, γ 2, γ 3, γ 4) = (0 .1, 0.2, 0.2, 0.3). Consequently, the phenotypes Kij for jth ear of ith subject were generated from a categorical distribution with 4 phenotypes and each with probabil-ity Pijk for k = 1 , . . . , 4. Let ϕk = ( ϕ0k, ϕ 1k, ϕ 2k )⊤ denote the parameters for phenotype k associated with frequency thresholds in mixture model, for 
+
+k = 1 , . . . , 4. We set the following true parameters as ϕ1 = (1 .8, 1.8, 0.5) ⊤, ϕ2 =(11 .7, 2.1, 0.8) ⊤, ϕ3 = (4 .6, 5.5, 3.2) ⊤, ϕ4 = (18 .5, 3.9, 4.8) ⊤. The error terms 
+
+εi = ( εi11 , . . . , ε i1Q, ε i21 , . . . , ε i2Q)⊤ were generated from multivariate normal with zero means and covariance matrix ( 1). We adopted following exchangeable correlation structure, 
+
+Λk1 = Λk2 =
+
+
+
+1 ρ1 . . . ρ1
+
+ρ1 1 . . . ρ1
+
+... . . . ...
+
+ρ1 ρ1 . . . 1
+
+ , Ck1k2 =
+
+
+
+ρ2 ρ2ρ3 . . . ρ2ρ3
+
+ρ2ρ3 ρ2 . . . ρ2ρ3
+
+... . . . ...
+
+ρ2ρ3 ρ2ρ3 . . . ρ2
+
+ .
+
+(16) For design matrix W , we employed a quadratic form based on the frequency thresholds h1, . . . , h Q corresponding to Q = 7 frequencies assessed. Specifically, 
+
+W =
+
+
+
+1 h1 h21
+
+1 h2 h22
+
+... ... ...1 hQ h2
+
+> Q
+
+ , (17) /Joint GBTM for Paired Repeated Measures 13 
+
+where the frequency thresholds were set to ( h1, . . . , h Q) = (500 , 1000 , 2000 , 3000 , 4000 , 6000 , 8000) Hz and scaled by dividing by 2000, resulting in ( h1, . . . , h Q) = (0 .25 , 0.5, 1, 1.5, 2, 3, 4). Conditional on Kij , the paired hearing threshold data Yi were generated using the marginal model Yijq |Kij =k = ϕ0k + ϕ1khq + ϕ2k h2 
+
+> q
+
++ εijq .We explored two scenarios reflecting the variability of standard deviations across frequencies for both ears. The first setting features the greater variation observed in the CHEARS-AAA data, where we set σ0 = 4 and σ1 = 3, yielding standard deviations V = diag(7 , 10 , 13 , 16 , 19 , 22 , 25) across seven frequencies. The second setting examines lower variability, with σ0 = 0 .8 and σ1 = 1 .2, re-sulting in V = diag(2 .0, 3.2, 4.4, 5.6, 6.8, 8.0, 9.2). We fixed the within-ear corre-lation at ρ1 = 0 .5 and the between-ear different-frequency reduction parameter at ρ3 = 0 .6. To evaluate model performance under varying levels of between-ear correlation, we considered three values for ρ2: 0 (no correlation), 0.5 (moderate), and 0.8 (high). For each scenario, we compared the proposed one-stage (OneStg) and two-stage (TwoStg) estimation procedures to conventional GBTM (IndG-BTM). IndGBTM was implemented under one-stage framework that commonly adopted in conventional GBTMs, but does not account for the correlation be-tween trajectories from the two ears of the same participant. We considered proposed model with both exchangeable and unstructured correlation matri-ces using a common covariance matrix shared across all groups. To evaluate simulation performance, we reported relative bias (RB), empirical standard er-ror (ESE), analytical standard error (ASE), and empirical coverage probability (CP) of the slope parameters β12 , β 13 , β 14 , each averaged over 500 replications. RB was computed as the mean of ( ˆβ1j −β1j )/β 1j for j = 1 , 2, 3. ESE was defined as the standard deviation across replications, and ASE was obtained from the observed likelihood for one-stage methods and by bootstrap approach for the two-stage method with the bootstrap sample sizes of 200. Table 1 summarizes the estimation performance of the IndGBTM, OneStg, and TwoStg methods for β12 , β 13 , β 14 in the presence of high within-trajectory measurement variability, assuming an exchangeable correlation structure de-scribed in ( 16 ). We observed that, when ρ2 = 0, all three methods demonstrated similar levels of bias and coverage near the nominal level of 95%, indicating the proposed methods performed well even when trajectories were independent. However, as ρ2 increases above zero, both the OneStg and TwoStg methods outperformed IndGBTM, demonstrating lower RBs and improved CPs that were closer to the nominal level. These improvements became more evidence as between-ear correlation strengthened, particularly for the TwoStg approach, which consistently yielded the lowest RBs and CPs closest to the nominal es-pecially with larger sample sizes. For all methods, ESE and ASE were close to each other, and CPs were generally close to the nominal 95% level across most scenarios, while IndGBTM tended to exhibit slightly lower CPs, especially as ρ2
+
+increased. The TwoStg approach typically exhibited the smallest ESE among the three methods. Table 2 presents the estimation results under an unstruc-tured covariance and shows similar patterns to those observed in Table 1. Addi-tionally, when within-trajectory variance was low, all three methods exhibited /Joint GBTM for Paired Repeated Measures 14 
+
+Table 1 
+
+Relative bias (RB), averaged standard error (ASE), empirical standard error (ESE), and coverage probability (CP) of the parameter estimates of interest following the proposed model based on 500 replications. The covariance matrix of paired trajectories was estimated from maximum likelihood under the exchangeable structure, with σ0 = 4 , σ 1 = 3 .
+
+β12 β13 β14 
+
+N ρ2 Methods RB ESE ASE CP RB ESE ASE CP RB ESE ASE CP 
+
+200 0 IndGBTM −0.078 0.316 0.356 95.2 −0.104 0.321 0.349 95.6 −0.082 0.333 0.357 94.7 OneStg −0.080 0.315 0.355 95.1 −0.103 0.320 0.349 95.6 −0.082 0.334 0.357 94.5 TwoStg −0.072 0.310 0.333 93.5 −0.057 0.307 0.337 96.5 −0.060 0.330 0.347 94.8 0.5 IndGBTM −0.085 0.318 0.359 94.2 −0.089 0.316 0.354 95.4 −0.084 0.343 0.361 93.5 OneStg −0.059 0.314 0.356 94.6 −0.049 0.313 0.353 96.2 −0.054 0.340 0.360 94.2 TwoStg −0.049 0.311 0.336 95.2 −0.025 0.311 0.339 96.0 −0.037 0.332 0.348 94.6 0.8 IndGBTM −0.090 0.323 0.359 92.9 −0.098 0.320 0.354 95.2 −0.089 0.346 0.360 94.2 OneStg −0.059 0.316 0.355 95.0 −0.049 0.316 0.353 96.5 −0.054 0.341 0.360 94.8 TwoStg −0.044 0.318 0.336 94.8 −0.017 0.312 0.340 96.2 −0.032 0.338 0.348 94.8 500 0 IndGBTM −0.088 0.229 0.218 88.8 −0.100 0.218 0.214 91.7 −0.082 0.220 0.219 92.1 OneStg −0.088 0.229 0.217 89.0 −0.105 0.218 0.213 91.0 −0.086 0.220 0.218 92.1 TwoStg −0.077 0.217 0.206 89.8 −0.070 0.212 0.209 93.3 −0.061 0.210 0.213 94.2 0.5 IndGBTM −0.092 0.228 0.218 87.5 −0.107 0.218 0.214 91.9 −0.087 0.222 0.218 91.2 OneStg −0.064 0.225 0.215 91.5 −0.063 0.216 0.213 93.3 −0.056 0.219 0.218 94.2 TwoStg −0.052 0.217 0.209 92.9 −0.033 0.213 0.210 93.5 −0.035 0.212 0.215 94.6 0.8 IndGBTM −0.091 0.233 0.218 87.3 −0.105 0.222 0.214 91.2 −0.086 0.224 0.219 90.6 OneStg −0.061 0.225 0.216 91.7 −0.057 0.218 0.214 91.7 −0.052 0.219 0.218 93.3 TwoStg −0.047 0.218 0.208 92.9 −0.027 0.213 0.210 93.1 −0.031 0.213 0.215 94.8 
+
+Table 2 
+
+Relative bias (RB), averaged standard error (ASE), empirical standard error (ESE), and coverage probability (CP) of the parameter estimates of interest following the proposed model based on 500 replications. The covariance matrix of paired trajectories was estimated using the moment-based estimation under the unstructured correlation structure, with 
+
+σ0 = 4 , σ 1 = 3 .
+
+β12 β13 β14 
+
+N ρ2 Methods RB ESE ASE CP RB ESE ASE CP RB ESE ASE CP 
+
+200 0 IndGBTM −0.090 0.317 0.357 94.2 −0.109 0.323 0.352 95.2 −0.094 0.333 0.359 95.0 OneStg −0.091 0.320 0.356 94.0 −0.112 0.321 0.351 95.2 −0.104 0.372 0.358 94.4 TwoStg −0.071 0.314 0.340 94.0 −0.058 0.310 0.340 95.8 −0.061 0.328 0.350 94.4 0.5 IndGBTM −0.084 0.318 0.358 93.8 −0.087 0.315 0.353 95.8 −0.082 0.342 0.360 93.3 OneStg −0.059 0.314 0.355 94.4 −0.049 0.314 0.353 96.5 −0.054 0.341 0.360 94.0 TwoStg −0.049 0.312 0.340 95.4 −0.025 0.310 0.341 96.2 −0.037 0.334 0.350 94.0 0.8 IndGBTM −0.088 0.322 0.349 92.1 −0.093 0.314 0.349 96.0 −0.086 0.336 0.356 94.2 OneStg −0.058 0.317 0.354 95.0 −0.047 0.317 0.353 96.5 −0.053 0.342 0.360 94.6 TwoStg −0.043 0.319 0.339 94.6 −0.016 0.312 0.341 96.0 −0.031 0.339 0.349 94.2 500 0 IndGBTM −0.086 0.228 0.218 89.0 −0.097 0.218 0.214 91.7 −0.081 0.219 0.219 92.7 OneStg −0.086 0.228 0.217 89.2 −0.103 0.218 0.213 91.5 −0.084 0.219 0.218 92.5 TwoStg −0.076 0.217 0.207 89.8 −0.069 0.212 0.209 92.7 −0.060 0.210 0.214 94.2 0.5 IndGBTM −0.090 0.228 0.217 87.5 −0.103 0.218 0.214 92.1 −0.085 0.222 0.218 91.9 OneStg −0.064 0.225 0.215 90.6 −0.061 0.216 0.213 92.9 −0.055 0.219 0.218 93.3 TwoStg −0.051 0.218 0.210 92.7 −0.032 0.213 0.211 93.3 −0.035 0.212 0.215 94.8 0.8 IndGBTM −0.089 0.221 0.212 88.5 −0.101 0.212 0.211 92.9 −0.084 0.215 0.216 92.5 OneStg −0.060 0.225 0.216 91.2 −0.055 0.218 0.213 91.9 −0.051 0.219 0.218 94.0 TwoStg −0.047 0.218 0.209 92.7 −0.026 0.213 0.210 92.9 −0.030 0.213 0.215 95.0 /Joint GBTM for Paired Repeated Measures 15 
+
+comparable and minimal RB and CP near the nominal 95% level for ˆβ21 , ˆβ31 ,ˆβ41 (see Tables S1–S2 in the Supplementary Material). As the effect of ignor-ing between-ear correlation becomes negligible when measurement variability is small, it is not unexpected that the proposed methods did not demonstrate a significant improvement over IndGBTM. To summarize, our simulation results suggest that by accounting for hierarchical correlation, the proposed OneStg and TwoStg methods provide more accurate estimations than IndGBTM when between-ear correlation is present, and perform comparably to IndGBTM when such correlation is negligible or measurement error variance is minimal. 
+
+5. Analysis of the CHEARS-AAA data 
+
+In this section, we applied our method to the CHEARS-AAA data. We examined the association between the Dietary Approaches to Stop Hypertension (DASH) dietary adherence score and audiometric phenotypes of age-related hearing loss. A higher DASH score indicated greater adherence to the recommendations pro-vided for the DASH diet. Previous studies ( Curhan et al. , 2018 , 2020 ) demon-strated that greater adherence to the DASH dietary pattern ( Appel et al. , 2006 )was associated with a substantially lower risk of hearing loss in this cohort. Fol-lowing Curhan et al. (2018 , 2020 ), we categorized DASH scores into quintiles (Q1-Q5). A review of participant characteristics across DASH quintiles is given in Table S3 of the Supplementary Material. Participants with missing values for specific hearing thresholds or covariates (approximately 2%) were excluded. The data for analysis included 3047 participants, each of whom had hearing assessments for both ears. In the analysis of the CHEARS-AAA data, mean trajectories were modeled using the design matrix W specified in ( 17 ), and the probabilities of phenotype assignment were modeled using a mixed-effects multinomial logistic regression, i.e., log 
+
+(
+
+πk (Xij |bi)
+
+π1(Xij |bi)
+
+)
+
+= β0k +β1kI(DASH i = 2)+ · · · +β4kI(DASH i = 5)+ · · · +bik ,
+
+(18) for ear j = 1 , 2 of participant i = 1 , . . . , 3047 and phenotype k = 1 , . . . , K ,where the lowest DASH quintile served as the reference and the probabilities of belonging to K phenotypes sum to 1. Model ( 18 ) also includes additional confounders that are not shown explicitly. These included age (continuous), self-reported major ancestry (binary: white, other), smoking history (binary: never, ever), body mass index (BMI) (continuous), total energy intake (contin-uous in calories), persistent tinnitus (several days per week or daily; binary: yes or no), and physical activity level (categorical: 1–5; representing quintiles). Sex was not included as a confounder as all study participants were female. The ex-changeable structure specified in ( 16 ) and the unstructured covariance structure were considered. Dubno et al. (2013 ) classified audiograms of older adults into four phenotypes (older-normal, metabolic, sensory, and metabolic plus sensory). /Joint GBTM for Paired Repeated Measures 16                  
+
+> Table 3
+> Odds ratios and 95% confidence intervals for the association of DASH quintiles (Q2–Q5) with specific phenotypes relative to the lowest quintile (reference Q1), estimated from the proposed two-stage approach under the exchangeable structure based on the CHEARS-AAA dataset. Confidence intervals derived from Fisher information are reported in round brackets and confidence intervals from bootstrap standard error estimates are reported in square brackets.
+> DASH Phenotype 2 Phenotype 3 Phenotype 4
+> Q2 1.03 (0.99, 1.07) [0.66, 1.40] 1.08 (1.06, 1.10) [0.83, 1.33] 0.92 (0.86, 0.98) [0.10, 1.74] Q3 0.84 (0.80, 0.88) [0.43, 1.25] 0.90 (0.88, 0.92) [0.63, 1.17] 0.78 (0.72, 0.84) [0.17, 1.39] Q4 1.06 (1.02, 1.10) [0.65, 1.47] 0.88 (0.86, 0.90) [0.59, 1.17] 0.87 (0.81, 0.93) [0.24, 1.50] Q5 1.05 (0.99, 1.11) [0.60, 1.50] 0.77 (0.73, 0.81) [0.48, 1.06] 0.89 (0.83, 0.95) [0.05, 1.73]
+
+Guided by this substantive classification, we evaluate the proposed models with two to four patterns in our analysis to balance interpretability with reference to prior research. When applying one-stage approach to the CHEARS-AAA dataset, the pre-dicted phenotype 1 was assigned to over 70% of ears, while phenotypes 2 and 4 accounted for only 6.8% and 5.3%, respectively (see Table S4 in Supplementary Material). This notable group size imbalance results in a limited effective sam-ple size for one-stage approach to successfully distinguish the rare groups. Given this reason, the one-stage approach experienced identifiability challenge when applied to the CHEARS-AAA data. Hence, we focused our primary analysis on the two-stage approach, which offered more stable and interpretable results in this context. Results are presented based on the exchangeable covariance struc-ture with four phenotypes in Table 3, which provided the best fit according to BIC when compared to models with an unstructured covariance structure or different numbers of phenotypes (two or three). See Figures S1 and Tables S5– S6 in the Supplementary Material for results under an unstructured covariance structure. To account for the variation introduced in the first stage of two-stage approach, we estimate the standard deviations of parameter estimates using bootstrapping. Following Yang et al. (2024 ), only the highest level units (par-ticipants) in the CHEARS-AAA data were sampled with replacement. Lower level data, including ears and hearing measurements of sampled participants, were not resampled, as additional resampling at these levels does not improve bootstrap performance ( Ren et al. , 2010 ). The proposed model was evaluated using 200 bootstrap samples of the CHEARS-AAA dataset, and bootstrap con-fidence intervals, as well as those following from the Fisher information in the second stage procedure, were reported in Table 3.Table 3 presents odds ratios and corresponding confidence intervals for hear-ing phenotypes 2, 3, and 4, reflecting the odds of having the specific phenotype compared to the reference category phenotype 1. In this analysis, DASH quintile Q1 indicates a diet that least reflects adherence to the DASH dietary pattern, and Q5 indicates a diet that most resembles the DASH dietary pattern. The par-ticipant characteristics according to phenotypes 1–4 are presented in Table S4 in the Supplementary Material. The results in Table 3 suggested that, participants with greater adherence to the DASH dietary pattern (i.e., those in higher DASH /Joint GBTM for Paired Repeated Measures 17       
+
+> 25 50 75 100 500 1000 2000 3000 4000 6000 8000
+> Frequency in Hertz (Hz) Hearing threshold (dB HL)
+> Phenotype
+> 1234
+> Fig 1 . Predicted average audiometric patterns (hearing thresholds in dB across frequencies in Hz) and 95% confidence intervals for phenotypes identified by the proposed GBTM with exchangeable covariance structure on the CHEARS-AAA dataset. The number and percentage of ears in each phenotype are as follows: phenotype 1, 4486 (73.6%); phenotype 2, 415 (6.8%); phenotype 3, 869 (14.3%); and phenotype 4, 324 (5.3%).
+
+quintiles) tended to have lower odds of exhibiting phenotype 3 or 4 compared to those in the lowest quintile, with the lowest odds observed in the highest quintile. Additionally, Figure 1 shows predicted averaged audiometric patterns by the groups that were determined using the proposed method. The audiogram displays hearing thresholds, (i.e. the lowest sound intensity or level that a person can detect at a specific frequency), on a graph. The Y-axis shows intensity (dB) and the X-axis shows the sound frequency (Hz). Lower thresholds (lower decibel values at the top) indicate better hearing, while higher thresholds (dB values) at the bottom indicate worse hearing. From Figure 1, Phenotype 3 differs from phenotype 2 with respect to hearing threshold values in the lower frequencies and the slope of the audiogram between 2000 and 6000 Hz. Specifically, phe-notype 3 exhibits lower thresholds and a steeper slope than phenotype 2. The lower frequency thresholds were similar for phenotypes 3 and 1. Phenotypes 3 and 4 showed similar higher frequency slopes, while phenotype 4 is character-ized by overall poorer thresholds across frequencies. These groupings are similar with those identified in prior work ( Dubno et al. , 2013 ) that characterized on four audiometric phenotypes. 
+
+6. Discussion 
+
+Traditional GBTM relies on the assumption of conditional independence, posit-ing that all structural patterns are explained by the latent class, leaving only independent residual errors. However, in the context of repeated measurements /Joint GBTM for Paired Repeated Measures 18 
+
+from paired organs (e.g., left and right ears), this assumption can be biolog-ically unrealistic. Our proposed model relaxes this conditional independence assumption and captures the inherent hierarchical dependence between paired trajectories. It is important to note that, because we consider the covariance structure to the residual errors rather than introducing individual-level random effects into the mean trajectory, we successfully account for multilevel correla-tion while preserving the strict, taxonomic philosophy of GBTM. The proposed model is flexible and can accommodate various specifications of the design matrix of mean trajectories, including cubic polynomials or spline-based methods to further enhance model flexibility. Simulations demonstrated that ignoring hierarchical dependence can lead to biased estimation and infer-ence. When the correlation between trajectories within a cluster is negligible, the conventional GBTM serves an appropriate and robust analytic choice. Neverthe-less, even when the correlation across trajectories within clusters is not appar-ent, our proposed methods demonstrate performance comparable to standard GBTM. To facilitate the implementation of these models, we have developed the R package pairtraj , available at https://github.com/yxc170/pairtraj .We developed two likelihood-based estimating procedures: a statistically ef-ficient one-stage approach and a computationally robust two-stage approach. The proposed one-stage approach offers a preferable statistical efficiency by jointly estimating mixture components and mixing probabilities. However, when group sizes were small or highly imbalanced, two-stage approach is highly recom-mended. Although both estimation approaches can be affected by small group sizes, the two-stage approach reduces parameter complexity and produces more stable group assignments by fitting a covariate-free mixture in the first stage, and facilitates more reliable estimation of exposure effects on group membership in the second stage. It is also worth noting that there is a trade-off between the flexibility of correlation structure and the computational stability of the mixture model. For instance, in the CHEARS-AAA analysis, group-specific unstructured covariance matrices can better capture heterogeneity in the data, but the large number of covariance parameters can make the regression parameters poorly determined by the data, particularly for the rare group. Although our method was illustrated in the context of the CHEARS-AAA dataset with two levels of clustering by ears and participants, the proposed framework can be extended to accommodate more complex hierarchical designs, such as further longitudinal clustering. Future work will focus on extending the model to longitudinal data involving multiple time points by incorporating ad-ditional random effects for time t in the nonlinear mixed effects model for the group membership, and by allowing the standard deviation of mean trajecto-ries to vary by time. Moreover, the correlation structure can be generalized to higher dimensions to capture additional dependence introduced by repeated measurements over time. By augmenting the relevant vectors and matrices, the likelihood function and maximum likelihood estimation procedures can be mod-ified to accommodate these extensions. /Joint GBTM for Paired Repeated Measures 19 
+
+Acknowledgments 
+
+Conflict of Interest : None declared. 
+
+Funding 
+
+This work was supported by National Institute Health grants [R01 DC017717 and U01 CA176726 (NHS II)]. 
+
+Supplementary Material Supplementary Material for “Joint Group-Based Trajectory Model-ing for Paired Repeated Measures: An Application to Audiometric Phenotypes and Dietary Associations” 
+
+The Supplementary material provides technical derivations of the results and additional empirical results unshown in the manuscript, including extra simu-lations, detailed CHEARS-AAA participant characteristics, phenotype-specific audiometric patterns, and DASH–phenotype association estimates under un-structured correlation matrix. 
+
+References 
+
+Appel, L. J. , Brands, M. W. , Daniels, S. R. , Karanja, N. , Elmer, P. J. 
+
+and Sacks, F. M. (2006). Dietary approaches to prevent and treat hyper-tension: a scientific statement from the American Heart Association. Hyper-tension 47 296–308. 
+
+Bolck, A. , Croon, M. and Hagenaars, J. (2004). Estimating latent struc-ture models with categorical variables: One-step versus three-step estimators. 
+
+Political analysis 12 3–27. 
+
+Curhan, S. G. , Wang, M. , Eavey, R. D. , Stampfer, M. J. and 
+
+Curhan, G. C. (2018). Adherence to healthful dietary patterns is associ-ated with lower risk of hearing loss in women. The Journal of nutrition 148 
+
+944–951. 
+
+Curhan, S. G. , Halpin, C. , Wang, M. , Eavey, R. D. and Curhan, G. C. 
+
+(2020). Prospective study of dietary patterns and hearing threshold elevation. 
+
+American Journal of Epidemiology 189 204–214. 
+
+Davies, C. E. , Glonek, G. F. and Giles, L. C. (2017). The impact of co-variance misspecification in group-based trajectory models for longitudinal data with non-stationary covariance structure. Statistical Methods in Medical Research 26 1982–1991. 
+
+Dubno, J. R. , Eckert, M. A. , Lee, F.-S. , Matthews, L. J. and 
+
+Schmiedt, R. A. (2013). Classifying human audiometric phenotypes of age-related hearing loss from animal models. Journal of the Association for Re-search in Otolaryngology 14 687–701. /Joint GBTM for Paired Repeated Measures 20 
+
+Fr¨ uhwirth-Schnatter, S. (2006). Finite mixture and Markov switching mod-els . Springer. 
+
+Fu, H. , Tang, L. , Rosen, O. , Hipwell, A. E. , Huppert, T. J. and 
+
+Krafty, R. T. (2024). Covariate-guided Bayesian mixture of spline experts for the analysis of multivariate high-density longitudinal data. Biostatistics 
+
+25 666–680. 
+
+Goldstein, H. (2011). Multilevel statistical models . John Wiley & Sons. 
+
+Green, P. J. (1984). Iteratively reweighted least squares for maximum likeli-hood estimation, and some robust and resistant alternatives. Journal of the Royal Statistical Society: Series B (Methodological) 46 149–170. 
+
+Hedeker, D. and Gibbons, R. D. (2006). Longitudinal data analysis . John Wiley & Sons. 
+
+Jones, B. L. , Nagin, D. S. and Roeder, K. (2001). A SAS procedure based on mixture models for estimating developmental trajectories. Socio-logical methods & research 29 374–393. 
+
+Jordan, M. I. and Jacobs, R. A. (1994). Hierarchical mixtures of experts and the EM algorithm. Neural computation 6 181–214. 
+
+Jordan, M. I. and Xu, L. (1995). Convergence results for the EM approach to mixtures of experts architectures. Neural networks 8 1409–1431. 
+
+Louis, T. A. (1982). Finding the Observed Information Matrix When Using the EM Algorithm. Journal of the Royal Statistical Society: Series B (Method-ological) 44 226-233. 
+
+Muth´ en, B. and Shedden, K. (1999). Finite mixture modeling with mixture outcomes using the EM algorithm. Biometrics 55 463–469. 
+
+Nagin, D. S. (1999). Analyzing developmental trajectories: a semiparametric, group-based approach. Psychological methods 4 139. 
+
+Nagin, D. S. (2005). Group-based modeling of development . Harvard university press. 
+
+Nagin, D. S. and Odgers, C. L. (2010a). Group-based trajectory modeling in clinical research. Annual review of clinical psychology 6 109–138. 
+
+Nagin, D. S. and Odgers, C. L. (2010b). Group-based trajectory modeling (nearly) two decades later. Journal of quantitative criminology 26 445–453. 
+
+Nagin, D. S. and Tremblay, R. E. (2001). Analyzing developmental trajec-tories of distinct but related behaviors: a group-based method. Psychological methods 6 18. 
+
+Nagin, D. S. , Jones, B. L. , Passos, V. L. and Tremblay, R. E. (2018). Group-based multi-trajectory modeling. Statistical methods in medical re-search 27 2015–2023. 
+
+Ng, S.-K. and McLachlan, G. J. (2014). Mixture models for clustering multi-level growth trajectories. Computational Statistics & Data Analysis 71 43–51. 
+
+Parthasarathy, A. , Romero Pinto, S. , Lewis, R. M. , Goedicke, W. and 
+
+Polley, D. B. (2020). Data-driven segmentation of audiometric phenotypes across a large clinical cohort. Scientific reports 10 6704. 
+
+Proust-Lima, C. , Philipps, V. and Liquet, B. (2017). Estimation of ex-tended mixed models using latent classes and latent processes: the R package lcmm. Journal of statistical software 78 1–56. /Joint GBTM for Paired Repeated Measures 21 
+
+Ren, S. , Lai, H. , Tong, W. , Aminzadeh, M. , Hou, X. and Lai, S. (2010). Nonparametric bootstrapping for hierarchical data. Journal of Applied Statis-tics 37 1487–1498. 
+
+Sheng, Y. , Yang, C. , Curhan, S. , Curhan, G. and Wang, M. (2022). An-alytical methods for correlated data arising from multicenter hearing studies. 
+
+Statistics in medicine 41 5335–5348. 
+
+Sun, Z. , Rosen, O. and Sampson, A. R. (2007). Multivariate Bernoulli mix-ture models with application to postmortem tissue studies in schizophrenia. 
+
+Biometrics 63 901–909. 
+
+Vaden, K. I. , Matthews, L. J. , Eckert, M. A. and Dubno, J. R. (2017). Longitudinal changes in audiometric phenotypes of age-related hearing loss. 
+
+Journal of the Association for Research in Otolaryngology 18 371–385. 
+
+Xu, L. , Jordan, M. and Hinton, G. E. (1994). An alternative model for mixtures of experts. Advances in neural information processing systems 7.
+
+Yang, C. , Langworthy, B. , Curhan, S. , Vaden Jr, K. I. , Curhan, G. ,
+
+Dubno, J. R. and Wang, M. (2024). Soft classification and regression anal-ysis of audiometric phenotypes of age-related hearing loss. Biometrics 80 
+
+ujae013. 
+
+Zhang, T. (2021). Iteratively reweighted least squares with random effects for maximum likelihood in generalized linear mixed effects models. Journal of Statistical Computation and Simulation 91 3404–3425.

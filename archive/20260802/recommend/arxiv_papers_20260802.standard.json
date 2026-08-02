@@ -1,0 +1,224 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-02T21:25:50.808200+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 1,
+    "deep_cap": 7,
+    "deep_selected": 1,
+    "quick_candidates": 4,
+    "quick_skim_target": 12,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2607.25888v1",
+      "source": "arxiv",
+      "title": "Depression Markers in Speech: An Approach based on Tract Variables Dynamics",
+      "abstract": "This study identifies new depression biomarkers based on the dynamical properties of tract variables, which represent geometric features describing the configuration of the speech articulators. A key advantage of this approach lies in its ability to quantify aspects of the articulatory process that have not been previously explored in the context of depression, namely predictability, complexity, and randomness. These properties are respectively characterised using the Largest Lyapunov Exponent, the Correlation Dimension, and the Sample Entropy. Thorough experiments were conducted on the Androids Corpus, a publicly available dataset comprising 64 speakers diagnosed with depression by clinicians and 54 control speakers with no reported history of mental health conditions. The results indicate that the proposed biomarkers effectively discriminate between the depressed and control speakers, as evidenced by the high Cliffs delta values across both read and spontaneous speech.",
+      "authors": [
+        "Sahar Altalhi",
+        "Tanaya Guha",
+        "Alessandro Vinciarelli"
+      ],
+      "primary_category": "eess.AS",
+      "categories": [
+        "eess.AS",
+        "cs.AI"
+      ],
+      "published": "2026-07-28T15:48:07+00:00",
+      "link": "https://arxiv.org/pdf/2607.25888v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "directly addresses the requirement 'depression mood assessment' via speech-based biomarkers; provides a novel method for depression detection that could support EMA-based monitoring",
+      "llm_evidence_cn": "直接对应“抑郁情绪评估”需求，通过语音生物标志物检测抑郁；提供可用于EMA监测的语音分析方法",
+      "llm_evidence": "直接对应“抑郁情绪评估”需求，通过语音生物标志物检测抑郁；提供可用于EMA监测的语音分析方法",
+      "canonical_evidence": "直接对应“抑郁情绪评估”需求，通过语音生物标志物检测抑郁；提供可用于EMA监测的语音分析方法",
+      "llm_tldr_en": "Proposes speech-based depression markers using tract variables dynamics, quantifying predictability, complexity, randomness, and validating on a clinical corpus.",
+      "llm_tldr_cn": "该研究针对临床抑郁诊断缺乏客观生物标志物的问题，提出基于声道变量动力学特征的语音抑郁标记方法，利用最大Lyapunov指数、相关维度和样本熵量化发音过程的可预测性、复杂性与随机性。在包含64名抑郁患者和54名对照者的Androids语料库上进行了充分实验，发现这些动力学特征能有效区分抑郁与正常语音。该工作为抑郁情绪的非侵入式自动化评估提供了新的语音特征途径，亦有望应用于移动健康监测场景。",
+      "llm_tldr": "该研究针对临床抑郁诊断缺乏客观生物标志物的问题，提出基于声道变量动力学特征的语音抑郁标记方法，利用最大Lyapunov指数、相关维度和样本熵量化发音过程的可预测性、复杂性与随机性。在包含64名抑郁患者和54名对照者的Androids语料库上进行了充分实验，发现这些动力学特征能有效区分抑郁与正常语音。该工作为抑郁情绪的非侵入式自动化评估提供了新的语音特征途径，亦有望应用于移动健康监测场景。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "depression mood assessment",
+      "matched_requirement_id": "req-14",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.27520v1",
+      "source": "arxiv",
+      "title": "The Continuous Latent Ornstein-Uhlenbeck Dynamics Framework: A Scalable Latent Process Model for Multivariate Longitudinal Categorical Data",
+      "abstract": "Longitudinal biomedical studies increasingly collect irregularly sampled, multivariate categorical data that imperfectly reflect disease progression. This presents three key analytical challenges: highly heterogeneous disease progression across subjects; the presence of unobserved, co-evolving latent variables driving multiple measurements; and highly irregular sampling intervals both within and across patients. To address those challenges, we present the Continuous Latent Ornstein-Uhlenbeck Dynamics (CLOUD) framework for modeling complex disease trajectories from multivariate longitudinal categorical data. CLOUD links multivariate categorical observations to underlying latent functional domains and characterizes their coupled temporal evolution via the integration of a measurement component adjusted from item response theory (IRT) with a dynamic component based on multivariate Ornstein-Uhlenbeck (OU) processes. Methodologically, we introduce a time-inhomogeneous OU process that incorporated covariate-dependent components into the shifting mean function of the latent dynamics, allowing baseline biomarkers to modulate individual-level disease trajectories. We further propose a scalable parameterization of the OU drift matrix that enabled valid interaction modeling without restricting the number of latent functional domains. We establish theoretical properties of the proposed framework, including the analytical tractability of the model, the generality of the drift matrix reparameterization, and the identifiability of the entire model. Through simulation studies and an application to longitudinal amyotrophic lateral sclerosis (ALS) clinical data, we demonstrate that CLOUD provided a principled and flexible tool for characterizing subject-specific disease evolution across multiple interacting functional domains.",
+      "authors": [
+        "Zhennan Wu",
+        "Yijie Wang",
+        "Xiaoqing Huang"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-07-29T23:19:25+00:00",
+      "link": "https://arxiv.org/pdf/2607.27520v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Latent process model for irregularly sampled multivariate categorical longitudinal data, transferable to EMA mental health analysis",
+      "llm_evidence_cn": "面向不规则采样多变量分类数据的潜过程模型，可迁移至EMA心理数据分析",
+      "llm_evidence": "面向不规则采样多变量分类数据的潜过程模型，可迁移至EMA心理数据分析",
+      "canonical_evidence": "面向不规则采样多变量分类数据的潜过程模型，可迁移至EMA心理数据分析",
+      "llm_tldr_en": "CLOUD models irregularly sampled multivariate categorical longitudinal data via latent Ornstein-Uhlenbeck dynamics. Though not EMA-specific, it directly supports analytical tasks in EMA-based mental health and sleep research.",
+      "llm_tldr_cn": "该论文提出CLOUD框架，用于建模不规则采样的多变量纵向分类数据，解决个体疾病进展异质性、潜在变量驱动及采样间隔不规则等挑战。CLOUD通过将分类观测映射到连续潜过程，实现对复杂疾病轨迹的建模。由于EMA数据常具备类似特征，该方法可作为心理与精神健康领域EMA数据分析的通用工具。",
+      "llm_tldr": "该论文提出CLOUD框架，用于建模不规则采样的多变量纵向分类数据，解决个体疾病进展异质性、潜在变量驱动及采样间隔不规则等挑战。CLOUD通过将分类观测映射到连续潜过程，实现对复杂疾病轨迹的建模。由于EMA数据常具备类似特征，该方法可作为心理与精神健康领域EMA数据分析的通用工具。",
+      "llm_tags": [
+        "query:ema-mental:composite"
+      ],
+      "matched_query_tag": "query:ema-mental:composite",
+      "matched_query_text": "Papers central to 请帮我查找在心理与精神健康领域使用到EMA工具的论文, especially work that connects or combines: Ecological Momentary Assessment mental health research; EMA use in psychological studies; Experience Sampling Method in clinical psychology; mobile health applications for ecological momentary assessment; digital phenotyping using EMA in mental health; ecological momentary assessment for depression monitoring; Ecological Momentary Assessment applications in mental health research; Studies using EMA to monitor psychiatric symptoms; Effectiveness of EMA in mental health interventions.",
+      "matched_requirement_id": "req-composite-ema-mental",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.23858v1",
+      "source": "arxiv",
+      "title": "Joint Group-Based Trajectory Modeling for Paired Repeated Measures: An Application to Audiometric Phenotypes and Dietary Associations",
+      "abstract": "The assumption of conditional independence in conventional group-based trajectory modeling (GBTM) is often violated by paired repeated-measures data with heterogeneous trajectory patterns. While random-effects models can accommodate this dependence, they inflate within-group variability and blur distinct phenotypic shapes. We propose a joint GBTM framework that explicitly models hierarchical dependence in paired trajectories while allowing them to follow different latent patterns. We develop a robust two-stage approach to address estimation challenges caused by rare latent groups, and a one-stage EM algorithm that serves as a theoretical baseline under balanced group sizes. Simulations demonstrate that our methods correct the biases caused by ignoring hierarchical dependence. The proposed model was applied to real-world data from the Conservation of Hearing Study (CHEARS) Audiology Assessment Arm (AAA), a subcohort of the Nurses' Health Study II (NHS II), to identify distinct audiometric phenotypes and to investigate the association between the Dietary Approaches to Stop Hypertension (DASH) dietary adherence score and the latent audiometric patterns.",
+      "authors": [
+        "Ying Chen",
+        "Sharon Curhan",
+        "Kenneth I. Vaden",
+        "Judy R. Dubno",
+        "Molin Wang"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-07-26T22:02:22+00:00",
+      "link": "https://arxiv.org/pdf/2607.23858v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "joint trajectory modeling for paired repeated measures can support sleep and mood EMA analysis",
+      "llm_evidence_cn": "成对重复测量轨迹建模方法可迁移至睡眠与情绪EMA数据分析",
+      "llm_evidence": "成对重复测量轨迹建模方法可迁移至睡眠与情绪EMA数据分析",
+      "canonical_evidence": "成对重复测量轨迹建模方法可迁移至睡眠与情绪EMA数据分析",
+      "llm_tldr_en": "Proposes a joint group-based trajectory modeling framework for paired repeated measures that handles hierarchical dependence, with robust two-stage and one-stage EM estimation, demonstrated on audiometric and dietary data.",
+      "llm_tldr_cn": "针对传统组基轨迹模型忽视成对重复测量间条件独立假设的问题，该论文提出联合组基轨迹建模框架，显式建模成对轨迹的层次依赖并允许其遵循不同潜类别模式。开发了稳健的两阶段估计和作为理论基线的一阶段EM算法。模拟实验展示了其在罕见潜类别和平衡组大小下的性能，为睡眠与情绪等成对纵向数据（如EMA研究）提供了可迁移的分析工具。",
+      "llm_tldr": "针对传统组基轨迹模型忽视成对重复测量间条件独立假设的问题，该论文提出联合组基轨迹建模框架，显式建模成对轨迹的层次依赖并允许其遵循不同潜类别模式。开发了稳健的两阶段估计和作为理论基线的一阶段EM算法。模拟实验展示了其在罕见潜类别和平衡组大小下的性能，为睡眠与情绪等成对纵向数据（如EMA研究）提供了可迁移的分析工具。",
+      "llm_tags": [
+        "query:sleep-mental:composite"
+      ],
+      "matched_query_tag": "query:sleep-mental:composite",
+      "matched_query_text": "Papers central to 请帮我查找在睡眠及心理健康领域使用到生态瞬时评估工具的论文, especially work that connects or combines: ecological momentary assessment EMA in sleep and mental health; sleep quality assessment and measurement; ambulatory assessment in clinical research; insomnia symptoms and treatment; depression mood assessment; anxiety disorders measurement; Ecological momentary assessment studies on sleep and mental health; Using EMA to measure sleep quality and mental health in natural settings; Experience sampling methodology for sleep and mood research.",
+      "matched_requirement_id": "req-composite-sleep-mental",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.25175v1",
+      "source": "arxiv",
+      "title": "Agentic AI-enabled discovery across large-scale sleep physiology",
+      "abstract": "Sleep occupies roughly one-third of human life, yet many aspects of its physiology remain poorly understood. Large polysomnography (PSG) datasets offer new opportunities to study sleep and its links to disease, but extracting insight from these recordings requires substantial expert effort and remains difficult for general-purpose AI systems. We developed AI Sleep Co-Scientist, an expert-guided environment in which human scientists direct specialist agents for hypothesis development, signal preprocessing, and statistical analysis, reviewing intermediate outputs. Each reported result is linked to the executable code that produced it. Across four cohorts of approximately 124,000 PSG recordings and more than 50 TB of raw signals, we conducted five case studies spanning how sleep physiology relates to future disease, how it distinguishes clinical phenotypes, and how sleep is organized and regulated. Diminished network-level physiological coupling during sleep was associated with incident Parkinson's disease (HR 1.48) and Alzheimer's disease (HR 1.38). A physiologically structured late-fusion sleep-age model outperformed an unconstrained early-fusion approach, and its age residual was associated with incident disease across multiple organ systems. Arousal dynamics characterized comorbid insomnia and sleep apnoea as an intermediate phenotype skewed towards obstructive sleep apnoea, distinguished by prolonged post-arousal wakefulness. Rapid eye movement (REM) bout duration tracked preceding non-REM sleep more closely than intervening wakefulness. Transient-oscillation analysis identified a fast-sigma deficit and excess centrofrontal theta activity in narcolepsy type 1. Together, these findings connect sleep to disease risk, clinical classification, and its own regulation, and show how agentic AI can support large-scale, multimodal discovery.",
+      "authors": [
+        "Rahul Thapa",
+        "Umaer Hanif",
+        "Robin Guillard",
+        "Andreas Brink-Kjaer",
+        "Adrien Specht",
+        "Matteo Saibene",
+        "Magnus Ruud Kjaer",
+        "Harrison G. Zhang",
+        "Elisabeth Roxane M. Heremans",
+        "Eric C. Landsness",
+        "Emmanuel Mignot",
+        "James Zou"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-07-28T00:59:08+00:00",
+      "link": "https://arxiv.org/pdf/2607.25175v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "AI environment for large-scale sleep physiology analysis",
+      "llm_evidence_cn": "面向大规模睡眠生理学分析的AI专家环境",
+      "llm_evidence": "面向大规模睡眠生理学分析的AI专家环境",
+      "canonical_evidence": "面向大规模睡眠生理学分析的AI专家环境",
+      "llm_tldr_en": "This paper introduces AI Sleep Co-Scientist, an expert-guided AI environment that helps scientists analyze large polysomnography datasets, linking sleep physiology to disease.",
+      "llm_tldr_cn": "睡眠占人类生命约三分之一，但其生理机制仍有很多未解之处。本文提出AI睡眠联合科学家（AI Sleep Co-Scientist），一个由人类科学家指导专业代理的环境，用于睡眠信号的预处理、统计分析和假设生成，并将每个结果关联到可执行代码。在约12.4万例多导睡眠图记录、超过50TB数据上完成了五项案例研究。结果表明该环境能显著降低大规模睡眠数据集的分析门槛，有望深化对睡眠与疾病关联的理解。",
+      "llm_tldr": "睡眠占人类生命约三分之一，但其生理机制仍有很多未解之处。本文提出AI睡眠联合科学家（AI Sleep Co-Scientist），一个由人类科学家指导专业代理的环境，用于睡眠信号的预处理、统计分析和假设生成，并将每个结果关联到可执行代码。在约12.4万例多导睡眠图记录、超过50TB数据上完成了五项案例研究。结果表明该环境能显著降低大规模睡眠数据集的分析门槛，有望深化对睡眠与疾病关联的理解。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "sleep quality assessment and measurement",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2607.26362v1",
+      "source": "arxiv",
+      "title": "Optimizing Efficiency and Convergence in MMRM: Practical Considerations for Longitudinal Data Analysis",
+      "abstract": "Mixed models for repeated measures (MMRM) are a popular method for analyzing longitudinal data in clinical trials. However, practical challenges, such as small sample sizes, large numbers of time points, and selection of variance-covariance structure for within-subject errors, often present barriers to model convergence and valid inference. This article evaluates different options for using MMRM in different scenarios through extensive simulation studies and an application on diabetes trial data. We demonstrate that the empirical bias-reduced coefficient covariance adjustment with the heterogeneous autoregressive covariance structure yields near-nominal coverage with high convergence rates for moderate and large sample designs. For small sample sizes, the simple model with baseline covariates and treatment by time point interaction achieves good efficiency and high probability of convergence. Based on these results, we provide practitioners with actionable guidance for applying MMRM to clinical trial data.",
+      "authors": [
+        "Dylan Clarke",
+        "Jeremiah Jones",
+        "Yongming Qu"
+      ],
+      "primary_category": "stat.ME",
+      "categories": [
+        "stat.ME"
+      ],
+      "published": "2026-07-29T00:32:50+00:00",
+      "link": "https://arxiv.org/pdf/2607.26362v1",
+      "tags": [
+        "keyword:EMA-mental",
+        "keyword:sleep-mental",
+        "query:EMA-mental",
+        "query:sleep-mental"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Longitudinal data analysis with MMRM, directly applicable to EMA and ambulatory assessment data analysis in clinical research.",
+      "llm_evidence_cn": "使用MMRM进行纵向数据分析，可直接应用于临床研究中的EMA和动态评估数据分析。",
+      "llm_evidence": "使用MMRM进行纵向数据分析，可直接应用于临床研究中的EMA和动态评估数据分析。",
+      "canonical_evidence": "使用MMRM进行纵向数据分析，可直接应用于临床研究中的EMA和动态评估数据分析。",
+      "llm_tldr_en": "This paper provides practical guidance for fitting mixed models for repeated measures, a core analytical tool for EMA and ambulatory assessment intensive longitudinal data.",
+      "llm_tldr_cn": "该论文针对重复测量混合模型（MMRM）在纵向数据分析中常见的收敛问题，系统评估了不同方差-协方差结构与小样本场景下的估计性能。通过模拟研究及糖尿病试验数据的实例，发现采用异质自回归协方差结构结合经验偏差校正的系数协方差调整能在中等和大样本下实现接近名义覆盖率和较高收敛率。对于生态瞬时评估（EMA）等密集纵向数据，MMRM是标准分析工具，本文为正确使用该模型提供了实用建议，有助于提高EMA研究中的统计推断质量。",
+      "llm_tldr": "该论文针对重复测量混合模型（MMRM）在纵向数据分析中常见的收敛问题，系统评估了不同方差-协方差结构与小样本场景下的估计性能。通过模拟研究及糖尿病试验数据的实例，发现采用异质自回归协方差结构结合经验偏差校正的系数协方差调整能在中等和大样本下实现接近名义覆盖率和较高收敛率。对于生态瞬时评估（EMA）等密集纵向数据，MMRM是标准分析工具，本文为正确使用该模型提供了实用建议，有助于提高EMA研究中的统计推断质量。",
+      "llm_tags": [
+        "query:sleep-mental"
+      ],
+      "matched_query_tag": "query:sleep-mental",
+      "matched_query_text": "ambulatory assessment in clinical research",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
